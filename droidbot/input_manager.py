@@ -70,7 +70,7 @@ class InputManager(object):
             input_policy = None
         elif self.policy_name in [POLICY_NAIVE_DFS, POLICY_NAIVE_BFS]:
             input_policy = UtgNaiveSearchPolicy(device, app, self.random_input, self.policy_name)
-        elif self.policy_name in [POLICY_GREEDY_DFS, POLICY_GREEDY_BFS]:
+        elif self.policy_name in [POLICY_GREEDY_DFS, POLICY_GREEDY_BFS]:#Default!
             input_policy = UtgGreedySearchPolicy(device, app, self.random_input, self.policy_name)
         elif self.policy_name == POLICY_MEMORY_GUIDED:
             from .input_policy2 import MemoryGuidedPolicy
@@ -113,7 +113,7 @@ class InputManager(object):
 
         try:
             if self.policy is not None:
-                self.policy.start(self)
+                self.policy.start(self)#Default!
             elif self.policy_name == POLICY_NONE:
                 self.device.start_app(self.app)
                 if self.event_count == 0:

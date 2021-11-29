@@ -306,7 +306,7 @@ class AppEnvManager(object):
         :param app_env_factory: the AppEnvFactory instance used to generate
         :return:
         """
-        return app_env_factory.produce_envs()
+        return  .produce_envs()
 
     def stop(self):
         self.enabled = False

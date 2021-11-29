@@ -52,7 +52,7 @@ class InputPolicy(object):
         self.action_count = 0
         self.master = None
 
-    def start(self, input_manager):
+    def start(self, input_manager):#Default!
         """
         start producing events
         :param input_manager: instance of InputManager
