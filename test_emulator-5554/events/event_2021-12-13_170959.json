@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-13_170959",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.couple.ebook.yjykc/com.couple.ebook.yjykc.ui.EBookPlatformDirActivity"
+  },
+  "start_state": "4ff08700705d07c10dd0257bfcdc5665",
+  "stop_state": "48b77db46ee18e870da3a236e26479ff",
+  "event_str": "IntentEvent(intent='am start com.couple.ebook.yjykc/com.couple.ebook.yjykc.ui.EBookPlatformDirActivity')"
+}

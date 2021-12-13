@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-13_115555",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop com.couple.ebook.yjykc"
+  },
+  "start_state": "a4392036ba3fb07f7aa2f99a2f1e2d40",
+  "stop_state": "4ff08700705d07c10dd0257bfcdc5665",
+  "event_str": "KillAppEvent()"
+}

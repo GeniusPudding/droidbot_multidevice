@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-13_171812",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.couple.ebook.yjykc",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          10,
+          61
+        ],
+        [
+          1070,
+          119
+        ]
+      ],
+      "resource_id": "android:id/title",
+      "checked": false,
+      "text": "\u7b2c\u4e03\u8bb2 \u8868\u610f\u6070\u5207\u8bad\u7ec3 ",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 2,
+      "temp_id": 3,
+      "size": "1060*58",
+      "signature": "[class]android.widget.TextView[resource_id]android:id/title[text]\u7b2c\u4e03\u8bb2 \u8868\u610f\u6070\u5207\u8bad\u7ec3 [enabled,,]",
+      "view_str": "588e2159913898aa5d583404e6b75c81",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]android:id/title"
+    }
+  },
+  "start_state": "99f408b8ea201b09d1de068a32c77653",
+  "stop_state": "99f408b8ea201b09d1de068a32c77653",
+  "event_str": "TouchEvent(state=99f408b8ea201b09d1de068a32c77653, view=588e2159913898aa5d583404e6b75c81(ChapterViewActivity/TextView-\u7b2c\u4e03\u8bb2 \u8868\u610f\u6070\u5207\u8bad\u7ec3))"
+}

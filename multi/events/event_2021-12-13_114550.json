@@ -1,0 +1,53 @@
+{
+  "tag": "2021-12-13_114550",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.permissioncontroller",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        12,
+        14,
+        17
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          22,
+          319
+        ],
+        [
+          1058,
+          519
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 10,
+      "temp_id": 11,
+      "size": "1036*200",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "57215666374f8c7635753d072dcc4268",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    }
+  },
+  "start_state": "91b8d99ef5ada9d55f303d6a7ae94790",
+  "stop_state": "a4392036ba3fb07f7aa2f99a2f1e2d40",
+  "event_str": "TouchEvent(state=91b8d99ef5ada9d55f303d6a7ae94790, view=57215666374f8c7635753d072dcc4268(ReviewPermissionsActivity/LinearLayout-))"
+}

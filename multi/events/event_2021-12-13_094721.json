@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-13_094721",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.permissioncontroller",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          674,
+          1999
+        ],
+        [
+          858,
+          2148
+        ]
+      ],
+      "resource_id": "com.android.permissioncontroller:id/cancel_button",
+      "checked": false,
+      "text": "Cancel",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 36,
+      "temp_id": 37,
+      "size": "184*149",
+      "signature": "[class]android.widget.Button[resource_id]com.android.permissioncontroller:id/cancel_button[text]Cancel[enabled,,]",
+      "view_str": "32f2a71f9d463f0d95e0c0140d993543",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.android.permissioncontroller:id/cancel_button"
+    }
+  },
+  "start_state": "91b8d99ef5ada9d55f303d6a7ae94790",
+  "stop_state": "a4392036ba3fb07f7aa2f99a2f1e2d40",
+  "event_str": "TouchEvent(state=91b8d99ef5ada9d55f303d6a7ae94790, view=32f2a71f9d463f0d95e0c0140d993543(ReviewPermissionsActivity/Button-Cancel))"
+}

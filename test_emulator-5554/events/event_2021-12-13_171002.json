@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-13_171002",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.couple.ebook.yjykc",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          270,
+          155
+        ],
+        [
+          810,
+          287
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u524d \u8a00 ",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 7,
+      "temp_id": 8,
+      "size": "540*132",
+      "signature": "[class]android.widget.Button[resource_id]None[text]\u524d \u8a00 [enabled,,]",
+      "view_str": "0fb492aebc97aed1ab8859c4af89e4a8",
+      "content_free_signature": "[class]android.widget.Button[resource_id]None"
+    }
+  },
+  "start_state": "48b77db46ee18e870da3a236e26479ff",
+  "stop_state": "4bc6892d674e4c1077d837d3df2b5d69",
+  "event_str": "TouchEvent(state=48b77db46ee18e870da3a236e26479ff, view=0fb492aebc97aed1ab8859c4af89e4a8(EBookPlatformDirActivity/Button-\u524d \u8a00 ))"
+}

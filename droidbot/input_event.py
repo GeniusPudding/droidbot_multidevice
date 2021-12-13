@@ -226,7 +226,7 @@ class EventLog(object):
                 return True
         return False
 
-    def start(self):
+    def start(self): #default! Sending event here!
         """
         start sending event
         """

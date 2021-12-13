@@ -1,0 +1,162 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        3bec841 com.couple.ebook.yjykc/.ui.EBookPlatformDirActivity filter c8541e6
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      android.net.conn.CONNECTIVITY_CHANGE:
+        aeea77d com.couple.ebook.yjykc/com.couple.ebook.service.ChannelConnectReceiver filter 6539672
+          Action: "android.net.conn.CONNECTIVITY_CHANGE"
+      android.intent.action.BOOT_COMPLETED:
+        cb55327 com.couple.ebook.yjykc/com.couple.ebook.service.AutoRebootReciever filter fb479d4
+          Action: "android.intent.action.BOOT_COMPLETED"
+
+Service Resolver Table:
+  Non-Data Actions:
+      com.couple.ebook.intent.action.DISPLAY_HEARTBEAT:
+        799fac3 com.couple.ebook.yjykc/com.couple.ebook.service.BookDisplayService filter cc95f40
+          Action: "com.couple.ebook.intent.action.DISPLAY_HEARTBEAT"
+
+Key Set Manager:
+  [com.couple.ebook.yjykc]
+      Signing KeySets: 60
+
+Packages:
+  Package [com.couple.ebook.yjykc] (ca92d2b):
+    userId=10201
+    pkg=Package{9fde0e8 com.couple.ebook.yjykc}
+    codePath=/data/app/~~iTNX1biGJZnCNmG8WK7KWg==/com.couple.ebook.yjykc-a13ibK3-YLLo4fTZ1s-jQA==
+    resourcePath=/data/app/~~iTNX1biGJZnCNmG8WK7KWg==/com.couple.ebook.yjykc-a13ibK3-YLLo4fTZ1s-jQA==
+    legacyNativeLibraryDir=/data/app/~~iTNX1biGJZnCNmG8WK7KWg==/com.couple.ebook.yjykc-a13ibK3-YLLo4fTZ1s-jQA==/lib
+    extractNativeLibs=true
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=2 minSdk=4 targetSdk=4
+    versionName=2.0
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=1
+    applicationInfo=PackageImpl{9fde0e8 com.couple.ebook.yjykc}
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_REQUEST_LEGACY_EXTERNAL_STORAGE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    queriesPackages=[]
+    dataDir=/data/user/0/com.couple.ebook.yjykc
+    supportsScreens=[small, medium, large, resizeable, anyDensity]
+    usesLibraries:
+      android.test.base
+      org.apache.http.legacy
+    usesLibraryFiles:
+      /system/framework/android.test.base.jar
+      /system/framework/org.apache.http.legacy.jar
+    timeStamp=2021-12-12 18:39:20
+    firstInstallTime=2021-12-12 18:39:20
+    lastUpdateTime=2021-12-12 18:39:20
+    signatures=PackageSignatures{70fa301 version:1, signatures:[b6ab4e18], past signatures:[]}
+    installPermissionsFixed=true
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    requested permissions:
+      android.permission.INTERNET
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.READ_PHONE_STATE
+      android.permission.ACCESS_COARSE_LOCATION
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.ACCESS_WIFI_STATE
+      android.permission.WRITE_EXTERNAL_STORAGE
+      android.permission.READ_EXTERNAL_STORAGE
+      android.permission.GET_TASKS
+      com.android.launcher.permission.INSTALL_SHORTCUT
+      com.android.browser.permission.WRITE_HISTORY_BOOKMARKS
+      android.permission.ACCESS_BACKGROUND_LOCATION
+      android.permission.ACCESS_MEDIA_LOCATION
+    install permissions:
+      android.permission.GET_TASKS: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      com.android.browser.permission.WRITE_HISTORY_BOOKMARKS: granted=true
+      android.permission.ACCESS_WIFI_STATE: granted=true
+      com.android.launcher.permission.INSTALL_SHORTCUT: granted=true
+    User 0: ceDataInode=36788 installed=true hidden=false suspended=false distractionFlags=0 stopped=true notLaunched=true enabled=0 instant=false virtual=false
+      gids=[3003]
+      runtime permissions:
+        android.permission.ACCESS_FINE_LOCATION: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_EXTERNAL_STORAGE: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.ACCESS_COARSE_LOCATION: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_PHONE_STATE: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.WRITE_EXTERNAL_STORAGE: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.ACCESS_BACKGROUND_LOCATION: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|REVOKE_WHEN_REQUESTED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.ACCESS_MEDIA_LOCATION: granted=true, flags=[ REVOKED_COMPAT|REVIEW_REQUIRED|REVOKE_WHEN_REQUESTED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via package name:
+  queries via intent:
+  queryable via interaction:
+    User 0:
+
+Package Changes:
+  Sequence number=452
+  User 0:
+    seq=0, package=com.google.android.permissioncontroller
+    seq=5, package=com.android.stk
+    seq=6, package=com.google.android.cellbroadcastreceiver
+    seq=7, package=com.android.carrierdefaultapp
+    seq=10, package=com.google.android.dialer
+    seq=11, package=com.google.android.inputmethod.latin
+    seq=22, package=com.google.android.sdksetup
+    seq=60, package=com.google.android.partnersetup
+    seq=301, package=com.google.android.gsf
+    seq=303, package=com.android.traceur
+    seq=304, package=com.android.systemui
+    seq=306, package=com.google.android.apps.docs
+    seq=311, package=com.android.camera2
+    seq=312, package=com.android.nfc
+    seq=323, package=com.google.android.apps.photos
+    seq=338, package=com.google.android.apps.enterprise.dmagent
+    seq=340, package=com.google.android.apps.maps
+    seq=341, package=com.android.vending
+    seq=342, package=com.google.android.youtube
+    seq=343, package=com.google.android.projection.gearhead
+    seq=344, package=com.google.android.setupwizard
+    seq=366, package=com.google.android.syncadapters.contacts
+    seq=369, package=com.google.android.gm
+    seq=370, package=com.google.android.googlequicksearchbox
+    seq=371, package=com.google.android.apps.messaging
+    seq=372, package=com.example.testtools
+    seq=374, package=com.google.android.calendar
+    seq=376, package=com.google.android.apps.youtube.music
+    seq=380, package=com.google.android.gms
+    seq=392, package=com.android.bluetooth
+    seq=407, package=com.android.settings
+    seq=437, package=com.yh.bldld.uc
+    seq=438, package=com.baidu.searchbox
+    seq=439, package=com.ilike.cartoon
+    seq=449, package=com.couple.ebook.yjykc
+    seq=451, package=io.github.ylimit.droidbotapp
+
+
+Dexopt state:
+  [com.couple.ebook.yjykc]
+    path: /data/app/~~iTNX1biGJZnCNmG8WK7KWg==/com.couple.ebook.yjykc-a13ibK3-YLLo4fTZ1s-jQA==/base.apk
+      arm64: [status=run-from-apk] [reason=unknown]
+
+
+Compiler stats:
+  [com.couple.ebook.yjykc]
+    (No recorded stats)
+
+APEX session state:
+
+Active APEX packages:
+
+
+Inactive APEX packages:
+
+
+Factory APEX packages:
+
+

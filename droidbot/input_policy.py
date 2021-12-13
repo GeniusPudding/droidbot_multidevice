@@ -193,7 +193,7 @@ class UtgBasedInputPolicy(InputPolicy):
         pass
 
 
-class UtgNaiveSearchPolicy(UtgBasedInputPolicy):
+class UtgNaiveSearchPolicy(UtgBasedInputPolicy):#Default!
     """
     depth-first strategy to explore UFG (old)
     """
@@ -213,9 +213,9 @@ class UtgNaiveSearchPolicy(UtgBasedInputPolicy):
         self.preferred_buttons = ["yes", "ok", "activate", "detail", "more", "access",
                                   "allow", "check", "agree", "try", "go", "next"]
 
-    def generate_event_based_on_utg(self):
+    def generate_event_based_on_utg(self):#Default!
         """
-        generate an event based on current device state
+        generate an event based on currenDt device state
         note: ensure these fields are properly maintained in each transaction:
           last_event_flag, last_touched_view, last_state, exploited_views, state_transitions
         @return: InputEvent
@@ -347,7 +347,7 @@ class UtgNaiveSearchPolicy(UtgBasedInputPolicy):
         self.explored_views.add((state_activity, view_str))
 
 
-class UtgGreedySearchPolicy(UtgBasedInputPolicy):
+class UtgGreedySearchPolicy(UtgBasedInputPolicy):#Default!
     """
     DFS/BFS (according to search_method) strategy to explore UFG (new)
     """
@@ -368,7 +368,7 @@ class UtgGreedySearchPolicy(UtgBasedInputPolicy):
         self.__missed_states = set()
         self.__random_explore = False
 
-    def generate_event_based_on_utg(self):
+    def generate_event_based_on_utg(self):#Default!
         """
         generate an event based on current UTG
         @return: InputEvent

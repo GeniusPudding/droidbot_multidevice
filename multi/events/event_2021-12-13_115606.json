@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-13_115606",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.permissioncontroller",
+      "visible": true,
+      "checkable": true,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          882,
+          353
+        ],
+        [
+          1014,
+          485
+        ]
+      ],
+      "resource_id": "android:id/switch_widget",
+      "checked": true,
+      "text": null,
+      "class": "android.widget.Switch",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 17,
+      "temp_id": 18,
+      "size": "132*132",
+      "signature": "[class]android.widget.Switch[resource_id]android:id/switch_widget[text]None[enabled,checked,]",
+      "view_str": "fd0eef708510125aa4b6ad1263755791",
+      "content_free_signature": "[class]android.widget.Switch[resource_id]android:id/switch_widget"
+    }
+  },
+  "start_state": "91b8d99ef5ada9d55f303d6a7ae94790",
+  "stop_state": "a4392036ba3fb07f7aa2f99a2f1e2d40",
+  "event_str": "TouchEvent(state=91b8d99ef5ada9d55f303d6a7ae94790, view=fd0eef708510125aa4b6ad1263755791(ReviewPermissionsActivity/Switch-))"
+}
