@@ -231,7 +231,7 @@ class AppEnvManager(object):
     AppEnvManager manages the environment of device in which an app will run.
     """
 
-    def __init__(self, device, app, env_policy):
+    def __init__(self, device, app, env_policy, device2=None):
         """
         construct a new AppEnvManager instance
         :param device: instance of Device
@@ -241,6 +241,7 @@ class AppEnvManager(object):
         """
         self.logger = logging.getLogger('AppEnvManager')
         self.device = device
+        self.device2 = device2
         self.app = app
         self.policy = env_policy
         self.envs = []
@@ -280,6 +281,8 @@ class AppEnvManager(object):
             if not self.enabled:
                 break
             self.device.add_env(env)
+            if self.device2:
+                self.device2.add_env(env)
 
         self.logger.debug("Finish deploying environment")
         if self.device.output_dir is not None:
@@ -287,7 +290,12 @@ class AppEnvManager(object):
             self.dump(out_file)
             out_file.close()
             self.logger.debug("Environment settings saved to droidbot_env.json")
-
+        if self.device2:
+            if self.device2.output_dir is not None:
+                out_file = open(os.path.join(self.device2.output_dir, "droidbot2_env.json"), "w")
+                self.dump(out_file)
+                out_file.close()
+                self.logger.debug("Environment settings saved to droidbot2_env.json")
     def dump(self, env_file):
         """
         dump the environment information to a file

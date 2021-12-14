@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164236",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          133,
+          769
+        ],
+        [
+          947,
+          840
+        ]
+      ],
+      "resource_id": "android:id/alertTitle",
+      "checked": false,
+      "text": "Empty Postal Code",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "814*71",
+      "signature": "[class]android.widget.TextView[resource_id]android:id/alertTitle[text]Empty Postal Code[enabled,,]",
+      "view_str": "8a28d81a2938823f649c48afdd9f847a",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]android:id/alertTitle"
+    }
+  },
+  "start_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "stop_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "event_str": "TouchEvent(state=d03c41cef9c4b1fa98010da4c29676c3, view=8a28d81a2938823f649c48afdd9f847a(MemberDefine/TextView-Empty Post))"
+}

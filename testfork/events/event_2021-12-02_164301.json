@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164301",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          815,
+          388
+        ],
+        [
+          1012,
+          445
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/login_language",
+      "checked": false,
+      "text": "FRAN\u00c7AIS",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 7,
+      "size": "197*57",
+      "signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/login_language[text]FRAN\u00c7AIS[enabled,,]",
+      "view_str": "695e71afff2f696a8b5de5d3dbc8f5ff",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/login_language"
+    }
+  },
+  "start_state": "e1fa36781e5029e3eed71fe2fcd035d5",
+  "stop_state": "c775cbdcabe6f54870f0eca181489f81",
+  "event_str": "TouchEvent(state=e1fa36781e5029e3eed71fe2fcd035d5, view=695e71afff2f696a8b5de5d3dbc8f5ff(LoginTerms/TextView-FRAN\u00c7AIS))"
+}

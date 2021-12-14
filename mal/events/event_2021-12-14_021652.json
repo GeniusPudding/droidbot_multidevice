@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-14_021652",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.chrome",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          57
+        ],
+        [
+          720,
+          1424
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "720*1367",
+      "signature": "[class]android.view.View[resource_id]None[text]None[enabled,,]",
+      "view_str": "c02cbfac0e4870f1e509acc119830a85",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    }
+  },
+  "start_state": "495d8401a698f3f0aca67863bc701680",
+  "stop_state": "6b3756b0a29f73469ce217450ec825e7",
+  "event_str": "TouchEvent(state=495d8401a698f3f0aca67863bc701680, view=c02cbfac0e4870f1e509acc119830a85(ChromeTabbedActivity/View-))"
+}

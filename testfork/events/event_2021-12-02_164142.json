@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164142",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": true,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": true,
+      "bounds": [
+        [
+          89,
+          876
+        ],
+        [
+          991,
+          998
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_postal_code",
+      "checked": false,
+      "text": "Enter Your Postal Code",
+      "class": "android.widget.EditText",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 6,
+      "temp_id": 10,
+      "size": "902*122",
+      "signature": "[class]android.widget.EditText[resource_id]a.envisionmobile.caa:id/member_define_postal_code[text]Enter Your Postal Code[enabled,,]",
+      "view_str": "b3e0c5a314e241e2e9a01372527dc3eb",
+      "content_free_signature": "[class]android.widget.EditText[resource_id]a.envisionmobile.caa:id/member_define_postal_code"
+    }
+  },
+  "start_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "stop_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "event_str": "TouchEvent(state=780672c3b0039b104b5d2fae95cea9e2, view=b3e0c5a314e241e2e9a01372527dc3eb(MemberDefine/EditText-Enter Your))"
+}

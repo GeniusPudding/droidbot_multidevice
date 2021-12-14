@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164123",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          477,
+          210
+        ],
+        [
+          603,
+          336
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ProgressBar",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "126*126",
+      "signature": "[class]android.widget.ProgressBar[resource_id]None[text]None[enabled,,]",
+      "view_str": "363e0bd0555b426bfa8ec6364bf1af67",
+      "content_free_signature": "[class]android.widget.ProgressBar[resource_id]None"
+    }
+  },
+  "start_state": "6653f782871735b601649f0a92eb211c",
+  "stop_state": "137829fcd9a580db1436bcd85c3cdcfb",
+  "event_str": "TouchEvent(state=6653f782871735b601649f0a92eb211c, view=363e0bd0555b426bfa8ec6364bf1af67(Launch/ProgressBar-))"
+}

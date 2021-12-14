@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164346",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": "CAA",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          389,
+          504
+        ],
+        [
+          691,
+          715
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/splash_logo",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 7,
+      "size": "302*211",
+      "signature": "[class]android.widget.ImageView[resource_id]a.envisionmobile.caa:id/splash_logo[text]None[enabled,,]",
+      "view_str": "ddbfa777d8eef4dad54bcc56764cad5d",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]a.envisionmobile.caa:id/splash_logo"
+    }
+  },
+  "start_state": "137829fcd9a580db1436bcd85c3cdcfb",
+  "stop_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "event_str": "TouchEvent(state=137829fcd9a580db1436bcd85c3cdcfb, view=ddbfa777d8eef4dad54bcc56764cad5d(MemberDefine/ImageView-))"
+}

@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164429",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.launcher3",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "Email",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          35,
+          1196
+        ],
+        [
+          237,
+          1474
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "Email",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 7,
+      "temp_id": 15,
+      "size": "202*278",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]Email[enabled,,]",
+      "view_str": "0411eec7e1e89316c701cd9488d40f07",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    }
+  },
+  "start_state": "6653f782871735b601649f0a92eb211c",
+  "stop_state": "137829fcd9a580db1436bcd85c3cdcfb",
+  "event_str": "TouchEvent(state=6653f782871735b601649f0a92eb211c, view=0411eec7e1e89316c701cd9488d40f07(Launch/TextView-Email))"
+}

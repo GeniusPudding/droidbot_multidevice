@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164444",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          415,
+          1701
+        ],
+        [
+          665,
+          1752
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/splash_loading",
+      "checked": false,
+      "text": "\u2026. LOADING \u2026.",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 9,
+      "size": "250*51",
+      "signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/splash_loading[text]\u2026. LOADING \u2026.[enabled,,]",
+      "view_str": "c54d85aa60aea5197199244120485625",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/splash_loading"
+    }
+  },
+  "start_state": "6653f782871735b601649f0a92eb211c",
+  "stop_state": "137829fcd9a580db1436bcd85c3cdcfb",
+  "event_str": "TouchEvent(state=6653f782871735b601649f0a92eb211c, view=c54d85aa60aea5197199244120485625(Launch/TextView-\u2026. LOADING))"
+}

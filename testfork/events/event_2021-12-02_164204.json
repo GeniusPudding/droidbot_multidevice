@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164204",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": true,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          253,
+          1040
+        ],
+        [
+          302,
+          1091
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_login_agree",
+      "checked": true,
+      "text": null,
+      "class": "android.widget.CheckBox",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 12,
+      "size": "49*51",
+      "signature": "[class]android.widget.CheckBox[resource_id]a.envisionmobile.caa:id/member_define_login_agree[text]None[enabled,checked,]",
+      "view_str": "202e55995d655b3a6b8fe0184ee690bd",
+      "content_free_signature": "[class]android.widget.CheckBox[resource_id]a.envisionmobile.caa:id/member_define_login_agree"
+    }
+  },
+  "start_state": "0efc187821c7b9b3dc659a630846feba",
+  "stop_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "event_str": "TouchEvent(state=0efc187821c7b9b3dc659a630846feba, view=202e55995d655b3a6b8fe0184ee690bd(MemberDefine/CheckBox-))"
+}

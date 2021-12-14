@@ -24,7 +24,7 @@ class DroidBot(object):
 
     def __init__(self,
                  app_path=None,
-                 device_serial=None,
+                 device_serials=None,
                  is_emulator=False,
                  output_dir=None,
                  env_policy=None,
@@ -72,6 +72,7 @@ class DroidBot(object):
         self.keep_app = keep_app
 
         self.device = None
+        self.device2 = None
         self.app = None
         self.droidbox = None
         self.env_manager = None
@@ -85,7 +86,7 @@ class DroidBot(object):
 
         try:
             self.device = Device(
-                device_serial=device_serial,
+                device_serial=device_serials[0],
                 is_emulator=is_emulator,
                 output_dir=self.output_dir,
                 cv_mode=cv_mode,
@@ -95,12 +96,25 @@ class DroidBot(object):
                 ignore_ad=ignore_ad)
             self.app = App(app_path, output_dir=self.output_dir)
 
+            if len(device_serials) > 1:
+                self.device2 = Device(
+                    device_serial=device_serials[1],
+                    is_emulator=is_emulator,
+                    output_dir=self.output_dir,
+                    cv_mode=cv_mode,
+                    grant_perm=grant_perm,
+                    enable_accessibility_hard=self.enable_accessibility_hard,
+                    humanoid=self.humanoid,
+                    ignore_ad=ignore_ad)
+
             self.env_manager = AppEnvManager(
                 device=self.device,
+                device2=self.device2,
                 app=self.app,
                 env_policy=env_policy)
             self.input_manager = InputManager(
                 device=self.device,
+                device2=self.device2,
                 app=self.app,
                 policy_name=policy_name,
                 random_input=random_input,
@@ -110,6 +124,9 @@ class DroidBot(object):
                 profiling_method=profiling_method,
                 master=master,
                 replay_output=replay_output)
+
+
+
         except Exception:
             import traceback
             traceback.print_exc()
@@ -137,14 +154,21 @@ class DroidBot(object):
                 self.timer.start()
 
             self.device.set_up()
+            if self.device2:
+                self.device2.set_up()
 
             if not self.enabled:
                 return
             self.device.connect()
+            if self.device2:
+                self.device2.connect()
+
 
             if not self.enabled:
                 return
             self.device.install_app(self.app)
+            if self.device2:
+                self.device2.install_app(self.app)        
 
             if not self.enabled:
                 return
@@ -184,6 +208,8 @@ class DroidBot(object):
             self.droidbox.stop()
         if self.device:
             self.device.disconnect()
+        if self.device2:
+            self.device2.disconnect()
         if not self.keep_env:
             self.device.tear_down()
         if not self.keep_app:
@@ -193,7 +219,6 @@ class DroidBot(object):
             import xmlrpc.client
             proxy = xmlrpc.client.ServerProxy(self.input_manager.policy.master)
             proxy.stop_worker(self.device.serial)
-
 
 class DroidBotException(Exception):
     pass

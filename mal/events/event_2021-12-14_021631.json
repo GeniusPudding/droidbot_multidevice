@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-14_021631",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.dotc.ime.latin.flash",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          143,
+          1354
+        ],
+        [
+          577,
+          1384
+        ]
+      ],
+      "resource_id": "com.dotc.ime.latin.flash:id/nb",
+      "checked": false,
+      "text": "You have read and accepted user agreement",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 16,
+      "size": "434*30",
+      "signature": "[class]android.widget.TextView[resource_id]com.dotc.ime.latin.flash:id/nb[text]You have read and accepted user agreement[enabled,,]",
+      "view_str": "78060750d0f54364d025d989084a022b",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.dotc.ime.latin.flash:id/nb"
+    }
+  },
+  "start_state": "7477d42e7c147ace6acde4c6fa874905",
+  "stop_state": "927248ffaa9c518c9b3fdb76d134f39c",
+  "event_str": "TouchEvent(state=7477d42e7c147ace6acde4c6fa874905, view=78060750d0f54364d025d989084a022b(SetupGuideActivity/TextView-You have r))"
+}

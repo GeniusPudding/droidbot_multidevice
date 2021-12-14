@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-14_021719",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.dotc.ime.latin.flash/com.dotc.ime.latin.setup.ShellActivity"
+  },
+  "start_state": "51462a5a78233760187b20afcac7411a",
+  "stop_state": "ad207239a6e65d0bb250c491db34e738",
+  "event_str": "IntentEvent(intent='am start com.dotc.ime.latin.flash/com.dotc.ime.latin.setup.ShellActivity')"
+}

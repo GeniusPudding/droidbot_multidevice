@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164315",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          89,
+          740
+        ],
+        [
+          991,
+          834
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "Please enter your postal code to view content from your local CAA Club.",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 9,
+      "size": "902*94",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]None[enabled,,]",
+      "view_str": "da1beba863454e43944f1efd3eaf6ded",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    }
+  },
+  "start_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "stop_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "event_str": "TouchEvent(state=780672c3b0039b104b5d2fae95cea9e2, view=da1beba863454e43944f1efd3eaf6ded(MemberDefine/TextView-Please ent))"
+}

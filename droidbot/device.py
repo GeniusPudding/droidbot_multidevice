@@ -36,13 +36,13 @@ class Device(object):
         """
         self.logger = logging.getLogger(self.__class__.__name__)
 
-        # if device_serial is None:
-        #     from .utils import get_available_devices
-        #     all_devices = get_available_devices()
-            # if len(all_devices) == 0:
-            #     self.logger.warning("ERROR: No device connected.")
-            #     sys.exit(-1)
-            # device_serial = all_devices[0]
+        if device_serial is None:
+            from .utils import get_available_devices
+            all_devices = get_available_devices()
+            if len(all_devices) == 0:
+                self.logger.warning("ERROR: No device connected.")
+                sys.exit(-1)
+            device_serial = all_devices[0]
         if "emulator" in device_serial and not is_emulator:
             self.logger.warning("Seems like you are using an emulator. If so, please add is_emulator option.")
         self.serial = device_serial
@@ -620,7 +620,7 @@ class Device(object):
             install_cmd.append(app.app_path)
             install_p = subprocess.Popen(install_cmd, stdout=subprocess.PIPE)
             while self.connected and package_name not in self.adb.get_installed_apps():
-                print("Please wait while installing the app...")
+                print("Please wait while installing the app...")#may be infinite loop
                 time.sleep(2)
             if not self.connected:
                 install_p.terminate()

@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-14_021528",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.dotc.ime.latin.flash",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          38,
+          681
+        ],
+        [
+          682,
+          837
+        ]
+      ],
+      "resource_id": "com.dotc.ime.latin.flash:id/n7",
+      "checked": false,
+      "text": "PLEASE COMPLETE STEP 1",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 13,
+      "size": "644*156",
+      "signature": "[class]android.widget.Button[resource_id]com.dotc.ime.latin.flash:id/n7[text]PLEASE COMPLETE STEP 1[enabled,,]",
+      "view_str": "2cd3901ae71914171bc2633e550c3c2b",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.dotc.ime.latin.flash:id/n7"
+    }
+  },
+  "start_state": "7477d42e7c147ace6acde4c6fa874905",
+  "stop_state": "7477d42e7c147ace6acde4c6fa874905",
+  "event_str": "TouchEvent(state=7477d42e7c147ace6acde4c6fa874905, view=2cd3901ae71914171bc2633e550c3c2b(SetupGuideActivity/Button-PLEASE COM))"
+}

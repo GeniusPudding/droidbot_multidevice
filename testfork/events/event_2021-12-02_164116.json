@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-02_164116",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop a.envisionmobile.caa"
+  },
+  "start_state": "cfa6c3ea13b2ca1bab7b6b54cbbeeacb",
+  "stop_state": "6d075b179ee504d627d567db9d91c236",
+  "event_str": "KillAppEvent()"
+}

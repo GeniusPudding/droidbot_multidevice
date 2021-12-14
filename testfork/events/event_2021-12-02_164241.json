@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164241",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          70,
+          861
+        ],
+        [
+          1010,
+          918
+        ]
+      ],
+      "resource_id": "android:id/message",
+      "checked": false,
+      "text": "Please enter your postal code and try again.",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 10,
+      "temp_id": 11,
+      "size": "940*57",
+      "signature": "[class]android.widget.TextView[resource_id]android:id/message[text]Please enter your postal code and try again.[enabled,,]",
+      "view_str": "02698ca88a545807b28b0f8fbfda8785",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]android:id/message"
+    }
+  },
+  "start_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "stop_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "event_str": "TouchEvent(state=d03c41cef9c4b1fa98010da4c29676c3, view=02698ca88a545807b28b0f8fbfda8785(MemberDefine/TextView-Please ent))"
+}

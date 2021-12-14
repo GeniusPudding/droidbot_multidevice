@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-14_021722",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.chrome",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          32,
+          185
+        ],
+        [
+          120,
+          245
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u9019\u500b\u5716\u7247\u5c1a\u672a\u52a0\u4e0a\u6a19\u7c64\u3002\u8acb\u958b\u555f\u53f3\u4e0a\u65b9\u7684\u300c\u66f4\u591a\u9078\u9805\u300d\u9078\u55ae\u4ee5\u53d6\u5f97\u5716\u7247\u8aaa\u660e\u3002",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 22,
+      "temp_id": 23,
+      "size": "88*60",
+      "signature": "[class]android.widget.Button[resource_id]None[text]\u9019\u500b\u5716\u7247\u5c1a\u672a\u52a0\u4e0a\u6a19\u7c64\u3002\u8acb\u958b\u555f\u53f3\u4e0a\u65b9\u7684\u300c\u66f4\u591a\u9078\u9805\u300d\u9078\u55ae\u4ee5\u53d6\u5f97\u5716\u7247\u8aaa\u660e\u3002[enabled,,]",
+      "view_str": "32ee01cbcabff7d7f7ea16e4ca83035a",
+      "content_free_signature": "[class]android.widget.Button[resource_id]None"
+    }
+  },
+  "start_state": "e729f8df572581fb8bab4fd53e5da1fe",
+  "stop_state": "483e014e0b1dece25659e915f548704a",
+  "event_str": "TouchEvent(state=e729f8df572581fb8bab4fd53e5da1fe, view=32ee01cbcabff7d7f7ea16e4ca83035a(ChromeTabbedActivity/Button-\u9019\u500b\u5716\u7247\u5c1a\u672a\u52a0\u4e0a\u6a19\u7c64))"
+}

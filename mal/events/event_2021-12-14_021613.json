@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-14_021613",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.settings",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          390,
+          837
+        ],
+        [
+          518,
+          933
+        ]
+      ],
+      "resource_id": "android:id/button2",
+      "checked": false,
+      "text": "\u53d6\u6d88",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 14,
+      "size": "128*96",
+      "signature": "[class]android.widget.Button[resource_id]android:id/button2[text]\u53d6\u6d88[enabled,,]",
+      "view_str": "3899943bfac3445daa8f673ad1d4952e",
+      "content_free_signature": "[class]android.widget.Button[resource_id]android:id/button2"
+    }
+  },
+  "start_state": "ff1e6095cca297d32a3b3650d7f91b2a",
+  "stop_state": "bbd2add777fae4589689fee6f0cacbfd",
+  "event_str": "TouchEvent(state=ff1e6095cca297d32a3b3650d7f91b2a, view=3899943bfac3445daa8f673ad1d4952e(Settings$AvailableVirtualKeyboardActivity/Button-\u53d6\u6d88))"
+}

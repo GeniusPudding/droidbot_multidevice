@@ -149,13 +149,14 @@ def main():
             self.logger.warning("ERROR: No device connected.")
             sys.exit(-1)
         threads = []
-        input(f'all_devices:{all_devices}')
-        for device_serial in all_devices:
+        print(f'all_devices:{all_devices}')
+        # for i,device_serial in enumerate(all_devices):
+        try:
             droidbot = DroidBot(
                 app_path=opts.apk_path,
-                device_serial=device_serial,
+                device_serials=all_devices,
                 is_emulator=opts.is_emulator,
-                output_dir=opts.output_dir+'_'+device_serial,
+                output_dir=opts.output_dir,
                 # env_policy=opts.env_policy,
                 env_policy=env_manager.POLICY_NONE,
                 policy_name=opts.input_policy,
@@ -176,10 +177,11 @@ def main():
                 ignore_ad=opts.ignore_ad,
                 replay_output=opts.replay_output)
             droidbot.start()
-
+        except Exception as e:
+            pass
 
         # for i, device_serial in enumerate(all_devices):
-        #     threads.append(threading.Thread(target = run_droidbot, args = (device_serial,)))
+        #     threads.append(threading.Thread(target = run_droidbot, args = (device_serial,i,)))
         #     threads[i].start()            
         # for i in range(len(all_devices)):
         #     threads[i].join()
@@ -187,13 +189,13 @@ def main():
     return
 
 
-def run_droidbot(device_serial):
+def run_droidbot(device_serial,i):
     opts = parse_args()
     droidbot = DroidBot(
         app_path=opts.apk_path,
         device_serial=device_serial,
         is_emulator=opts.is_emulator,
-        output_dir=opts.output_dir+'_'+device_serial,
+        output_dir=opts.output_dir+'_'+str(i),
         # env_policy=opts.env_policy,
         env_policy=env_manager.POLICY_NONE,
         policy_name=opts.input_policy,

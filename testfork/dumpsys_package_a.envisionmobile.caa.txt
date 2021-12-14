@@ -1,0 +1,156 @@
+Activity Resolver Table:
+  Schemes:
+      http:
+        9963d24 a.envisionmobile.caa/com.aaa.android.aaamaps.controller.activity.AAAMapsActivity filter 1630746
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "http"
+          Authority: "www.aaa.com": -1
+          Path: "PatternMatcher{GLOB: /mapshare/*}"
+
+  Non-Data Actions:
+      android.intent.action.AAA_HOME:
+        971308d a.envisionmobile.caa/.Home filter 5e68188
+          Action: "android.intent.action.AAA_HOME"
+          Category: "android.intent.category.DEFAULT"
+      android.intent.action.MAIN:
+        c0ad242 a.envisionmobile.caa/.Launch filter 498992b
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+      android.intent.action.AAA_LOGIN_INTENT_FOR_RESULT:
+        db7d253 a.envisionmobile.caa/.MemberLogin filter 5ccc721
+          Action: "android.intent.action.AAA_LOGIN_INTENT_FOR_RESULT"
+          Category: "android.intent.category.DEFAULT"
+      android.intent.action.GO_AAA_MAP:
+        9963d24 a.envisionmobile.caa/com.aaa.android.aaamaps.controller.activity.AAAMapsActivity filter 9859d07
+          Action: "android.intent.action.GO_AAA_MAP"
+          Category: "android.intent.category.DEFAULT"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      com.google.android.gms.measurement.UPLOAD:
+        88c0790 a.envisionmobile.caa/com.google.android.gms.measurement.AppMeasurementReceiver filter b598d7a
+          Action: "com.google.android.gms.measurement.UPLOAD"
+      com.google.android.gms.analytics.ANALYTICS_DISPATCH:
+        74d4889 a.envisionmobile.caa/com.google.android.gms.analytics.AnalyticsReceiver filter 375b0f
+          Action: "com.google.android.gms.analytics.ANALYTICS_DISPATCH"
+      com.android.vending.INSTALL_REFERRER:
+        af7d08e a.envisionmobile.caa/com.google.android.gms.analytics.CampaignTrackingReceiver filter 1ea879c
+          Action: "com.android.vending.INSTALL_REFERRER"
+      com.google.android.c2dm.intent.RECEIVE:
+        8e340af a.envisionmobile.caa/com.google.android.gcm.GCMBroadcastReceiver filter 4d575a5
+          Action: "com.google.android.c2dm.intent.RECEIVE"
+          Action: "com.google.android.c2dm.intent.REGISTRATION"
+          Category: "a.envisionmobile.caa"
+      com.google.android.c2dm.intent.REGISTRATION:
+        8e340af a.envisionmobile.caa/com.google.android.gcm.GCMBroadcastReceiver filter 4d575a5
+          Action: "com.google.android.c2dm.intent.RECEIVE"
+          Action: "com.google.android.c2dm.intent.REGISTRATION"
+          Category: "a.envisionmobile.caa"
+
+Permissions:
+  Permission [a.envisionmobile.caa.permission.C2D_MESSAGE] (cd20cbc):
+    sourcePackage=a.envisionmobile.caa
+    uid=10086 gids=null type=0 prot=signature
+    perm=Permission{ab8e445 a.envisionmobile.caa.permission.C2D_MESSAGE}
+    packageSetting=PackageSetting{8a4679a a.envisionmobile.caa/10086}
+
+Registered ContentProviders:
+  a.envisionmobile.caa/com.google.android.gms.measurement.AppMeasurementContentProvider:
+    Provider{ad38cb a.envisionmobile.caa/com.google.android.gms.measurement.AppMeasurementContentProvider}
+
+ContentProvider Authorities:
+  [a.envisionmobile.caa.google_measurement_service]:
+    Provider{ad38cb a.envisionmobile.caa/com.google.android.gms.measurement.AppMeasurementContentProvider}
+      applicationInfo=ApplicationInfo{91138a8 a.envisionmobile.caa}
+
+Key Set Manager:
+  [a.envisionmobile.caa]
+      Signing KeySets: 18
+
+Packages:
+  Package [a.envisionmobile.caa] (8a4679a):
+    userId=10086
+    pkg=Package{5887fc1 a.envisionmobile.caa}
+    codePath=/data/app/a.envisionmobile.caa-rPuhArtRqzxRipR8F0nO5w==
+    resourcePath=/data/app/a.envisionmobile.caa-rPuhArtRqzxRipR8F0nO5w==
+    legacyNativeLibraryDir=/data/app/a.envisionmobile.caa-rPuhArtRqzxRipR8F0nO5w==/lib
+    primaryCpuAbi=x86
+    secondaryCpuAbi=null
+    versionCode=28 minSdk=14 targetSdk=22
+    versionName=5.11.0707
+    splits=[base]
+    apkSigningVersion=1
+    applicationInfo=ApplicationInfo{91138a8 a.envisionmobile.caa}
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP LARGE_HEAP ]
+    privateFlags=[ HAS_DOMAIN_URLS ]
+    dataDir=/data/user/0/a.envisionmobile.caa
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2021-12-02 03:39:55
+    firstInstallTime=2021-12-02 03:39:57
+    lastUpdateTime=2021-12-02 03:39:57
+    signatures=PackageSignatures{2516366 [360261db]}
+    installPermissionsFixed=true installStatus=1
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP LARGE_HEAP ]
+    declared permissions:
+      a.envisionmobile.caa.permission.C2D_MESSAGE: prot=signature, INSTALLED
+    requested permissions:
+      a.envisionmobile.caa.permission.C2D_MESSAGE
+      android.permission.CALL_PHONE
+      android.permission.CAMERA
+      com.google.android.c2dm.permission.RECEIVE
+      com.google.android.providers.gsf.permission.READ_GSERVICES
+      android.permission.INTERNET
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.READ_PHONE_STATE
+      android.permission.GET_ACCOUNTS
+      android.permission.WAKE_LOCK
+      android.permission.ACCESS_COARSE_LOCATION
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+      android.permission.WRITE_EXTERNAL_STORAGE
+      android.permission.RECORD_AUDIO
+      android.permission.VIBRATE
+      com.aaa.android.aaamaps.permission.MAPS_RECEIVE
+      android.permission.READ_EXTERNAL_STORAGE
+      android.permission.READ_CONTACTS
+    install permissions:
+      android.permission.ACCESS_FINE_LOCATION: granted=true
+      a.envisionmobile.caa.permission.C2D_MESSAGE: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.READ_EXTERNAL_STORAGE: granted=true
+      android.permission.ACCESS_COARSE_LOCATION: granted=true
+      android.permission.READ_PHONE_STATE: granted=true
+      android.permission.CALL_PHONE: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      android.permission.CAMERA: granted=true
+      android.permission.GET_ACCOUNTS: granted=true
+      android.permission.WRITE_EXTERNAL_STORAGE: granted=true
+      android.permission.VIBRATE: granted=true
+      android.permission.RECORD_AUDIO: granted=true
+      android.permission.WAKE_LOCK: granted=true
+      android.permission.READ_CONTACTS: granted=true
+    User 0: ceDataInode=-4294885408 installed=true hidden=false suspended=false stopped=true notLaunched=true enabled=0 instant=false virtual=false
+      gids=[3003]
+      runtime permissions:
+
+Package Changes:
+  Sequence number=17
+  User 0:
+    seq=10, package=com.android.apps
+    seq=12, package=com.software.malataedu.homeworkdog
+    seq=15, package=a.envisionmobile.caa
+    seq=16, package=io.github.ylimit.droidbotapp
+
+
+Dexopt state:
+  [a.envisionmobile.caa]
+    path: /data/app/a.envisionmobile.caa-rPuhArtRqzxRipR8F0nO5w==/base.apk
+      x86: /data/app/a.envisionmobile.caa-rPuhArtRqzxRipR8F0nO5w==/oat/x86/base.odex[status=kOatUpToDate, compilation_fi
+      lter=quicken]
+
+
+Compiler stats:
+  [a.envisionmobile.caa]
+     base.apk - 1608

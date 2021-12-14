@@ -1,0 +1,760 @@
+{
+  "tag": "2021-12-02_164805",
+  "state_str": "e25776ba977e8dc69708a0005e766c0a",
+  "state_str_content_free": "14257653302e5cbd928a5654838f3e88",
+  "foreground_activity": "a.envisionmobile.caa/.Launch",
+  "activity_stack": [
+    "a.envisionmobile.caa/.Launch"
+  ],
+  "background_services": [
+    "com.android.systemui/.keyguard.KeyguardService",
+    "com.android.systemui/.ImageWallpaper",
+    "com.android.launcher3/.notification.NotificationListener",
+    "io.github.ylimit.droidbotapp/.DroidBotIME",
+    "io.github.ylimit.droidbotapp/io.github.privacystreams.accessibility.PSAccessibilityService",
+    "com.android.systemui/.SystemUIService",
+    "android/.hardware.location.GeofenceHardwareService",
+    "com.android.server.telecom/.components.TelecomService",
+    "com.android.smspush/.WapPushManager",
+    "com.genymotion.genyd/.GenydService",
+    "com.android.phone/.vvm.RemoteVvmTaskManager",
+    "android/com.android.internal.backup.LocalTransportService",
+    "com.android.location.fused/.FusedLocationService",
+    "android/com.android.server.content.SyncJobService",
+    "com.android.mms.service/.MmsService",
+    "com.android.phone/.TelephonyDebugService"
+  ],
+  "width": 1080,
+  "height": 1920,
+  "views": [
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        1,
+        17,
+        18
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1080,
+          1920
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": -1,
+      "temp_id": 0,
+      "size": "1080*1920",
+      "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "5b0e1f9ac0650b9187fdecc6ed31b1f7",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        2
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1080,
+          1794
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 1,
+      "size": "1080*1794",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "1c2c16422362ecf5f68e55f5a2187f2e",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        3
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          63
+        ],
+        [
+          1080,
+          1794
+        ]
+      ],
+      "resource_id": "android:id/content",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 1,
+      "temp_id": 2,
+      "size": "1080*1731",
+      "signature": "[class]android.widget.FrameLayout[resource_id]android:id/content[text]None[enabled,,]",
+      "view_str": "b6fbe7d64b9ffa4c515a584fc06274a2",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]android:id/content"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        4
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          63
+        ],
+        [
+          1080,
+          1794
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/drawer_layout",
+      "checked": false,
+      "text": null,
+      "class": "android.support.v4.widget.DrawerLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 2,
+      "temp_id": 3,
+      "size": "1080*1731",
+      "signature": "[class]android.support.v4.widget.DrawerLayout[resource_id]a.envisionmobile.caa:id/drawer_layout[text]None[enabled,,]",
+      "view_str": "a3cc2a6646d278dda7afc9df15e008c7",
+      "content_free_signature": "[class]android.support.v4.widget.DrawerLayout[resource_id]a.envisionmobile.caa:id/drawer_layout"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        5
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          63
+        ],
+        [
+          1080,
+          1794
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/content_frame",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 4,
+      "size": "1080*1731",
+      "signature": "[class]android.widget.LinearLayout[resource_id]a.envisionmobile.caa:id/content_frame[text]None[enabled,,]",
+      "view_str": "dc31bd7c73f8ce243d0df5138dcbc0a2",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]a.envisionmobile.caa:id/content_frame"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        6
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          63
+        ],
+        [
+          1080,
+          1794
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.RelativeLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "1080*1731",
+      "signature": "[class]android.widget.RelativeLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "d5448a30a928f4c04c74b4aa78e04aec",
+      "content_free_signature": "[class]android.widget.RelativeLayout[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 7,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          42,
+          362
+        ],
+        [
+          1038,
+          1495
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "996*1133",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "7c6a9610b294147999f6d1dd30fd207a",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          815,
+          388
+        ],
+        [
+          1012,
+          445
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/login_language",
+      "checked": false,
+      "text": "FRAN\u00c7AIS",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 7,
+      "size": "197*57",
+      "signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/login_language[text]FRAN\u00c7AIS[enabled,,]",
+      "view_str": "d486309297acd4cbee81e1d04575ec3e",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/login_language"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          389,
+          487
+        ],
+        [
+          691,
+          698
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_logo",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 8,
+      "size": "302*211",
+      "signature": "[class]android.widget.ImageView[resource_id]a.envisionmobile.caa:id/member_define_logo[text]None[enabled,,]",
+      "view_str": "d906fc2cbbf9c2437edcc7bf7f8f15fc",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]a.envisionmobile.caa:id/member_define_logo"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          89,
+          740
+        ],
+        [
+          991,
+          834
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "Please enter your postal code to view content from your local CAA Club.",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 9,
+      "size": "902*94",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]None[enabled,,]",
+      "view_str": "da1beba863454e43944f1efd3eaf6ded",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": true,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": true,
+      "bounds": [
+        [
+          89,
+          876
+        ],
+        [
+          991,
+          998
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_postal_code",
+      "checked": false,
+      "text": "Enter Your Postal Code",
+      "class": "android.widget.EditText",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 6,
+      "temp_id": 10,
+      "size": "902*122",
+      "signature": "[class]android.widget.EditText[resource_id]a.envisionmobile.caa:id/member_define_postal_code[text]Enter Your Postal Code[enabled,,]",
+      "view_str": "b3e0c5a314e241e2e9a01372527dc3eb",
+      "content_free_signature": "[class]android.widget.EditText[resource_id]a.envisionmobile.caa:id/member_define_postal_code"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        12,
+        13,
+        14
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          110,
+          1040
+        ],
+        [
+          970,
+          1091
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 11,
+      "size": "860*51",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "a01fc8cfa5dafb555bbba3445b85371a",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": true,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          253,
+          1040
+        ],
+        [
+          302,
+          1091
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_login_agree",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.CheckBox",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 12,
+      "size": "49*51",
+      "signature": "[class]android.widget.CheckBox[resource_id]a.envisionmobile.caa:id/member_define_login_agree[text]None[enabled,,]",
+      "view_str": "14605b34b8bbb6d638501d6dabed4135",
+      "content_free_signature": "[class]android.widget.CheckBox[resource_id]a.envisionmobile.caa:id/member_define_login_agree"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          323,
+          1040
+        ],
+        [
+          539,
+          1091
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "I agree to the",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 13,
+      "size": "216*51",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]I agree to the[enabled,,]",
+      "view_str": "edf1eb43ae1a18105884e7a18f0895e3",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          550,
+          1040
+        ],
+        [
+          827,
+          1091
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_terms",
+      "checked": false,
+      "text": "Terms of Service",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 11,
+      "temp_id": 14,
+      "size": "277*51",
+      "signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/member_define_terms[text]Terms of Service[enabled,,]",
+      "view_str": "f632e802b2c1d33b508d55c4ed2e21f7",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]a.envisionmobile.caa:id/member_define_terms"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          89,
+          1175
+        ],
+        [
+          991,
+          1280
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_member",
+      "checked": false,
+      "text": "I\u2019M A MEMBER",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 15,
+      "size": "902*105",
+      "signature": "[class]android.widget.Button[resource_id]a.envisionmobile.caa:id/member_define_member[text]I\u2019M A MEMBER[enabled,,]",
+      "view_str": "1294ee08777f5f0dcbd3ec41d3411dfb",
+      "content_free_signature": "[class]android.widget.Button[resource_id]a.envisionmobile.caa:id/member_define_member"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          89,
+          1322
+        ],
+        [
+          991,
+          1427
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_not_member",
+      "checked": false,
+      "text": "I\u2019M NOT A MEMBER",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 16,
+      "size": "902*105",
+      "signature": "[class]android.widget.Button[resource_id]a.envisionmobile.caa:id/member_define_not_member[text]I\u2019M NOT A MEMBER[enabled,,]",
+      "view_str": "4eb8f76c866b7fefbd4d4b7892f6ca98",
+      "content_free_signature": "[class]android.widget.Button[resource_id]a.envisionmobile.caa:id/member_define_not_member"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1080,
+          63
+        ]
+      ],
+      "resource_id": "android:id/statusBarBackground",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 17,
+      "size": "1080*63",
+      "signature": "[class]android.view.View[resource_id]android:id/statusBarBackground[text]None[enabled,,]",
+      "view_str": "215c0e3105aabf79c5d13ebeeb3ada6a",
+      "content_free_signature": "[class]android.view.View[resource_id]android:id/statusBarBackground"
+    },
+    {
+      "package": "a.envisionmobile.caa",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          1794
+        ],
+        [
+          1080,
+          1920
+        ]
+      ],
+      "resource_id": "android:id/navigationBarBackground",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 18,
+      "size": "1080*126",
+      "signature": "[class]android.view.View[resource_id]android:id/navigationBarBackground[text]None[enabled,,]",
+      "view_str": "6c42bdb79df52ed2db5166b23a37ac17",
+      "content_free_signature": "[class]android.view.View[resource_id]android:id/navigationBarBackground"
+    }
+  ]
+}

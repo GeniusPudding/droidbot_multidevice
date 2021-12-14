@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164232",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          89,
+          1322
+        ],
+        [
+          991,
+          1427
+        ]
+      ],
+      "resource_id": "a.envisionmobile.caa:id/member_define_not_member",
+      "checked": false,
+      "text": "I\u2019M NOT A MEMBER",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 16,
+      "size": "902*105",
+      "signature": "[class]android.widget.Button[resource_id]a.envisionmobile.caa:id/member_define_not_member[text]I\u2019M NOT A MEMBER[enabled,,]",
+      "view_str": "4eb8f76c866b7fefbd4d4b7892f6ca98",
+      "content_free_signature": "[class]android.widget.Button[resource_id]a.envisionmobile.caa:id/member_define_not_member"
+    }
+  },
+  "start_state": "780672c3b0039b104b5d2fae95cea9e2",
+  "stop_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "event_str": "TouchEvent(state=780672c3b0039b104b5d2fae95cea9e2, view=4eb8f76c866b7fefbd4d4b7892f6ca98(MemberDefine/Button-I\u2019M NOT A ))"
+}

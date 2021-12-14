@@ -161,8 +161,9 @@ class EventLog(object):
     save an event to local file system
     """
 
-    def __init__(self, device, app, event, profiling_method=None, tag=None):
+    def __init__(self, device, app, event, profiling_method=None, device2=None, tag=None):
         self.device = device
+        self.device2 = device2
         self.app = app
         self.event = event
         if tag is None:
@@ -235,6 +236,8 @@ class EventLog(object):
         self.event_str = self.event.get_event_str(self.from_state)
         print("Action: %s" % self.event_str)
         self.device.send_event(self.event)
+        if self.device2:
+            self.device2.send_event(self.event)
 
     def start_profiling(self):
         """

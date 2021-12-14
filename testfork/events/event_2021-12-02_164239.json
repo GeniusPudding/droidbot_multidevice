@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-02_164239",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "a.envisionmobile.caa",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          70,
+          840
+        ],
+        [
+          1010,
+          861
+        ]
+      ],
+      "resource_id": "android:id/titleDividerNoCustom",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 7,
+      "size": "940*21",
+      "signature": "[class]android.view.View[resource_id]android:id/titleDividerNoCustom[text]None[enabled,,]",
+      "view_str": "e96900f0caed355e0345432874000806",
+      "content_free_signature": "[class]android.view.View[resource_id]android:id/titleDividerNoCustom"
+    }
+  },
+  "start_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "stop_state": "d03c41cef9c4b1fa98010da4c29676c3",
+  "event_str": "TouchEvent(state=d03c41cef9c4b1fa98010da4c29676c3, view=e96900f0caed355e0345432874000806(MemberDefine/View-))"
+}

@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-02_164815",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start a.envisionmobile.caa/a.envisionmobile.caa.Launch"
+  },
+  "start_state": "d58199018f70493ec1a6d303142f004e",
+  "stop_state": "e25776ba977e8dc69708a0005e766c0a",
+  "event_str": "IntentEvent(intent='am start a.envisionmobile.caa/a.envisionmobile.caa.Launch')"
+}

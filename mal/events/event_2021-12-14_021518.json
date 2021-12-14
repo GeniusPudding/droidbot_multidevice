@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-14_021518",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.settings",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u5411\u4e0a\u700f\u89bd",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          57
+        ],
+        [
+          112,
+          169
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageButton",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "112*112",
+      "signature": "[class]android.widget.ImageButton[resource_id]None[text]None[enabled,,]",
+      "view_str": "45876bc7ff00c085982fbfcb43ae6421",
+      "content_free_signature": "[class]android.widget.ImageButton[resource_id]None"
+    }
+  },
+  "start_state": "bbd2add777fae4589689fee6f0cacbfd",
+  "stop_state": "7477d42e7c147ace6acde4c6fa874905",
+  "event_str": "TouchEvent(state=bbd2add777fae4589689fee6f0cacbfd, view=45876bc7ff00c085982fbfcb43ae6421(Settings$AvailableVirtualKeyboardActivity/ImageButton-))"
+}
