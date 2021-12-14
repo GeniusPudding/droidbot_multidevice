@@ -131,7 +131,7 @@ class UtgBasedInputPolicy(InputPolicy):
             self.humanoid_view_trees = []
             self.humanoid_events = []
 
-    def generate_event(self):
+    def generate_event(self):#Default!
         """
         generate an event
         @return:
@@ -169,7 +169,7 @@ class UtgBasedInputPolicy(InputPolicy):
                 self.script_event_idx = 1
 
         if event is None:
-            event = self.generate_event_based_on_utg()
+            event = self.generate_event_based_on_utg()#Default!
 
         # update last events for humanoid
         if self.device.humanoid is not None:
@@ -193,7 +193,7 @@ class UtgBasedInputPolicy(InputPolicy):
         pass
 
 
-class UtgNaiveSearchPolicy(UtgBasedInputPolicy):#Default!
+class UtgNaiveSearchPolicy(UtgBasedInputPolicy):
     """
     depth-first strategy to explore UFG (old)
     """
@@ -213,9 +213,9 @@ class UtgNaiveSearchPolicy(UtgBasedInputPolicy):#Default!
         self.preferred_buttons = ["yes", "ok", "activate", "detail", "more", "access",
                                   "allow", "check", "agree", "try", "go", "next"]
 
-    def generate_event_based_on_utg(self):#Default!
+    def generate_event_based_on_utg(self):
         """
-        generate an event based on currenDt device state
+        generate an event based on current device state
         note: ensure these fields are properly maintained in each transaction:
           last_event_flag, last_touched_view, last_state, exploited_views, state_transitions
         @return: InputEvent
@@ -434,7 +434,7 @@ class UtgGreedySearchPolicy(UtgBasedInputPolicy):#Default!
         if self.random_input:
             random.shuffle(possible_events)
 
-        if self.search_method == POLICY_GREEDY_DFS:
+        if self.search_method == POLICY_GREEDY_DFS:#Default!
             possible_events.append(KeyEvent(name="BACK"))
         elif self.search_method == POLICY_GREEDY_BFS:
             possible_events.insert(0, KeyEvent(name="BACK"))
