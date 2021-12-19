@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-19_094200",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.ilike.cartoon/com.ilike.cartoon.activities.LogoActivity"
+  },
+  "start_state": "ac6003d66d59abaf4e43a4915863409e",
+  "stop_state": "197bb24b4457f66592cebee5488d0635",
+  "event_str": "IntentEvent(intent='am start com.ilike.cartoon/com.ilike.cartoon.activities.LogoActivity')"
+}

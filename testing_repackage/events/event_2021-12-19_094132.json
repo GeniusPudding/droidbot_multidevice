@@ -1,0 +1,54 @@
+{
+  "tag": "2021-12-19_094132",
+  "event": {
+    "event_type": "scroll",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.ilike.cartoon",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        8,
+        9,
+        10
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          720,
+          1424
+        ]
+      ],
+      "resource_id": "com.ilike.cartoon:id/vp_intro",
+      "checked": false,
+      "text": null,
+      "class": "android.support.v4.view.ViewPager",
+      "scrollable": true,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 7,
+      "size": "720*1424",
+      "signature": "[class]android.support.v4.view.ViewPager[resource_id]com.ilike.cartoon:id/vp_intro[text]None[enabled,,]",
+      "view_str": "8dbd47b96bba305d3f8e0f1e76d1ae1c",
+      "content_free_signature": "[class]android.support.v4.view.ViewPager[resource_id]com.ilike.cartoon:id/vp_intro"
+    },
+    "direction": "DOWN"
+  },
+  "start_state": "ad3b8c86d14befb7c1a79e334623129e",
+  "stop_state": "ad3b8c86d14befb7c1a79e334623129e",
+  "event_str": "ScrollEvent(state=ad3b8c86d14befb7c1a79e334623129e, view=8dbd47b96bba305d3f8e0f1e76d1ae1c(IntroActivity/ViewPager-), direction=DOWN)"
+}

@@ -8,6 +8,8 @@ from droidbot import DroidBot
 from droidbot.droidmaster import DroidMaster
 from droidbot.utils import get_available_devices
 import threading
+from apkmaster.apk_repacker import bytecode_instrumentation
+import os 
 
 def parse_args():
     """
@@ -102,9 +104,12 @@ def main():
     """
     opts = parse_args()
     import os
+    print(f'opts.apk_path:{opts.apk_path}')
     if not os.path.exists(opts.apk_path):
         print("APK does not exist.")
         return
+    r = bytecode_instrumentation(opts.apk_path)
+    input(f'r:{r}')
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
 

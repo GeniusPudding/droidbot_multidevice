@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-19_094342",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.ilike.cartoon",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          720,
+          1424
+        ]
+      ],
+      "resource_id": "com.ilike.cartoon:id/iv_dark",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "720*1424",
+      "signature": "[class]android.widget.ImageView[resource_id]com.ilike.cartoon:id/iv_dark[text]None[enabled,,]",
+      "view_str": "ef12910cfa497d1ec5501bd1d4ede2e6",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]com.ilike.cartoon:id/iv_dark"
+    }
+  },
+  "start_state": "ad3b8c86d14befb7c1a79e334623129e",
+  "stop_state": "ad3b8c86d14befb7c1a79e334623129e",
+  "event_str": "TouchEvent(state=ad3b8c86d14befb7c1a79e334623129e, view=ef12910cfa497d1ec5501bd1d4ede2e6(IntroActivity/ImageView-))"
+}

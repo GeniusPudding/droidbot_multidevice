@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-19_093745",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.android.apps/com.android.apps.Main"
+  },
+  "start_state": "8f16b4e0426ad786428694628ffa4fd6",
+  "stop_state": "40710152e1f4d7ee52969d21c6f98a73",
+  "event_str": "IntentEvent(intent='am start com.android.apps/com.android.apps.Main')"
+}

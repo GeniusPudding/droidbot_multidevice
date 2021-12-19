@@ -1,0 +1,1 @@
+aapt dumping badging %1 | findstr "native-code" 
