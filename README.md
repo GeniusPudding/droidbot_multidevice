@@ -1,6 +1,13 @@
 ![DroidBot UTG](droidbot/resources/dummy_documents/droidbot_utg.png)
 
-# DroidBot
+
+
+
+# Two-Device Version DroidBot
+
+## Modification:
+
+Integrating android app's API call sequence monitoring solution 
 
 ## New!
 
