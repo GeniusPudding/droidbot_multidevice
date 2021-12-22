@@ -81,12 +81,12 @@ def callee_logger(smali_lines,f): # TODO: if no .prologue??
 			# print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
 			
 
-			# new_content += ('    #Instrumentation by GeniusPudding\n')
-			# new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
-			# new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
-			# new_content += (f'    const-string {free[0]}, \"GeniusPudding - methodEnd\"\n\n')
-			# new_content += (f'    const-string {free[1]}, \"{current_method_signature}\"\n\n')
-			# new_content += (f'    invoke-static {{{free[0]},{free[1]}}}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+			new_content += ('    #Instrumentation by GeniusPudding\n')
+			new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
+			new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
+			new_content += (f'    const-string {free[0]}, \"GeniusPudding - methodEnd\"\n\n')
+			new_content += (f'    const-string {free[1]}, \"{current_method_signature}\"\n\n')
+			new_content += (f'    invoke-static {{{free[0]},{free[1]}}}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
 
 		if in_method_flag:#method analysis
 			line = line.strip('\n')			
