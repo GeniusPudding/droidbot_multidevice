@@ -53,12 +53,12 @@ def callee_logger(smali_lines,f): # TODO: if no .prologue??
 
 			if not only_prototype:#not abstract method->method already be injected at the start
 				if not return_inst:
-					print(f'This function:{current_method_signature} has no return')
+					# print(f'This function:{current_method_signature} has no return')
 					# new_content += ('    #Instrumentation by GeniusPudding\n')
 					# new_content += ('    const-string v0, \"GeniusPudding-monitor\"\n\n')
 					# new_content += (f'    const-string v1, \"END method: {current_method_signature}\"\n\n')
 					# new_content += ('    invoke-static {v0,v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
-	
+					pass
 			else:
 				only_prototype = False
 			return_inst = False
@@ -78,7 +78,7 @@ def callee_logger(smali_lines,f): # TODO: if no .prologue??
 			#check the final free register
 			if len(free) < 2:
 				input('bug!!!')
-			print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
+			# print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
 			
 
 			# new_content += ('    #Instrumentation by GeniusPudding\n')
@@ -147,28 +147,28 @@ def walk_smali_dir(smali_dir):
 	smali_base_dir = find_smali_base_dir(smali_dir)
 	walking_list = list(os.walk(smali_dir))
 
-	input(f'walking_list:{walking_list}')
+	# input(f'walking_list:{walking_list}')
 	#for the instrumentation
 	for walking_tuple in walking_list:
 		if len(walking_tuple[2]) == 0:
 			continue
-		input(f'walking_tuple:{walking_tuple}')
+		# input(f'walking_tuple:{walking_tuple}')
 		for file_name in walking_tuple[2]:
 			if file_name[-6:] != '.smali':
 				continue
 			# start to parse the smali files
 			full_name = os.path.join(os.path.abspath(walking_tuple[0]),file_name)
-			print(f'full_name:{full_name}')
+			# print(f'full_name:{full_name}')
 			try:
 				f = open(full_name,'r+', encoding='utf-8')
 				smali_lines = list(f)
 			except :
-				print("Oops!", sys.exc_info()[0], "occurred.")
-				print("dir:", os.getcwd())
-				input(f'Can\'t read file:{full_name}')
+				# print("Oops!", sys.exc_info()[0], "occurred.")
+				# print("dir:", os.getcwd())
+				# print(f'Can\t read file:{full_name}')
 				continue
 			f.seek(0)
-			print(f'Logging file:{file_name}')
+			# print(f'Logging file:{file_name}')
 			new_content = callee_logger(smali_lines,f)
 			f.write(new_content)
 			f.close()

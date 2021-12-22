@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-22_113111",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u5c55\u958b",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          197,
+          507
+        ],
+        [
+          293,
+          603
+        ]
+      ],
+      "resource_id": "android:id/expand_button",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 16,
+      "temp_id": 19,
+      "size": "96*96",
+      "signature": "[class]android.widget.Button[resource_id]android:id/expand_button[text]None[enabled,,]",
+      "view_str": "3df275b2610d1666694b35767bcfe1eb",
+      "content_free_signature": "[class]android.widget.Button[resource_id]android:id/expand_button"
+    }
+  },
+  "start_state": "4e628afd3c6e475605767b9aa4c42473",
+  "stop_state": "4e628afd3c6e475605767b9aa4c42473",
+  "event_str": "TouchEvent(state=4e628afd3c6e475605767b9aa4c42473, view=3df275b2610d1666694b35767bcfe1eb(IntroActivity/Button-))"
+}

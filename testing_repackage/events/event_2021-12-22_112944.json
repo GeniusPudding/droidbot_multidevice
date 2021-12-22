@@ -1,0 +1,51 @@
+{
+  "tag": "2021-12-22_112944",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.googlequicksearchbox",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "Google \u641c\u5c0b",
+      "children": [
+        19
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          155,
+          345
+        ],
+        [
+          462,
+          443
+        ]
+      ],
+      "resource_id": "com.google.android.googlequicksearchbox:id/search_edit_frame",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 15,
+      "temp_id": 18,
+      "size": "307*98",
+      "signature": "[class]android.widget.FrameLayout[resource_id]com.google.android.googlequicksearchbox:id/search_edit_frame[text]None[enabled,,]",
+      "view_str": "116e38dca041df851882c1981c03a16f",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]com.google.android.googlequicksearchbox:id/search_edit_frame"
+    }
+  },
+  "start_state": "ac6003d66d59abaf4e43a4915863409e",
+  "stop_state": "f0c7d851049d1a10512cf6fce5439ac1",
+  "event_str": "TouchEvent(state=ac6003d66d59abaf4e43a4915863409e, view=116e38dca041df851882c1981c03a16f(NowLauncher/FrameLayout-))"
+}

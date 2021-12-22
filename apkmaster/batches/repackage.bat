@@ -30,7 +30,7 @@ set packagename=!d:~0,%num%!
 echo %packagename%
 
 adb uninstall %packagename%
-@REM adb install %b%
+adb install %b%
 
 
 

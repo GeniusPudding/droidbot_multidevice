@@ -1,0 +1,11 @@
+{
+  "tag": "2021-12-22_112726",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop com.ilike.cartoon"
+  },
+  "start_state": "7d6b4ec9ea982c780361cb49628b92b4",
+  "stop_state": "ac6003d66d59abaf4e43a4915863409e",
+  "event_str": "KillAppEvent()"
+}

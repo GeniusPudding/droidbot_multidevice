@@ -1,24 +1,24 @@
 Activity Resolver Table:
   Schemes:
       tencent1102042292:
-        31e8e40 com.ilike.cartoon/com.mob.tools.MobUIShell filter bc4b8d4
+        bd46b8c com.ilike.cartoon/com.mob.tools.MobUIShell filter 69dea6b
           Action: "android.intent.action.VIEW"
           Category: "android.intent.category.BROWSABLE"
           Category: "android.intent.category.DEFAULT"
           Scheme: "tencent1102042292"
-        8da4179 com.ilike.cartoon/com.tencent.tauth.AuthActivity filter b0b7a7d
+        c7ea2d5 com.ilike.cartoon/com.tencent.tauth.AuthActivity filter 86b99c8
           Action: "android.intent.action.VIEW"
           Category: "android.intent.category.DEFAULT"
           Category: "android.intent.category.BROWSABLE"
           Scheme: "tencent1102042292"
       manhuaren:
-        176eebe com.ilike.cartoon/.activities.LogoActivity filter ef5a8e6
+        d466aea com.ilike.cartoon/.activities.LogoActivity filter aa194e5
           Action: "android.intent.action.VIEW"
           Category: "android.intent.category.DEFAULT"
           Category: "android.intent.category.BROWSABLE"
           Scheme: "manhuaren"
       alipaysdk:
-        155bb1f com.ilike.cartoon/com.alipay.sdk.app.AlipayResultActivity filter ce36d72
+        68b01db com.ilike.cartoon/com.alipay.sdk.app.AlipayResultActivity filter 75b9a61
           Action: "android.intent.action.VIEW"
           Category: "android.intent.category.DEFAULT"
           Category: "android.intent.category.BROWSABLE"
@@ -26,99 +26,99 @@ Activity Resolver Table:
 
   Non-Data Actions:
       android.intent.action.MAIN:
-        176eebe com.ilike.cartoon/.activities.LogoActivity filter 7a46b41
+        d466aea com.ilike.cartoon/.activities.LogoActivity filter 1629bdc
           Action: "android.intent.action.MAIN"
           Category: "android.intent.category.LAUNCHER"
       com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY:
-        31e8e40 com.ilike.cartoon/com.mob.tools.MobUIShell filter ff32e27
+        bd46b8c com.ilike.cartoon/com.mob.tools.MobUIShell filter 485bba
           Action: "com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"
           Category: "android.intent.category.DEFAULT"
 
 Receiver Resolver Table:
   Schemes:
       package:
-        97e4e6c com.ilike.cartoon/.broadcast.AppInstallBroadcast filter d8517c5
+        e22b478 com.ilike.cartoon/.broadcast.AppInstallBroadcast filter dabe4b0
           Action: "android.intent.action.PACKAGE_ADDED"
           Action: "android.intent.action.PACKAGE_REPLACED"
           Scheme: "package"
 
   Non-Data Actions:
       android.net.conn.CONNECTIVITY_CHANGE:
-        a347c35 com.ilike.cartoon/.broadcast.NetWorkBroadcast filter 228de3c
+        4939751 com.ilike.cartoon/.broadcast.NetWorkBroadcast filter f666ff3
           Action: "android.net.conn.CONNECTIVITY_CHANGE"
-        c2f38ca com.ilike.cartoon/com.vungle.warren.NetworkProviderReceiver filter ec3a228
+        4984bb6 com.ilike.cartoon/com.vungle.warren.NetworkProviderReceiver filter 76e184f
           Action: "android.net.conn.CONNECTIVITY_CHANGE"
           Category: "android.intent.category.DEFAULT"
       com.tencent.mm.sdk.channel.Intent.ACTION_MESSAGE:
-        9a4ea3b com.ilike.cartoon/com.tencent.mm.sdk.channel.MMessage$Receiver filter 469584b
+        ade0b7 com.ilike.cartoon/com.tencent.mm.sdk.channel.MMessage$Receiver filter e4ec2ae
           Action: "com.tencent.mm.sdk.channel.Intent.ACTION_MESSAGE"
       com.tencent.mm.sdk.plugin.Intent.ACTION_RESPONSE:
-        f37e558 com.ilike.cartoon/com.tencent.mm.sdk.plugin.MMPluginOAuth$Receiver filter 647551a
+        90aa024 com.ilike.cartoon/com.tencent.mm.sdk.plugin.MMPluginOAuth$Receiver filter 1fe2f29
           Action: "com.tencent.mm.sdk.plugin.Intent.ACTION_RESPONSE"
 
 Service Resolver Table:
   Non-Data Actions:
       com.mintegral.msdk.download.action:
-        cbda6b1 com.ilike.cartoon/com.mintegral.msdk.shell.MTGService filter bf4682f
+        629578d com.ilike.cartoon/com.mintegral.msdk.shell.MTGService filter 940e262
           Action: "com.mintegral.msdk.download.action"
 
 Registered ContentProviders:
   com.ilike.cartoon/com.crashlytics.android.CrashlyticsInitProvider:
-    Provider{3701796 com.ilike.cartoon/com.crashlytics.android.CrashlyticsInitProvider}
+    Provider{c556d42 com.ilike.cartoon/com.crashlytics.android.CrashlyticsInitProvider}
   com.ilike.cartoon/android.arch.lifecycle.ProcessLifecycleOwnerInitializer:
-    Provider{1edef17 com.ilike.cartoon/android.arch.lifecycle.ProcessLifecycleOwnerInitializer}
+    Provider{ab5d153 com.ilike.cartoon/android.arch.lifecycle.ProcessLifecycleOwnerInitializer}
   com.ilike.cartoon/android.support.v4.content.FileProvider:
-    Provider{3f1ff04 com.ilike.cartoon/android.support.v4.content.FileProvider}
+    Provider{e639a90 com.ilike.cartoon/android.support.v4.content.FileProvider}
   com.ilike.cartoon/com.mintegral.msdk.base.utils.MTGFileProvider:
-    Provider{ad4fced com.ilike.cartoon/com.mintegral.msdk.base.utils.MTGFileProvider}
+    Provider{4e0df89 com.ilike.cartoon/com.mintegral.msdk.base.utils.MTGFileProvider}
   com.ilike.cartoon/com.mob.MobProvider:
-    Provider{e0e1722 com.ilike.cartoon/com.mob.MobProvider}
+    Provider{4d11b8e com.ilike.cartoon/com.mob.MobProvider}
   com.ilike.cartoon/com.google.android.gms.ads.MobileAdsInitProvider:
-    Provider{d5865b3 com.ilike.cartoon/com.google.android.gms.ads.MobileAdsInitProvider}
+    Provider{1422faf com.ilike.cartoon/com.google.android.gms.ads.MobileAdsInitProvider}
   com.ilike.cartoon/com.colorfast.kern.core.ColorFastProvider:
-    Provider{9120770 com.ilike.cartoon/com.colorfast.kern.core.ColorFastProvider}
+    Provider{40fcfbc com.ilike.cartoon/com.colorfast.kern.core.ColorFastProvider}
 
 ContentProvider Authorities:
   [com.ilike.cartoon.com.mob.MobProvider]:
-    Provider{e0e1722 com.ilike.cartoon/com.mob.MobProvider}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{4d11b8e com.ilike.cartoon/com.mob.MobProvider}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
   [com.ilike.cartoon.crashlyticsinitprovider]:
-    Provider{3701796 com.ilike.cartoon/com.crashlytics.android.CrashlyticsInitProvider}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{c556d42 com.ilike.cartoon/com.crashlytics.android.CrashlyticsInitProvider}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
   [com.ilike.cartoon.xxprovider]:
-    Provider{9120770 com.ilike.cartoon/com.colorfast.kern.core.ColorFastProvider}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{40fcfbc com.ilike.cartoon/com.colorfast.kern.core.ColorFastProvider}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
   [com.ilike.cartoon.mtgFileProvider]:
-    Provider{ad4fced com.ilike.cartoon/com.mintegral.msdk.base.utils.MTGFileProvider}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{4e0df89 com.ilike.cartoon/com.mintegral.msdk.base.utils.MTGFileProvider}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
   [com.ilike.cartoon.fileprovider]:
-    Provider{3f1ff04 com.ilike.cartoon/android.support.v4.content.FileProvider}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{e639a90 com.ilike.cartoon/android.support.v4.content.FileProvider}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
   [com.ilike.cartoon.mobileadsinitprovider]:
-    Provider{d5865b3 com.ilike.cartoon/com.google.android.gms.ads.MobileAdsInitProvider}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{1422faf com.ilike.cartoon/com.google.android.gms.ads.MobileAdsInitProvider}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
   [com.ilike.cartoon.lifecycle-trojan]:
-    Provider{1edef17 com.ilike.cartoon/android.arch.lifecycle.ProcessLifecycleOwnerInitializer}
-      applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    Provider{ab5d153 com.ilike.cartoon/android.arch.lifecycle.ProcessLifecycleOwnerInitializer}
+      applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
 
 Key Set Manager:
   [com.ilike.cartoon]
       Signing KeySets: 27
 
 Packages:
-  Package [com.ilike.cartoon] (99a836e):
-    userId=10156
-    pkg=Package{fe9aa0f com.ilike.cartoon}
-    codePath=/data/app/com.ilike.cartoon-hkdL1CoQEbxw5RriX1-ejQ==
-    resourcePath=/data/app/com.ilike.cartoon-hkdL1CoQEbxw5RriX1-ejQ==
-    legacyNativeLibraryDir=/data/app/com.ilike.cartoon-hkdL1CoQEbxw5RriX1-ejQ==/lib
+  Package [com.ilike.cartoon] (e47629a):
+    userId=10166
+    pkg=Package{18c17cb com.ilike.cartoon}
+    codePath=/data/app/com.ilike.cartoon-U1XHr38BgxV_OrXXnYD-HQ==
+    resourcePath=/data/app/com.ilike.cartoon-U1XHr38BgxV_OrXXnYD-HQ==
+    legacyNativeLibraryDir=/data/app/com.ilike.cartoon-U1XHr38BgxV_OrXXnYD-HQ==/lib
     primaryCpuAbi=arm64-v8a
     secondaryCpuAbi=null
     versionCode=325 minSdk=14 targetSdk=27
     versionName=3.9.3
     splits=[base]
     apkSigningVersion=1
-    applicationInfo=ApplicationInfo{b917ae9 com.ilike.cartoon}
+    applicationInfo=ApplicationInfo{36eeb45 com.ilike.cartoon}
     flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP LARGE_HEAP ]
     privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ]
     dataDir=/data/user/0/com.ilike.cartoon
@@ -127,10 +127,10 @@ Packages:
       org.apache.http.legacy
     usesLibraryFiles:
       /system/framework/org.apache.http.legacy.boot.jar
-    timeStamp=2021-12-19 09:40:54
-    firstInstallTime=2021-12-19 09:40:58
-    lastUpdateTime=2021-12-19 09:40:58
-    signatures=PackageSignatures{ee82a9c version:1, signatures:[360261db], past signatures:[]}
+    timeStamp=2021-12-22 11:25:27
+    firstInstallTime=2021-12-22 11:25:31
+    lastUpdateTime=2021-12-22 11:25:31
+    signatures=PackageSignatures{9e82ba8 version:1, signatures:[360261db], past signatures:[]}
     installPermissionsFixed=true
     pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP LARGE_HEAP ]
     requested permissions:
@@ -170,7 +170,7 @@ Packages:
       android.permission.VIBRATE: granted=true
       android.permission.ACCESS_WIFI_STATE: granted=true
       android.permission.WAKE_LOCK: granted=true
-    User 0: ceDataInode=1743576 installed=true hidden=false suspended=false stopped=true notLaunched=true enabled=0 instant=false virtual=false
+    User 0: ceDataInode=1743435 installed=true hidden=false suspended=false stopped=true notLaunched=true enabled=0 instant=false virtual=false
       gids=[3003]
       runtime permissions:
 
@@ -254,7 +254,7 @@ ASUS_X01AD WW sku / Country Code:TW / CID:ASUS
 
 
 Package Changes:
-  Sequence number=331
+  Sequence number=428
   User 0:
     seq=0, package=com.facebook.services
     seq=47, package=com.android.vending
@@ -283,22 +283,25 @@ Package Changes:
     seq=251, package=com.facebook.katana
     seq=268, package=com.google.android.apps.docs.editors.slides
     seq=305, package=com.facebook.orca
-    seq=309, package=com.google.android.tts
-    seq=313, package=com.google.android.contacts
     seq=314, package=com.google.android.apps.tachyon
-    seq=320, package=com.instagram.android
     seq=321, package=com.google.android.gm
-    seq=325, package=com.google.android.apps.docs
     seq=329, package=com.android.apps
-    seq=330, package=io.github.ylimit.droidbotapp
+    seq=333, package=com.instagram.android
+    seq=367, package=com.android.shell
+    seq=368, package=com.android.settings
+    seq=390, package=com.google.android.tts
+    seq=394, package=com.google.android.contacts
+    seq=425, package=com.google.android.apps.docs
+    seq=426, package=com.ilike.cartoon
+    seq=427, package=io.github.ylimit.droidbotapp
 
 
 Dexopt state:
   [com.ilike.cartoon]
-    path: /data/app/com.ilike.cartoon-hkdL1CoQEbxw5RriX1-ejQ==/base.apk
-      arm64: [status=run-from-apk] [reason=unknown]
+    path: /data/app/com.ilike.cartoon-U1XHr38BgxV_OrXXnYD-HQ==/base.apk
+      arm64: [status=speed-profile] [reason=install]
 
 
 Compiler stats:
   [com.ilike.cartoon]
-    (No recorded stats)
+     base.apk - 7341

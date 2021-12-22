@@ -1,0 +1,49 @@
+{
+  "tag": "2021-12-22_112922",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.launcher3",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u61c9\u7528\u7a0b\u5f0f\u6e05\u55ae",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          336,
+          1147
+        ],
+        [
+          384,
+          1195
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "48*48",
+      "signature": "[class]android.view.View[resource_id]None[text]None[enabled,,]",
+      "view_str": "50e6edbee11e7db1380077897ca67498",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    }
+  },
+  "start_state": "8e579a78d26b254537f5b3526df1d2d3",
+  "stop_state": "ad3b8c86d14befb7c1a79e334623129e",
+  "event_str": "TouchEvent(state=8e579a78d26b254537f5b3526df1d2d3, view=50e6edbee11e7db1380077897ca67498(LogoActivity/View-))"
+}
