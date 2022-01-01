@@ -96,6 +96,7 @@ class DroidBot(object):
                 ignore_ad=ignore_ad)
             self.app = App(app_path, output_dir=self.output_dir)
 
+            #For the second device
             if len(device_serials) > 1:
                 self.device2 = Device(
                     device_serial=device_serials[1],
@@ -166,10 +167,12 @@ class DroidBot(object):
 
             if not self.enabled:
                 return
+
+            self.device.uninstall_app(self.app)
             self.device.install_app(self.app)
             if self.device2:
                 self.device2.install_app(self.app)        
-
+                self.device2.uninstall_app(self.app)
             if not self.enabled:
                 return
             self.env_manager.deploy()
@@ -212,8 +215,12 @@ class DroidBot(object):
             self.device2.disconnect()
         if not self.keep_env:
             self.device.tear_down()
+            if self.device2:
+                self.device2.tear_down()
         if not self.keep_app:
             self.device.uninstall_app(self.app)
+            if self.device2:
+                self.device2.uninstall_app(self.app)
         if hasattr(self.input_manager.policy, "master") and \
            self.input_manager.policy.master:
             import xmlrpc.client

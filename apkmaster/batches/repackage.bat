@@ -1,21 +1,21 @@
-:: apktool b %1 , do it first
-:: %2 is "aapt dumping badging %1.apk | findstr "package:\ name=""
-:: need to rsplit "\" , and filter "." in %1
+:: %1:dirname,%2apkname
 @echo on
-cmd /c apktool b %1
-set p=%~n1
-set pp=%~dp1
-set b=%pp%repacked_%p%.apk
-echo p:%p%
-echo b:%b%
-echo pp:%pp%
-set bp=%~p0
-jarsigner -verbose -storepass s35gj6 -keystore %bp%\..\res\1.keystore -signedjar %b% %1\dist\%p%.apk a1.keystore
+@REM cmd /c apktool b %1
+@REM set apkdirname=%~n1
+@REM set pp=%~dp1
+set resigned_apkpath=%1\repacked_%2.apk
+@REM echo p:%apkdirname%
+echo 1:%1
+echo 2:%2
+@REM echo resigned_apkpath:%resigned_apkpath%
+@REM echo pp:%pp%
+set basepath=%~p0
+jarsigner -verbose -storepass s35gj6 -keystore %basepath%\..\res\1.keystore -signedjar %resigned_apkpath% %1\%2\dist\%2.apk a1.keystore
 adb devices
 
 
 @echo off
-SET apk=%1.apk
+SET apk=%1\%2.apk
 echo apk:%apk%
 aapt dumping badging %apk% | findstr package: > result.txt
 set /p DATA=<result.txt
@@ -29,8 +29,8 @@ Setlocal EnableDelayedExpansion
 set packagename=!d:~0,%num%!
 echo %packagename%
 
-adb uninstall %packagename%
-adb install %b%
+@REM adb uninstall %packagename%
+@REM adb install %resigned_apkpath%
 
 
 

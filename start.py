@@ -108,8 +108,15 @@ def main():
     if not os.path.exists(opts.apk_path):
         print("APK does not exist.")
         return
-    r = bytecode_instrumentation(opts.apk_path)
-    input(f'r:{r}')
+    all_devices = get_available_devices()
+    if len(all_devices) == 0:
+        self.logger.warning("ERROR: No device connected.")
+        sys.exit(-1)
+    threads = []
+
+    # repackaged_apk = bytecode_instrumentation(opts.apk_path,all_devices)
+    # input(f'bytecode_instrumentation:{repackaged_apk}')
+
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
 
@@ -148,17 +155,10 @@ def main():
             replay_output=opts.replay_output)
         droidmaster.start()
     else:
-
-        all_devices = get_available_devices()
-        if len(all_devices) == 0:
-            self.logger.warning("ERROR: No device connected.")
-            sys.exit(-1)
-        threads = []
-        print(f'all_devices:{all_devices}')
         # for i,device_serial in enumerate(all_devices):
         try:
             droidbot = DroidBot(
-                app_path=opts.apk_path,
+                app_path=opts.apk_path,#repackaged_apk,#
                 device_serials=all_devices,
                 is_emulator=opts.is_emulator,
                 output_dir=opts.output_dir,
@@ -185,42 +185,8 @@ def main():
         except Exception as e:
             pass
 
-        # for i, device_serial in enumerate(all_devices):
-        #     threads.append(threading.Thread(target = run_droidbot, args = (device_serial,i,)))
-        #     threads[i].start()            
-        # for i in range(len(all_devices)):
-        #     threads[i].join()
 
     return
-
-
-def run_droidbot(device_serial,i):
-    opts = parse_args()
-    droidbot = DroidBot(
-        app_path=opts.apk_path,
-        device_serial=device_serial,
-        is_emulator=opts.is_emulator,
-        output_dir=opts.output_dir+'_'+str(i),
-        # env_policy=opts.env_policy,
-        env_policy=env_manager.POLICY_NONE,
-        policy_name=opts.input_policy,
-        random_input=opts.random_input,
-        script_path=opts.script_path,
-        event_interval=opts.interval,
-        timeout=opts.timeout,
-        event_count=opts.count,
-        cv_mode=opts.cv_mode,
-        debug_mode=opts.debug_mode,
-        keep_app=opts.keep_app,
-        keep_env=opts.keep_env,
-        profiling_method=opts.profiling_method,
-        grant_perm=opts.grant_perm,
-        enable_accessibility_hard=opts.enable_accessibility_hard,
-        master=opts.master,
-        humanoid=opts.humanoid,
-        ignore_ad=opts.ignore_ad,
-        replay_output=opts.replay_output)
-    droidbot.start()
 
 if __name__ == "__main__":
     main()

@@ -14,7 +14,7 @@ from .input_policy import UtgBasedInputPolicy, UtgNaiveSearchPolicy, UtgGreedySe
 
 DEFAULT_POLICY = POLICY_GREEDY_DFS
 DEFAULT_EVENT_INTERVAL = 1
-DEFAULT_EVENT_COUNT = 50#100000000
+DEFAULT_EVENT_COUNT = 5000#100000000
 DEFAULT_TIMEOUT = -1
 
 
@@ -27,10 +27,10 @@ class InputManager(object):
     This class manages all events to send during app running
     """
 
-    def __init__(self, device, app, policy_name, random_input,
+    def __init__(self, device, device2, app, policy_name, random_input,
                  event_count, event_interval,
                  script_path=None, profiling_method=None, master=None,
-                 replay_output=None, device2=None):
+                 replay_output=None):
         """
         manage input event sent to the target device
         :param device: instance of Device
@@ -98,7 +98,7 @@ class InputManager(object):
             return
         self.events.append(event)
 
-        event_log = EventLog(self.device, self.app, event, self.profiling_method, self.device2)
+        event_log = EventLog(self.device, self.device2, self.app, event, self.profiling_method)
         event_log.start() #default! Sending event here!
         while True:
             time.sleep(self.event_interval)
@@ -106,7 +106,7 @@ class InputManager(object):
                 break
         event_log.stop()
 
-    def start(self):
+    def start(self):#TODO: For other policy, support device2
         """
         start sending event
         """
@@ -117,6 +117,8 @@ class InputManager(object):
                 self.policy.start(self)#Default!
             elif self.policy_name == POLICY_NONE:
                 self.device.start_app(self.app)
+                if self.device2:
+                    self.device2.start_app(self.app)
                 if self.event_count == 0:
                     return
                 while self.enabled:
@@ -162,8 +164,15 @@ class InputManager(object):
             if self.monkey.returncode is None:
                 self.monkey.terminate()
             self.monkey = None
-            pid = self.device.get_app_pid("com.android.commands.monkey")
-            if pid is not None:
-                self.device.adb.shell("kill -9 %d" % pid)
+            # pid = self.device.get_app_pid("com.android.commands.monkey")
+            # if pid is not None:
+            #     self.device.adb.shell("kill -9 %d" % pid)
+            self.__stop_device_monkey(self.device)
+            if self.device2:
+                self.__stop_device_monkey(self.device2)            
         self.enabled = False
 
+    def __stop_device_monkey(device):
+        pid = device.get_app_pid("com.android.commands.monkey")
+        if pid is not None:
+            device.adb.shell("kill -9 %d" % pid)

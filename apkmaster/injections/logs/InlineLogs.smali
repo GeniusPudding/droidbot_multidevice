@@ -38,7 +38,7 @@
     return-void
 .end method
 
-.method public static methodEndLog(Ljava/lang/String;)V #This function shill bugs! WHY???
+.method public static methodEndLog(Ljava/lang/String;)V
     .locals 1
 
     const-string v0, "GeniusPudding - methodEnd"
