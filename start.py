@@ -9,6 +9,7 @@ from droidbot.droidmaster import DroidMaster
 from droidbot.utils import get_available_devices
 import threading
 from apkmaster.apk_repacker import bytecode_instrumentation
+from apkmaster.datautils.apkinfo import get_min_sdkversion
 import os 
 
 def parse_args():
@@ -92,6 +93,10 @@ def parse_args():
                         help="Ignore Ad views by checking resource_id.")
     parser.add_argument("-replay_output", action="store", dest="replay_output",
                         help="The droidbot output directory being replayed.")
+    parser.add_argument("-i", action="store_true", dest="inject",
+                    help="Inject the apk gor logging methods.")
+    parser.add_argument("-ni", action="store_false", dest="inject",
+                    help="Not to inject the apk gor logging methods.")
     options = parser.parse_args()
     # print options
     return options
@@ -112,10 +117,12 @@ def main():
     if len(all_devices) == 0:
         self.logger.warning("ERROR: No device connected.")
         sys.exit(-1)
-    threads = []
 
-    # repackaged_apk = bytecode_instrumentation(opts.apk_path,all_devices)
-    # input(f'bytecode_instrumentation:{repackaged_apk}')
+    repackaged_apk_path = None
+    if opts.inject:
+        input('test inject')
+        repackaged_apk_path = bytecode_instrumentation(opts.apk_path,all_devices)
+        input(f'bytecode_instrumentation:{repackaged_apk_path}')
 
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
@@ -158,7 +165,7 @@ def main():
         # for i,device_serial in enumerate(all_devices):
         try:
             droidbot = DroidBot(
-                app_path=opts.apk_path,#repackaged_apk,#
+                app_path= repackaged_apk_path if opts.inject else opts.apk_path,#repackaged_apk_path,# a if condition else b
                 device_serials=all_devices,
                 is_emulator=opts.is_emulator,
                 output_dir=opts.output_dir,
@@ -180,7 +187,8 @@ def main():
                 master=opts.master,
                 humanoid=opts.humanoid,
                 ignore_ad=opts.ignore_ad,
-                replay_output=opts.replay_output)
+                replay_output=opts.replay_output,
+                get_min_sdkversion=get_min_sdkversion)
             droidbot.start()
         except Exception as e:
             pass

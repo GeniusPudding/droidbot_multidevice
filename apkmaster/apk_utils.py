@@ -1,4 +1,4 @@
-#Function to manipulate APKs, apktool dir
+#Function to manipulate apktool dir
 import sys
 import os 
 import shutil

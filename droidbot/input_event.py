@@ -238,7 +238,7 @@ class EventLog(object):
         self.device.send_event(self.event)
         if self.device2:
             self.device2.send_event(self.event)
-            input(f'Sending {self.event} to device2')
+            print(f'Sending {self.event} to device2')
     def start_profiling(self):
         """
         start profiling the current event

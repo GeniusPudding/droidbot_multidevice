@@ -27,7 +27,8 @@ class Device(object):
 
     def __init__(self, device_serial=None, is_emulator=False, output_dir=None,
                  cv_mode=False, grant_perm=False, telnet_auth_token=None,
-                 enable_accessibility_hard=False, humanoid=None, ignore_ad=False):
+                 enable_accessibility_hard=False, humanoid=None, ignore_ad=False,
+                get_min_sdkversion=None):#get_min_sdkversion for apk's requirement
         """
         initialize a device connection
         :param device_serial: serial number of target device
@@ -56,6 +57,7 @@ class Device(object):
         self.enable_accessibility_hard = enable_accessibility_hard
         self.humanoid = humanoid
         self.ignore_ad = ignore_ad
+        self.get_min_sdkversion = get_min_sdkversion
 
         # basic device information
         self.settings = {}
@@ -609,13 +611,19 @@ class Device(object):
         @param app: instance of App
         @return:
         """
-        assert isinstance(app, App)
+        assert isinstance(app, App), f'app here is not an instance of class \'App\''
         # subprocess.check_call(["adb", "-s", self.serial, "uninstall", app.get_package_name()],
         #                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        device_sdk = self.get_sdk_version() 
+        if callable(self.get_min_sdkversion):
+            a = self.get_min_sdkversion(app.app_path)
+            input(f'get_min_sdkversion callable:{a}')
+            assert device_sdk >= a, f'The device\'s sdk version({device_sdk}) not support! (app require:{a})'
+
         package_name = app.get_package_name()
         if package_name not in self.adb.get_installed_apps():
             install_cmd = ["adb", "-s", self.serial, "install", "-r"]
-            if self.grant_perm and self.get_sdk_version() >= 23:
+            if self.grant_perm and device_sdk >= 23:#grant all runtime permissions
                 install_cmd.append("-g")
             install_cmd.append(app.app_path)
             install_p = subprocess.Popen(install_cmd, stdout=subprocess.PIPE)

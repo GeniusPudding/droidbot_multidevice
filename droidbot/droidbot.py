@@ -44,7 +44,8 @@ class DroidBot(object):
                  master=None,
                  humanoid=None,
                  ignore_ad=False,
-                 replay_output=None):
+                 replay_output=None,
+                 get_min_sdkversion=None):
         """
         initiate droidbot with configurations
         :return:
@@ -93,8 +94,10 @@ class DroidBot(object):
                 grant_perm=grant_perm,
                 enable_accessibility_hard=self.enable_accessibility_hard,
                 humanoid=self.humanoid,
-                ignore_ad=ignore_ad)
+                ignore_ad=ignore_ad,
+                get_min_sdkversion=get_min_sdkversion)
             self.app = App(app_path, output_dir=self.output_dir)
+                
 
             #For the second device
             if len(device_serials) > 1:
@@ -106,7 +109,8 @@ class DroidBot(object):
                     grant_perm=grant_perm,
                     enable_accessibility_hard=self.enable_accessibility_hard,
                     humanoid=self.humanoid,
-                    ignore_ad=ignore_ad)
+                    ignore_ad=ignore_ad,
+                get_min_sdkversion=get_min_sdkversion)
 
             self.env_manager = AppEnvManager(
                 device=self.device,
