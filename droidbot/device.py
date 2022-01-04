@@ -617,7 +617,7 @@ class Device(object):
         device_sdk = self.get_sdk_version() 
         if callable(self.get_min_sdkversion):
             a = self.get_min_sdkversion(app.app_path)
-            input(f'get_min_sdkversion callable:{a}')
+            print(f'get_min_sdkversion callable:{a}')
             assert device_sdk >= a, f'The device\'s sdk version({device_sdk}) not support! (app require:{a})'
 
         package_name = app.get_package_name()

@@ -23,7 +23,7 @@ def parse_args():
                         help="The serial number of target device (use `adb devices` to find)")
     parser.add_argument("-a", action="store", dest="apk_path", required=True,
                         help="The file path to target APK")
-    parser.add_argument("-o", action="store", dest="output_dir",
+    parser.add_argument("-o", action="store", dest="output_dir",default='../testing/',
                         help="directory of output")
     # parser.add_argument("-env", action="store", dest="env_policy",
     #                     help="policy to set up environment. Supported policies:\n"
