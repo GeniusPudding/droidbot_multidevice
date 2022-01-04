@@ -26,11 +26,11 @@ class Logcat(Adapter):
         if device.output_dir is None:
             self.out_file = None
         else:
-            self.out_file = "%s/logcat.txt" % device.output_dir
+            self.out_file = f"{device.output_dir}/logcat_{device.serial}.txt"   #"%s/logcat.txt" % device.output_dir
 
     def connect(self):
         self.device.adb.run_cmd("logcat -c")
-        self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
+        self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "GeniusPudding:D", "*:S" "-v", "time"],#["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
                                         stdin=subprocess.PIPE,
                                         stderr=subprocess.PIPE,
                                         stdout=subprocess.PIPE)

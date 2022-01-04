@@ -23,7 +23,7 @@ def parse_args():
                         help="The serial number of target device (use `adb devices` to find)")
     parser.add_argument("-a", action="store", dest="apk_path", required=True,
                         help="The file path to target APK")
-    parser.add_argument("-o", action="store", dest="output_dir",default='../testing/',
+    parser.add_argument("-o", action="store", dest="output_dir",default='../testing/test_droidbot_output',
                         help="directory of output")
     # parser.add_argument("-env", action="store", dest="env_policy",
     #                     help="policy to set up environment. Supported policies:\n"
@@ -120,9 +120,9 @@ def main():
 
     repackaged_apk_path = None
     if opts.inject:
-        input('test inject')
+        #input('test inject')
         repackaged_apk_path = bytecode_instrumentation(opts.apk_path,all_devices)
-        input(f'bytecode_instrumentation:{repackaged_apk_path}')
+        print(f'bytecode_instrumentation:{repackaged_apk_path}')
 
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")

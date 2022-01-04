@@ -161,7 +161,7 @@ class DroidBot(object):
             self.device.set_up()
             if self.device2:
                 self.device2.set_up()  
-                input('check device2 set_up')
+                #input('check device2 set_up')
 
             if not self.enabled:
                 return
@@ -169,7 +169,7 @@ class DroidBot(object):
             self.device.connect()
             if self.device2:
                 self.device2.connect()
-                input('check device2 connect')
+                #input('check device2 connect')
 
 
 
@@ -181,7 +181,7 @@ class DroidBot(object):
             if self.device2:
                 self.device2.uninstall_app(self.app)
                 self.device2.install_app(self.app)        
-                input('check device2 install')    
+                #input('check device2 install')    
             if not self.enabled:
                 return
             self.env_manager.deploy()
