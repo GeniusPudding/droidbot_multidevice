@@ -112,7 +112,7 @@ def main():
     print(f'opts.apk_path:{opts.apk_path}')
     if not os.path.exists(opts.apk_path):
         print("APK does not exist.")
-        return
+        return  
     all_devices = get_available_devices()
     if len(all_devices) == 0:
         self.logger.warning("ERROR: No device connected.")
