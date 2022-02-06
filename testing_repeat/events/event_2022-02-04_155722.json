@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_155722",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop com.aitype.android.emojinew"
+  },
+  "start_state": "f9ef1bbaa7facab6d41c03c40b6357f9",
+  "stop_state": "f9ef1bbaa7facab6d41c03c40b6357f9",
+  "event_str": "KillAppEvent()"
+}

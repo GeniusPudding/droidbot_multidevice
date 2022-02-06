@@ -1,0 +1,52 @@
+{
+  "tag": "2022-02-04_185051",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.googlequicksearchbox",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        17,
+        18
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          32,
+          57
+        ],
+        [
+          173,
+          153
+        ]
+      ],
+      "resource_id": "com.google.android.googlequicksearchbox:id/googleapp_weather_container",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 15,
+      "temp_id": 16,
+      "size": "141*96",
+      "signature": "[class]android.widget.LinearLayout[resource_id]com.google.android.googlequicksearchbox:id/googleapp_weather_container[text]None[enabled,,]",
+      "view_str": "797c9a73525b0142ee4bb049eb87857d",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]com.google.android.googlequicksearchbox:id/googleapp_weather_container"
+    }
+  },
+  "start_state": "52f8a4dbca6d904cb5156bbd09f71f9c",
+  "stop_state": "f557aaf973ba46aef7a2ccad46312ec9",
+  "event_str": "TouchEvent(state=52f8a4dbca6d904cb5156bbd09f71f9c, view=797c9a73525b0142ee4bb049eb87857d(GoogleAppActivity/LinearLayout-))"
+}

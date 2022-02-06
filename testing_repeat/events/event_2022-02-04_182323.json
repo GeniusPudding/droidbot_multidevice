@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_182323",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.dotc.ime.latin.flash/com.dotc.ime.latin.setup.ShellActivity"
+  },
+  "start_state": "b6723f43c1fff0c1f745259fd08df467",
+  "stop_state": "69c2afb452abc158aaa0121cd8e43ecf",
+  "event_str": "IntentEvent(intent='am start com.dotc.ime.latin.flash/com.dotc.ime.latin.setup.ShellActivity')"
+}

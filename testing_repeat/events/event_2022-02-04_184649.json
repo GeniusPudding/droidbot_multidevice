@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_184649",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          40,
+          636
+        ],
+        [
+          576,
+          674
+        ]
+      ],
+      "resource_id": "android:id/text",
+      "checked": false,
+      "text": "\u8907\u88fd\u4f60\u7684\u8cc7\u6599\u3001\u8a2d\u5b9a\u684c\u5e03\u7b49",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 21,
+      "temp_id": 24,
+      "size": "536*38",
+      "signature": "[class]android.widget.TextView[resource_id]android:id/text[text]\u8907\u88fd\u4f60\u7684\u8cc7\u6599\u3001\u8a2d\u5b9a\u684c\u5e03\u7b49[enabled,,]",
+      "view_str": "f760b4f865c57ee499e9a5402ecee3f7",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]android:id/text"
+    }
+  },
+  "start_state": "f6b9f23a5e431b177261043d389cfa83",
+  "stop_state": "f6b9f23a5e431b177261043d389cfa83",
+  "event_str": "TouchEvent(state=f6b9f23a5e431b177261043d389cfa83, view=f760b4f865c57ee499e9a5402ecee3f7(MainActivity/TextView-\u8907\u88fd\u4f60\u7684\u8cc7\u6599\u3001\u8a2d\u5b9a\u684c))"
+}

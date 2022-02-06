@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_150715",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "1440*2872",
+      "signature": "[class]android.widget.ImageView[resource_id]None[text]None[enabled,,]",
+      "view_str": "b9c870f71d2d73c44fb42a292a601693",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]None"
+    }
+  },
+  "start_state": "e8ad48b4a3bb2863c476dcfe8ea97bdd",
+  "stop_state": "3943e4a9e4aadd933b0a9da542d482bc",
+  "event_str": "TouchEvent(state=e8ad48b4a3bb2863c476dcfe8ea97bdd, view=b9c870f71d2d73c44fb42a292a601693(MainActivity/ImageView-))"
+}

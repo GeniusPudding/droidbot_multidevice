@@ -14,7 +14,7 @@ from .input_policy import UtgBasedInputPolicy, UtgNaiveSearchPolicy, UtgGreedySe
 
 DEFAULT_POLICY = POLICY_GREEDY_DFS
 DEFAULT_EVENT_INTERVAL = 1
-DEFAULT_EVENT_COUNT = 5000#100000000
+DEFAULT_EVENT_COUNT = 10#100000000
 DEFAULT_TIMEOUT = -1
 
 
@@ -28,7 +28,7 @@ class InputManager(object):
     """
 
     def __init__(self, device, device2, app, policy_name, random_input,
-                 event_count, event_interval,
+                 event_count, event_interval,repeat,
                  script_path=None, profiling_method=None, master=None,
                  replay_output=None):
         """
@@ -52,7 +52,7 @@ class InputManager(object):
         self.event_count = event_count
         self.event_interval = event_interval
         self.replay_output = replay_output
-
+        self.repeat = repeat
         self.monkey = None
 
         if script_path is not None:
@@ -99,12 +99,13 @@ class InputManager(object):
         self.events.append(event)
 
         event_log = EventLog(self.device, self.device2, self.app, event, self.profiling_method)
-        event_log.start() #default! Sending event here!
+        event_str = event_log.start() #default! Sending event here!
         while True:
             time.sleep(self.event_interval)
             if not self.device.pause_sending_event:
                 break
         event_log.stop()
+        return event_str
 
     def start(self):#TODO: For other policy, support device2
         """

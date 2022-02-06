@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_150738",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          1032,
+          2717
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/btnPrivacy",
+      "checked": false,
+      "text": "Privacy policy",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 20,
+      "size": "408*155",
+      "signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnPrivacy[text]Privacy policy[enabled,,]",
+      "view_str": "4577386236d874a65e6b1aa0cc661517",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnPrivacy"
+    }
+  },
+  "start_state": "3943e4a9e4aadd933b0a9da542d482bc",
+  "stop_state": "efab58008102525e6a19b28a782cfb79",
+  "event_str": "TouchEvent(state=3943e4a9e4aadd933b0a9da542d482bc, view=4577386236d874a65e6b1aa0cc661517(MainActivity/TextView-Privacy po))"
+}

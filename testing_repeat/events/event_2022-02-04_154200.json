@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_154200",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.aitype.android.emojinew/com.aitype.installation.MainWindow"
+  },
+  "start_state": "f9ef1bbaa7facab6d41c03c40b6357f9",
+  "stop_state": "e91d2f4dc9945377594d0da1e7c5f78d",
+  "event_str": "IntentEvent(intent='am start com.aitype.android.emojinew/com.aitype.installation.MainWindow')"
+}

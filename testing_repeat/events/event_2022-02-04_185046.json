@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_185046",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.ibm.constantsDLC/com.ibm.constantsDLC.MainActivity"
+  },
+  "start_state": "52f8a4dbca6d904cb5156bbd09f71f9c",
+  "stop_state": "05dc5871b65232d986366cf29571370e",
+  "event_str": "IntentEvent(intent='am start com.ibm.constantsDLC/com.ibm.constantsDLC.MainActivity')"
+}

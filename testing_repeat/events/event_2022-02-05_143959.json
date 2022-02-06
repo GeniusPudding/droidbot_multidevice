@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-05_143959",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "net.cdeguet.smartkeyboardtrial",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          24,
+          61
+        ],
+        [
+          696,
+          262
+        ]
+      ],
+      "resource_id": "net.cdeguet.smartkeyboardtrial:id/setup_title",
+      "checked": false,
+      "text": "\u6b63\u5728\u8a2d\u5b9a\u300cSmart Keyboard Trial\u300d",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "672*201",
+      "signature": "[class]android.widget.TextView[resource_id]net.cdeguet.smartkeyboardtrial:id/setup_title[text]\u6b63\u5728\u8a2d\u5b9a\u300cSmart Keyboard Trial\u300d[enabled,,]",
+      "view_str": "f8506c95e5a3c10a8005edbde7538389",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]net.cdeguet.smartkeyboardtrial:id/setup_title"
+    }
+  },
+  "start_state": "63de06db41762b2ff4f975bb4786fa54",
+  "stop_state": "63de06db41762b2ff4f975bb4786fa54",
+  "event_str": "TouchEvent(state=63de06db41762b2ff4f975bb4786fa54, view=f8506c95e5a3c10a8005edbde7538389(SetupWizardActivity/TextView-\u6b63\u5728\u8a2d\u5b9a\u300cSmart))"
+}

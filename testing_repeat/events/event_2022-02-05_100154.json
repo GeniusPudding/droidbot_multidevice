@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-05_100154",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.packageinstaller",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u5411\u4e0a\u700f\u89bd",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          57
+        ],
+        [
+          112,
+          169
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageButton",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 4,
+      "size": "112*112",
+      "signature": "[class]android.widget.ImageButton[resource_id]None[text]None[enabled,,]",
+      "view_str": "c28090c76abb0c1c4a0f0a4d81cefe2e",
+      "content_free_signature": "[class]android.widget.ImageButton[resource_id]None"
+    }
+  },
+  "start_state": "17f062498d8840b16ef2da944f980103",
+  "stop_state": "f253c6e6994dc89dfeefb8a42a114fe9",
+  "event_str": "TouchEvent(state=17f062498d8840b16ef2da944f980103, view=c28090c76abb0c1c4a0f0a4d81cefe2e(ManagePermissionsActivity/ImageButton-))"
+}

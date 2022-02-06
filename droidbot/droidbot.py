@@ -43,6 +43,7 @@ class DroidBot(object):
                  enable_accessibility_hard=False,
                  master=None,
                  humanoid=None,
+                 repeat=None,
                  ignore_ad=False,
                  replay_output=None,
                  get_min_sdkversion=None):
@@ -125,6 +126,7 @@ class DroidBot(object):
                 random_input=random_input,
                 event_count=event_count,
                 event_interval=event_interval,
+                repeat=repeat,
                 script_path=script_path,
                 profiling_method=profiling_method,
                 master=master,
@@ -161,7 +163,6 @@ class DroidBot(object):
             self.device.set_up()
             if self.device2:
                 self.device2.set_up()  
-                #input('check device2 set_up')
 
             if not self.enabled:
                 return
@@ -169,7 +170,6 @@ class DroidBot(object):
             self.device.connect()
             if self.device2:
                 self.device2.connect()
-                #input('check device2 connect')
 
 
 
@@ -180,8 +180,7 @@ class DroidBot(object):
             self.device.install_app(self.app)
             if self.device2:
                 self.device2.uninstall_app(self.app)
-                self.device2.install_app(self.app)        
-                #input('check device2 install')    
+                self.device2.install_app(self.app)         
             if not self.enabled:
                 return
             self.env_manager.deploy()

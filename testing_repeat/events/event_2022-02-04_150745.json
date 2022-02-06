@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_150745",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          175,
+          2241
+        ],
+        [
+          1265,
+          2409
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/btnEnable",
+      "checked": false,
+      "text": "Enable Soft Keyboard",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 18,
+      "size": "1090*168",
+      "signature": "[class]android.widget.Button[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnEnable[text]Enable Soft Keyboard[enabled,,]",
+      "view_str": "ebc3ef7bec974fa3709e99723f070e07",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnEnable"
+    }
+  },
+  "start_state": "efab58008102525e6a19b28a782cfb79",
+  "stop_state": "efab58008102525e6a19b28a782cfb79",
+  "event_str": "TouchEvent(state=efab58008102525e6a19b28a782cfb79, view=ebc3ef7bec974fa3709e99723f070e07(WebViewBrowserActivity/Button-Enable Sof))"
+}

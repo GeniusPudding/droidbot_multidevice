@@ -1,0 +1,166 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        ec42fec com.jb.gokeyboard.langpack.ru/com.jb.gokeyboard.langpack.main.MainActivity filter 9d0a2cc
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Schemes:
+      package:
+        caa7fb5 com.jb.gokeyboard.langpack.ru/com.jb.gokeyboard.langpack.main.PackageManReceiver filter ea524ff
+          Action: "android.intent.action.PACKAGE_ADDED"
+          Action: "android.intent.action.PACKAGE_REPLACED"
+          Action: "android.intent.action.PACKAGE_REMOVED"
+          Scheme: "package"
+
+Key Set Manager:
+  [com.jb.gokeyboard.langpack.ru]
+      Signing KeySets: 27
+
+Packages:
+  Package [com.jb.gokeyboard.langpack.ru] (adc541e):
+    userId=10229
+    sharedUser=SharedUserSetting{27fb64a com.jb.gokeyboard.shared/10229}
+    pkg=Package{12759bb com.jb.gokeyboard.langpack.ru}
+    codePath=/data/app/com.jb.gokeyboard.langpack.ru-q19QtArH5KpEUhWB-a17VA==
+    resourcePath=/data/app/com.jb.gokeyboard.langpack.ru-q19QtArH5KpEUhWB-a17VA==
+    legacyNativeLibraryDir=/data/app/com.jb.gokeyboard.langpack.ru-q19QtArH5KpEUhWB-a17VA==/lib
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    versionCode=11 minSdk=4 targetSdk=4
+    versionName=3.3
+    splits=[base]
+    apkSigningVersion=1
+    applicationInfo=ApplicationInfo{cba5ed8 com.jb.gokeyboard.langpack.ru}
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    dataDir=/data/user/0/com.jb.gokeyboard.langpack.ru
+    supportsScreens=[small, medium, large, resizeable, anyDensity]
+    usesLibraries:
+      org.apache.http.legacy
+    usesLibraryFiles:
+      /system/framework/org.apache.http.legacy.boot.jar
+    timeStamp=2022-02-04 17:31:38
+    firstInstallTime=2022-02-04 17:31:39
+    lastUpdateTime=2022-02-04 17:31:39
+    signatures=PackageSignatures{7506231 version:1, signatures:[360261db], past signatures:[]}
+    installPermissionsFixed=true
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    User 0: ceDataInode=1744142 installed=true hidden=false suspended=false stopped=true notLaunched=true enabled=0 instant=false virtual=false
+
+Asus Customized Information:
+ASUS_X01AD WW sku / Country Code:TW / CID:ASUS
+* Uninstall Preloaded Apps [enabled]
+ Configuration Lists:
+   --- Skipped System Packages ---
+      YandexApp.apk
+      YandexBrowser.apk
+      ATOKIME.apk
+      Caping.apk
+      FreeFire.apk
+      IBook.apk
+      BRApps.apk
+
+   --- Sticky System Packages ---
+      com.asus.UpdateLauncher
+      com.asus.configupdater
+      com.asus.dm
+      com.asus.livedemoservice
+      com.asus.loguploader
+      com.asus.loguploaderproxy
+      com.asus.maxxaudio
+      com.asus.setupwizard
+      com.asus.smartreading
+      com.asus.sysdiagnostic
+      com.google.android.apps.docs.oem
+      com.google.android.packageinstaller
+      dk.icepower.icesound
+
+   --- Protected System Packages ---
+      com.android.chrome
+      com.android.vending
+      com.asus.brapp
+      com.asus.calculator
+      com.asus.faceunlockservice
+      com.asus.livedemo
+      com.asus.soundrecorder
+      com.asus.sysmonitor
+      com.atok.mobile.im.asus.service
+      com.facebook.appmanager
+      com.facebook.services
+      com.facebook.system
+      com.google.android.apps.docs
+      com.google.android.apps.maps
+      com.google.android.apps.messaging
+      com.google.android.apps.photos
+      com.google.android.apps.restore
+      com.google.android.apps.tachyon
+      com.google.android.apps.walletnfcrel
+      com.google.android.backuptransport
+      com.google.android.calendar
+      com.google.android.configupdater
+      com.google.android.contacts
+      com.google.android.deskclock
+      com.google.android.dialer
+      com.google.android.ext.services
+      com.google.android.ext.shared
+      com.google.android.feedback
+      com.google.android.gm
+      com.google.android.gms
+      com.google.android.gms.policy_sidecar_aps
+      com.google.android.googlequicksearchbox
+      com.google.android.gsf
+      com.google.android.ims
+      com.google.android.inputmethod.latin
+      com.google.android.marvin.talkback
+      com.google.android.music
+      com.google.android.onetimeinitializer
+      com.google.android.partnersetup
+      com.google.android.printservice.recommendation
+      com.google.android.setupwizard
+      com.google.android.syncadapters.calendar
+      com.google.android.syncadapters.contacts
+      com.google.android.tts
+      com.google.android.videos
+      com.google.android.webview
+      com.google.android.youtube
+      google
+
+
+Shared users:
+  SharedUser [com.jb.gokeyboard.shared] (27fb64a):
+    userId=10229
+
+Package Changes:
+  Sequence number=112
+  User 0:
+    seq=5, package=com.google.android.gms
+    seq=7, package=com.google.android.contacts
+    seq=56, package=com.facebook.katana
+    seq=57, package=com.android.chrome
+    seq=62, package=com.google.android.gm
+    seq=63, package=com.google.android.keep
+    seq=64, package=com.google.android.tts
+    seq=65, package=com.google.android.apps.photos
+    seq=67, package=com.google.android.apps.tachyon
+    seq=68, package=com.google.android.ims
+    seq=69, package=com.google.android.apps.messaging
+    seq=70, package=com.google.android.googlequicksearchbox
+    seq=78, package=com.instagram.android
+    seq=100, package=com.facebook.orca
+    seq=106, package=com.GoldenKiwi.iphone5sios7keyboardFree
+    seq=107, package=io.github.ylimit.droidbotapp
+    seq=109, package=com.google.android.apps.docs
+    seq=110, package=com.google.android.apps.maps
+    seq=111, package=com.jb.gokeyboard.langpack.ru
+
+
+Dexopt state:
+  [com.jb.gokeyboard.langpack.ru]
+    path: /data/app/com.jb.gokeyboard.langpack.ru-q19QtArH5KpEUhWB-a17VA==/base.apk
+      arm64: [status=speed-profile] [reason=install]
+
+
+Compiler stats:
+  [com.jb.gokeyboard.langpack.ru]
+     base.apk - 490

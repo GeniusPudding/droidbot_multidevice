@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_154606",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.aitype.android.emojinew",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          429,
+          648
+        ],
+        [
+          1405,
+          790
+        ]
+      ],
+      "resource_id": "com.aitype.android.emojinew:id/text_view_section_one_msg",
+      "checked": false,
+      "text": "You have installed ai.type Emoji Plugin, to run it you'll need ai.type keyboard.",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 10,
+      "size": "976*142",
+      "signature": "[class]android.widget.TextView[resource_id]com.aitype.android.emojinew:id/text_view_section_one_msg[text]None[enabled,,]",
+      "view_str": "3dd0318e9822c8c34ceedb849d9b382b",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.aitype.android.emojinew:id/text_view_section_one_msg"
+    }
+  },
+  "start_state": "151d6788d0adfce0e529f029621486ea",
+  "stop_state": "151d6788d0adfce0e529f029621486ea",
+  "event_str": "TouchEvent(state=151d6788d0adfce0e529f029621486ea, view=3dd0318e9822c8c34ceedb849d9b382b(MainWindow/TextView-You have i))"
+}

@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-05_112916",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop net.cdeguet.smartkeyboardtrial"
+  },
+  "start_state": "dd8fac27438655ccdaaed86003a45b72",
+  "stop_state": "5372a53a38651e76d2870294b1af7b2c",
+  "event_str": "KillAppEvent()"
+}

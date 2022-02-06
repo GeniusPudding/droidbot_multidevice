@@ -1,0 +1,54 @@
+{
+  "tag": "2022-02-04_173149",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 4,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        12,
+        13,
+        14,
+        27
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          8,
+          505
+        ],
+        [
+          712,
+          715
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 10,
+      "temp_id": 11,
+      "size": "704*210",
+      "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "441f4db460e4356fb0a766e0c1261f77",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"
+    }
+  },
+  "start_state": "558ce8c393f806f62a293ca90de59338",
+  "stop_state": "cfe76a22d3f0b4732b7eec0fe9acce5f",
+  "event_str": "TouchEvent(state=558ce8c393f806f62a293ca90de59338, view=441f4db460e4356fb0a766e0c1261f77(MainActivity/FrameLayout-))"
+}

@@ -23,7 +23,7 @@ def p_reg_to_v(p_reg,locals_num):
 	else:
 		raise ValueError('Wrong register name')
 
-def callee_logger(smali_lines,f): # TODO: if no .prologue??
+def callee_logger(smali_lines): # TODO: if no .prologue??
 	in_method_flag = False
 	output_flag = 1
 	class_name = ''
@@ -79,11 +79,6 @@ def callee_logger(smali_lines,f): # TODO: if no .prologue??
 			if len(free) < 2:
 				input('bug!!!')
 			# print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
-
-			# new_content += ('    #Instrumentation by GeniusPudding\n')
-			# new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
-			# new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodStartLog(Ljava/lang/String;)V\n\n')
-
 			#Injections let some app crash?
 			new_content += ('    #Instrumentation by GeniusPudding\n')
 			new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
@@ -136,11 +131,9 @@ def callee_logger(smali_lines,f): # TODO: if no .prologue??
 		else:#expandable for other features here
 
 			if line.startswith('.class '):
-				#print(f'class line:{line}')
 				class_name = line.split(' ')[-1].strip('\n')
 
 		if output_flag:
-			#f.write(line)
 			new_content += line
 		else:
 			output_flag = 1	
@@ -150,14 +143,18 @@ def callee_logger(smali_lines,f): # TODO: if no .prologue??
 
 def walk_smali_dir(smali_dir):
 	smali_base_dir = find_smali_base_dir(smali_dir)
-	walking_list = list(os.walk(smali_dir))
 
-	# input(f'walking_list:{walking_list}')
+	walking_list = []
+	for d in os.listdir(smali_base_dir):
+		if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax']:#system API
+			continue
+		walking_list += list(os.walk(os.path.join(smali_base_dir,d)))
+		# walking_list = list(os.walk(smali_dir))
+
 	#for the instrumentation
 	for walking_tuple in walking_list:
 		if len(walking_tuple[2]) == 0:
 			continue
-		# input(f'walking_tuple:{walking_tuple}')
 		for file_name in walking_tuple[2]:
 			if file_name[-6:] != '.smali':
 				continue
@@ -174,7 +171,7 @@ def walk_smali_dir(smali_dir):
 				continue
 			f.seek(0)
 			# print(f'Logging file:{file_name}')
-			new_content = callee_logger(smali_lines,f)
+			new_content = callee_logger(smali_lines)
 			f.write(new_content)
 			f.close()
 	patch_log_file(smali_base_dir)

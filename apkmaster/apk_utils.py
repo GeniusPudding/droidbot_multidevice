@@ -33,6 +33,16 @@ def patch_log_file(smali_base_dir):
     shutil.copyfile(os.path.join(os.path.dirname(__file__),'injections','logs','InlineLogs.smali'), os.path.join(inject_dir,'InlineLogs.smali'))
     return 
 
+def patch_protection_file(smali_base_dir):
+
+    inject_dir = os.path.join(smali_base_dir,'injections')
+    if not os.path.isdir(inject_dir):
+        os.mkdir(inject_dir)
+    # log_dir = os.path.join(inject_dir,'logs')
+    # os.mkdir(log_dir)
+    shutil.copyfile(os.path.join(os.path.dirname(__file__),'injections','protections','AntiEmulator.smali'), os.path.join(inject_dir,'InlineLogs.smali'))
+    return 
+
 def profile_bytecode(class_name):
     return (\
 '    #Instrumentation by GeniusPudding\n'        

@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_155838",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.aitype.android.emojinew",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          337,
+          815
+        ],
+        [
+          1052,
+          997
+        ]
+      ],
+      "resource_id": "com.aitype.android.emojinew:id/text_view_section_two_header",
+      "checked": false,
+      "text": "Keyboard isn't installed",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 14,
+      "size": "715*182",
+      "signature": "[class]android.widget.TextView[resource_id]com.aitype.android.emojinew:id/text_view_section_two_header[text]Keyboard isn't installed[enabled,,]",
+      "view_str": "849991b4fa88f6e8efb4c7520e797ba4",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.aitype.android.emojinew:id/text_view_section_two_header"
+    }
+  },
+  "start_state": "151d6788d0adfce0e529f029621486ea",
+  "stop_state": "151d6788d0adfce0e529f029621486ea",
+  "event_str": "TouchEvent(state=151d6788d0adfce0e529f029621486ea, view=849991b4fa88f6e8efb4c7520e797ba4(MainWindow/TextView-Keyboard i))"
+}

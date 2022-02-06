@@ -28,6 +28,7 @@
     return-void
 .end method
 
+
 .method public static methodStartLog(Ljava/lang/String;)V
     .locals 2
 

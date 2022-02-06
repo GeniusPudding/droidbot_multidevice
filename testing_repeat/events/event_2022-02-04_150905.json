@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_150905",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "org.chromium.webview_shell",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "Load URL",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          1034,
+          172
+        ],
+        [
+          1237,
+          340
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageButton",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 8,
+      "size": "203*168",
+      "signature": "[class]android.widget.ImageButton[resource_id]None[text]None[enabled,,]",
+      "view_str": "6872c84f392fc0f1759a52f265180d81",
+      "content_free_signature": "[class]android.widget.ImageButton[resource_id]None"
+    }
+  },
+  "start_state": "50b3dbfab67b13c9b9c3f428de284a3b",
+  "stop_state": "50b3dbfab67b13c9b9c3f428de284a3b",
+  "event_str": "TouchEvent(state=50b3dbfab67b13c9b9c3f428de284a3b, view=6872c84f392fc0f1759a52f265180d81(WebViewBrowserActivity/ImageButton-))"
+}

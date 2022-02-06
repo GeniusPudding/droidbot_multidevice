@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_183215",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.ibm.constantsDLC",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          32,
+          86
+        ],
+        [
+          283,
+          140
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "constantsDLC",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "251*54",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]constantsDLC[enabled,,]",
+      "view_str": "51fe5c55a6bddca481278d33a6e11819",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    }
+  },
+  "start_state": "05dc5871b65232d986366cf29571370e",
+  "stop_state": "05dc5871b65232d986366cf29571370e",
+  "event_str": "TouchEvent(state=05dc5871b65232d986366cf29571370e, view=51fe5c55a6bddca481278d33a6e11819(MainActivity/TextView-constantsD))"
+}

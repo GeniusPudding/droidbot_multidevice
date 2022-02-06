@@ -1,0 +1,153 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        94cfb48 com.GoldenKiwi.iphone5sios7keyboardFree/.ui.SplashPage filter 9d09ea0
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Service Resolver Table:
+  Non-Data Actions:
+      android.view.InputMethod:
+        c071de1 com.GoldenKiwi.iphone5sios7keyboardFree/.SoftKeyboard filter f031ba3 permission android.permission.BIND_INPUT_METHOD
+          Action: "android.view.InputMethod"
+
+Key Set Manager:
+  [com.GoldenKiwi.iphone5sios7keyboardFree]
+      Signing KeySets: 27
+
+Packages:
+  Package [com.GoldenKiwi.iphone5sios7keyboardFree] (7287706):
+    userId=10224
+    pkg=Package{522b1c7 com.GoldenKiwi.iphone5sios7keyboardFree}
+    codePath=/data/app/com.GoldenKiwi.iphone5sios7keyboardFree-xbVO01omxIRaofos8If3LQ==
+    resourcePath=/data/app/com.GoldenKiwi.iphone5sios7keyboardFree-xbVO01omxIRaofos8If3LQ==
+    legacyNativeLibraryDir=/data/app/com.GoldenKiwi.iphone5sios7keyboardFree-xbVO01omxIRaofos8If3LQ==/lib
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    versionCode=13 minSdk=15 targetSdk=28
+    versionName=2.0
+    splits=[base]
+    apkSigningVersion=1
+    applicationInfo=ApplicationInfo{8da83f4 com.GoldenKiwi.iphone5sios7keyboardFree}
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ]
+    dataDir=/data/user/0/com.GoldenKiwi.iphone5sios7keyboardFree
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2022-02-04 16:52:00
+    firstInstallTime=2022-02-04 16:52:05
+    lastUpdateTime=2022-02-04 16:52:05
+    signatures=PackageSignatures{bf6b71d version:1, signatures:[360261db], past signatures:[]}
+    installPermissionsFixed=true
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    requested permissions:
+      android.permission.WRITE_EXTERNAL_STORAGE
+      android.permission.INTERNET
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.ACCESS_WIFI_STATE
+      android.permission.READ_EXTERNAL_STORAGE
+    install permissions:
+      android.permission.INTERNET: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      android.permission.ACCESS_WIFI_STATE: granted=true
+    User 0: ceDataInode=1743885 installed=true hidden=false suspended=false stopped=true notLaunched=true enabled=0 instant=false virtual=false
+      gids=[3003]
+      runtime permissions:
+
+Asus Customized Information:
+ASUS_X01AD WW sku / Country Code:TW / CID:ASUS
+* Uninstall Preloaded Apps [enabled]
+ Configuration Lists:
+   --- Skipped System Packages ---
+      YandexApp.apk
+      YandexBrowser.apk
+      ATOKIME.apk
+      Caping.apk
+      FreeFire.apk
+      IBook.apk
+      BRApps.apk
+
+   --- Sticky System Packages ---
+      com.asus.UpdateLauncher
+      com.asus.configupdater
+      com.asus.dm
+      com.asus.livedemoservice
+      com.asus.loguploader
+      com.asus.loguploaderproxy
+      com.asus.maxxaudio
+      com.asus.setupwizard
+      com.asus.smartreading
+      com.asus.sysdiagnostic
+      com.google.android.apps.docs.oem
+      com.google.android.packageinstaller
+      dk.icepower.icesound
+
+   --- Protected System Packages ---
+      com.android.chrome
+      com.android.vending
+      com.asus.brapp
+      com.asus.calculator
+      com.asus.faceunlockservice
+      com.asus.livedemo
+      com.asus.soundrecorder
+      com.asus.sysmonitor
+      com.atok.mobile.im.asus.service
+      com.facebook.appmanager
+      com.facebook.services
+      com.facebook.system
+      com.google.android.apps.docs
+      com.google.android.apps.maps
+      com.google.android.apps.messaging
+      com.google.android.apps.photos
+      com.google.android.apps.restore
+      com.google.android.apps.tachyon
+      com.google.android.apps.walletnfcrel
+      com.google.android.backuptransport
+      com.google.android.calendar
+      com.google.android.configupdater
+      com.google.android.contacts
+      com.google.android.deskclock
+      com.google.android.dialer
+      com.google.android.ext.services
+      com.google.android.ext.shared
+      com.google.android.feedback
+      com.google.android.gm
+      com.google.android.gms
+      com.google.android.gms.policy_sidecar_aps
+      com.google.android.googlequicksearchbox
+      com.google.android.gsf
+      com.google.android.ims
+      com.google.android.inputmethod.latin
+      com.google.android.marvin.talkback
+      com.google.android.music
+      com.google.android.onetimeinitializer
+      com.google.android.partnersetup
+      com.google.android.printservice.recommendation
+      com.google.android.setupwizard
+      com.google.android.syncadapters.calendar
+      com.google.android.syncadapters.contacts
+      com.google.android.tts
+      com.google.android.videos
+      com.google.android.webview
+      com.google.android.youtube
+      google
+
+
+Package Changes:
+  Sequence number=13
+  User 0:
+    seq=5, package=com.google.android.gms
+    seq=7, package=com.google.android.contacts
+    seq=8, package=io.github.ylimit.droidbotapp
+    seq=10, package=com.GoldenKiwi.iphone5sios7keyboardFree
+    seq=12, package=com.google.android.apps.docs
+
+
+Dexopt state:
+  [com.GoldenKiwi.iphone5sios7keyboardFree]
+    path: /data/app/com.GoldenKiwi.iphone5sios7keyboardFree-xbVO01omxIRaofos8If3LQ==/base.apk
+      arm64: [status=run-from-apk] [reason=unknown]
+
+
+Compiler stats:
+  [com.GoldenKiwi.iphone5sios7keyboardFree]
+     base.apk - 4456

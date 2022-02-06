@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-05_112710",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.SetupActivity"
+  },
+  "start_state": "d517978f8443d8d2bf4db98b4045f755",
+  "stop_state": "821d95988b71257a19996ed07ca04cad",
+  "event_str": "IntentEvent(intent='am start net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.SetupActivity')"
+}

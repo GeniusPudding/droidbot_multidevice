@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_184418",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop com.ibm.constantsDLC"
+  },
+  "start_state": "6aa266ffb6a68c626b08f014966eea56",
+  "stop_state": "6aa266ffb6a68c626b08f014966eea56",
+  "event_str": "KillAppEvent()"
+}

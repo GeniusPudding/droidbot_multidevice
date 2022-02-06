@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_183211",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.ibm.constantsDLC",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          32,
+          201
+        ],
+        [
+          141,
+          239
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "Evadroid",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 9,
+      "temp_id": 10,
+      "size": "109*38",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]Evadroid[enabled,,]",
+      "view_str": "1716c21ad6de5f4688fae5df97884611",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    }
+  },
+  "start_state": "05dc5871b65232d986366cf29571370e",
+  "stop_state": "05dc5871b65232d986366cf29571370e",
+  "event_str": "TouchEvent(state=05dc5871b65232d986366cf29571370e, view=1716c21ad6de5f4688fae5df97884611(MainActivity/TextView-Evadroid))"
+}

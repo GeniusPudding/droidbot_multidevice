@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_165341",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          720,
+          1520
+        ]
+      ],
+      "resource_id": "com.android.systemui:id/scrim_in_front",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 1,
+      "size": "720*1520",
+      "signature": "[class]android.view.View[resource_id]com.android.systemui:id/scrim_in_front[text]None[enabled,,]",
+      "view_str": "5185792e5d62f43fb180ed24c5f0cf33",
+      "content_free_signature": "[class]android.view.View[resource_id]com.android.systemui:id/scrim_in_front"
+    }
+  },
+  "start_state": "5db51b1e8e04044fe4f74f5b8fcca534",
+  "stop_state": "5db51b1e8e04044fe4f74f5b8fcca534",
+  "event_str": "TouchEvent(state=5db51b1e8e04044fe4f74f5b8fcca534, view=5185792e5d62f43fb180ed24c5f0cf33(MainActivity/View-))"
+}

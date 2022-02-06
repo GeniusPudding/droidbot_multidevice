@@ -8,7 +8,7 @@ from droidbot import DroidBot
 from droidbot.droidmaster import DroidMaster
 from droidbot.utils import get_available_devices
 import threading
-from apkmaster.apk_repacker import bytecode_instrumentation
+from apkmaster.apk_repacker import methodlog_instrumentation
 from apkmaster.datautils.apkinfo import get_min_sdkversion
 import os 
 
@@ -97,6 +97,8 @@ def parse_args():
                     help="Inject the apk gor logging methods.")
     parser.add_argument("-ni", action="store_false", dest="inject",
                     help="Not to inject the apk gor logging methods.")
+    parser.add_argument("-repeat", action="store", dest="repeat", default=0, type=int,
+                    help="Repeat sending same input sequence for testing.")
     options = parser.parse_args()
     # print options
     return options
@@ -120,9 +122,8 @@ def main():
 
     repackaged_apk_path = None
     if opts.inject:
-        #input('test inject')
-        repackaged_apk_path = bytecode_instrumentation(opts.apk_path,all_devices)
-        print(f'bytecode_instrumentation:{repackaged_apk_path}')
+        repackaged_apk_path = methodlog_instrumentation(opts.apk_path)
+        print(f'methodlog_instrumentation:{repackaged_apk_path}')
 
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
@@ -186,6 +187,7 @@ def main():
                 enable_accessibility_hard=opts.enable_accessibility_hard,
                 master=opts.master,
                 humanoid=opts.humanoid,
+                repeat=opts.repeat,
                 ignore_ad=opts.ignore_ad,
                 replay_output=opts.replay_output,
                 get_min_sdkversion=get_min_sdkversion)

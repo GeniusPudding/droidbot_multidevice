@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-05_100206",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "android",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          98,
+          588
+        ],
+        [
+          622,
+          691
+        ]
+      ],
+      "resource_id": "android:id/alertTitle",
+      "checked": false,
+      "text": "\u300cRidmik Keyboard\u300d\u5c62\u6b21\u505c\u6b62\u904b\u4f5c",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "524*103",
+      "signature": "[class]android.widget.TextView[resource_id]android:id/alertTitle[text]\u300cRidmik Keyboard\u300d\u5c62\u6b21\u505c\u6b62\u904b\u4f5c[enabled,,]",
+      "view_str": "2a3f46e46fa4b96957c2048ea03474ba",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]android:id/alertTitle"
+    }
+  },
+  "start_state": "67a9b6d5a9e587c59daf66c6d68ba0f6",
+  "stop_state": "08f7ae4ce2380394e806a765acd76e8f",
+  "event_str": "TouchEvent(state=67a9b6d5a9e587c59daf66c6d68ba0f6, view=2a3f46e46fa4b96957c2048ea03474ba(InstalledAppDetails/TextView-\u300cRidmik Ke))"
+}

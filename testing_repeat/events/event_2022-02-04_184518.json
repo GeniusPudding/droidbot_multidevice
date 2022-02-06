@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_184518",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          272,
+          1304
+        ],
+        [
+          448,
+          1380
+        ]
+      ],
+      "resource_id": "com.android.systemui:id/emergency_call_button",
+      "checked": false,
+      "text": "\u7dca\u6025\u64a5\u865f",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 78,
+      "temp_id": 79,
+      "size": "176*76",
+      "signature": "[class]android.widget.Button[resource_id]com.android.systemui:id/emergency_call_button[text]\u7dca\u6025\u64a5\u865f[enabled,,]",
+      "view_str": "19b815e38596097c0d10ac1e7cd6c097",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.android.systemui:id/emergency_call_button"
+    }
+  },
+  "start_state": "fa683039b7911240cd9ebcff65f926c9",
+  "stop_state": "fa683039b7911240cd9ebcff65f926c9",
+  "event_str": "TouchEvent(state=fa683039b7911240cd9ebcff65f926c9, view=19b815e38596097c0d10ac1e7cd6c097(MainActivity/Button-\u7dca\u6025\u64a5\u865f))"
+}

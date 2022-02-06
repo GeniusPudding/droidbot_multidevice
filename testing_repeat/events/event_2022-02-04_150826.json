@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_150826",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.settings",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "Navigate up",
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          84
+        ],
+        [
+          196,
+          280
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageButton",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "196*196",
+      "signature": "[class]android.widget.ImageButton[resource_id]None[text]None[enabled,,]",
+      "view_str": "4586a6dccb9abb738720ba2d6f68f665",
+      "content_free_signature": "[class]android.widget.ImageButton[resource_id]None"
+    }
+  },
+  "start_state": "20945cc3d03665ad9ac28f0da990b8f7",
+  "stop_state": "31e5c3936408dde6ccfefb3243d44821",
+  "event_str": "TouchEvent(state=20945cc3d03665ad9ac28f0da990b8f7, view=4586a6dccb9abb738720ba2d6f68f665(SearchActivity/ImageButton-))"
+}

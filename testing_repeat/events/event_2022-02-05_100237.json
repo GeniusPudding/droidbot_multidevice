@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-05_100237",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start ridmik.keyboard/com.android.inputmethod.latin.setup.MainActivity"
+  },
+  "start_state": "2ddaad26603c26f099508d5cd74c5dec",
+  "stop_state": "29923a4796600ba8de8c776cbf86a068",
+  "event_str": "IntentEvent(intent='am start ridmik.keyboard/com.android.inputmethod.latin.setup.MainActivity')"
+}

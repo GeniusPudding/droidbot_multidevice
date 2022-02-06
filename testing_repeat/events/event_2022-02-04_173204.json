@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_173204",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.jb.gokeyboard.langpack.ru/com.jb.gokeyboard.langpack.main.MainActivity"
+  },
+  "start_state": "8f16b4e0426ad786428694628ffa4fd6",
+  "stop_state": "cfe76a22d3f0b4732b7eec0fe9acce5f",
+  "event_str": "IntentEvent(intent='am start com.jb.gokeyboard.langpack.ru/com.jb.gokeyboard.langpack.main.MainActivity')"
+}

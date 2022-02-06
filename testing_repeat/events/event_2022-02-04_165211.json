@@ -1,0 +1,11 @@
+{
+  "tag": "2022-02-04_165211",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.GoldenKiwi.iphone5sios7keyboardFree/com.GoldenKiwi.iphone5sios7keyboardFree.ui.SplashPage"
+  },
+  "start_state": "0b2b928b1d88bef66a1854189a5996e0",
+  "stop_state": "ecb5bb5194b2dc51062a798f8e4e8f20",
+  "event_str": "IntentEvent(intent='am start com.GoldenKiwi.iphone5sios7keyboardFree/com.GoldenKiwi.iphone5sios7keyboardFree.ui.SplashPage')"
+}

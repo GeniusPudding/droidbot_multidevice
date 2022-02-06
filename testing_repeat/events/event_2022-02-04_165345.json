@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_165345",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          8,
+          505
+        ],
+        [
+          712,
+          853
+        ]
+      ],
+      "resource_id": "com.android.systemui:id/backgroundDimmed",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 13,
+      "size": "704*348",
+      "signature": "[class]android.view.View[resource_id]com.android.systemui:id/backgroundDimmed[text]None[enabled,,]",
+      "view_str": "ebf5b8abe43c5192f39692ff4ba20254",
+      "content_free_signature": "[class]android.view.View[resource_id]com.android.systemui:id/backgroundDimmed"
+    }
+  },
+  "start_state": "5db51b1e8e04044fe4f74f5b8fcca534",
+  "stop_state": "5db51b1e8e04044fe4f74f5b8fcca534",
+  "event_str": "TouchEvent(state=5db51b1e8e04044fe4f74f5b8fcca534, view=ebf5b8abe43c5192f39692ff4ba20254(MainActivity/View-))"
+}

@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_173216",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.jb.gokeyboard.langpack.ru",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          80,
+          603
+        ],
+        [
+          646,
+          662
+        ]
+      ],
+      "resource_id": "com.jb.gokeyboard.langpack.ru:id/title",
+      "checked": false,
+      "text": "Russian Pack",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 4,
+      "size": "566*59",
+      "signature": "[class]android.widget.TextView[resource_id]com.jb.gokeyboard.langpack.ru:id/title[text]Russian Pack[enabled,,]",
+      "view_str": "d52372dcd9a3fb90111494959ac3212f",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.jb.gokeyboard.langpack.ru:id/title"
+    }
+  },
+  "start_state": "3e41cb3b2ab54baa72182b76ae0c92f4",
+  "stop_state": "3e41cb3b2ab54baa72182b76ae0c92f4",
+  "event_str": "TouchEvent(state=3e41cb3b2ab54baa72182b76ae0c92f4, view=d52372dcd9a3fb90111494959ac3212f(MainActivity/TextView-Russian Pa))"
+}

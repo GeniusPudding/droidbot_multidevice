@@ -58,6 +58,8 @@ class InputPolicy(object):
         :param input_manager: instance of InputManager
         """
         self.action_count = 0
+        self.action_list = []
+        event_list = []
         while input_manager.enabled and self.action_count < input_manager.event_count:
             try:
                 # # make sure the first event is go to HOME screen
@@ -70,7 +72,9 @@ class InputPolicy(object):
                     event = KillAppEvent(app=self.app)
                 else:
                     event = self.generate_event()
-                input_manager.add_event(event)
+                event_list.append(event)
+                event_str = input_manager.add_event(event)
+                self.action_list.append(event_str)
             except KeyboardInterrupt:
                 break
             except InputInterruptedException as e:
@@ -86,6 +90,30 @@ class InputPolicy(object):
                 continue
             self.action_count += 1
 
+        input_manager.add_event(KillAppEvent(app=self.app))
+
+        for i in range(input_manager.repeat):
+            repeat_count = 0 
+            action_list2 = []
+            while input_manager.enabled and repeat_count < input_manager.event_count:
+                try:
+                    event = event_list[repeat_count]
+                    event_str = input_manager.add_event(event)
+                    action_list2.append(event_str)
+                except KeyboardInterrupt:
+                    break
+                except InputInterruptedException as e:
+                    self.logger.warning("stop sending events: %s" % e)
+                    break
+                except Exception as e:
+                    self.logger.warning("exception during sending events: %s" % e)
+                    import traceback
+                    traceback.print_exc()
+                    continue
+                repeat_count += 1
+            input_manager.add_event(KillAppEvent(app=self.app))
+            # print(f'action_list:{self.action_list}')
+            # print(f'action_list2:{action_list2}')
     @abstractmethod
     def generate_event(self):
         """

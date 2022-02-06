@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_165349",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          40,
+          537
+        ],
+        [
+          76,
+          573
+        ]
+      ],
+      "resource_id": "android:id/icon",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 16,
+      "temp_id": 17,
+      "size": "36*36",
+      "signature": "[class]android.widget.ImageView[resource_id]android:id/icon[text]None[enabled,,]",
+      "view_str": "d7f4e41e8ed6f7fffe8524f6bcb5c2bc",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]android:id/icon"
+    }
+  },
+  "start_state": "5db51b1e8e04044fe4f74f5b8fcca534",
+  "stop_state": "5db51b1e8e04044fe4f74f5b8fcca534",
+  "event_str": "TouchEvent(state=5db51b1e8e04044fe4f74f5b8fcca534, view=d7f4e41e8ed6f7fffe8524f6bcb5c2bc(MainActivity/ImageView-))"
+}

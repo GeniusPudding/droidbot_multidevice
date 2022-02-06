@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_154213",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.aitype.android.emojinew",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          257,
+          2332
+        ],
+        [
+          1183,
+          2523
+        ]
+      ],
+      "resource_id": "com.aitype.android.emojinew:id/wizard_needs_update_button_lite",
+      "checked": false,
+      "text": "DOWNLOAD KEYBOARD LITE",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 17,
+      "size": "926*191",
+      "signature": "[class]android.widget.Button[resource_id]com.aitype.android.emojinew:id/wizard_needs_update_button_lite[text]DOWNLOAD KEYBOARD LITE[enabled,,]",
+      "view_str": "2556ec858b1b6b9480d71c90b64c7216",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.aitype.android.emojinew:id/wizard_needs_update_button_lite"
+    }
+  },
+  "start_state": "151d6788d0adfce0e529f029621486ea",
+  "stop_state": "d727162f15da18a0c31154bdd8a5f173",
+  "event_str": "TouchEvent(state=151d6788d0adfce0e529f029621486ea, view=2556ec858b1b6b9480d71c90b64c7216(MainWindow/Button-DOWNLOAD K))"
+}

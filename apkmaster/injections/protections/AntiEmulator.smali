@@ -2,424 +2,258 @@
 .super Ljava/lang/Object;
 .source "SourceFile"
 
-# instance fields
-.field private final mActivity:Landroid/app/Activity;
-
-.field private final mContext:Landroid/content/Context;
-
-.field tag:Ljava/lang/String;
-
-.field private telephonyManager:Landroid/telephony/TelephonyManager;
-
-
 # direct methods
-.method public constructor <init>(Landroid/content/Context;Landroid/app/Activity;)V
-    .locals 2
-    .param p1, "mainContext"    # Landroid/content/Context;
-    .param p2, "mainActivity"    # Landroid/app/Activity;
+.method public constructor <init>()V
+    .locals 0
 
-    .prologue
-    .line 29
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 35
-    const-string v0, "Emulator Check:"
-
-    iput-object v0, p0, Linjections/AntiEmulator;->tag:Ljava/lang/String;
-
-    .line 30
-    iput-object p1, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
-
-    .line 31
-    iput-object p2, p0, Linjections/AntiEmulator;->mActivity:Landroid/app/Activity;
-
-    .line 32
-    iget-object v0, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
-
-    const-string v1, "phone"
-
-    invoke-virtual {v0, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/telephony/TelephonyManager;
-
-    iput-object v0, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    .line 33
     return-void
 .end method
 
-.method public checkBuild()Z
+.method public static testEvasionBehavior()V
     .locals 2
 
+    const-string v0, "GeniusPudding"
+
+    const-string v1, "- Malicious Behavior -"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+.end method
+
+.method public static isBuildEmulator()Z
+    .locals 3
     .prologue
-    .line 73
-    const-string v0, "CHECKING"
+    
+    .line 50
+    const/4 v0, 0x0
 
-    const-string v1, "checkBuild"
+    .line 53
+    .local v0, "emuCount":I
+    sget-object v1, Landroid/os/Build;->BOARD:Ljava/lang/String;
 
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+    const-string v2, "unknown"
+
+    if-ne v1, v2, :cond_9
+
+    .line 54
+    add-int/lit8 v0, v0, 0x1
+
+    .line 56
+    :cond_9
+    sget-object v1, Landroid/os/Build;->BRAND:Ljava/lang/String;
+
+    const-string v2, "Android"
+
+    if-eq v1, v2, :cond_15
+
+    sget-object v1, Landroid/os/Build;->BRAND:Ljava/lang/String;
+
+    const-string v2, "google"
+
+    if-ne v1, v2, :cond_17
+
+    .line 57
+    :cond_15
+    add-int/lit8 v0, v0, 0x1
+
+    .line 59
+    :cond_17
+    sget-object v1, Landroid/os/Build;->DEVICE:Ljava/lang/String;
+
+    const-string v2, "generic"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_27
+
+    sget-object v1, Landroid/os/Build;->DEVICE:Ljava/lang/String;
+
+    const-string v2, "vbox86p"
+
+    if-ne v1, v2, :cond_29
+
+    .line 60
+    :cond_27
+    add-int/lit8 v0, v0, 0x1
+
+    .line 62
+    :cond_29
+    sget-object v1, Landroid/os/Build;->FINGERPRINT:Ljava/lang/String;
+
+    const-string v2, "google/sdk"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_3d
+
+    sget-object v1, Landroid/os/Build;->FINGERPRINT:Ljava/lang/String;
+
+    const-string v2, "Android/vbox86p"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_3f
+
+    .line 63
+    :cond_3d
+    add-int/lit8 v0, v0, 0x1
+
+    .line 65
+    :cond_3f
+    sget-object v1, Landroid/os/Build;->HARDWARE:Ljava/lang/String;
+
+    const-string v2, "ranchu"
+
+    if-eq v1, v2, :cond_4b
+
+    sget-object v1, Landroid/os/Build;->HARDWARE:Ljava/lang/String;
+
+    const-string v2, "vbox86"
+
+    if-ne v1, v2, :cond_4d
+
+    .line 66
+    :cond_4b
+    add-int/lit8 v0, v0, 0x1
+
+    .line 68
+    :cond_4d
+    sget-object v1, Landroid/os/Build;->MANUFACTURER:Ljava/lang/String;
+
+    const-string v2, "unknown"
+
+    if-eq v1, v2, :cond_5d
+
+    sget-object v1, Landroid/os/Build;->MANUFACTURER:Ljava/lang/String;
+
+    const-string v2, "Genym"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_5f
+
+    .line 69
+    :cond_5d
+    add-int/lit8 v0, v0, 0x1
+
+    .line 71
+    :cond_5f
+    sget-object v1, Landroid/os/Build;->MODEL:Ljava/lang/String;
+
+    const-string v2, "Android SDK built"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_6b
+
+    .line 72
+    add-int/lit8 v0, v0, 0x1
 
     .line 74
-    sget-object v0, Landroid/os/Build;->BOARD:Ljava/lang/String;
+    :cond_6b
+    sget-object v1, Landroid/os/Build;->PRODUCT:Ljava/lang/String;
 
-    const-string v1, "unknown"
+    const-string v2, "sdk_gphone_x86"
 
-    if-eq v0, v1, :cond_1d
+    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
 
-    sget-object v0, Landroid/os/Build;->DEVICE:Ljava/lang/String;
+    move-result v1
 
-    const-string v1, "generic"
+    if-nez v1, :cond_7b
+
+    sget-object v1, Landroid/os/Build;->PRODUCT:Ljava/lang/String;
+
+    const-string v2, "vbox86p"
+
+    if-ne v1, v2, :cond_7d
 
     .line 75
-    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_1d
-
-    sget-object v0, Landroid/os/Build;->USER:Ljava/lang/String;
-
-    const-string v1, "android-build"
-
-    if-ne v0, v1, :cond_26
+    :cond_7b
+    add-int/lit8 v0, v0, 0x1
 
     .line 77
-    :cond_1d
-    iget-object v0, p0, Linjections/AntiEmulator;->tag:Ljava/lang/String;
+    :cond_7d
+    sget-object v1, Landroid/os/Build;->USER:Ljava/lang/String;
 
-    const-string v1, "checkBuild():Emulator Detected!"
+    const-string v2, "genymotion"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+    if-eq v1, v2, :cond_89
+
+    sget-object v1, Landroid/os/Build;->USER:Ljava/lang/String;
+
+    const-string v2, "android-build"
+
+    if-ne v1, v2, :cond_8b
 
     .line 78
-    const/4 v0, 0x1
+    :cond_89
+    add-int/lit8 v0, v0, 0x1
 
     .line 80
-    :goto_25
-    return v0
+    :cond_8b
+    sget-object v1, Landroid/os/Build;->SUPPORTED_ABIS:[Ljava/lang/String;
 
-    :cond_26
-    const/4 v0, 0x0
+    invoke-static {v1}, Ljava/util/Arrays;->asList([Ljava/lang/Object;)Ljava/util/List;
 
-    goto :goto_25
-.end method
+    move-result-object v1
 
-.method public checkTelephony()Z
-    .locals 6
+    const-string v2, "x86"
 
-    .prologue
-    const/4 v1, 0x1
+    invoke-interface {v1, v2}, Ljava/util/List;->contains(Ljava/lang/Object;)Z
 
-    const/4 v0, 0x0
+    move-result v1
 
-    .line 85
-    iget-object v2, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
+    if-eqz v1, :cond_9b
 
-    const-string v3, "android.permission.READ_SMS"
+    .line 81
+    add-int/lit8 v0, v0, 0x1
 
-    invoke-static {v2, v3}, Landroidx/core/app/ActivityCompat;->checkSelfPermission(Landroid/content/Context;Ljava/lang/String;)I
+    .line 83
+    :cond_9b
+    sget-object v1, Landroid/os/Build;->TAGS:Ljava/lang/String;
 
-    move-result v2
+    const-string v2, "test-keys"
 
-    if-eqz v2, :cond_35
+    if-eq v1, v2, :cond_a7
 
-    iget-object v2, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
+    sget-object v1, Landroid/os/Build;->TAGS:Ljava/lang/String;
 
-    const-string v3, "android.permission.READ_PHONE_NUMBERS"
+    const-string v2, "dev-keys"
 
-    .line 86
-    invoke-static {v2, v3}, Landroidx/core/app/ActivityCompat;->checkSelfPermission(Landroid/content/Context;Ljava/lang/String;)I
+    if-ne v1, v2, :cond_a9
 
-    move-result v2
-
-    if-eqz v2, :cond_35
-
-    iget-object v2, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
-
-    const-string v3, "android.permission.READ_PHONE_STATE"
+    .line 84
+    :cond_a7
+    add-int/lit8 v0, v0, 0x1
 
     .line 87
-    invoke-static {v2, v3}, Landroidx/core/app/ActivityCompat;->checkSelfPermission(Landroid/content/Context;Ljava/lang/String;)I
+    :cond_a9
+    const/4 v1, 0x3
 
-    move-result v2
-
-    if-eqz v2, :cond_35
+    if-le v0, v1, :cond_ae
 
     .line 88
-    iget-object v2, p0, Linjections/AntiEmulator;->mActivity:Landroid/app/Activity;
-
-    const/4 v3, 0x3
-
-    new-array v3, v3, [Ljava/lang/String;
-
-    const-string v4, "android.permission.READ_PHONE_STATE"
-
-    aput-object v4, v3, v0
-
-    const-string v4, "android.permission.READ_SMS"
-
-    aput-object v4, v3, v1
-
-    const/4 v4, 0x2
-
-    const-string v5, "android.permission.READ_PHONE_NUMBERS"
-
-    aput-object v5, v3, v4
-
-    invoke-static {v2, v3, v0}, Landroidx/core/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V
+    const/4 v1, 0x1
 
     .line 90
-    :cond_35
-    const-string v2, "CHECKING"
+    :goto_ad
+    return v1
 
-    const-string v3, "checkTelephony"
+    :cond_ae
+    const/4 v1, 0x0
 
-    invoke-static {v2, v3}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 91
-    iget-object v2, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    invoke-virtual {v2}, Landroid/telephony/TelephonyManager;->getLine1Number()Ljava/lang/String;
-
-    move-result-object v2
-
-    const-string v3, "155552155"
-
-    invoke-virtual {v2, v3}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v2
-
-    if-nez v2, :cond_6c
-
-    iget-object v2, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    .line 92
-    invoke-virtual {v2}, Landroid/telephony/TelephonyManager;->getSimSerialNumber()Ljava/lang/String;
-
-    move-result-object v2
-
-    const-string v3, "89014103211118510720"
-
-    if-eq v2, v3, :cond_6c
-
-    iget-object v2, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    .line 93
-    invoke-virtual {v2}, Landroid/telephony/TelephonyManager;->getSubscriberId()Ljava/lang/String;
-
-    move-result-object v2
-
-    const-string v3, "310260000000000"
-
-    if-eq v2, v3, :cond_6c
-
-    iget-object v2, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    .line 94
-    invoke-virtual {v2}, Landroid/telephony/TelephonyManager;->getVoiceMailNumber()Ljava/lang/String;
-
-    move-result-object v2
-
-    const-string v3, "15552175049"
-
-    invoke-virtual {v2, v3}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_74
-
-    .line 95
-    :cond_6c
-    iget-object v0, p0, Linjections/AntiEmulator;->tag:Ljava/lang/String;
-
-    const-string v2, "checkTelephony():Emulator Detected!"
-
-    invoke-static {v0, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    move v0, v1
-
-    .line 98
-    :cond_74
-    return v0
+    goto :goto_ad
 .end method
-
-.method public listBuildDetails()V
-    .locals 2
-    .annotation build Landroidx/annotation/RequiresApi;
-        api = 0x1a
-    .end annotation
-    .prologue
-    invoke-static {}, Linjections/BuildProfile;->listBuildDetails()V
-    .line 121
-    return-void
-.end method
-
-.method public listTelephonyDetails()V
-    .locals 6
-
-    .prologue
-    const/4 v5, 0x0
-
-    .line 123
-    const-string v0, "GeniusPudding - TelephonyDetails:"
-
-    .line 124
-    .local v0, "tag":Ljava/lang/String;
-    iget-object v1, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
-
-    const-string v2, "android.permission.READ_SMS"
-
-    invoke-static {v1, v2}, Landroidx/core/app/ActivityCompat;->checkSelfPermission(Landroid/content/Context;Ljava/lang/String;)I
-
-    move-result v1
-
-    if-eqz v1, :cond_37
-
-    iget-object v1, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
-
-    const-string v2, "android.permission.READ_PHONE_NUMBERS"
-
-    .line 125
-    invoke-static {v1, v2}, Landroidx/core/app/ActivityCompat;->checkSelfPermission(Landroid/content/Context;Ljava/lang/String;)I
-
-    move-result v1
-
-    if-eqz v1, :cond_37
-
-    iget-object v1, p0, Linjections/AntiEmulator;->mContext:Landroid/content/Context;
-
-    const-string v2, "android.permission.READ_PHONE_STATE"
-
-    .line 126
-    invoke-static {v1, v2}, Landroidx/core/app/ActivityCompat;->checkSelfPermission(Landroid/content/Context;Ljava/lang/String;)I
-
-    move-result v1
-
-    if-eqz v1, :cond_37
-
-    .line 134
-    iget-object v1, p0, Linjections/AntiEmulator;->mActivity:Landroid/app/Activity;
-
-    const/4 v2, 0x3
-
-    new-array v2, v2, [Ljava/lang/String;
-
-    const-string v3, "android.permission.READ_PHONE_STATE"
-
-    aput-object v3, v2, v5
-
-    const/4 v3, 0x1
-
-    const-string v4, "android.permission.READ_SMS"
-
-    aput-object v4, v2, v3
-
-    const/4 v3, 0x2
-
-    const-string v4, "android.permission.READ_PHONE_NUMBERS"
-
-    aput-object v4, v2, v3
-
-    invoke-static {v1, v2, v5}, Landroidx/core/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V
-
-    .line 138
-    :cond_37
-    iget-object v1, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    invoke-virtual {v1}, Landroid/telephony/TelephonyManager;->getDeviceId()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 139
-    iget-object v1, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    invoke-virtual {v1}, Landroid/telephony/TelephonyManager;->getLine1Number()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 140
-    iget-object v1, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    invoke-virtual {v1}, Landroid/telephony/TelephonyManager;->getSimSerialNumber()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 141
-    iget-object v1, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    invoke-virtual {v1}, Landroid/telephony/TelephonyManager;->getSubscriberId()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 142
-    iget-object v1, p0, Linjections/AntiEmulator;->telephonyManager:Landroid/telephony/TelephonyManager;
-
-    invoke-virtual {v1}, Landroid/telephony/TelephonyManager;->getVoiceMailNumber()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 144
-    return-void
-.end method
-
-
-# virtual methods
-.method public IsEmulator()Z
-    .locals 2
-    .annotation build Landroidx/annotation/RequiresApi;
-        api = 0x1a
-    .end annotation
-
-    .prologue
-    .line 40
-    invoke-direct {p0}, Linjections/AntiEmulator;->listTelephonyDetails()V
-
-    .line 41
-    invoke-direct {p0}, Linjections/AntiEmulator;->listBuildDetails()V
-
-    .line 42
-    const-string v0, "CHECKING"
-
-    const-string v1, "CHECKING"
-
-    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 45
-    invoke-direct {p0}, Linjections/AntiEmulator;->checkTelephony()Z
-
-    move-result v0
-
-    if-nez v0, :cond_19
-
-    invoke-direct {p0}, Linjections/AntiEmulator;->checkBuild()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1b
-
-    :cond_19
-    const/4 v0, 0x1
-
-    :goto_1a
-    return v0
-
-    :cond_1b
-    const/4 v0, 0x0
-
-    goto :goto_1a
-.end method
-
-
-

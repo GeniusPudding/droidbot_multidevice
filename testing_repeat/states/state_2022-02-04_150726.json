@@ -1,0 +1,924 @@
+{
+  "tag": "2022-02-04_150726",
+  "state_str": "c782c2ee07d601af44dc839bb8ebab2e",
+  "state_str_content_free": "6f0c006484d431a2c01ae5aab3c959e5",
+  "foreground_activity": "com.android.settings/.Settings$AvailableVirtualKeyboardActivity",
+  "activity_stack": [
+    "com.android.settings/.Settings$AvailableVirtualKeyboardActivity",
+    "com.GoldenKiwi.iphone5sios7keyboardFree/.ui.MainActivity"
+  ],
+  "background_services": [
+    "com.android.dialer/com.android.voicemail.impl.scheduling.TaskSchedulerJobService",
+    "android.ext.services/.notification.Assistant",
+    "com.android.permissioncontroller/com.android.packageinstaller.role.service.RoleControllerServiceImpl",
+    "com.android.systemui/.keyguard.KeyguardService",
+    "com.android.systemui/.ImageWallpaper",
+    "com.android.launcher3/.notification.NotificationListener",
+    "com.android.phone/com.android.internal.telephony.CellularNetworkService",
+    "com.GoldenKiwi.iphone5sios7keyboardFree/org.chromium.content.app.SandboxedProcessService0",
+    "io.github.ylimit.droidbotapp/.DroidBotIME",
+    "com.android.networkstack/com.android.server.NetworkStackService",
+    "io.github.ylimit.droidbotapp/io.github.privacystreams.accessibility.PSAccessibilityService",
+    "com.android.systemui/.SystemUIService",
+    "com.android.se/.SecureElementService",
+    "com.android.phone/com.android.internal.telephony.dataconnection.CellularDataService",
+    "com.android.server.telecom/.components.TelecomService",
+    "com.android.launcher3/com.android.quickstep.TouchInteractionService",
+    "com.android.smspush/.WapPushManager",
+    "com.genymotion.genyd/.GenydService",
+    "com.android.phone/.vvm.RemoteVvmTaskManager",
+    "com.android.location.fused/.FusedLocationService",
+    "com.android.ons/.OpportunisticNetworkService",
+    "com.android.mms.service/.MmsService",
+    "com.android.phone/.TelephonyDebugService"
+  ],
+  "width": 1440,
+  "height": 3040,
+  "views": [
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        1,
+        21,
+        22
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          3040
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": -1,
+      "temp_id": 0,
+      "size": "1440*3040",
+      "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "6e44ebc9f1ea575b4bc43b0d456c7791",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        2
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 1,
+      "size": "1440*2872",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "ab080107032ebe6edc4f8a49b8c35610",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        3
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          84
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 1,
+      "temp_id": 2,
+      "size": "1440*2788",
+      "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "ce8c4e1199cf644229ebe9916e13d4c2",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        4
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          84
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/decor_content_parent",
+      "checked": false,
+      "text": null,
+      "class": "android.view.ViewGroup",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 2,
+      "temp_id": 3,
+      "size": "1440*2788",
+      "signature": "[class]android.view.ViewGroup[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/decor_content_parent[text]None[enabled,,]",
+      "view_str": "1742d6f745b0ddfd74ad8881a7772662",
+      "content_free_signature": "[class]android.view.ViewGroup[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/decor_content_parent"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        5
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          84
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": "android:id/content",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 4,
+      "size": "1440*2788",
+      "signature": "[class]android.widget.FrameLayout[resource_id]android:id/content[text]None[enabled,,]",
+      "view_str": "71f56ef39dbc1a3dfd264396c9eb3720",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]android:id/content"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        6,
+        7
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          84
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "1440*2788",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "19105d7f6999e8752b2a392d591a49bb",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          84
+        ],
+        [
+          1440,
+          399
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/adView",
+      "checked": false,
+      "text": null,
+      "class": "android.view.ViewGroup",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "1440*315",
+      "signature": "[class]android.view.ViewGroup[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/adView[text]None[enabled,,]",
+      "view_str": "99036c2fc27f20a15ae535d89415ed0e",
+      "content_free_signature": "[class]android.view.ViewGroup[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/adView"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        8
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/container",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 7,
+      "size": "1440*2473",
+      "signature": "[class]android.widget.LinearLayout[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/container[text]None[enabled,,]",
+      "view_str": "f91d72004f6e6684fa023acb4883e141",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/container"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 4,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        9,
+        18,
+        19,
+        20
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 7,
+      "temp_id": 8,
+      "size": "1440*2473",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "14d3d9fe2326251feecb090d1b8d3dbe",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        10,
+        17
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          2206
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/pagerCont",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.RelativeLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 9,
+      "size": "1440*1807",
+      "signature": "[class]android.widget.RelativeLayout[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/pagerCont[text]None[enabled,,]",
+      "view_str": "d1f759ad047b3daa792561fcb399eb5b",
+      "content_free_signature": "[class]android.widget.RelativeLayout[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/pagerCont"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        11,
+        14
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          2206
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/pager",
+      "checked": false,
+      "text": null,
+      "class": "android.support.v4.view.ViewPager",
+      "scrollable": true,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 9,
+      "temp_id": 10,
+      "size": "1440*1807",
+      "signature": "[class]android.support.v4.view.ViewPager[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/pager[text]None[enabled,,]",
+      "view_str": "bb81f536eed7d020dd79a1681dd6c06e",
+      "content_free_signature": "[class]android.support.v4.view.ViewPager[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/pager"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        12,
+        13
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          2136
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 10,
+      "temp_id": 11,
+      "size": "1440*1737",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "fc7c4fb7bbad3668936b1af79123624b",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          1920
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/img",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 12,
+      "size": "1440*1521",
+      "signature": "[class]android.widget.ImageView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/img[text]None[enabled,,]",
+      "view_str": "d5de1f9607b90b35fb5870f7ee14e751",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/img"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          269,
+          1920
+        ],
+        [
+          1171,
+          2136
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/txt",
+      "checked": false,
+      "text": "Hottest emojis, stickers & GIFs",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 13,
+      "size": "902*216",
+      "signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/txt[text]Hottest emojis, stickers & GIFs[enabled,,]",
+      "view_str": "6886c3531730355f77a46de0eff49459",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/txt"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": false,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        15,
+        16
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          1440,
+          399
+        ],
+        [
+          1440,
+          2136
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 10,
+      "temp_id": 14,
+      "size": "0*1737",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "cf67fd821bd699e41b0a2998cde19a24",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          1440,
+          399
+        ],
+        [
+          1440,
+          1920
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/img",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 14,
+      "temp_id": 15,
+      "size": "0*1521",
+      "signature": "[class]android.widget.ImageView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/img[text]None[enabled,,]",
+      "view_str": "d5de1f9607b90b35fb5870f7ee14e751",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/img"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          1883,
+          1920
+        ],
+        [
+          1440,
+          2136
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/txt",
+      "checked": false,
+      "text": "Colorful Themes",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 14,
+      "temp_id": 16,
+      "size": "-443*216",
+      "signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/txt[text]Colorful Themes[enabled,,]",
+      "view_str": "9207976ff1e2ef2fdeb6d48ff002ecd1",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/txt"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          2149
+        ],
+        [
+          1440,
+          2206
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/indicator",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 9,
+      "temp_id": 17,
+      "size": "1440*57",
+      "signature": "[class]android.view.View[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/indicator[text]None[enabled,,]",
+      "view_str": "ff7964ab60ef5349e8a1e6938f06820a",
+      "content_free_signature": "[class]android.view.View[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/indicator"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          175,
+          2241
+        ],
+        [
+          1265,
+          2409
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/btnEnable",
+      "checked": false,
+      "text": "Enable Soft Keyboard",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 18,
+      "size": "1090*168",
+      "signature": "[class]android.widget.Button[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnEnable[text]Enable Soft Keyboard[enabled,,]",
+      "view_str": "760919abe9ce2e9c1d141978db43dc7a",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnEnable"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": false,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          175,
+          2479
+        ],
+        [
+          1265,
+          2647
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/btnSwitch",
+      "checked": false,
+      "text": "Switch to Soft Keyboard",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 19,
+      "size": "1090*168",
+      "signature": "[class]android.widget.Button[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnSwitch[text]Switch to Soft Keyboard[,,]",
+      "view_str": "f4e82f91693bd059a8f8b01bb00ab348",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnSwitch"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          1032,
+          2717
+        ],
+        [
+          1440,
+          2872
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/btnPrivacy",
+      "checked": false,
+      "text": "Privacy policy",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 20,
+      "size": "408*155",
+      "signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnPrivacy[text]Privacy policy[enabled,,]",
+      "view_str": "42b563a1860964af786cb2b06171d369",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/btnPrivacy"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          84
+        ]
+      ],
+      "resource_id": "android:id/statusBarBackground",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 21,
+      "size": "1440*84",
+      "signature": "[class]android.view.View[resource_id]android:id/statusBarBackground[text]None[enabled,,]",
+      "view_str": "71618973afb62d58a38de5fb7e2df199",
+      "content_free_signature": "[class]android.view.View[resource_id]android:id/statusBarBackground"
+    },
+    {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          2872
+        ],
+        [
+          1440,
+          3040
+        ]
+      ],
+      "resource_id": "android:id/navigationBarBackground",
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 22,
+      "size": "1440*168",
+      "signature": "[class]android.view.View[resource_id]android:id/navigationBarBackground[text]None[enabled,,]",
+      "view_str": "1878ed36a48c77009d68f5933d6b98f0",
+      "content_free_signature": "[class]android.view.View[resource_id]android:id/navigationBarBackground"
+    }
+  ]
+}

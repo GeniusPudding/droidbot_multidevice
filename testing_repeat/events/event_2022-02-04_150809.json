@@ -1,0 +1,53 @@
+{
+  "tag": "2022-02-04_150809",
+  "event": {
+    "event_type": "scroll",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.GoldenKiwi.iphone5sios7keyboardFree",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        11,
+        14
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          399
+        ],
+        [
+          1440,
+          2206
+        ]
+      ],
+      "resource_id": "com.GoldenKiwi.iphone5sios7keyboardFree:id/pager",
+      "checked": false,
+      "text": null,
+      "class": "android.support.v4.view.ViewPager",
+      "scrollable": true,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 9,
+      "temp_id": 10,
+      "size": "1440*1807",
+      "signature": "[class]android.support.v4.view.ViewPager[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/pager[text]None[enabled,,]",
+      "view_str": "5096e0ce9d910f1b25b193ecee521f9f",
+      "content_free_signature": "[class]android.support.v4.view.ViewPager[resource_id]com.GoldenKiwi.iphone5sios7keyboardFree:id/pager"
+    },
+    "direction": "LEFT"
+  },
+  "start_state": "3943e4a9e4aadd933b0a9da542d482bc",
+  "stop_state": "3943e4a9e4aadd933b0a9da542d482bc",
+  "event_str": "ScrollEvent(state=3943e4a9e4aadd933b0a9da542d482bc, view=5096e0ce9d910f1b25b193ecee521f9f(MainActivity/ViewPager-), direction=LEFT)"
+}

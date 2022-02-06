@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_185108",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.google.android.googlequicksearchbox",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          120,
+          281
+        ],
+        [
+          224,
+          377
+        ]
+      ],
+      "resource_id": "com.google.android.googlequicksearchbox:id/corpus_selector_name",
+      "checked": false,
+      "text": "\u65b0\u805e",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 16,
+      "temp_id": 18,
+      "size": "104*96",
+      "signature": "[class]android.widget.TextView[resource_id]com.google.android.googlequicksearchbox:id/corpus_selector_name[text]\u65b0\u805e[enabled,,]",
+      "view_str": "6070bc2bc75de58e095a11135b97ba20",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.google.android.googlequicksearchbox:id/corpus_selector_name"
+    }
+  },
+  "start_state": "8e20ad4690ecee018c81ababd98df44e",
+  "stop_state": "7ae5f814d0f8f70044a6f1c76a2860f7",
+  "event_str": "TouchEvent(state=8e20ad4690ecee018c81ababd98df44e, view=6070bc2bc75de58e095a11135b97ba20(SearchNowActivity/TextView-\u65b0\u805e))"
+}

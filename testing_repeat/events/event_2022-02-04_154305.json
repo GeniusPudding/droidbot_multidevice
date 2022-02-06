@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_154305",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.aitype.android.emojinew",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          429,
+          1216
+        ],
+        [
+          1405,
+          1358
+        ]
+      ],
+      "resource_id": "com.aitype.android.emojinew:id/text_view_section_two_msg",
+      "checked": false,
+      "text": "Click on the button below to install ai.type keyboard",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 15,
+      "size": "976*142",
+      "signature": "[class]android.widget.TextView[resource_id]com.aitype.android.emojinew:id/text_view_section_two_msg[text]None[enabled,,]",
+      "view_str": "6945c1455999e3f04ca9e2c3eef56f08",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.aitype.android.emojinew:id/text_view_section_two_msg"
+    }
+  },
+  "start_state": "151d6788d0adfce0e529f029621486ea",
+  "stop_state": "151d6788d0adfce0e529f029621486ea",
+  "event_str": "TouchEvent(state=151d6788d0adfce0e529f029621486ea, view=6945c1455999e3f04ca9e2c3eef56f08(MainWindow/TextView-Click on t))"
+}

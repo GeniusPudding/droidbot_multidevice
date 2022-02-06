@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_173201",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.jb.gokeyboard.langpack.ru",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          246,
+          764
+        ],
+        [
+          446,
+          854
+        ]
+      ],
+      "resource_id": "com.jb.gokeyboard.langpack.ru:id/cancel",
+      "checked": false,
+      "text": "Cancel",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 7,
+      "size": "200*90",
+      "signature": "[class]android.widget.TextView[resource_id]com.jb.gokeyboard.langpack.ru:id/cancel[text]Cancel[enabled,,]",
+      "view_str": "64ebbe6dd3c8fe3ad9963101fa438a61",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.jb.gokeyboard.langpack.ru:id/cancel"
+    }
+  },
+  "start_state": "3e41cb3b2ab54baa72182b76ae0c92f4",
+  "stop_state": "8f16b4e0426ad786428694628ffa4fd6",
+  "event_str": "TouchEvent(state=3e41cb3b2ab54baa72182b76ae0c92f4, view=64ebbe6dd3c8fe3ad9963101fa438a61(MainActivity/TextView-Cancel))"
+}

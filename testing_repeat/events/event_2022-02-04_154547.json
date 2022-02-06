@@ -1,0 +1,49 @@
+{
+  "tag": "2022-02-04_154547",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "org.chromium.webview_shell",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": true,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          172
+        ],
+        [
+          1034,
+          340
+        ]
+      ],
+      "resource_id": "org.chromium.webview_shell:id/url_field",
+      "checked": false,
+      "text": "https://play.google.com/store/apps/details?id=com.aitype.android.p&referrer=utm_source%3Dai.type%20Emoji%20Plugin%26utm_medium%3DactivationWizard",
+      "class": "android.widget.EditText",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 6,
+      "temp_id": 7,
+      "size": "1034*168",
+      "signature": "[class]android.widget.EditText[resource_id]org.chromium.webview_shell:id/url_field[text]None[enabled,,]",
+      "view_str": "f2726a2833e5efa80612d64d7339f19e",
+      "content_free_signature": "[class]android.widget.EditText[resource_id]org.chromium.webview_shell:id/url_field"
+    }
+  },
+  "start_state": "151d6788d0adfce0e529f029621486ea",
+  "stop_state": "151d6788d0adfce0e529f029621486ea",
+  "event_str": "TouchEvent(state=151d6788d0adfce0e529f029621486ea, view=f2726a2833e5efa80612d64d7339f19e(MainWindow/EditText-https://pl))"
+}

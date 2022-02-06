@@ -67,6 +67,7 @@ class Logcat(Adapter):
             self.recent_lines.append(line)
             self.parse_line(line)
             if f is not None:
+                #input(f'write line:{line}')
                 f.write(line)
         if f is not None:
             f.close()

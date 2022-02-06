@@ -1,0 +1,50 @@
+{
+  "tag": "2022-02-05_105446",
+  "event": {
+    "event_type": "long_touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          272,
+          1304
+        ],
+        [
+          448,
+          1380
+        ]
+      ],
+      "resource_id": "com.android.systemui:id/emergency_call_button",
+      "checked": false,
+      "text": "\u7dca\u6025\u64a5\u865f",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 78,
+      "temp_id": 79,
+      "size": "176*76",
+      "signature": "[class]android.widget.Button[resource_id]com.android.systemui:id/emergency_call_button[text]\u7dca\u6025\u64a5\u865f[enabled,,]",
+      "view_str": "19a69e73ce7834036b8ef9ba7f3c1727",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.android.systemui:id/emergency_call_button"
+    },
+    "duration": 2000
+  },
+  "start_state": "0b1e9744e61f35cf9b1926ed1151b1bb",
+  "stop_state": "0b1e9744e61f35cf9b1926ed1151b1bb",
+  "event_str": "LongTouchEvent(state=0b1e9744e61f35cf9b1926ed1151b1bb, view=19a69e73ce7834036b8ef9ba7f3c1727(SetupWizardActivity/Button-\u7dca\u6025\u64a5\u865f))"
+}

@@ -1,0 +1,8 @@
+--------- beginning of system
+--------- beginning of main
+02-06 11:24:14.085  3394  3394 D GeniusPudding: - Method START: Lcom/jb/gokeyboard/langpack/main/PackageManReceiver;->onReceive(Landroid/content/Context;Landroid/content/Intent;)V
+02-06 11:24:14.085  3394  3394 D GeniusPudding: - Method START: Lcom/jb/gokeyboard/langpack/guide/GuideReceiver;->setIConstant(Lcom/jb/gokeyboard/langpack/guide/IConstant;)V
+02-06 11:24:14.085  3394  3394 D GeniusPudding: - Method START: Lcom/jb/gokeyboard/langpack/guide/GuideReceiver;->onReceive(Landroid/content/Context;Landroid/content/Intent;)V
+02-06 11:24:14.085  3394  3394 D GeniusPudding: - Method START: Lcom/jb/gokeyboard/langpack/main/Constant;->getAction()Ljava/lang/String;
+02-06 11:24:14.085  3394  3394 D GeniusPudding: - Method START: Lcom/jb/gokeyboard/langpack/guide/Utils;->isExistTargetGokeyboard(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
+02-06 11:24:14.085  3394  3394 D GeniusPudding: - Method START: Lcom/jb/gokeyboard/langpack/guide/Utils;->isGOKeyboard(Ljava/lang/String;)Z
