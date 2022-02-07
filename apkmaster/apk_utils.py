@@ -40,7 +40,7 @@ def patch_protection_file(smali_base_dir):
         os.mkdir(inject_dir)
     # log_dir = os.path.join(inject_dir,'logs')
     # os.mkdir(log_dir)
-    shutil.copyfile(os.path.join(os.path.dirname(__file__),'injections','protections','AntiEmulator.smali'), os.path.join(inject_dir,'InlineLogs.smali'))
+    shutil.copyfile(os.path.join(os.path.dirname(__file__),'injections','protections','AntiEmulator.smali'), os.path.join(inject_dir,'AntiEmulator.smali'))
     return 
 
 def profile_bytecode(class_name):

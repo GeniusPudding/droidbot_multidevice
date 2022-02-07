@@ -30,7 +30,7 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 	current_method_signature = '' #without the access scope
 	#locate methods, registers
 	new_content = ''
-	only_prototype = False
+	# only_prototype = False #abstract, native method prototype
 	return_inst = False
 	locals_num = 0
 	param_num = 0
@@ -46,26 +46,26 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 			splitted_identifiers = line.strip('\n').split(' ')
 			#current_method_signature = line.strip('\n').split(' ')[-1]
 			current_method_signature = f'{class_name}->' + splitted_identifiers[-1]
-			if 'abstract' in splitted_identifiers or 'native' in splitted_identifiers:
-				only_prototype = True
+			# if 'abstract' in splitted_identifiers or 'native' in splitted_identifiers:
+			# 	only_prototype = True
 			
 		elif line.startswith('.end method') and in_method_flag:				
 
-			if not only_prototype:#not abstract method->method already be injected at the start
-				if not return_inst:
-					# print(f'This function:{current_method_signature} has no return')
-					# new_content += ('    #Instrumentation by GeniusPudding\n')
-					# new_content += ('    const-string v0, \"GeniusPudding-monitor\"\n\n')
-					# new_content += (f'    const-string v1, \"END method: {current_method_signature}\"\n\n')
-					# new_content += ('    invoke-static {v0,v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
-					pass
-			else:
-				only_prototype = False
+			# if not only_prototype:#not abstract method->method already be injected at the start
+			# 	if not return_inst:
+			# 		# print(f'This function:{current_method_signature} has no return')
+			# 		# new_content += ('    #Instrumentation by GeniusPudding\n')
+			# 		# new_content += ('    const-string v0, \"GeniusPudding-monitor\"\n\n')
+			# 		# new_content += (f'    const-string v1, \"END method: {current_method_signature}\"\n\n')
+			# 		# new_content += ('    invoke-static {v0,v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+			# 		pass
+			# else:
+			# 	only_prototype = False
 			return_inst = False
 			in_method_flag = False
 		elif line.startswith('    return') and in_method_flag:
 			return_inst = True
-			free = ['v0','v1','v2','v3']#p_0 = v_{locals}
+			free = ['v0','v1','v2']#free = ['v0','v1','v2','v3']#p_0 = v_{locals}
 			if not line.startswith('    return-void'):
 				ret_reg = line.strip().split(' ')[-1] 
 				ret_reg = p_reg_to_v(ret_reg,locals_num)
@@ -76,52 +76,44 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 					else:#only return 1-register-wide value
 						free.remove(ret_reg)
 			#check the final free register
-			if len(free) < 2:
-				input('bug!!!')
+			if len(free) < 1:#if len(free) < 2:
+				input('bug!!! len(free) < 1')
 			# print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
 			#Injections let some app crash?
 			new_content += ('    #Instrumentation by GeniusPudding\n')
 			new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
 			new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
 			
-			# new_content += (f'    const-string {free[0]}, \"GeniusPudding - methodEnd\"\n\n')
-			# new_content += (f'    const-string {free[1]}, \"{current_method_signature}\"\n\n')
-			# new_content += (f'    invoke-static {{{free[0]},{free[1]}}}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
-
 		if in_method_flag:#method analysis
 			line = line.strip('\n')			
-			if line.startswith('    .locals ') or line.startswith('    .registers '): #p naming default
-				if line.startswith('    .locals '):
-					try:
-						locals_num  = int(line.split(' ')[-1])					
-						if 16-param_num >= 4:					 
-							instrumented_num = max(locals_num,4)#4  2 for log and 2 for return (only return-wide use 2)
+			if line.startswith('    .locals '): #p naming default
+				try:
+					locals_num  = int(line.split(' ')[-1])					 
+					if 16-param_num >= 3:#if 16-param_num >= 4:	#param_num + locals_num	can't exceed 16?	 
+						instrumented_num = max(locals_num,3)#instrumented_num = max(locals_num,4)#4  2 for log and 2 for return (only return-wide use 2)
 						#instrumented_num = min(instrumented_num,max(16-registers_num,locals_num)) #Can't exceed 16 registers totally for smali
-							line = line.replace(str(locals_num),str(instrumented_num))
-					except:
-						pass
+						line = line.replace(str(locals_num),str(instrumented_num))
+					
+				except:
+					pass
 
-					#f.write(line+'\n')#'    .local #new_number'
-					new_content += (line+'\n')
-				else : #v naming scheme #TODO
-					input('.registers')
-					registers_num = line.split(' ')[-1]
-					instrumented_num = max(registers_num,4)
-					line = line.replace(str(registers_num),str(instrumented_num))
-					#need to parse the number of parameters and modified those registers' name used in the function
-					#Hard to implement 
-					#TODO
-					#f.write(line+'\n')
-					new_content += (line+'\n')
+				new_content += (line+'\n')
+				# else : #v naming scheme #TODO
+				# 	input('.registers')
+				# 	registers_num = line.split(' ')[-1]
+				# 	instrumented_num = max(registers_num,4)
+				# 	line = line.replace(str(registers_num),str(instrumented_num))
+				# 	#need to parse the number of parameters and modified those registers' name used in the function
+				# 	#Hard to implement 
+				# 	#TODO
+				# 	#f.write(line+'\n')
+				# 	new_content += (line+'\n')
 
 				new_content += ('    \n')
 				new_content += ('    .prologue\n')
 				new_content += ('    #Instrumentation by GeniusPudding\n')
 				new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
 				new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodStartLog(Ljava/lang/String;)V\n\n')
-				# new_content += ('    const-string v0, \"GeniusPudding-monitor\"\n\n')
-				# new_content += (f'    const-string v1, \"{current_method_signature}\"\n\n')
-				# new_content += ('    invoke-static {v0,v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
 				output_flag = 0 
 
 			if line.startswith('    .prologue'):	 #instrument at the begin of methods, maybe try instrument before the prologue
@@ -144,12 +136,12 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 def walk_smali_dir(smali_dir):
 	smali_base_dir = find_smali_base_dir(smali_dir)
 
-	walking_list = []
-	for d in os.listdir(smali_base_dir):
-		if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax']:#system API
-			continue
-		walking_list += list(os.walk(os.path.join(smali_base_dir,d)))
-		# walking_list = list(os.walk(smali_dir))
+	# walking_list = []
+	# for d in os.listdir(smali_base_dir):
+	# 	if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax']:#system API
+	# 		continue
+	# 	walking_list += list(os.walk(os.path.join(smali_base_dir,d)))
+	walking_list = list(os.walk(smali_dir))
 
 	#for the instrumentation
 	for walking_tuple in walking_list:

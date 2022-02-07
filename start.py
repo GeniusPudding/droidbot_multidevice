@@ -94,7 +94,7 @@ def parse_args():
     parser.add_argument("-replay_output", action="store", dest="replay_output",
                         help="The droidbot output directory being replayed.")
     parser.add_argument("-i", action="store_true", dest="inject",
-                    help="Inject the apk gor logging methods.")
+                    help="Inject method logging(hooking) to the apk.")
     parser.add_argument("-ni", action="store_false", dest="inject",
                     help="Not to inject the apk gor logging methods.")
     parser.add_argument("-repeat", action="store", dest="repeat", default=0, type=int,
@@ -122,9 +122,9 @@ def main():
 
     repackaged_apk_path = None
     if opts.inject:
-        repackaged_apk_path = methodlog_instrumentation(opts.apk_path)
+        repackaged_apk_path = methodlog_instrumentation(opts.apk_path,True)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
-
+    input('test')
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
 

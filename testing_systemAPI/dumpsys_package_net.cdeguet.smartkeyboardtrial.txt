@@ -1,0 +1,125 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        2cfc0b8 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.Settings filter dfcd278
+          Action: "android.intent.action.MAIN"
+        57d4e91 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.SetupActivity filter d965d51
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+        970d1f6 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.SetupWizardActivity filter 71a99b6
+          Action: "android.intent.action.MAIN"
+        f4689f7 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.AutoTextEditor filter 9ed16b7
+          Action: "android.intent.action.MAIN"
+        b1c3064 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.UserDictionaryEditor filter f689e24
+          Action: "android.intent.action.MAIN"
+        31742cd net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.ui.SmileyEditor filter 3927d8d
+          Action: "android.intent.action.MAIN"
+        ed01782 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.ui.DomainEditor filter fae9b42
+          Action: "android.intent.action.MAIN"
+        64fce93 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.Calibration filter 7b26753
+          Action: "android.intent.action.MAIN"
+        99deed0 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.SkinList filter fa37890
+          Action: "android.intent.action.MAIN"
+        be23ec9 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.settings.PermissionActivity filter 6b66589
+          Action: "android.intent.action.MAIN"
+
+Service Resolver Table:
+  Non-Data Actions:
+      android.view.InputMethod:
+        6ec29ce net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.SmartKeyboard filter f8f298e permission android.permission.BIND_INPUT_METHOD
+          Action: "android.view.InputMethod"
+
+Registered ContentProviders:
+  net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.AutoTextProvider:
+    Provider{a9ec0ef net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.AutoTextProvider}
+  net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.MyBackupPro:
+    Provider{c3b27fc net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.MyBackupPro}
+  net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.UserDictionaryProvider:
+    Provider{446fe85 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.UserDictionaryProvider}
+
+ContentProvider Authorities:
+  [net.cdeguet.smartkeyboardtrial.MyBackupPro]:
+    Provider{c3b27fc net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.MyBackupPro}
+      applicationInfo=ApplicationInfo{3a514da net.cdeguet.smartkeyboardtrial}
+  [net.cdeguet.smartkeyboardtrial.userdicprovider]:
+    Provider{446fe85 net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.UserDictionaryProvider}
+      applicationInfo=ApplicationInfo{3a514da net.cdeguet.smartkeyboardtrial}
+  [net.cdeguet.smartkeyboardtrial.autotextprovider]:
+    Provider{a9ec0ef net.cdeguet.smartkeyboardtrial/com.dexilog.smartkeyboard.AutoTextProvider}
+      applicationInfo=ApplicationInfo{3a514da net.cdeguet.smartkeyboardtrial}
+
+Key Set Manager:
+  [net.cdeguet.smartkeyboardtrial]
+      Signing KeySets: 7
+
+Packages:
+  Package [net.cdeguet.smartkeyboardtrial] (4407d0b):
+    userId=10114
+    pkg=Package{710c7e8 net.cdeguet.smartkeyboardtrial}
+    codePath=/data/app/net.cdeguet.smartkeyboardtrial-cenLe29jV6j5_wINXNu2ag==
+    resourcePath=/data/app/net.cdeguet.smartkeyboardtrial-cenLe29jV6j5_wINXNu2ag==
+    legacyNativeLibraryDir=/data/app/net.cdeguet.smartkeyboardtrial-cenLe29jV6j5_wINXNu2ag==/lib
+    primaryCpuAbi=x86
+    secondaryCpuAbi=null
+    versionCode=5220 minSdk=9 targetSdk=23
+    versionName=4.20.1
+    splits=[base]
+    apkSigningVersion=1
+    applicationInfo=ApplicationInfo{3a514da net.cdeguet.smartkeyboardtrial}
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_REQUEST_LEGACY_EXTERNAL_STORAGE ]
+    dataDir=/data/user/0/net.cdeguet.smartkeyboardtrial
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesLibraries:
+      org.apache.http.legacy
+    usesLibraryFiles:
+      /system/framework/org.apache.http.legacy.jar
+    timeStamp=2022-02-06 20:36:02
+    firstInstallTime=2022-02-06 20:36:02
+    lastUpdateTime=2022-02-06 20:36:02
+    signatures=PackageSignatures{47dfe01 version:1, signatures:[360261db], past signatures:[]}
+    installPermissionsFixed=true
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    requested permissions:
+      android.permission.READ_USER_DICTIONARY
+      android.permission.VIBRATE
+      android.permission.READ_CONTACTS
+      android.permission.WRITE_EXTERNAL_STORAGE: restricted=true
+      android.permission.RECORD_AUDIO
+      android.permission.READ_EXTERNAL_STORAGE: restricted=true
+      android.permission.ACCESS_MEDIA_LOCATION
+    install permissions:
+      android.permission.VIBRATE: granted=true
+      android.permission.READ_USER_DICTIONARY: granted=true
+    User 0: ceDataInode=-4294534888 installed=true hidden=false suspended=false stopped=true notLaunched=true enabled=0 instant=false virtual=false
+      runtime permissions:
+        android.permission.READ_EXTERNAL_STORAGE: granted=false, flags=[ REVOKE_WHEN_REQUESTED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.WRITE_EXTERNAL_STORAGE: granted=false, flags=[ RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.ACCESS_MEDIA_LOCATION: granted=false, flags=[ REVOKE_WHEN_REQUESTED]
+
+Package Changes:
+  Sequence number=16
+  User 0:
+    seq=15, package=net.cdeguet.smartkeyboardtrial
+
+
+Dexopt state:
+  [net.cdeguet.smartkeyboardtrial]
+    path: /data/app/net.cdeguet.smartkeyboardtrial-cenLe29jV6j5_wINXNu2ag==/base.apk
+      x86: [status=speed-profile] [reason=install]
+
+
+Compiler stats:
+  [net.cdeguet.smartkeyboardtrial]
+     base.apk - 605
+
+Active APEX packages:
+
+
+Inactive APEX packages:
+
+
+Factory APEX packages:
+
+
+  APEX session state:
