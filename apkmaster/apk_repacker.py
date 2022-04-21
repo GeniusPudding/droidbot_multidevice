@@ -1,28 +1,32 @@
 import subprocess
+import json
 import os 
-from .smali_function_logger import walk_smali_dir  
+from .smali_function_logger import walk_target_dir,walk_smali_dir  
 import sys
 from .apk_utils import *
-def methodlog_instrumentation(target_apk_path, redecompile):#TODO install for two device
+def methodlog_instrumentation(target_apk_path, redecompile):
     # param: target apk path that want to apply instrumentation method 
     # return: repackaged apk path   
     dirname, basename = os.path.split(target_apk_path)
     apkname = os.path.splitext(basename)[0]
     apktool_dir = os.path.join(dirname,apkname)
-    print(f'apktool_dir:{apktool_dir},target_apk_path:{target_apk_path}')
-    # input(f'path:{os.getcwd()}')
     #1.apktool decompile
     if redecompile:
         try:
             f = os.popen('apktool -rf d '+target_apk_path+' -o '+apktool_dir).read()#.read() for blocking
         except :
             raise RuntimeError('Failed to decompile this apk, check the apktool') 
-
+    print('bytecode instrumentation')
     #2.apk's binary(bytecode) instrumentation
     try:
+        print(os.getcwd())
+        with open('apkmaster/target_API_graph2.json', 'r') as f:
+            graph = json.load(f)
         for subdir in os.listdir(apktool_dir):
             if subdir.startswith('smali'):
-                walk_smali_dir(os.path.join(apktool_dir,subdir))
+                #walk_smali_dir(os.path.join(apktool_dir,subdir))
+                walk_target_dir(os.path.join(apktool_dir,subdir), graph)
+        patch_log_file(os.path.join(apktool_dir,'smali'))
     except:   
         raise RuntimeError('Failed to do instrumentation')
 
@@ -46,7 +50,7 @@ def evasion_instrumentation(target_apk_path, redecompile):#TODO install for two 
     dirname, basename = os.path.split(target_apk_path)
     apkname = os.path.splitext(basename)[0]
     apktool_dir = os.path.join(dirname,apkname)
-    print(f'apktool_dir:{apktool_dir},target_apk_path:{target_apk_path}')
+    # print(f'apktool_dir:{apktool_dir},target_apk_path:{target_apk_path}')
 
     # 1.apktool decompile
     if redecompile:
@@ -72,7 +76,7 @@ def evasion_instrumentation(target_apk_path, redecompile):#TODO install for two 
                     f.seek(0)
                     new_content = add_emulator_detection(smali_lines)
                     f.write(new_content)
-                
+                input(f'smali_dir:{smali_dir},smali_base_dir:{smali_base_dir}')
                 smali_base_dir = os.path.join(apktool_dir,smali_dir)
                 patch_protection_file(smali_base_dir)
                 patch_log_file(smali_base_dir)

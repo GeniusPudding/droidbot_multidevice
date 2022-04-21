@@ -1,0 +1,94 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      sami.pro.keyboard.free.Custom_Smile:
+        68afb80 sami.pro.keyboard.free/.Custom_Smile filter 3eb085a
+          Action: "sami.pro.keyboard.free.Custom_Smile"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.ClipSettings:
+        6ce45b9 sami.pro.keyboard.free/.ClipSettings filter f3ca768
+          Action: "sami.pro.keyboard.free.ClipSettings"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.BackupSettings:
+        5283dfe sami.pro.keyboard.free/.BackupSettings filter e9bbabd
+          Action: "sami.pro.keyboard.free.BackupSettings"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.INPUT_LANGUAGE_SELECTION:
+        579f95f sami.pro.keyboard.free/.InputLangSelect filter bd1e54e
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.INPUT_LANGUAGE_SELECTION"
+          Category: "android.intent.category.DEFAULT"
+      android.intent.action.MAIN:
+        d644fac sami.pro.keyboard.free/.LoadingScreen filter 4874c13
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+        f048475 sami.pro.keyboard.free/.LatinIMESettings filter 7b5e50
+          Action: "android.intent.action.MAIN"
+        cc63c0a sami.pro.keyboard.free/.LatinIMEDebugSettings filter d23b849
+          Action: "android.intent.action.MAIN"
+        579f95f sami.pro.keyboard.free/.InputLangSelect filter bd1e54e
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.INPUT_LANGUAGE_SELECTION"
+          Category: "android.intent.category.DEFAULT"
+        6ecc7b sami.pro.keyboard.free/.PrefActions filter 490966f
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.PREFS_ACTIONS"
+          Category: "android.intent.category.DEFAULT"
+        39cba98 sami.pro.keyboard.free/.PrefView filter 8400f7c
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.PREFS_VIEW"
+          Category: "android.intent.category.DEFAULT"
+        425f2f1 sami.pro.keyboard.free/.PrefFeedback filter de69005
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.PREFS_FEEDBACK"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.ClipbaordWords:
+        b940ed6 sami.pro.keyboard.free/.ClipbaordWords filter 59ee467
+          Action: "sami.pro.keyboard.free.ClipbaordWords"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.tabsthemes.MainThemes:
+        a13b557 sami.pro.keyboard.free/.tabsthemes.MainThemes filter 66248b2
+          Action: "sami.pro.keyboard.free.tabsthemes.MainThemes"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.PREFS_FEEDBACK:
+        425f2f1 sami.pro.keyboard.free/.PrefFeedback filter de69005
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.PREFS_FEEDBACK"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.ChooseSmile:
+        3eee844 sami.pro.keyboard.free/.ChooseSmile filter 73a2a8b
+          Action: "sami.pro.keyboard.free.ChooseSmile"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.ShortcutsWord:
+        15cd2d sami.pro.keyboard.free/.ShortcutsWord filter a452781
+          Action: "sami.pro.keyboard.free.ShortcutsWord"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.PREFS_VIEW:
+        39cba98 sami.pro.keyboard.free/.PrefView filter 8400f7c
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.PREFS_VIEW"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.ShortcutSettings:
+        b9a4262 sami.pro.keyboard.free/.ShortcutSettings filter 415026
+          Action: "sami.pro.keyboard.free.ShortcutSettings"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.BottomRowActivity:
+        ab44ff3 sami.pro.keyboard.free/.BottomRowActivity filter 5ab6003
+          Action: "sami.pro.keyboard.free.BottomRowActivity"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.skin.SkinActivity:
+        81444b0 sami.pro.keyboard.free/.SkinActivity filter ce8d214
+          Action: "sami.pro.keyboard.free.skin.SkinActivity"
+          Category: "android.intent.category.DEFAULT"
+      sami.pro.keyboard.free.PREFS_ACTIONS:
+        6ecc7b sami.pro.keyboard.free/.PrefActions filter 490966f
+          Action: "android.intent.action.MAIN"
+          Action: "sami.pro.keyboard.free.PREFS_ACTIONS"
+          Category: "android.intent.category.DEFAULT"
+
+Service Resolver Table:
+  Non-Data Actions:
+      android.view.InputMethod:
+        daf0f29 sami.pro.keyboard.free/.LatinIME filter c691b02 permission android.permission.BIND_INPUT_METHOD
+          Action: "android.view.InputMethod"
+
+Registered ContentProviders:

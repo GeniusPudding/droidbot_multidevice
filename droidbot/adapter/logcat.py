@@ -27,11 +27,12 @@ class Logcat(Adapter):
             self.out_file = None
         else:
             self.out_file = f"{device.output_dir}/logcat_{device.serial}.txt"   #"%s/logcat.txt" % device.output_dir
+            self.out_file = self.out_file.replace(':', '_')
 
     def connect(self):
         self.device.adb.run_cmd("logcat -c")
         self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "GeniusPudding:D", "*:S" "-v", "time"],#["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
-                                        stdin=subprocess.PIPE,
+                                        
                                         stderr=subprocess.PIPE,
                                         stdout=subprocess.PIPE)
         import threading
@@ -55,20 +56,25 @@ class Logcat(Adapter):
         self.connected = True
 
         f = None
+        w = 0
         if self.out_file is not None:
-            f = open(self.out_file, 'w', encoding='utf-8')
-
+            f = open(self.out_file, 'w', encoding='utf-8')#
+            w = f.write('test')
+        print(f'self.out_file:{self.out_file},f:{f},w:{w}')
         while self.connected:
+            
             if self.process is None:
                 continue
             line = self.process.stdout.readline()
             if not isinstance(line, str):
                 line = line.decode()
+            # print(f'line:{line}')
             self.recent_lines.append(line)
             self.parse_line(line)
             if f is not None:
                 #input(f'write line:{line}')
-                f.write(line)
+                w = f.write(line)
+            # print(f'line:{line}.w:{w}')
         if f is not None:
             f.close()
         print("[CONNECTION] %s is disconnected" % self.__class__.__name__)

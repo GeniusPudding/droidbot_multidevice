@@ -10,6 +10,7 @@ from droidbot.utils import get_available_devices
 import threading
 from apkmaster.apk_repacker import methodlog_instrumentation
 from apkmaster.datautils.apkinfo import get_min_sdkversion
+from methodseq_analysis.log_parser import parser2
 import os 
 
 def parse_args():
@@ -23,6 +24,8 @@ def parse_args():
                         help="The serial number of target device (use `adb devices` to find)")
     parser.add_argument("-a", action="store", dest="apk_path", required=True,
                         help="The file path to target APK")
+    # parser.add_argument("-dataset", action="store", dest="dataset", required=True,
+    #                 help="The path to target APKs dir")
     parser.add_argument("-o", action="store", dest="output_dir",default='../testing/test_droidbot_output',
                         help="directory of output")
     # parser.add_argument("-env", action="store", dest="env_policy",
@@ -104,27 +107,28 @@ def parse_args():
     return options
 
 
-def main():
+def main(testing_apk_path, opts):
     """
     the main function
     it starts a droidbot according to the arguments given in cmd line
     """
-    opts = parse_args()
+    # opts = parse_args()
     import os
-    print(f'opts.apk_path:{opts.apk_path}')
-    if not os.path.exists(opts.apk_path):
+    # print(f'testing_apk_path:{testing_apk_path}')
+    if not os.path.exists(testing_apk_path):
         print("APK does not exist.")
         return  
+        
     all_devices = get_available_devices()
     if len(all_devices) == 0:
         self.logger.warning("ERROR: No device connected.")
         sys.exit(-1)
-
+    droidbot = None
     repackaged_apk_path = None
     if opts.inject:
-        repackaged_apk_path = methodlog_instrumentation(opts.apk_path,True)
+        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
-    input('test')
+    # input('test methodlog_instrumentation')
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
 
@@ -138,7 +142,7 @@ def main():
 
     if start_mode == "master":
         droidmaster = DroidMaster(
-            app_path=opts.apk_path,
+            app_path=testing_apk_path,
             is_emulator=opts.is_emulator,
             output_dir=opts.output_dir,
             # env_policy=opts.env_policy,
@@ -166,7 +170,7 @@ def main():
         # for i,device_serial in enumerate(all_devices):
         try:
             droidbot = DroidBot(
-                app_path= repackaged_apk_path if opts.inject else opts.apk_path,#repackaged_apk_path,# a if condition else b
+                app_path= repackaged_apk_path if opts.inject else testing_apk_path,#repackaged_apk_path,# a if condition else b
                 device_serials=all_devices,
                 is_emulator=opts.is_emulator,
                 output_dir=opts.output_dir,
@@ -193,10 +197,32 @@ def main():
                 get_min_sdkversion=get_min_sdkversion)
             droidbot.start()
         except Exception as e:
+            print('go to exception handler')
             pass
 
+
+    if droidbot and len(all_devices) == 2:
+        try:
+            target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs'
+            app_name = droidbot.app.package_name
+            logs = [l for l in os.listdir(target_dir) if app_name in l]
+            no = '('+str(len(logs)//2)+')'
+            p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
+            p2 = os.path.join(opts.output_dir,'logcat_'+ all_devices[1].replace(':','_') + '.txt')
+            parser2(p1, p2, target_dir,  droidbot.app.package_name+no)
+        except:
+            print('Can\'t parse the log')
 
     return
 
 if __name__ == "__main__":
-    main()
+    # main()
+    opts = parse_args()
+    testing_apk_path = opts.apk_path
+    main(testing_apk_path,opts)
+    # for a in os.listdir(opts.dataset):
+    #     if a[-4:] == '.apk':
+    #         try:
+    #             main(os.path.join(opts.dataset,a),opts)
+    #         except:
+    #             print(f'Analyzing {a} failed')

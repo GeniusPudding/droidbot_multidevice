@@ -23,7 +23,7 @@ def p_reg_to_v(p_reg,locals_num):
 	else:
 		raise ValueError('Wrong register name')
 
-def callee_logger(smali_lines): # TODO: if no .prologue??
+def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 	in_method_flag = False
 	output_flag = 1
 	class_name = ''
@@ -37,7 +37,10 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 	instrumented_num = 0
 
 	for line in smali_lines:
-		if line.startswith('.method ') and 'init>(' not in line:#filtered out the constructor methods (<init>,<clinit>)
+		if line.startswith('.method ') and 'init>(' not in line and (not target_methods or any([m in line for m in target_methods])):
+			#filtered out the constructor methods (<init>,<clinit>), #or only log target methods
+			# if target_methods:
+			# 	print(f'Target line:{line}')
 			in_method_flag = True
 			#method state init 
 			locals_num = 0
@@ -50,17 +53,6 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 			# 	only_prototype = True
 			
 		elif line.startswith('.end method') and in_method_flag:				
-
-			# if not only_prototype:#not abstract method->method already be injected at the start
-			# 	if not return_inst:
-			# 		# print(f'This function:{current_method_signature} has no return')
-			# 		# new_content += ('    #Instrumentation by GeniusPudding\n')
-			# 		# new_content += ('    const-string v0, \"GeniusPudding-monitor\"\n\n')
-			# 		# new_content += (f'    const-string v1, \"END method: {current_method_signature}\"\n\n')
-			# 		# new_content += ('    invoke-static {v0,v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
-			# 		pass
-			# else:
-			# 	only_prototype = False
 			return_inst = False
 			in_method_flag = False
 		elif line.startswith('    return') and in_method_flag:
@@ -118,10 +110,8 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 
 			if line.startswith('    .prologue'):	 #instrument at the begin of methods, maybe try instrument before the prologue
 				output_flag = 0 
-
 			line += '\n'	
 		else:#expandable for other features here
-
 			if line.startswith('.class '):
 				class_name = line.split(' ')[-1].strip('\n')
 
@@ -133,16 +123,25 @@ def callee_logger(smali_lines): # TODO: if no .prologue??
 	return new_content
 
 
-def walk_smali_dir(smali_dir):
-	smali_base_dir = find_smali_base_dir(smali_dir)
-
-	# walking_list = []
-	# for d in os.listdir(smali_base_dir):
-	# 	if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax']:#system API
-	# 		continue
-	# 	walking_list += list(os.walk(os.path.join(smali_base_dir,d)))
-	walking_list = list(os.walk(smali_dir))
-
+# def walk_smali_dir(smali_dir):
+def walk_smali_dir(smali_base_dir):
+	# smali_base_dir = find_smali_base_dir(smali_dir)
+	# input(f'smali_base_dir:{smali_base_dir}')
+	walking_list = []
+	for d in os.listdir(smali_base_dir):
+		if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','io','org','okhttp3','okio']:#system API
+			continue
+		if d == 'com':
+			for dd in os.listdir(os.path.join(smali_base_dir,'com')): 
+				if dd in ['android','facebook','google']:
+					continue
+				else:
+					walking_list += list(os.walk(os.path.join(smali_base_dir,'com0',dd)))
+		else:	
+			walking_list += list(os.walk(os.path.join(smali_base_dir,d)))
+		# input(walking_list)
+	# walking_list = list(os.walk(smali_dir))
+	
 	#for the instrumentation
 	for walking_tuple in walking_list:
 		if len(walking_tuple[2]) == 0:
@@ -152,7 +151,6 @@ def walk_smali_dir(smali_dir):
 				continue
 			# start to parse the smali files
 			full_name = os.path.join(os.path.abspath(walking_tuple[0]),file_name)
-			# print(f'full_name:{full_name}')
 			try:
 				f = open(full_name,'r+', encoding='utf-8')
 				smali_lines = list(f)
@@ -162,10 +160,31 @@ def walk_smali_dir(smali_dir):
 				# print(f'Can\t read file:{full_name}')
 				continue
 			f.seek(0)
-			# print(f'Logging file:{file_name}')
 			new_content = callee_logger(smali_lines)
 			f.write(new_content)
 			f.close()
 	patch_log_file(smali_base_dir)
 
+def walk_target_dir(smali_base_dir, graph):
+	#print(f'walk to smali_base_dir:{smali_base_dir},keys:{graph.keys()}')
+	if os.path.isfile(smali_base_dir) and smali_base_dir[-6:] == '.smali':# a method node
+		# basename = os.path.basename(smali_base_dir)
+		target_methods = graph.keys()
+		#input(f'smali_base_dir:{smali_base_dir}\ntarget_methods:{target_methods}')
+		try:
+			f = open(smali_base_dir,'r+', encoding='utf-8')
+			smali_lines = list(f)
+			f.seek(0)
+			new_content = callee_logger(smali_lines,target_methods)
+			f.write(new_content)
+			f.close()			
+		except :				
+			return
+		return 
 
+	for subdir in os.listdir(smali_base_dir):
+		#print(f'subdir:{subdir}')
+		if subdir in graph or (subdir[-6:]=='.smali' and subdir[:-6] in graph): 
+			next_dir_path = os.path.join(smali_base_dir,subdir)
+			walk_target_dir(next_dir_path, graph[subdir] if subdir in graph else graph[subdir[:-6]])
+		

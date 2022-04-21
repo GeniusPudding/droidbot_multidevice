@@ -618,7 +618,8 @@ class Device(object):
         if callable(self.get_min_sdkversion):
             a = self.get_min_sdkversion(app.app_path)
             print(f'get_min_sdkversion callable:{a}')
-            assert device_sdk >= a, f'The device\'s sdk version({device_sdk}) not support! (app require:{a})'
+            if a:
+                assert device_sdk >= a, f'The device\'s sdk version({device_sdk}) not support! (app require:{a})'
 
         package_name = app.get_package_name()
         if package_name not in self.adb.get_installed_apps():
@@ -627,9 +628,13 @@ class Device(object):
                 install_cmd.append("-g")
             install_cmd.append(app.app_path)
             install_p = subprocess.Popen(install_cmd, stdout=subprocess.PIPE)
+            waiting = 0
             while self.connected and package_name not in self.adb.get_installed_apps():
                 print("Please wait while installing the app...")#may be infinite loop
                 time.sleep(2)
+                waiting += 1
+                if waiting > 100:
+                    raise Exception('Waiting too long time while installing the app!')
             if not self.connected:
                 install_p.terminate()
                 return
@@ -647,7 +652,7 @@ class Device(object):
         if self.output_dir is not None:
             package_info_file_name = "%s/dumpsys_package_%s.txt" % (self.output_dir, app.get_package_name())
             package_info_file = open(package_info_file_name, "w")
-            package_info_file.writelines(dumpsys_lines)
+            
             package_info_file.close()
         app.dumpsys_main_activity = self.__parse_main_activity_from_dumpsys_lines(dumpsys_lines)
 

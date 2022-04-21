@@ -8,17 +8,18 @@ def find_smali_base_dir(file_or_subdir):
 	d = file_or_subdir
 	smali_base_dir = ''
 	while True:
-		print(d)
+		# print(d)
 		parent = os.path.dirname(d)
 		if parent == d:
 			break
 		else:
 			if 'smali' in d and 'smali' not in parent:
 				smali_base_dir = d
-				print(f'smali_base_dir:{smali_base_dir}')
+				# print(f'smali_base_dir:{smali_base_dir}')
 			d = parent
+	# print(f'test smali_base_dir:{smali_base_dir}')
 	if smali_base_dir[-5:] != 'smali':
-		smali_base_dir = smali_base_dir[:-9]
+		smali_base_dir = smali_base_dir[:smali_base_dir.index('smali')+5]
 
 	return smali_base_dir
 
