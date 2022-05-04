@@ -4,7 +4,7 @@ import re
 import subprocess
 import sys
 import time
-
+import shutil
 from .adapter.adb import ADB
 from .adapter.droidbot_app import DroidBotAppConn
 from .adapter.logcat import Logcat
@@ -28,7 +28,7 @@ class Device(object):
     def __init__(self, device_serial=None, is_emulator=False, output_dir=None,
                  cv_mode=False, grant_perm=False, telnet_auth_token=None,
                  enable_accessibility_hard=False, humanoid=None, ignore_ad=False,
-                get_min_sdkversion=None):#get_min_sdkversion for apk's requirement
+                get_min_sdkversion=None, second_device=False):#get_min_sdkversion for apk's requirement
         """
         initialize a device connection
         :param device_serial: serial number of target device
@@ -50,9 +50,15 @@ class Device(object):
         self.is_emulator = is_emulator
         self.cv_mode = cv_mode
         self.output_dir = output_dir
-        if output_dir is not None:
-            if not os.path.isdir(output_dir):
-                os.makedirs(output_dir)
+        if second_device:
+            self.output_dir += '_2'
+        
+        if self.output_dir is not None:
+            if not os.path.isdir(self.output_dir):
+                os.makedirs(self.output_dir)
+            else:
+                shutil.rmtree(self.output_dir)
+                os.makedirs(self.output_dir)
         self.grant_perm = grant_perm
         self.enable_accessibility_hard = enable_accessibility_hard
         self.humanoid = humanoid
@@ -633,6 +639,8 @@ class Device(object):
                 print("Please wait while installing the app...")#may be infinite loop
                 time.sleep(2)
                 waiting += 1
+                if waiting % 10 == 0:
+                    install_p = subprocess.Popen(install_cmd, stdout=subprocess.PIPE)
                 if waiting > 100:
                     raise Exception('Waiting too long time while installing the app!')
             if not self.connected:

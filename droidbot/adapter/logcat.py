@@ -59,22 +59,22 @@ class Logcat(Adapter):
         w = 0
         if self.out_file is not None:
             f = open(self.out_file, 'w', encoding='utf-8')#
-            w = f.write('test')
+            w = f.write('test\n')
         print(f'self.out_file:{self.out_file},f:{f},w:{w}')
         while self.connected:
-            
+            #print(f'connecting')
             if self.process is None:
                 continue
             line = self.process.stdout.readline()
             if not isinstance(line, str):
                 line = line.decode()
-            # print(f'line:{line}')
+            #print(f'Read log line:{line}')
             self.recent_lines.append(line)
             self.parse_line(line)
             if f is not None:
                 #input(f'write line:{line}')
                 w = f.write(line)
-            # print(f'line:{line}.w:{w}')
+                #print(f'line:{line}.w:{w}')
         if f is not None:
             f.close()
         print("[CONNECTION] %s is disconnected" % self.__class__.__name__)

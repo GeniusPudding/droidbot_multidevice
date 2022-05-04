@@ -1,6 +1,9 @@
 # helper file of droidbot
 # it parses command arguments and send the options to droidbot
 import argparse
+from fileinput import filename
+from re import A
+import subprocess
 from droidbot import input_manager
 from droidbot import input_policy
 from droidbot import env_manager
@@ -12,7 +15,9 @@ from apkmaster.apk_repacker import methodlog_instrumentation
 from apkmaster.datautils.apkinfo import get_min_sdkversion
 from methodseq_analysis.log_parser import parser2
 import os 
-
+from wrapt_timeout_decorator import *
+from tqdm import tqdm
+import random
 def parse_args():
     """
     parse command line input
@@ -22,11 +27,13 @@ def parse_args():
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-d", action="store", dest="device_serial", required=False,
                         help="The serial number of target device (use `adb devices` to find)")
-    parser.add_argument("-a", action="store", dest="apk_path", required=True,
+    parser.add_argument("-a", action="store", dest="apk_path",
                         help="The file path to target APK")
-    # parser.add_argument("-dataset", action="store", dest="dataset", required=True,
-    #                 help="The path to target APKs dir")
+    parser.add_argument("-dataset", action="store", dest="dataset", required=True,
+                    help="The path to target APKs dir")
     parser.add_argument("-o", action="store", dest="output_dir",default='../testing/test_droidbot_output',
+                        help="directory of output")
+    parser.add_argument("-logdir", action="store", dest="logdir",default='../testing/dataset/method_seq_logs',
                         help="directory of output")
     # parser.add_argument("-env", action="store", dest="env_policy",
     #                     help="policy to set up environment. Supported policies:\n"
@@ -107,6 +114,7 @@ def parse_args():
     return options
 
 
+@timeout(180, use_signals=False)
 def main(testing_apk_path, opts):
     """
     the main function
@@ -118,7 +126,7 @@ def main(testing_apk_path, opts):
     if not os.path.exists(testing_apk_path):
         print("APK does not exist.")
         return  
-        
+    #print('test main')    
     all_devices = get_available_devices()
     if len(all_devices) == 0:
         self.logger.warning("ERROR: No device connected.")
@@ -197,32 +205,75 @@ def main(testing_apk_path, opts):
                 get_min_sdkversion=get_min_sdkversion)
             droidbot.start()
         except Exception as e:
-            print('go to exception handler')
+            #print('go to exception handler')
             pass
 
-
+    success_logging_file = False        
     if droidbot and len(all_devices) == 2:
         try:
-            target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs'
+            print('Start generating logs......')
+            #target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs\\Difuzer'
+            target_dir = opts.logdir
+
             app_name = droidbot.app.package_name
             logs = [l for l in os.listdir(target_dir) if app_name in l]
             no = '('+str(len(logs)//2)+')'
             p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
-            p2 = os.path.join(opts.output_dir,'logcat_'+ all_devices[1].replace(':','_') + '.txt')
-            parser2(p1, p2, target_dir,  droidbot.app.package_name+no)
+            p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
+            print(p1,p2)
+            success_logging_file = parser2(p1, p2, target_dir,  droidbot.app.package_name+no)
         except:
             print('Can\'t parse the log')
 
-    return
+    return success_logging_file
 
 if __name__ == "__main__":
     # main()
     opts = parse_args()
-    testing_apk_path = opts.apk_path
-    main(testing_apk_path,opts)
-    # for a in os.listdir(opts.dataset):
-    #     if a[-4:] == '.apk':
-    #         try:
-    #             main(os.path.join(opts.dataset,a),opts)
-    #         except:
-    #             print(f'Analyzing {a} failed')
+    target_dir = opts.logdir
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+        #print(f'mkdir:{target_dir}')
+    # testing_apk_path = opts.apk_path
+    #main(testing_apk_path,opts)
+    if opts.apk_path:
+        testing_apk_path = opts.apk_path
+        main(testing_apk_path,opts)
+    else:
+        dataset_path = opts.dataset
+
+        #For debugging
+        ran_apks = []
+        logged_apks = []
+        none_logged_apks = []
+        log_list = [f[:f.index('(')] for f in os.listdir(target_dir) if '(' in f and os.path.getsize(os.path.join(target_dir,f)) != 0 ]
+        for a in os.listdir(dataset_path):
+            if a[-4:] != '.apk' or 'repacked_' in a :
+                continue
+            r = subprocess.run(['packagename.bat',os.path.join(dataset_path,a)], capture_output=True)   
+            packagename = r.stdout.decode("utf-8").strip()
+            #input(f'packagename:{packagename}')
+            if packagename in log_list:
+                logged_apks.append(a)
+            else:
+                none_logged_apks.append(a)
+        random.shuffle(logged_apks)
+        random.shuffle(none_logged_apks)
+        input(f'none_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
+        # input(f'logged_apks:{logged_apks}')
+        # input(f'none_logged_apks:{none_logged_apks}')
+        ran_apks = none_logged_apks #+ logged_apks
+        #For running all samples
+        # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
+        # random.shuffle(ran_apks)
+
+        for a in tqdm(ran_apks):
+            try:
+                #input('wait')
+                result = main(os.path.join(dataset_path,a),opts)
+                # if not result:
+                #     main(os.path.join(dataset_path,a),opts)
+                
+            except:
+                print(f'Analyzing {a} failed')
+        print(f'ran_apks:{ran_apks}')

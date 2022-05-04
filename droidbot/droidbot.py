@@ -111,7 +111,8 @@ class DroidBot(object):
                     enable_accessibility_hard=self.enable_accessibility_hard,
                     humanoid=self.humanoid,
                     ignore_ad=ignore_ad,
-                get_min_sdkversion=get_min_sdkversion)
+                get_min_sdkversion=get_min_sdkversion,
+                second_device=True)
 
             self.env_manager = AppEnvManager(
                 device=self.device,

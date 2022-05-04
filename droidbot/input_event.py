@@ -178,7 +178,9 @@ class EventLog(object):
         self.profiling_method = profiling_method
         self.trace_remote_file = "/data/local/tmp/event.trace"
         self.is_profiling = False
+        self.is_profiling2 = False
         self.profiling_pid = -1
+        self.profiling_pid2 = -1
         self.sampling = None
         # sampling feature was added in Android 5.0 (API level 21)
         if profiling_method is not None and \
@@ -212,6 +214,23 @@ class EventLog(object):
         except Exception as e:
             self.device.logger.warning("Saving event to dir failed.")
             self.device.logger.warning(e)
+
+        if not self.device2:
+            return
+        if self.device2.output_dir is None:
+            return
+        else:
+            output_dir = os.path.join(self.device2.output_dir, "events")
+        try:
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+            event_json_file_path = "%s/event_%s.json" % (output_dir, self.tag)
+            event_json_file = open(event_json_file_path, "w")
+            json.dump(self.to_dict(), event_json_file, indent=2)
+            event_json_file.close()
+        except Exception as e:
+            self.device2.logger.warning("Saving event to dir failed.")
+            self.device2.logger.warning(e)        
 
     def save_views(self, output_dir=None):
         # Save views
@@ -264,6 +283,25 @@ class EventLog(object):
         self.is_profiling = True
         self.profiling_pid = pid
 
+        #For device 2
+        if not self.device2:
+            return 
+        if self.is_profiling2:
+            return
+        pid = self.device2.get_app_pid(self.app)
+        if pid is None:
+            if self.is_start_event():
+                start_intent = self.app.get_start_with_profiling_intent(self.trace_remote_file, self.sampling)
+                self.event.intent = start_intent.get_cmd()
+                self.is_profiling2 = True
+            return
+        if self.sampling is not None:
+            self.device2.adb.shell(
+                ["am", "profile", "start", "--sampling", str(self.sampling), str(pid), self.trace_remote_file])
+        else:
+            self.device2.adb.shell(["am", "profile", "start", str(pid), self.trace_remote_file])
+        self.is_profiling2 = True
+        self.profiling_pid2 = pid
     def stop(self):
         """
         finish sending event
@@ -303,6 +341,35 @@ class EventLog(object):
             self.device.logger.warning("profiling event failed")
             self.device.logger.warning(e)
 
+        #For device 2
+        if not self.device2:
+            return 
+        if not self.is_profiling2:
+            return
+        try:
+            if self.profiling_pid2 == -1:
+                pid = self.device2.get_app_pid(self.app)
+                if pid is None:
+                    return
+                self.profiling_pid2 = pid
+
+            self.device2.adb.shell(["am", "profile", "stop", str(self.profiling_pid2)])
+            if self.sampling is None:
+                time.sleep(3)  # guess this time can vary between machines
+
+
+            if self.device2.output_dir is None:
+                return
+            else:
+                output_dir = os.path.join(self.device2.output_dir, "events")
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+            event_trace_local_path = "%s/event_trace_%s.trace" % (output_dir, self.tag)
+            self.device2.pull_file(self.trace_remote_file, event_trace_local_path)
+
+        except Exception as e:
+            self.device2.logger.warning("profiling event failed")
+            self.device2.logger.warning(e)        
 
 class ManualEvent(InputEvent):
     """

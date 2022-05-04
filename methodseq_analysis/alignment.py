@@ -57,14 +57,14 @@ if __name__ == "__main__":
     # H = matrix(a, b, 3, 2)
     # print(traceback_b(H, b)) # ('gtt-ac', 1)
 
-    a, b = 'GAGTATGACTA', 'TAGTCATACGG'
-    start, end = smith_waterman(a, b, 1, 1.5)
-    print(a[start:end])     # GTTGAC
-    input('stop')
-    with open(sys.argv[1], 'r') as f1:
+    # a, b = 'GAGTATGACTA', 'TAGTCATACGG'
+    # start, end = smith_waterman(a, b, 1, 1.5)
+    # print(a[start:end])     # GTTGAC
+    # input('stop')
+    with open(sys.argv[1], 'r',encoding='utf-8') as f1:
         t1 = f1.read().split('\n')[:-1]
         t1 = [i[7:] for i in t1]
-    with open(sys.argv[2], 'r') as f2:
+    with open(sys.argv[2], 'r',encoding='utf-8') as f2:
         t2 = f2.read().split('\n')[:-1]
         t2 = [i[7:] for i in t2]
 

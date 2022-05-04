@@ -1,0 +1,643 @@
+{
+    "android": {
+        "webkit": {
+            "WebView": {
+                "saveWebArchive": "leaf",
+                "loadData": "leaf",
+                "getVisibility": "leaf",
+                "removeAllViews": "leaf",
+                "setTag": "leaf",
+                "setDownloadListener": "leaf",
+                "setVerticalScrollbarOverlay": "leaf",
+                "removeJavascriptInterface": "leaf"
+            },
+            "WebChromeClient": {
+                "onRequestFocus": "leaf"
+            },
+            "WebSettings": {
+                "setMinimumFontSize": "leaf",
+                "getMinimumFontSize": "leaf",
+                "setDefaultZoom": "leaf",
+                "setTextSize": "leaf"
+            },
+            "CookieManager": {
+                "removeAllCookie": "leaf"
+            }
+        },
+        "content": {
+            "Context": {
+                "fileList": "leaf"
+            },
+            "ContextWrapper": {
+                "sendOrderedBroadcast": "leaf",
+                "createPackageContext": "leaf",
+                "sendBroadcastAsUser": "leaf",
+                "removeStickyBroadcast": "leaf",
+                "sendStickyOrderedBroadcastAsUser": "leaf",
+                "sendStickyOrderedBroadcast": "leaf",
+                "sendOrderedBroadcastAsUser": "leaf",
+                "sendStickyBroadcast": "leaf",
+                "sendStickyBroadcastAsUser": "leaf",
+                "sendBroadcast": "leaf"
+            },
+            "pm": {
+                "$init": "leaf",
+                "getPackageArchiveInfo": "leaf",
+                "setComponentEnabledSetting": "leaf"
+            },
+            "res": {
+                "setToDefaults": "leaf"
+            },
+            "ContentResolver": {
+                "delete": "leaf",
+                "query": "leaf"
+            },
+            "IntentFilter": {
+                "setPriority": "leaf"
+            },
+            "BroadcastReceiver": {
+                "abortBroadcast": "leaf"
+            }
+        },
+        "text": {
+            "format": {
+                "toMillis": "leaf",
+                "$init": "leaf",
+                "set": "leaf"
+            },
+            "Editable": {
+                "toString": "leaf"
+            }
+        },
+        "net": {
+            "wifi": {
+                "saveConfiguration": "leaf",
+                "isWifiEnabled": "leaf",
+                "getConnectionInfo": "leaf",
+                "disableNetwork": "leaf",
+                "updateNetwork": "leaf",
+                "enableNetwork": "leaf",
+                "getScanResults": "leaf",
+                "setWifiEnabled": "leaf",
+                "getConfiguredNetworks": "leaf",
+                "disconnect": "leaf"
+            },
+            "ConnectivityManager": {
+                "getActiveNetworkInfo": "leaf",
+                "startUsingNetworkFeature": "leaf",
+                "getAllNetworkInfo": "leaf"
+            },
+            "NetworkInfo": {
+                "getExtraInfo": "leaf",
+                "isAvailable": "leaf"
+            },
+            "Proxy": {
+                "getDefaultHost": "leaf",
+                "getDefaultPort": "leaf"
+            },
+            "SSLCertificateSocketFactory": {
+                "getHttpSocketFactory": "leaf"
+            },
+            "sip": {
+                "open": "leaf",
+                "unregister": "leaf",
+                "takeAudioCall": "leaf",
+                "makeAudioCall": "leaf",
+                "setRegistrationListener": "leaf",
+                "register": "leaf",
+                "isOpened": "leaf",
+                "getSessionFor": "leaf",
+                "createSipSession": "leaf",
+                "isRegistered": "leaf",
+                "close": "leaf"
+            }
+        },
+        "telephony": {
+            "cdma": {
+                "getBaseStationId": "leaf",
+                "getSystemId": "leaf",
+                "getNetworkId": "leaf",
+                "getBaseStationLongitude": "leaf",
+                "getBaseStationLatitude": "leaf"
+            },
+            "gsm": {
+                "getLac": "leaf",
+                "getCid": "leaf",
+                "sendDataMessage": "leaf",
+                "sendMultipartTextMessage": "leaf",
+                "divideMessage": "leaf"
+            },
+            "TelephonyManager": {
+                "getLine1Number": "leaf",
+                "getDeviceSoftwareVersion": "leaf",
+                "getCellLocation": "leaf",
+                "getVoiceMailAlphaTag": "leaf",
+                "getNeighboringCellInfo": "leaf",
+                "getDeviceId": "leaf",
+                "getGroupIdLevel1": "leaf",
+                "getSimSerialNumber": "leaf",
+                "getSubscriberId": "leaf",
+                "listen": "leaf",
+                "getAllCellInfo": "leaf",
+                "getVoiceMailNumber": "leaf"
+            },
+            "SubscriptionManager": {
+                "addOnSubscriptionsChangedListener": "leaf",
+                "getActiveSubscriptionInfoForSimSlotIndex": "leaf",
+                "getActiveSubscriptionInfoList": "leaf",
+                "getActiveSubscriptionInfoCount": "leaf",
+                "getActiveSubscriptionInfo": "leaf"
+            },
+            "SmsManager": {
+                "divideMessage": "leaf",
+                "sendDataMessage": "leaf",
+                "sendTextMessage": "leaf",
+                "downloadMultimediaMessage": "leaf",
+                "sendMultipartTextMessage": "leaf",
+                "sendMultimediaMessage": "leaf"
+            },
+            "PhoneNumberUtils": {
+                "isVoiceMailNumber": "leaf"
+            }
+        },
+        "app": {
+            "Dialog": {
+                "dispatchKeyEvent": "leaf",
+                "setOnKeyListener": "leaf"
+            },
+            "Instrumentation": {
+                "callActivityOnSaveInstanceState": "leaf",
+                "callActivityOnPostCreate": "leaf",
+                "onException": "leaf",
+                "callActivityOnNewIntent": "leaf",
+                "callActivityOnStart": "leaf",
+                "callActivityOnUserLeaving": "leaf",
+                "callActivityOnRestoreInstanceState": "leaf"
+            },
+            "Application": {
+                "onCreate": "leaf",
+                "$init": "leaf",
+                "attachBaseContext": "leaf",
+                "getDir": "leaf"
+            },
+            "AlertDialog": {
+                "$init": "leaf",
+                "onCreate": "leaf"
+            },
+            "Service": {
+                "onStartCommand": "leaf",
+                "onConfigurationChanged": "leaf",
+                "onStart": "leaf",
+                "onLowMemory": "leaf"
+            },
+            "ActivityManager": {
+                "getRunningAppProcesses": "leaf",
+                "killBackgroundProcesses": "leaf",
+                "restartPackage": "leaf",
+                "forceStopPackage": "leaf"
+            },
+            "KeyguardManager": {
+                "exitKeyguardSecurely": "leaf"
+            },
+            "DownloadManager": {
+                "enqueue": "leaf",
+                "getUriForDownloadedFile": "leaf",
+                "addCompletedDownload": "leaf"
+            },
+            "ApplicationPackageManager": {
+                "getInstalledPackages": "leaf",
+                "installPackage": "leaf",
+                "getInstalledApplications": "leaf",
+                "deletePackage": "leaf",
+                "setComponentEnabledSetting": "leaf"
+            }
+        },
+        "view": {
+            "Window": {
+                "setIcon": "leaf",
+                "getLayoutInflater": "leaf",
+                "setLogo": "leaf"
+            },
+            "animation": {
+                "start": "leaf"
+            },
+            "inputmethod": {
+                "showInputMethodAndSubtypeEnabler": "leaf"
+            }
+        },
+        "widget": {
+            "EditText": {
+                "setFocusable": "leaf",
+                "setTextSize": "leaf",
+                "setFocusableInTouchMode": "leaf",
+                "setGravity": "leaf",
+                "getContext": "leaf"
+            },
+            "LinearLayout": {
+                "setBackgroundDrawable": "leaf",
+                "setMinimumWidth": "leaf"
+            },
+            "CheckBox": {
+                "getTextColors": "leaf"
+            },
+            "RadioButton": {
+                "setOnCheckedChangeListener": "leaf",
+                "isChecked": "leaf"
+            },
+            "Toast": {
+                "cancel": "leaf"
+            },
+            "QuickContactBadge": {
+                "assignContactFromPhone": "leaf",
+                "assignContactFromEmail": "leaf",
+                "onClick": "leaf"
+            }
+        },
+        "accounts": {
+            "AccountManager": {
+                "updateCredentials": "leaf",
+                "getAccounts": "leaf",
+                "editProperties": "leaf",
+                "hasFeatures": "leaf",
+                "removeAccount": "leaf",
+                "getAccountsByType": "leaf",
+                "addAccount": "leaf",
+                "confirmCredentials": "leaf",
+                "getAuthToken": "leaf",
+                "getAccountsByTypeAndFeatures": "leaf",
+                "blockingGetAuthToken": "leaf",
+                "addOnAccountsUpdatedListener": "leaf"
+            }
+        },
+        "database": {
+            "sqlite": {
+                "isOpen": "leaf"
+            }
+        },
+        "location": {
+            "LocationManager": {
+                "setTestProviderEnabled": "leaf",
+                "getCurrentLocation": "leaf",
+                "addNmeaListener": "leaf",
+                "addGpsStatusListener": "leaf",
+                "addProximityAlert": "leaf",
+                "getProvider": "leaf",
+                "requestSingleUpdate": "leaf",
+                "getBestProvider": "leaf",
+                "requestLocationUpdates": "leaf",
+                "getLastKnownLocation": "leaf",
+                "isProviderEnabled": "leaf",
+                "getProviders": "leaf"
+            }
+        },
+        "util": {
+            "Base64": {
+                "encode": "leaf"
+            }
+        },
+        "graphics": {
+            "drawable": {
+                "$init": "leaf"
+            },
+            "NinePatch": {
+                "isNinePatchChunk": "leaf"
+            }
+        },
+        "os": {
+            "HandlerThread": {
+                "isAlive": "leaf"
+            },
+            "Bundle": {
+                "getClassLoader": "leaf"
+            }
+        },
+        "bluetooth": {
+            "BluetoothAdapter": {
+                "getAddress": "leaf"
+            }
+        },
+        "hardware": {
+            "Sensor": {
+                "getName": "leaf",
+                "getVersion": "leaf",
+                "getVendor": "leaf"
+            },
+            "Camera": {
+                "open": "leaf"
+            }
+        },
+        "telecom": {
+            "TelecomManager": {
+                "isInCall": "leaf",
+                "showInCallScreen": "leaf"
+            }
+        },
+        "speech": {
+            "SpeechRecognizer": {
+                "startListening": "leaf",
+                "cancel": "leaf",
+                "stopListening": "leaf",
+                "setRecognitionListener": "leaf"
+            }
+        },
+        "provider": {
+            "Browser": {
+                "addSearchUrl": "leaf",
+                "deleteFromHistory": "leaf",
+                "clearHistory": "leaf",
+                "deleteHistoryTimeFrame": "leaf",
+                "updateVisitedHistory": "leaf",
+                "clearSearches": "leaf",
+                "truncateHistory": "leaf"
+            }
+        },
+        "media": {
+            "MediaRecorder": {
+                "setVideoSource": "leaf",
+                "setAudioSource": "leaf"
+            }
+        },
+        "inputmethodservice": {
+            "KeyboardView": {
+                "swipeRight": "leaf",
+                "swipeDown": "leaf"
+            }
+        }
+    },
+    "java": {
+        "util": {
+            "Hashtable": {
+                "keys": "leaf"
+            },
+            "concurrent": {
+                "getActiveCount": "leaf",
+                "done": "leaf",
+                "getTaskCount": "leaf",
+                "getCompletedTaskCount": "leaf"
+            },
+            "zip": {
+                "$init": "leaf",
+                "finish": "leaf",
+                "setCompressedSize": "leaf",
+                "finished": "leaf",
+                "getValue": "leaf",
+                "flush": "leaf",
+                "update": "leaf",
+                "reset": "leaf"
+            },
+            "jar": {
+                "putValue": "leaf",
+                "putAll": "leaf",
+                "getName": "leaf",
+                "read": "leaf",
+                "entries": "leaf",
+                "close": "leaf",
+                "$init": "leaf"
+            },
+            "WeakHashMap": {
+                "size": "leaf",
+                "keySet": "leaf"
+            },
+            "Properties": {
+                "store": "leaf",
+                "put": "leaf"
+            },
+            "Date": {
+                "toLocaleString": "leaf"
+            }
+        },
+        "lang": {
+            "Process": {
+                "destroy": "leaf",
+                "getInputStream": "leaf",
+                "getOutputStream": "leaf",
+                "waitFor": "leaf"
+            },
+            "ClassLoader": {
+                "getParent": "leaf"
+            },
+            "Character": {
+                "$init": "leaf",
+                "toTitleCase": "leaf"
+            },
+            "ProcessBuilder": {
+                "start": "leaf",
+                "redirectErrorStream": "leaf",
+                "$init": "leaf"
+            },
+            "Runtime": {
+                "String\")": "leaf"
+            },
+            "StringBuffer": {
+                "substring": "leaf",
+                "ensureCapacity": "leaf"
+            },
+            "Integer": {
+                "byteValue": "leaf"
+            }
+        },
+        "net": {
+            "SocketException": {
+                "printStackTrace": "leaf"
+            },
+            "URL": {
+                "openConnection": "leaf",
+                "getDefaultPort": "leaf",
+                "openStream": "leaf"
+            },
+            "URLClassLoader": {
+                "$init": "leaf",
+                "loadClass": "leaf"
+            },
+            "Proxy": {
+                "$init": "leaf"
+            },
+            "URLConnection": {
+                "setDoInput": "leaf",
+                "getHeaderField": "leaf"
+            },
+            "NetworkInterface": {
+                "getInetAddresses": "leaf",
+                "getDisplayName": "leaf",
+                "getByName": "leaf"
+            },
+            "SocketTimeoutException": {
+                "printStackTrace": "leaf"
+            }
+        },
+        "security": {
+            "InvalidAlgorithmParameterException": {
+                "printStackTrace": "leaf"
+            },
+            "DigestInputStream": {
+                "$init": "leaf",
+                "read": "leaf",
+                "getMessageDigest": "leaf"
+            },
+            "cert": {
+                "printStackTrace": "leaf",
+                "getPublicKey": "leaf"
+            },
+            "SecureRandom": {
+                "setSeed": "leaf"
+            },
+            "InvalidKeyException": {
+                "printStackTrace": "leaf"
+            },
+            "spec": {
+                "$init": "leaf"
+            },
+            "Security": {
+                "setProperty": "leaf"
+            },
+            "MessageDigest": {
+                "getInstance": "leaf"
+            }
+        },
+        "io": {
+            "BufferedWriter": {
+                "close": "leaf",
+                "write": "leaf"
+            },
+            "LineNumberReader": {
+                "readLine": "leaf",
+                "$init": "leaf",
+                "close": "leaf"
+            },
+            "Reader": {
+                "markSupported": "leaf"
+            },
+            "ByteArrayOutputStream": {
+                "reset": "leaf"
+            },
+            "FileWriter": {
+                "close": "leaf"
+            },
+            "BufferedReader": {
+                "ready": "leaf"
+            },
+            "FileReader": {
+                "read": "leaf"
+            },
+            "StringReader": {
+                "close": "leaf"
+            },
+            "OutputStreamWriter": {
+                "close": "leaf",
+                "flush": "leaf"
+            },
+            "UnsupportedEncodingException": {
+                "initCause": "leaf"
+            },
+            "BufferedInputStream": {
+                "mark": "leaf",
+                "reset": "leaf"
+            },
+            "DataInputStream": {
+                "readLine": "leaf"
+            }
+        },
+        "nio": {
+            "charset": {
+                "isOverflow": "leaf",
+                "$init": "leaf",
+                "isError": "leaf",
+                "toString": "leaf"
+            },
+            "channels": {
+                "lock": "leaf",
+                "release": "leaf"
+            }
+        },
+        "math": {
+            "BigInteger": {
+                "divideAndRemainder": "leaf"
+            }
+        },
+        "text": {
+            "DateFormat": {
+                "getInstance": "leaf"
+            },
+            "SimpleDateFormat": {
+                "applyPattern": "leaf",
+                "applyLocalizedPattern": "leaf"
+            }
+        }
+    },
+    "javax": {
+        "crypto": {
+            "KeyGenerator": {
+                "generateKey": "leaf",
+                "getInstance": "leaf",
+                "init": "leaf"
+            },
+            "Cipher": {
+                "getInstance": "leaf",
+                "getBlockSize": "leaf"
+            },
+            "EncryptedPrivateKeyInfo": {
+                "getKeySpec": "leaf"
+            },
+            "SecretKeyFactory": {
+                "generateSecret": "leaf",
+                "getInstance": "leaf"
+            },
+            "CipherOutputStream": {
+                "write": "leaf",
+                "flush": "leaf",
+                "close": "leaf"
+            },
+            "Mac": {
+                "getAlgorithm": "leaf"
+            },
+            "spec": {
+                "$init": "leaf"
+            },
+            "BadPaddingException": {
+                "printStackTrace": "leaf"
+            }
+        },
+        "net": {
+            "ssl": {
+                "setDefaultHostnameVerifier": "leaf"
+            }
+        }
+    },
+    "org": {
+        "w3c": {
+            "dom": {
+                "getElementsByTagName": "leaf"
+            }
+        },
+        "xmlpull": {
+            "v1": {
+                "setFeature": "leaf",
+                "text": "leaf",
+                "nextText": "leaf"
+            }
+        },
+        "apache": {
+            "http": {
+                "setStaleCheckingEnabled": "leaf",
+                "printStackTrace": "leaf",
+                "setIntParameter": "leaf"
+            }
+        }
+    },
+    "dalvik": {
+        "system": {
+            "DexClassLoader": {
+                "findLibrary": "leaf"
+            }
+        }
+    },
+    "app": {
+        "admin": {
+            "DevicePolicyManager": {
+                "isAdminActive": "leaf",
+                "lockNow": "leaf",
+                "resetPassword": "leaf"
+            }
+        }
+    }
+}

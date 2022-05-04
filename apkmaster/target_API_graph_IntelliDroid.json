@@ -1,0 +1,360 @@
+{
+    "android": {
+        "location": {
+            "Location": {
+                "getLatitude": "leaf",
+                "getLongitude": "leaf"
+            },
+            "LocationManager": {
+                "getLastKnownLocation": "leaf"
+            }
+        },
+        "telephony": {
+            "TelephonyManager": {
+                "getDeviceId": "leaf",
+                "getSubscriberId": "leaf",
+                "getSimSerialNumber": "leaf",
+                "getLine1Number": "leaf"
+            },
+            "SmsManager": {
+                "sendTextMessage": "leaf",
+                "sendDataMessage": "leaf",
+                "sendMultipartTextMessage": "leaf"
+            },
+            "gsm": {
+                "GsmCellLocation": {
+                    "getCid": "leaf",
+                    "getLac": "leaf"
+                },
+                "SmsManager": {
+                    "sendTextMessage": "leaf"
+                }
+            }
+        },
+        "os": {
+            "Bundle": {
+                "get": "leaf",
+                "getBoolean": "leaf",
+                "getBooleanArray": "leaf",
+                "getBundle": "leaf",
+                "getByte": "leaf",
+                "getByteArray": "leaf",
+                "getChar": "leaf",
+                "getCharArray": "leaf",
+                "getCharSequence": "leaf",
+                "getCharSequenceArray": "leaf",
+                "getCharSequenceArrayList": "leaf",
+                "getClassLoader": "leaf",
+                "getDouble": "leaf",
+                "getDoubleArray": "leaf",
+                "getFloat": "leaf",
+                "getFloatArray": "leaf",
+                "getInt": "leaf",
+                "getIntArray": "leaf",
+                "getIntegerArrayList": "leaf",
+                "getLong": "leaf",
+                "getLongArray": "leaf",
+                "getParcelable": "leaf",
+                "getParcelableArray": "leaf",
+                "getParcelableArrayList": "leaf",
+                "getSerializable": "leaf",
+                "getShort": "leaf",
+                "getShortArray": "leaf",
+                "getSparseParcelableArray": "leaf",
+                "getString": "leaf",
+                "getStringArrayList": "leaf",
+                "putBinder": "leaf",
+                "putBoolean": "leaf",
+                "putBooleanArray": "leaf",
+                "putBundle": "leaf",
+                "putByte": "leaf",
+                "putByteArray": "leaf",
+                "putChar": "leaf",
+                "putCharArray": "leaf",
+                "putCharSequence": "leaf",
+                "putCharSequenceArray": "leaf",
+                "putCharSequenceArrayList": "leaf",
+                "putDouble": "leaf",
+                "putDoubleArray": "leaf",
+                "putFloat": "leaf",
+                "putFloatArray": "leaf",
+                "putInt": "leaf",
+                "putIntArray": "leaf",
+                "putIntegerArrayList": "leaf",
+                "putLong": "leaf",
+                "putLongArray": "leaf",
+                "putParcelable": "leaf",
+                "putParcelableArray": "leaf",
+                "putParcelableArrayList": "leaf",
+                "putSerializable": "leaf",
+                "putShort": "leaf",
+                "putShortArray": "leaf",
+                "putSparseParcelableArray": "leaf",
+                "putString": "leaf",
+                "putStringArray": "leaf",
+                "putStringArrayList": "leaf",
+                "putAll": "leaf"
+            },
+            "Handler": {
+                "obtainMessage": "leaf",
+                "sendMessage": "leaf"
+            }
+        },
+        "app": {
+            "PendingIntent": {
+                "getActivity": "leaf",
+                "getBroadcast": "leaf",
+                "getService": "leaf"
+            },
+            "Activity": {
+                "getIntent": "leaf",
+                "setResult": "leaf",
+                "onActivityResult": "leaf",
+                "startActivity": "leaf",
+                "startActivities": "leaf",
+                "startActivityForResult": "leaf",
+                "startActivityFromChild": "leaf",
+                "startActivityFromFragment": "leaf",
+                "startActivityIfNeeded": "leaf",
+                "startService": "leaf",
+                "bindService": "leaf",
+                "sendBroadcast": "leaf",
+                "sendBroadcastAsUser": "leaf",
+                "sendOrderedBroadcast": "leaf",
+                "sendOrderedBroadcastAsUser": "leaf",
+                "sendStickyBroadcast": "leaf",
+                "sendStickyBroadcastAsUser": "leaf",
+                "sendStickyOrderedBroadcast": "leaf",
+                "sendStickyOrderedBroadcastAsUser": "leaf",
+                "findViewById": "leaf"
+            }
+        },
+        "media": {
+            "AudioRecord": {
+                "read": "leaf"
+            },
+            "MediaRecorder": {
+                "setVideoSource": "leaf",
+                "setPreviewDisplay": "leaf",
+                "start": "leaf"
+            }
+        },
+        "content": {
+            "pm": {
+                "PackageManager": {
+                    "getInstalledApplications": "leaf",
+                    "getInstalledPackages": "leaf",
+                    "queryIntentActivities": "leaf",
+                    "queryIntentServices": "leaf",
+                    "queryBroadcastReceivers": "leaf",
+                    "queryContentProviders": "leaf"
+                }
+            },
+            "Intent": {
+                "setAction": "leaf",
+                "setClassName": "leaf",
+                "setComponent": "leaf"
+            },
+            "Context": {
+                "sendBroadcast": "leaf",
+                "registerReceiver": "leaf",
+                "startActivity": "leaf",
+                "startActivities": "leaf",
+                "startService": "leaf",
+                "bindService": "leaf"
+            },
+            "IntentFilter": {
+                "addAction": "leaf"
+            },
+            "SharedPreferences$Editor": {
+                "putBoolean": "leaf",
+                "putFloat": "leaf",
+                "putInt": "leaf",
+                "putLong": "leaf",
+                "putString": "leaf"
+            },
+            "SharedPreferences": {
+                "getDefaultSharedPreferences": "leaf"
+            },
+            "ContentResolver": {
+                "query": "leaf",
+                "insert": "leaf",
+                "delete": "leaf",
+                "update": "leaf"
+            },
+            "BroadcastReceiver": {
+                "abortBroadcast": "leaf"
+            }
+        },
+        "util": {
+            "Log": {
+                "d": "leaf",
+                "e": "leaf",
+                "i": "leaf",
+                "v": "leaf",
+                "w": "leaf",
+                "wtf": "leaf"
+            }
+        },
+        "bluetooth": {
+            "BluetoothAdapter": {
+                "getAddress": "leaf"
+            }
+        },
+        "net": {
+            "wifi": {
+                "WifiInfo": {
+                    "getMacAddress": "leaf",
+                    "getSSID": "leaf"
+                }
+            },
+            "http": {
+                "AndroidHttpClient": {
+                    "execute": "leaf"
+                }
+            }
+        },
+        "accounts": {
+            "AccountManager": {
+                "getAccounts": "leaf"
+            }
+        },
+        "provider": {
+            "Browser": {
+                "getAllBookmarks": "leaf",
+                "getAllVisitedUrls": "leaf"
+            }
+        },
+        "database": {
+            "Cursor": {
+                "getString": "leaf"
+            },
+            "sqlite": {
+                "SQLiteDatabase": {
+                    "query": "leaf"
+                }
+            },
+            "CursorWrapper": {
+                "getDouble": "leaf",
+                "getFloat": "leaf",
+                "getInt": "leaf",
+                "getLong": "leaf",
+                "getShort": "leaf",
+                "getString": "leaf"
+            }
+        },
+        "hardware": {
+            "SensorManager": {
+                "getRotationMatrix": "leaf",
+                "getInclination": "leaf",
+                "getOrientation": "leaf",
+                "getAltitude": "leaf",
+                "getAngleChange": "leaf",
+                "getRotationMatrixFromVector": "leaf",
+                "getQuaternionFromVector": "leaf"
+            }
+        }
+    },
+    "java": {
+        "net": {
+            "URLConnection": {
+                "getOutputStream": "leaf",
+                "getInputStream": "leaf",
+                "setRequestProperty": "leaf"
+            },
+            "URL": {
+                "set": "leaf",
+                "openConnection": "leaf",
+                "<init>": "leaf"
+            },
+            "Socket": {
+                "connect": "leaf"
+            }
+        },
+        "io": {
+            "OutputStream": {
+                "write": "leaf"
+            },
+            "FileOutputStream": {
+                "write": "leaf",
+                "writeBytes": "leaf"
+            },
+            "Writer": {
+                "write": "leaf"
+            },
+            "DataOutputStream": {
+                "writeBytes": "leaf"
+            }
+        },
+        "util": {
+            "Locale": {
+                "getCountry": "leaf"
+            },
+            "Calendar": {
+                "getTimeZone": "leaf"
+            }
+        },
+        "lang": {
+            "ProcessBuilder": {
+                "start": "leaf"
+            },
+            "reflect": {
+                "Method": {
+                    "invoke": "leaf"
+                }
+            },
+            "ClassLoader": {
+                "loadClass": "leaf"
+            }
+        }
+    },
+    "org": {
+        "apache": {
+            "http": {
+                "HttpResponse": {
+                    "getEntity": "leaf"
+                },
+                "util": {
+                    "EntityUtils": {
+                        "toString": "leaf",
+                        "toByteArray": "leaf",
+                        "getContentCharSet": "leaf"
+                    }
+                },
+                "message": {
+                    "BasicNameValuePair": {
+                        "<init>": "leaf"
+                    }
+                },
+                "impl": {
+                    "client": {
+                        "DefaultHttpClient": {
+                            "execute": "leaf"
+                        },
+                        "AbstractHttpClient": {
+                            "execute": "leaf"
+                        }
+                    }
+                },
+                "client": {
+                    "HttpClient": {
+                        "execute": "leaf"
+                    }
+                }
+            }
+        }
+    },
+    "sun": {
+        "net": {
+            "www": {
+                "protocol": {
+                    "http": {
+                        "HttpURLConnection": {
+                            "connect": "leaf"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

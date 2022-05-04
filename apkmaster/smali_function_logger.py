@@ -57,24 +57,24 @@ def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 			in_method_flag = False
 		elif line.startswith('    return') and in_method_flag:
 			return_inst = True
-			free = ['v0','v1','v2']#free = ['v0','v1','v2','v3']#p_0 = v_{locals}
-			if not line.startswith('    return-void'):
-				ret_reg = line.strip().split(' ')[-1] 
-				ret_reg = p_reg_to_v(ret_reg,locals_num)
-				if ret_reg in free:
-					if 'return-wide' in line:	#return 2-register-wide value
-						ret_reg2 = 'v' + str(int(ret_reg[1])+1) 
-						free = [r for r in free if r not in [ret_reg,ret_reg2]]
-					else:#only return 1-register-wide value
-						free.remove(ret_reg)
-			#check the final free register
-			if len(free) < 1:#if len(free) < 2:
-				input('bug!!! len(free) < 1')
-			# print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
-			#Injections let some app crash?
-			new_content += ('    #Instrumentation by GeniusPudding\n')
-			new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
-			new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
+			# free = ['v0','v1','v2']#free = ['v0','v1','v2','v3']#p_0 = v_{locals}
+			# if not line.startswith('    return-void'):
+			# 	ret_reg = line.strip().split(' ')[-1] 
+			# 	ret_reg = p_reg_to_v(ret_reg,locals_num)
+			# 	if ret_reg in free:
+			# 		if 'return-wide' in line:	#return 2-register-wide value
+			# 			ret_reg2 = 'v' + str(int(ret_reg[1])+1) 
+			# 			free = [r for r in free if r not in [ret_reg,ret_reg2]]
+			# 		else:#only return 1-register-wide value
+			# 			free.remove(ret_reg)
+			# #check the final free register
+			# if len(free) < 1:#if len(free) < 2:
+			# 	input('bug!!! len(free) < 1')
+			# # print(f'free list:{free}, inject {free[0]},{free[1]} refore return')
+			# #Injections let some app crash?
+			# new_content += ('    #Instrumentation by GeniusPudding\n')
+			# new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
+			# new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
 			
 		if in_method_flag:#method analysis
 			line = line.strip('\n')			
@@ -108,8 +108,6 @@ def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 				new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodStartLog(Ljava/lang/String;)V\n\n')
 				output_flag = 0 
 
-			if line.startswith('    .prologue'):	 #instrument at the begin of methods, maybe try instrument before the prologue
-				output_flag = 0 
 			line += '\n'	
 		else:#expandable for other features here
 			if line.startswith('.class '):
@@ -125,18 +123,17 @@ def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 
 # def walk_smali_dir(smali_dir):
 def walk_smali_dir(smali_base_dir):
-	# smali_base_dir = find_smali_base_dir(smali_dir)
-	# input(f'smali_base_dir:{smali_base_dir}')
+	#print(f'smali_base_dir:{smali_base_dir}')
 	walking_list = []
 	for d in os.listdir(smali_base_dir):
-		if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','io','org','okhttp3','okio']:#system API
+		if d in ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','io','org','okhttp3','okio']:#system API
 			continue
 		if d == 'com':
 			for dd in os.listdir(os.path.join(smali_base_dir,'com')): 
 				if dd in ['android','facebook','google']:
 					continue
 				else:
-					walking_list += list(os.walk(os.path.join(smali_base_dir,'com0',dd)))
+					walking_list += list(os.walk(os.path.join(smali_base_dir,'com',dd)))
 		else:	
 			walking_list += list(os.walk(os.path.join(smali_base_dir,d)))
 		# input(walking_list)
@@ -163,14 +160,16 @@ def walk_smali_dir(smali_base_dir):
 			new_content = callee_logger(smali_lines)
 			f.write(new_content)
 			f.close()
-	patch_log_file(smali_base_dir)
+	#patch_log_file(smali_base_dir)
 
 def walk_target_dir(smali_base_dir, graph):
 	#print(f'walk to smali_base_dir:{smali_base_dir},keys:{graph.keys()}')
-	if os.path.isfile(smali_base_dir) and smali_base_dir[-6:] == '.smali':# a method node
+	if os.path.isfile(smali_base_dir) and smali_base_dir[-6:] == '.smali' :# a method node
+		if list(graph.values())[0] != 'leaf': #identical basename of dir and smali file! 
+			return
 		# basename = os.path.basename(smali_base_dir)
 		target_methods = graph.keys()
-		#input(f'smali_base_dir:{smali_base_dir}\ntarget_methods:{target_methods}')
+		input(f'smali_base_dir:{smali_base_dir}\graph:{graph}')
 		try:
 			f = open(smali_base_dir,'r+', encoding='utf-8')
 			smali_lines = list(f)
@@ -178,7 +177,8 @@ def walk_target_dir(smali_base_dir, graph):
 			new_content = callee_logger(smali_lines,target_methods)
 			f.write(new_content)
 			f.close()			
-		except :				
+		except :
+			input('log inject failed')				
 			return
 		return 
 
@@ -186,5 +186,5 @@ def walk_target_dir(smali_base_dir, graph):
 		#print(f'subdir:{subdir}')
 		if subdir in graph or (subdir[-6:]=='.smali' and subdir[:-6] in graph): 
 			next_dir_path = os.path.join(smali_base_dir,subdir)
-			walk_target_dir(next_dir_path, graph[subdir] if subdir in graph else graph[subdir[:-6]])
+			walk_target_dir(next_dir_path, graph[subdir[:-6]] if subdir[-6:]=='.smali' else graph[subdir])
 		
