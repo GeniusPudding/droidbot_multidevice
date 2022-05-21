@@ -1,310 +1,541 @@
-Package Name,Successfully Logged,"Triggered(Real/Emu/Both,None)",Trigger Type,Behavior Type,Behavior Difference
-aait.sa.aspbranch.semsem,False,,is_screen_off,sms_string,False
-ahman.timo.tatargetfinder,True,,build,return,0.6722710442649944
-an.MalayArabTranslate,True,,camera,stop_wifi,0.7151075710209549
-app.bpbonline,True,Both,location,exit,0.7430789496026406
-app.wise.passwordgenerator,True,Real,music,exit,0.6577199043316503
-appinventor.ai_afandhirafa.EBOOK_CERITA_SUKSES,True,,location,write_string,0.39943248995034286
-appinventor.ai_bunjop.LifeFM,True,,build,native_log_string,0.5169760162550374
-at.my_chauffeur.my_chauffeur,True,,location,exit,0.5892232520118709
-athithi.gruha.foods,True,,network,set_text,0.4976947342877942
-blesskcoin.com.android.kt1q.blesskcoin,True,,is_screen_off,exit,0.7986870897155361
-br.com.audiobras.consagracaomp3,True,,network,native_phone_number_network,0.11674641148325358
-br.ici.corrida3.view,True,,music,sms_imei,0.7473501303214596
-buzzgrillindian.co.uk,True,,network,set_text,0.0
-ca.myfirstresponse.cdems,True,,music,set_text_reflection,0.0
-ca.myfirstresponse.ipco,True,,music,http_location,0.0
-co.adelgazarencasa.adelgazarencasa,True,,is_screen_off,set_text_reflection,0.0
-com.a2sxd.aplikasi.namabayilaki_lakiislam,True,Real,music,write_string,0.9308624376336422
-com.acr.minigun,False,,addition,sms_imei,False
-com.acrylplatform.client,True,Both,is_screen_on,native_write_phone_number,0.0
-com.activspaces.labs.bizcard,False,,camera,sms_imei,False
-com.ad.tutorialoffice,True,Both,is_screen_on,native_write_phone_number,0.0
-com.aiimspqms.mq,True,,network,stop_wifi,0.0
-com.alienshome.alabrat,True,Both,is_screen_off,native_phone_number_network,0.1488238902942164
-com.aliexpress.india,True,Both,addition,native_write_phone_number,0.3156673114119923
-com.amullabanaenterprisess.multirecharge,True,,is_screen_off,write_phone_number,0.8328729281767956
-com.androidandrew.volumelimiter,True,Both,time,native_phone_number_network,0.0
-com.androidtool.selectcontactnumber.checkphone.beingvalidinvalid.validatecontact,True,,network,set_text,0.0
-com.anncleaners.anncleaners,True,Both,camera,native_phone_number_network,0.0
-com.apinjari.chargerremovalalarm,True,,camera,write_phone_number,0.0
-com.apkinstaller,True,Both,addition,native_log_string,0.5041153934991597
-com.app.occeramics,True,Both,addition,native_log_model,0.7265983780063793
-com.app.penasultra,True,,music,write_string,0.0
-com.app.todosfolletoscanarias,False,,is_screen_off,sms_string,False
-com.application.anasi.connect3,False,,network,sms_imei,False
-com.apps.garwoodattributes.monetonsea,True,,is_screen_on,write_phone_number,0.5
-com.apps.offbeat.colorpalette,True,,time,return,0.0
-com.arabwomensports.sport,True,,camera,write_string,0.7338685808776219
-com.artharakshak.artharakshak,True,Both,music,native_log_string,0.4446823697359029
-com.ashensoftware.toolforyoutube,True,,network,native_log_model,0.0
-com.atmiyafadia.game.clickspeedtest,False,,sms,stop_wifi,False
-com.auctionslive.bidding,True,Both,is_screen_off,native_log_string,0.7495961227786753
-com.auralisoft.colorimeter,False,,music,sms_imei,False
-com.aurhe.ap37,True,Both,music,native_write_phone_number,0.3461664646843384
-com.baasgeo.cogoBeta,True,,music,stop_wifi,0.9131925190300952
-com.badep.demoodoo,True,,time,exit,0.8127536231884058
-com.bari.bandhan,True,,time,set_text,0.0
-com.BDPlus.BangladesherItihas,True,Both,time,native_log_model,0.2937799043062201
-com.beeflash.HotePenginapan,False,,network,sms_string,False
-com.birnepal.sciencekoguide,True,,camera,set_text_reflection,0.27060269176819723
-com.blood.bloodbank.newbank,True,,sms,sms_imei,0.2540322580645161
-com.bowtiemedia.verbouwen,False,,sms,set_text_reflection,False
-com.branah.farsiiran,True,Both,location,stop_wifi,0.6930199748913761
-com.brighteyetea.pilotkick,True,Real,time,return,0.9597238802096849
-com.cakemakeappp.appandappcakemakeappbake,True,,location,sms_string,0.7313565111427042
-com.CheckPointTexter,True,Real,location,native_write_phone_number,0.4833166736151923
-com.ciiskills.assessment,True,,is_screen_on,native_phone_number_network,0.15478076434622082
-com.ciopec.vremea,False,,sms,sms_string,False
-com.clinvivo.datacatcher,True,Both,is_screen_on,http_location,0.0
-com.cmusical.pc.culturamusical,True,Both,location,native_log_model,0.6633758693409486
-com.coconut_apps.stewartfrancisjokes,True,Both,is_screen_off,native_log_model,0.6497601096641535
-com.codebear.random_list,False,,is_screen_on,return,False
-com.completegardencuttings.adeknata,True,,network,http_location,0.6286039366262184
-com.comself.cameravideo,True,,is_screen_on,native_phone_number_network,0.6413396749436477
-com.cooolindia.cooolindi1,True,Both,music,native_log_model,0.0
-com.cygnus.calendar,True,,music,set_text_reflection,0.2
-com.dakshapps.junglewaterfall,True,,network,return,0.0
-com.darnijood.app,False,,sms,set_text,False
-com.datinglove.pet2,False,,build,sms_string,False
-com.dayna.yourloancalculator,True,Real,is_screen_off,http_location,0.26550520873131095
-com.ddangman.anythinggoespaint,True,,is_screen_on,set_text,0.0
-com.deepnetsecurity.safeidburner,True,Both,is_screen_on,stop_wifi,0.0
-com.designhunt.geeksmood,True,,location,set_text_reflection,0.5353938378363735
-com.diabetesid,True,,addition,native_phone_number_network,0.8180650005965289
-com.diemagd.interestcalculator,True,,camera,native_phone_number_network,0.11278917161270102
-com.digitalfuturesoft.mlbticketsapp,True,Both,time,stop_wifi,0.6518987341772152
-com.djl.html5_init,True,Both,addition,stop_wifi,0.5157995914934519
-com.doionline.flashlight,True,,time,return,0.0
-com.DrMoPhysics,True,Both,location,native_log_string,0.0
-com.ecoin.ecoin,True,,sms,set_text_reflection,0.746770563066
-com.electron.provjera,True,,music,return,0.9270833333333334
-com.elisoft.soaphandmade,True,Real,time,http_location,0.5509830348761687
-com.emm.app.masteranylanguage.farsi,True,,network,exit,0.0
-com.englistening.makeev.englisteningcom,True,,build,set_text,0.0
-com.exampl.alldecadesrado,True,,time,write_phone_number,0.9298504177393269
-com.ez.automatic.phonecall.recorder,True,,network,http_location,0.1791530944625407
-com.farhanaliqureshi.pakistanlandareacalculator,True,Real,network,native_write_phone_number,0.6947935368043088
-com.felsefe.notlari,True,,music,native_write_phone_number,0.6825651113927175
-com.flaps.herbfun,True,Both,camera,write_string,0.7224077669902913
-com.forts.forts,True,,music,write_string,0.5255382909345337
-com.framesizecalculator,True,,addition,set_text,0.7264871411718443
-com.frankburmo,True,,music,set_text_reflection,0.5338188790476054
-com.frederic.distanceAlarme,True,,network,exit,0.12932680946348532
-com.freedollarstore.app,True,,music,http_location,0.5068844535107917
-com.gamemob.minijump,True,,network,sms_string,0.7461110940717466
-com.gcart.android.deron,True,,is_screen_off,native_write_phone_number,0.6849734653081361
-com.gcart.android.fazha,True,,is_screen_on,stop_wifi,0.36065573770491804
-com.gcart.android.seraphim,True,,build,stop_wifi,0.3047337278106509
-com.gcart.android.twice,True,,music,http_location,0.0
-com.gilisztaturmixgmail.locus_addon_pebble,True,,is_screen_on,native_log_string,0.4753482636784275
-com.github.axet.hourlyreminder,True,,time,native_write_phone_number,0.6777176706908128
-com.github.fractals,True,,music,set_text_reflection,0.5534512250252781
-com.gmail.coolapps726.bankTester,True,,location,native_log_string,0.9645996043965007
-com.gnrdsoftsolution.news6teluguandroidapp,True,Both,is_screen_on,native_phone_number_network,0.0
-com.gocalsd.quicktile.launchers,True,,sms,stop_wifi,0.33394160583941607
-com.grc.lhc,True,,music,sms_string,0.7087794187205296
-com.gst.ihab.gst,True,,location,sms_string,0.3025568181818182
-com.hakimisolution.webapp,True,,sms,write_phone_number,0.6715101276937292
-com.health.mcardiac,True,,sms,set_text_reflection,0.7243414110650136
-com.helpwork,True,Both,music,native_write_phone_number,0.5874743852459017
-com.henkes.puzzel,False,,sms,sms_imei,False
-com.hlcsdev.x.shoppinglist,True,Real,is_screen_off,return,0.7130303999799257
-com.hotlunchorders.hotlunchorders,True,Both,is_screen_on,return,0.0
-com.huawei.agilecontroller.boarding,True,,build,native_log_model,0.15365773358793705
-com.iamadeel.resultcheck,True,Both,build,http_location,0.6963007873728352
-com.ilearn.chromecustomtab,False,,sms,native_log_string,False
-com.imorapid.com,True,,location,sms_imei,0.7331221285179821
-com.indiablo.diablo3paragoncalculator,True,,is_screen_off,sms_imei,0.7089158019311926
-com.indiagury.whitepaper,False,,build,sms_imei,False
-com.indiamatrix.saimaja,True,Both,location,write_string,0.0
-com.iwillh.iwillhelp,True,,is_screen_off,set_text_reflection,0.2966490596507755
-com.jakepolatty.highschoolsciencebowlpractice,False,,sms,stop_wifi,False
-com.jaskaran.freeweatherpro,False,,build,write_phone_number,False
-com.jmvtechnology.fmradiocidadedosol,True,Both,music,native_phone_number_network,0.0
-com.joticle.christology,True,,addition,exit,0.3933933933933934
-com.jsands.joaosantos.websocketclient,True,Both,addition,write_string,0.1171387421987518
-com.kholaygroup.covid_19tracker,True,,is_screen_off,sms_imei,0.7376802599708653
-com.kodam.child.kidsafe.browser,True,Both,camera,return,0.720771850170261
-com.krnhhd2.player,True,Real,is_screen_on,native_log_string,0.7846808510638298
-com.KSAebuy.app,False,,build,sms_imei,False
-com.kwaso.recorder,True,,sms,set_text,0.7356626451158799
-com.lab.flashlight.buddhalight6,True,,camera,http_location,0.7017543859649122
-com.ledger.live.managerapp,True,Both,time,http_location,0.0
-com.lockup.Lockup,True,Both,is_screen_on,write_phone_number,0.01925206101397905
-com.loeffler.votebeacon,True,Both,time,write_phone_number,0.026400918292810185
-com.loopcupcakes.invested,True,,is_screen_off,native_write_phone_number,0.005415915234442852
-com.lovemaths.lovemaths_eclair,True,Both,time,native_phone_number_network,0.53374734433731
-com.luckiespetstore.app,True,Both,addition,return,0.0
-com.magic.ultimate_android,True,,network,return,0.334136546184739
-com.malseriesguideextension,True,,camera,native_write_phone_number,0.6438631790744467
-com.mehdira.squarekilometerandacrekm2acconvertor,True,,network,native_write_phone_number,0.9626704953338119
-com.mexicojuegabasquetbol.app,True,Both,is_screen_off,http_location,0.0
-com.mjapplabs.tinybrightledflashlight,True,,build,set_text_reflection,0.8818316100443131
-com.mobilinkd.tncconfig,True,Real,location,stop_wifi,0.7100267677451788
-com.motivateinspirevids.inspireme,True,,is_screen_on,write_phone_number,0.054339171974522295
-com.mpsystemstore.iwaiter,True,Both,location,write_phone_number,0.00642630612585545
-com.mqsoftwares.neboshigc,True,,sms,set_text_reflection,0.7115144879129268
-com.mterp.citizen.calculator,True,Both,network,native_phone_number_network,0.0
-com.mynamecubeapps.ball,True,Real,time,native_phone_number_network,0.9642488550305839
-com.mynarski.mrev,True,,location,return,0.4855570839064649
-com.myradarconnect.securemessenger,False,,sms,native_write_phone_number,False
-com.myworldrules.newearth.earth,True,Both,network,native_write_phone_number,0.0
-com.nainfomatics.microphone.earspy,True,Both,network,stop_wifi,0.3059989205027373
-com.narb.passwordmanagement,True,,build,http_location,0.058351642736702264
-com.nativecamp.nativecampforteachers,True,Both,addition,native_log_string,0.9508238702879888
-com.netsells.rina_affairs,False,,sms,native_phone_number_network,False
-com.nicekit.android.timebosscloud,True,,music,http_location,0.3826918507959135
-com.nippon.shogun,True,Both,time,native_phone_number_network,0.0
-com.notebook.idealabs.deepsearch,True,Both,camera,write_phone_number,0.0
-com.nougadere.dev.guessthecolor,True,,time,return,0.7443505622478028
-com.oceanicsa.unoventas,True,,addition,sms_imei,0.7143065982240399
-com.osmanli.kilotakip,True,,network,write_string,0.6378581925055107
-com.pennmike.app,True,,is_screen_off,return,0.7171561051004637
-com.pentawire.netlook,True,,is_screen_off,write_string,0.7177066203257118
-com.perfectSys.psl,True,,sms,native_log_model,0.6748013331250325
-com.pit.roseandmango,True,,is_screen_off,write_string,0.0
-com.plena507.plena507,True,Both,location,write_string,0.6780130928507427
-com.preciousapp.tshirt.android.app,False,,sms,sms_string,False
-com.programming.monk.morsecodetranslator,True,Both,is_screen_on,native_phone_number_network,0.0
-com.prueba.joel.sort,True,,location,return,0.5376549094375596
-com.pufa.oneside,True,,is_screen_off,native_log_string,0.0
-com.qict.androidapp,True,,is_screen_off,stop_wifi,0.41298796059832177
-com.QRCode.SK,True,,is_screen_on,exit,0.0
-com.rabbitcarrrot.jump,False,,sms,native_phone_number_network,False
-com.radio.m8bd9ceaf8,True,,is_screen_off,set_text_reflection,0.0
-com.raiiware.interceptor,True,,addition,native_phone_number_network,0.8762002158968241
-com.raincontinues.transarde,True,Real,build,stop_wifi,0.9072635906806761
-com.rapidapper.qrscanner,True,,location,set_text,0.9200287321920269
-com.ravelroads.kailash,True,,location,return,0.5311216733584966
-com.rclaret1.player,True,,camera,native_log_model,0.917936694021102
-com.reach.reacherp,True,,build,exit,0.5594907014750686
-com.redpointglobal.redpointrewardtest,True,,is_screen_on,set_text_reflection,0.757765232968043
-com.ribblr.app,True,,sms,set_text_reflection,0.7547156199235371
-com.richanngolf.richanngolf,True,,sms,return,0.2847411444141689
-com.ruleoffun.ebd,True,Both,build,native_log_model,0.3230021598272138
-com.salesreport,True,,is_screen_off,native_log_model,0.5034965034965035
-com.samanyagyan2018.dhokha,True,,build,native_write_phone_number,0.2
-com.sandello.ndscalculator,True,,music,set_text_reflection,0.0032473009446693656
-com.santoexpedito.oracao,True,Both,build,stop_wifi,0.4106288448393712
-com.shex.startfromzero_tagalog,True,Real,build,exit,0.9804134929270947
-com.shubhmpro.biologymcq_11,False,,time,sms_imei,False
-com.shyri.whitescreenapp,True,Both,build,native_write_phone_number,0.06889724360258012
-com.siglimigliapps.benefitsofmeditation,False,,is_screen_off,sms_imei,False
-com.smartdeveloper000.reelsvideodownloaderforinstagram,True,,sms,return,0.7231207104749267
-com.soccer_x.www.twa,True,,location,return,0.6579106569526756
-com.softsysworl.hajumracouncil,True,,network,native_phone_number_network,0.0
-com.soulreap.developerstouch.interpolatorguide,True,Both,time,native_log_model,0.2801556420233463
-com.speakinghoroscope,True,Both,time,http_location,0.44538571504209246
-com.speedymarks.android.averageFree,True,Real,music,native_write_phone_number,0.9561194818926778
-com.sppgc.sardarpatelpgcollege,True,,camera,set_text,0.0
-com.ST.CELL,True,,is_screen_off,native_log_string,0.0072992700729927005
-com.talmidimteologia.turma.twa,True,,is_screen_off,return,0.637000849617672
-com.tappsolutions.calc_lsnic_joint,True,Both,camera,http_location,0.0
-com.tiempo_english.rob,True,,location,stop_wifi,0.7350993377483444
-com.tr.anadolu,True,Both,time,write_phone_number,0.0
-com.training.aamc,True,,camera,return,0.668918918918919
-com.translatteh.com,True,,location,http_location,0.7161905748112645
-com.trianguloy.openInWhatsapp,True,,music,return,0.6476301476301476
-com.tunzor.ssls,False,,is_screen_off,sms_string,False
-com.turbomedia.android,True,Both,camera,write_string,0.43558951732016
-com.ucoin.dateconverter,True,Real,is_screen_on,write_phone_number,0.907559832847917
-com.ukrainestudios.cpsc,True,Both,is_screen_on,native_write_phone_number,0.0511212696615879
-com.uppasocial,True,,is_screen_on,set_text,0.7807106598984772
-com.vgsa.vgsa_mobile,True,,build,return,0.5380905001040315
-com.viptronica.viptronicaapp,True,,music,set_text_reflection,0.0
-com.visualhdstudio.autoload,True,,network,http_location,0.7088508606140798
-com.vitanaschools03.thecreedacademy,True,Both,time,stop_wifi,0.0
-com.voxx.mobile.headrest,False,,time,sms_imei,False
-com.weclean4you.weclean4you,True,,camera,set_text,0.0
-com.wetracker.wetracker,True,,network,exit,0.530009015187123
-com.wizardsexe.rockvillerobotics.roverruckusscoutingapp,True,Both,addition,stop_wifi,0.0
-com.yarapps.applockwinter,True,,is_screen_on,sms_string,0.6581822821923629
-com.yiftach_rak.www.googleshortcutsbeta,True,,build,sms_string,0.2727272727272727
-com.zeninfotech.typenepali_nepalitexttospeech,True,,location,http_location,0.003376571275742177
-com.zibtek.on_course,True,,addition,http_location,0.8229683482009673
-config.gg.com.appconfigandroid,True,Both,addition,write_string,0.0
-cst.stJoseph.SURESH,True,Both,is_screen_off,stop_wifi,0.0
-de.airportpark24.car_tour24,True,Both,camera,http_location,0.0
-de.musoftmedia.deutschtrainer_a1_a2,True,,time,write_string,0.6287790697674419
-de.sammysoft.consumption,True,,time,native_phone_number_network,0.15691056910569107
-de.sweety.shooting,True,,build,http_location,0.10045468172279405
-de.tobiasbielefeld.brickgames,True,Both,network,native_log_string,0.11449016100178891
-deltagamabeta.cesketelevizevmobile,True,Real,build,exit,0.3793103448275862
-dongsan.church.viewer,True,Real,is_screen_on,write_phone_number,0.7796257796257796
-es.hol.ing.ninochka,True,,addition,stop_wifi,0.23093093093093092
-eu.bansko_gevgelija.app,True,,sms,set_text_reflection,0.7088329288511906
-eu.dowellscience.dowellscienceapp,False,,time,sms_imei,False
-fr.sitronman.geochampi,True,,sms,set_text,0.29526462395543174
-free.girls.chat,True,Both,camera,http_location,0.0
-gob.osinergmin.dglp,True,Both,music,native_write_phone_number,0.04096696807529064
-hu.chefpro.android,True,,location,sms_string,0.7015754189944134
-il.co.yoganow,True,,is_screen_on,return,0.29305555555555557
-in.android.foneguru,True,Both,music,write_string,0.0
-in.firm.stepsindia.orchardmart,True,Both,is_screen_on,write_string,0.3386034255599473
-in.gov.wb.wbrelieffund,True,,network,native_phone_number_network,0.8020304568527918
-in.oxeshop.oxeshop,True,,camera,stop_wifi,0.3327991452991453
-infofixsolution.com.demon,False,,sms,sms_string,False
-interpessoal.zarza.br.com.lcapuano,True,Both,time,write_phone_number,0.6235310949364449
-io.appground.blek,True,,is_screen_on,native_write_phone_number,0.06676474519179075
-io.github.visnkmr.bapl,True,,music,sms_imei,0.715762137650114
-io.Moonstargame.sanliturktarihi3,True,Both,is_screen_off,native_write_phone_number,0.0
-ioapp.ionic.starter,True,Both,camera,native_log_string,0.7373628958743788
-ir.museumhikers.musem,True,,network,exit,0.8484848484848485
-ishita.resortbooking,True,,addition,set_text,0.0
-it.whiletrue.tvseriestweet3,True,,time,set_text_reflection,0.0
-itsfreedating.com,True,Both,music,write_string,0.0
-iyapps.carrosusadosportugal,True,Real,location,native_log_model,0.6525285481239804
-jp.co.opto.opn.opnime2,True,,time,native_write_phone_number,0.40430059523809525
-jp.golddisc.z80cheatsheet,True,Both,location,exit,0.3256880733944954
-jp.simple_web_view,True,Both,music,exit,0.0
-kr.co.webation.realserver1,True,,addition,sms_imei,0.719059405940594
-kr.speedx,True,Both,location,stop_wifi,0.6875026238093044
-la.ggu.m16.m16chat,True,,camera,return,0.7138482056728356
-laundryonthewheels.app,True,,time,set_text,0.0
-lp2i.radiodelta.fr,True,,is_screen_off,set_text,0.3169230769230769
-mindmine.audiobook,True,,location,native_log_model,0.807094952347335
-misol.alex.buttonfrontier,True,Real,location,native_log_string,0.656653247438312
-moi.medisonlineindonesia.com,True,,location,sms_imei,0.738139713540324
-mtw.app.vtu,False,,build,sms_string,False
-nascenia.robi.com.digired,True,,is_screen_on,set_text_reflection,0.0
-navi.android.my_launcher,True,,is_screen_off,stop_wifi,0.681110938229345
-net.classicelectronic.sms,True,,camera,exit,0.6888150609080842
-net.myappy.charterchecklist,True,,build,return,0.0618413203420163
-net.shapkin.timerchgk,True,,is_screen_on,return,0.25066666666666665
-nl.candosoft.lifebalance,True,Real,location,stop_wifi,0.9418457648546145
-nl.foodticket.app.orderapp658,True,,camera,native_phone_number_network,0.9409223458256831
-nl.matthijsvh.screenoff,True,Both,is_screen_off,http_location,0.5
-nl.mijnschoolinfo.obsannefrank,True,Both,is_screen_on,native_log_model,0.0
-nl.onlineafspraken.android.bodyteccenter,True,,addition,set_text_reflection,0.5389807627404657
-nl.sitedish.jodl,True,Both,music,native_phone_number_network,0.27222578576010265
-nl.sitedish.kofusushi,True,,build,native_log_model,0.5770535319274444
-nl.sitedish.maximiliano,True,Both,camera,return,0.2958810626370948
-nl.sitedish.monalisaweesp,True,,camera,native_write_phone_number,0.6194412770809579
-nl.winterblend.winterblendquiz,True,Both,is_screen_on,http_location,0.0
-ohms.com.ohms,True,Both,camera,write_string,0.22206832871652815
-org.js.oledsaver,True,,sms,write_string,0.6888488973234735
-org.mystphysx.wallet.mygulfcoinwallet,False,Real,camera,return,False
-org.project.pycalculator,True,,is_screen_off,native_write_phone_number,0.0
-org.sailonline.solclient,True,Real,is_screen_on,native_phone_number_network,0.05385505679698493
-ortsspiegel.emilen.com.ortsspiegel,True,,location,sms_string,0.7284501719361537
-ramya.xtremecoders.awhile,True,,network,exit,0.7225765651820399
-request.android,True,Both,music,native_log_string,0.0
-ru.amartynov.bond_finder,True,Both,addition,native_write_phone_number,0.0
-ru.free.esplus,True,,camera,native_log_model,0.13234130125059362
-ru.imilka.randomfact,True,,build,write_string,0.6752124795006702
-ru.intour_online.intourist,True,,build,set_text_reflection,0.9244897959183673
-ru.rucobe.wheeloflifeoffline,False,,sms,native_log_string,False
-sitinoldae.qlauncher,True,,sms,set_text_reflection,0.7315206337102473
-sk.blade.globalvibratetoggledemo,False,,sms,set_text_reflection,False
-statusfacebook.vvidmate.allvideodownloader,True,,network,write_phone_number,0.8268526455232603
-summersedge23.com.circuitbreaker.lite,True,Real,is_screen_off,write_phone_number,0.7995226730310262
-taleb.elhadi.ntbApp,True,,sms,native_write_phone_number,0.7517967519397597
-tech.klinge.picksort,False,,network,native_log_string,False
-thegoodshot.sandip.com.thegoodshot,False,,sms,exit,False
-trex.tv.baharturktv.mobile,True,Both,location,native_phone_number_network,0.0
-ua.com.gpsradar.gpsrb,True,Both,network,write_phone_number,0.41212305817849526
-utility.com.scoutdictionary,True,Both,is_screen_on,stop_wifi,0.47312925170068026
-valhalldev.mwst,True,Real,location,write_string,0.7109561925395261
-weidoo.ultratipp,True,,time,set_text_reflection,0.0
-za.drlocustfinance,False,,sms,sms_imei,False
+Package Name,Successfully Logged,"Triggered(Real/Emu/Both,None)",Trigger Type,Behavior Type,Behavior Difference,Evasion Point
+aait.sa.aspbranch.semsem,False,,is_screen_off,sms_string,False,
+ahman.timo.tatargetfinder,True,,build,return,0.6722710442649944,Different Entry Point!?
+an.MalayArabTranslate,True,,camera,stop_wifi,0.7151075710209549,Different Entry Point!?
+app.bpbonline,True,Both,location,exit,0.7430789496026406,Different Entry Point!?
+app.wise.passwordgenerator,True,Real,music,exit,0.6577199043316503,"START: Lapp/wise/passwordgenerator/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+appinventor.ai_afandhirafa.EBOOK_CERITA_SUKSES,True,,location,write_string,0.39943248995034286,"START: Lgnu/kawa/util/AbstractHashTable;->hashToIndex(I)I
+"
+appinventor.ai_bunjop.LifeFM,True,,build,native_log_string,0.5169760162550374,Different Entry Point!?
+at.my_chauffeur.my_chauffeur,True,,location,exit,0.5892232520118709,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+athithi.gruha.foods,True,,network,set_text,0.4976947342877942,"START: Lathithi/gruha/foods/MainActivity$4;->onGlobalLayout()V
+"
+blesskcoin.com.android.kt1q.blesskcoin,True,,is_screen_off,exit,0.7986870897155361,"START: Lblesskcoin/com/android/kt1q/blesskcoin/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+br.com.audiobras.consagracaomp3,True,,network,native_phone_number_network,0.11674641148325358,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+br.ici.corrida3.view,True,,music,sms_imei,0.7473501303214596,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->isMusicPlaying()Z
+"
+buzzgrillindian.co.uk,True,,network,set_text,0.0,"START: Lbuzzgrillindian/co/uk/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+ca.myfirstresponse.cdems,True,,music,set_text_reflection,0.0,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+ca.myfirstresponse.ipco,True,,music,http_location,0.0,"START: Ldagger/internal/Preconditions;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+"
+co.adelgazarencasa.adelgazarencasa,True,,is_screen_off,set_text_reflection,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.a2sxd.aplikasi.namabayilaki_lakiislam,True,Real,music,write_string,0.9308624376336422,"START: Lcom/a2sxd/aplikasi/namabayilaki_lakiislam/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.acr.minigun,False,,addition,sms_imei,False,
+com.acrylplatform.client,True,Both,is_screen_on,native_write_phone_number,0.0,Different Entry Point!?
+com.activspaces.labs.bizcard,False,,camera,sms_imei,False,
+com.ad.tutorialoffice,True,Both,is_screen_on,native_write_phone_number,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.aiimspqms.mq,True,,network,stop_wifi,0.0,"START: Lcom/aiimspqms/mq/MainActivity;->setPage()V
+"
+com.alienshome.alabrat,True,Both,is_screen_off,native_phone_number_network,0.1488238902942164,"START: La/b/e/e/c;->getTheme()Landroid/content/res/Resources$Theme;
+"
+com.aliexpress.india,True,Both,addition,native_write_phone_number,0.3156673114119923,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.amullabanaenterprisess.multirecharge,True,,is_screen_off,write_phone_number,0.8328729281767956,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.androidandrew.volumelimiter,True,Both,time,native_phone_number_network,0.0,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->isMusicPlaying()Z
+"
+com.androidtool.selectcontactnumber.checkphone.beingvalidinvalid.validatecontact,True,,network,set_text,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.anncleaners.anncleaners,True,Both,camera,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.apinjari.chargerremovalalarm,True,,camera,write_phone_number,0.0,"START: Lb/c/b/a/b/m/a;->a(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+"
+com.apkinstaller,True,Both,addition,native_log_string,0.5041153934991597,"START: Lc/b/c/h;->getResources()Landroid/content/res/Resources;
+"
+com.app.occeramics,True,Both,addition,native_log_model,0.7265983780063793,Different Entry Point!?
+com.app.penasultra,True,,music,write_string,0.0,"START: Lcom/app/penasultra/MainActivity$myWebclient;->onPageFinished(Landroid/webkit/WebView;Ljava/lang/String;)V
+"
+com.app.todosfolletoscanarias,False,,is_screen_off,sms_string,False,
+com.application.anasi.connect3,False,,network,sms_imei,False,
+com.apps.garwoodattributes.monetonsea,True,,is_screen_on,write_phone_number,0.5,"START: Lcom/apps/garwoodattributes/monetonsea/mywallpaperActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.apps.offbeat.colorpalette,True,,time,return,0.0,"START: Lcom/ukrainestudios/cpsc/MainActivity;->access$3(Lcom/ukrainestudios/cpsc/MainActivity;)Landroid/content/SharedPreferences;
+"
+com.arabwomensports.sport,True,,camera,write_string,0.7338685808776219,Different Entry Point!?
+com.artharakshak.artharakshak,True,Both,music,native_log_string,0.4446823697359029,"START: Lcom/artharakshak/artharakshak/ArthaRakshakHomeActivity;->l()V
+"
+com.ashensoftware.toolforyoutube,True,,network,native_log_model,0.0,"START: Lcom/ashensoftware/toolforyoutube/AddChannel;->onCreate(Landroid/os/Bundle;)V
+"
+com.atmiyafadia.game.clickspeedtest,False,,sms,stop_wifi,False,
+com.auctionslive.bidding,True,Both,is_screen_off,native_log_string,0.7495961227786753,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.auralisoft.colorimeter,False,,music,sms_imei,False,
+com.aurhe.ap37,True,Both,music,native_write_phone_number,0.3461664646843384,"START: Lcom/aurhe/ap37/MainActivity$4;->compare(Ljava/lang/Object;Ljava/lang/Object;)I
+"
+com.baasgeo.cogoBeta,True,,music,stop_wifi,0.9131925190300952,"START: Lb/a/c/k;->j(I)Lb/a/c/k;
+"
+com.badep.demoodoo,True,,time,exit,0.8127536231884058,"START: Lcom/badep/demoodoo/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.bari.bandhan,True,,time,set_text,0.0,"START: Lcom/bari/bandhan/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.BDPlus.BangladesherItihas,True,Both,time,native_log_model,0.2937799043062201,"START: Lcom/rjfun/cordova/ad/GenericAdPlugin;->onResume(Z)V
+"
+com.beeflash.HotePenginapan,False,,network,sms_string,False,
+com.birnepal.sciencekoguide,True,,camera,set_text_reflection,0.27060269176819723,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.blood.bloodbank.newbank,True,,sms,sms_imei,0.2540322580645161,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.bowtiemedia.verbouwen,False,,sms,set_text_reflection,False,
+com.branah.farsiiran,True,Both,location,stop_wifi,0.6930199748913761,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.brighteyetea.pilotkick,True,Real,time,return,0.9597238802096849,"START: Lcom/brighteyetea/pilotkick/MainActivity;->onResume()V
+"
+com.cakemakeappp.appandappcakemakeappbake,True,,location,sms_string,0.7313565111427042,Different Entry Point!?
+com.CheckPointTexter,True,Real,location,native_write_phone_number,0.4833166736151923,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.ciiskills.assessment,True,,is_screen_on,native_phone_number_network,0.15478076434622082,"START: La/a/a/a/a/c/k$a;->newThread(Ljava/lang/Runnable;)Ljava/lang/Thread;
+"
+com.ciopec.vremea,False,,sms,sms_string,False,
+com.clinvivo.datacatcher,True,Both,is_screen_on,http_location,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.cmusical.pc.culturamusical,True,Both,location,native_log_model,0.6633758693409486,Different Entry Point!?
+com.coconut_apps.stewartfrancisjokes,True,Both,is_screen_off,native_log_model,0.6497601096641535,"START: Lcom/coconut_apps/stewartfrancisjokes/MainActivity;->setJoke(Ljava/util/Random;Landroid/widget/TextView;)V
+"
+com.codebear.random_list,False,,is_screen_on,return,False,
+com.completegardencuttings.adeknata,True,,network,http_location,0.6286039366262184,Different Entry Point!?
+com.comself.cameravideo,True,,is_screen_on,native_phone_number_network,0.6413396749436477,Different Entry Point!?
+com.cooolindia.cooolindi1,True,Both,music,native_log_model,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.cygnus.calendar,True,,music,set_text_reflection,0.2,"START: Lcom/cygnus/calendar/MainActivity;->a()V
+"
+com.dakshapps.junglewaterfall,True,,network,return,0.0,"START: Lcom/dakshapps/junglewaterfall/LWPServiceWelcome;->onCreate(Landroid/os/Bundle;)V
+"
+com.darnijood.app,False,,sms,set_text,False,
+com.datinglove.pet2,False,,build,sms_string,False,
+com.dayna.yourloancalculator,True,Real,is_screen_off,http_location,0.26550520873131095,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.ddangman.anythinggoespaint,True,,is_screen_on,set_text,0.0,"START: Lcom/ddangman/anythinggoespaint/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.deepnetsecurity.safeidburner,True,Both,is_screen_on,stop_wifi,0.0,Different Entry Point!?
+com.designhunt.geeksmood,True,,location,set_text_reflection,0.5353938378363735,Different Entry Point!?
+com.diabetesid,True,,addition,native_phone_number_network,0.8180650005965289,"START: La/a/a/a/a/c/k$a;->newThread(Ljava/lang/Runnable;)Ljava/lang/Thread;
+"
+com.diemagd.interestcalculator,True,,camera,native_phone_number_network,0.11278917161270102,"START: La/b/d/d/j;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+"
+com.digitalfuturesoft.mlbticketsapp,True,Both,time,stop_wifi,0.6518987341772152,"START: Lcom/digitalfuturesoft/mlbticketsapp/MainActivity;->onResume()V
+"
+com.djl.html5_init,True,Both,addition,stop_wifi,0.5157995914934519,"START: Lcom/djl/html5_init/MainActivity$ListRefFragment$myAdapter;->getCount()I
+"
+com.doionline.flashlight,True,,time,return,0.0,"START: Lc/d/b/a/b/m/a;->a(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+"
+com.DrMoPhysics,True,Both,location,native_log_string,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.ecoin.ecoin,True,,sms,set_text_reflection,0.746770563066,Different Entry Point!?
+com.electron.provjera,True,,music,return,0.9270833333333334,"START: Lcom/electron/provjera/Form1;->onCreate(Landroid/os/Bundle;)V
+"
+com.elisoft.soaphandmade,True,Real,time,http_location,0.5509830348761687,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->isMusicPlaying()Z
+"
+com.emm.app.masteranylanguage.farsi,True,,network,exit,0.0,"START: Lcom/emm/app/masteranylanguage/farsi/SplashScreen;->onPause()V
+"
+com.englistening.makeev.englisteningcom,True,,build,set_text,0.0,"START: Lcom/englistening/makeev/englisteningcom/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.exampl.alldecadesrado,True,,time,write_phone_number,0.9298504177393269,"START: Lc/a/b/b/a/b/b;->a(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+"
+com.ez.automatic.phonecall.recorder,True,,network,http_location,0.1791530944625407,"START: Lcom/ez/automatic/phonecall/recorder/CallRecorder;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+com.farhanaliqureshi.pakistanlandareacalculator,True,Real,network,native_write_phone_number,0.6947935368043088,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.felsefe.notlari,True,,music,native_write_phone_number,0.6825651113927175,Different Entry Point!?
+com.flaps.herbfun,True,Both,camera,write_string,0.7224077669902913,"START: Lcom/silkimen/http/HttpRequest$ConnectionFactory$1;->create(Ljava/net/URL;)Ljava/net/HttpURLConnection;
+"
+com.forts.forts,True,,music,write_string,0.5255382909345337,"START: Lb/a/b/c;->h()V
+"
+com.framesizecalculator,True,,addition,set_text,0.7264871411718443,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.frankburmo,True,,music,set_text_reflection,0.5338188790476054,"START: Lcom/frankburmo/android/flyplasslib/handlers/BaseFeedParser;->getInputStream()Ljava/io/InputStream;
+"
+com.frederic.distanceAlarme,True,,network,exit,0.12932680946348532,"START: Lb/a/n/i;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+"
+com.freedollarstore.app,True,,music,http_location,0.5068844535107917,Different Entry Point!?
+com.gamemob.minijump,True,,network,sms_string,0.7461110940717466,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(I)V
+"
+com.gcart.android.deron,True,,is_screen_off,native_write_phone_number,0.6849734653081361,Different Entry Point!?
+com.gcart.android.fazha,True,,is_screen_on,stop_wifi,0.36065573770491804,"START: Lcom/gcart/android/fazha/LoginScreen$1;->onClick(Landroid/view/View;)V
+"
+com.gcart.android.seraphim,True,,build,stop_wifi,0.3047337278106509,"START: Lcom/gcart/android/seraphim/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+com.gcart.android.twice,True,,music,http_location,0.0,"START: Lb/c/a/b$b;->a(Ljava/lang/String;Ljava/io/File;)V
+"
+com.gilisztaturmixgmail.locus_addon_pebble,True,,is_screen_on,native_log_string,0.4753482636784275,Different Entry Point!?
+com.github.axet.hourlyreminder,True,,time,native_write_phone_number,0.6777176706908128,"START: Lcom/github/axet/androidlibrary/widgets/OptimizationPreferenceCompat;->IntentClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+"
+com.github.fractals,True,,music,set_text_reflection,0.5534512250252781,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.gmail.coolapps726.bankTester,True,,location,native_log_string,0.9645996043965007,"START: Lcom/gmail/coolapps726/bankTester/utilities/BankDisplay;->d(Landroid/view/ViewGroup;)[Ljava/lang/Object;
+"
+com.gnrdsoftsolution.news6teluguandroidapp,True,Both,is_screen_on,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.gocalsd.quicktile.launchers,True,,sms,stop_wifi,0.33394160583941607,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.grc.lhc,True,,music,sms_string,0.7087794187205296,Different Entry Point!?
+com.gst.ihab.gst,True,,location,sms_string,0.3025568181818182,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.hakimisolution.webapp,True,,sms,write_phone_number,0.6715101276937292,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.health.mcardiac,True,,sms,set_text_reflection,0.7243414110650136,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.helpwork,True,Both,music,native_write_phone_number,0.5874743852459017,"START: Lcom/helpwork/Fragment/FragmentHome;->setAllClickListener()V
+"
+com.henkes.puzzel,False,,sms,sms_imei,False,
+com.hlcsdev.x.shoppinglist,True,Real,is_screen_off,return,0.7130303999799257,"START: La/a/o/i;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+"
+com.hotlunchorders.hotlunchorders,True,Both,is_screen_on,return,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.huawei.agilecontroller.boarding,True,,build,native_log_model,0.15365773358793705,"START: Lcom/huawei/agilecontroller/boarding/common/BoardingLog;->getFileSizes(Ljava/io/File;)J
+"
+com.iamadeel.resultcheck,True,Both,build,http_location,0.6963007873728352,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.ilearn.chromecustomtab,False,,sms,native_log_string,False,
+com.imorapid.com,True,,location,sms_imei,0.7331221285179821,Different Entry Point!?
+com.indiablo.diablo3paragoncalculator,True,,is_screen_off,sms_imei,0.7089158019311926,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.indiagury.whitepaper,False,,build,sms_imei,False,
+com.indiamatrix.saimaja,True,Both,location,write_string,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.iwillh.iwillhelp,True,,is_screen_off,set_text_reflection,0.2966490596507755,Different Entry Point!?
+com.jakepolatty.highschoolsciencebowlpractice,False,,sms,stop_wifi,False,
+com.jaskaran.freeweatherpro,False,,build,write_phone_number,False,
+com.jmvtechnology.fmradiocidadedosol,True,Both,music,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.joticle.christology,True,,addition,exit,0.3933933933933934,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.jsands.joaosantos.websocketclient,True,Both,addition,write_string,0.1171387421987518,"START: Lde/hdodenhof/circleimageview/CircleImageView;->setup()V
+"
+com.kholaygroup.covid_19tracker,True,,is_screen_off,sms_imei,0.7376802599708653,Different Entry Point!?
+com.kodam.child.kidsafe.browser,True,Both,camera,return,0.720771850170261,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.krnhhd2.player,True,Real,is_screen_on,native_log_string,0.7846808510638298,"START: Lcom/krnhhd2/player/MainActivity;->checkPlayServices()Z
+"
+com.KSAebuy.app,False,,build,sms_imei,False,
+com.kwaso.recorder,True,,sms,set_text,0.7356626451158799,Different Entry Point!?
+com.lab.flashlight.buddhalight6,True,,camera,http_location,0.7017543859649122,"START: Lcom/lab/flashlight/buddhalight6/PermissionAcitivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.ledger.live.managerapp,True,Both,time,http_location,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.lockup.Lockup,True,Both,is_screen_on,write_phone_number,0.01925206101397905,"START: Lb/b/i/j$a;->a([II)Z
+"
+com.loeffler.votebeacon,True,Both,time,write_phone_number,0.026400918292810185,"START: Lcom/uriio/beacons/ble/AdvertisersManager;->isBluetoothEnabled()Z
+"
+com.loopcupcakes.invested,True,,is_screen_off,native_write_phone_number,0.005415915234442852,"START: Ld/b/b/g/a;->b()Ljava/lang/String;
+"
+com.lovemaths.lovemaths_eclair,True,Both,time,native_phone_number_network,0.53374734433731,"START: Lcom/lovemaths/lovemaths_eclair/i;->e()I
+"
+com.luckiespetstore.app,True,Both,addition,return,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.magic.ultimate_android,True,,network,return,0.334136546184739,"START: Lcom/magic/ultimate_android/MainActivity;->getWebViewInstance(I)Landroid/webkit/WebView;
+"
+com.malseriesguideextension,True,,camera,native_write_phone_number,0.6438631790744467,"START: Lcom/malseriesguideextension/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+com.mehdira.squarekilometerandacrekm2acconvertor,True,,network,native_write_phone_number,0.9626704953338119,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.mexicojuegabasquetbol.app,True,Both,is_screen_off,http_location,0.0,"START: Lcom/mexicojuegabasquetbol/app/HomeActivity;->access$000(Lcom/mexicojuegabasquetbol/app/HomeActivity;)Landroid/widget/ProgressBar;
+"
+com.mjapplabs.tinybrightledflashlight,True,,build,set_text_reflection,0.8818316100443131,"START: Lcom/mjapplabs/tinybrightledflashlight/MainActivity;->onResume()V
+"
+com.mobilinkd.tncconfig,True,Real,location,stop_wifi,0.7100267677451788,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.motivateinspirevids.inspireme,True,,is_screen_on,write_phone_number,0.054339171974522295,"START: La/b/e/f/i;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+"
+com.mpsystemstore.iwaiter,True,Both,location,write_phone_number,0.00642630612585545,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.mqsoftwares.neboshigc,True,,sms,set_text_reflection,0.7115144879129268,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.mterp.citizen.calculator,True,Both,network,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.mynamecubeapps.ball,True,Real,time,native_phone_number_network,0.9642488550305839,"START: Lcom/threed/jpct/RGBColor;->getBlue()I
+"
+com.mynarski.mrev,True,,location,return,0.4855570839064649,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.myradarconnect.securemessenger,False,,sms,native_write_phone_number,False,
+com.myworldrules.newearth.earth,True,Both,network,native_write_phone_number,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.nainfomatics.microphone.earspy,True,Both,network,stop_wifi,0.3059989205027373,"START: Lb/b/o/c;->getResources()Landroid/content/res/Resources;
+"
+com.narb.passwordmanagement,True,,build,http_location,0.058351642736702264,"START: Lcom/narb/passwordmanagement/MainActivity;->onOptionsItemSelected(Landroid/view/MenuItem;)Z
+"
+com.nativecamp.nativecampforteachers,True,Both,addition,native_log_string,0.9508238702879888,"START: Lcom/nativecamp/nativecampforteachers/activity/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+com.netsells.rina_affairs,False,,sms,native_phone_number_network,False,
+com.nicekit.android.timebosscloud,True,,music,http_location,0.3826918507959135,"START: Lcom/nicekit/android/timebosscloud/MainActivity;->c(I)V
+"
+com.nippon.shogun,True,Both,time,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.notebook.idealabs.deepsearch,True,Both,camera,write_phone_number,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.nougadere.dev.guessthecolor,True,,time,return,0.7443505622478028,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.oceanicsa.unoventas,True,,addition,sms_imei,0.7143065982240399,Different Entry Point!?
+com.osmanli.kilotakip,True,,network,write_string,0.6378581925055107,"START: Lcom/osmanli/kilotakip/ilkActivity;->setBackgroundColor()V
+"
+com.pennmike.app,True,,is_screen_off,return,0.7171561051004637,"START: Lcom/pennmike/app/MainActivity$WebClient;->onPageFinished(Landroid/webkit/WebView;Ljava/lang/String;)V
+"
+com.pentawire.netlook,True,,is_screen_off,write_string,0.7177066203257118,Different Entry Point!?
+com.perfectSys.psl,True,,sms,native_log_model,0.6748013331250325,Different Entry Point!?
+com.pit.roseandmango,True,,is_screen_off,write_string,0.0,"START: Lcom/pit/roseandmango/SplashActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.plena507.plena507,True,Both,location,write_string,0.6780130928507427,Different Entry Point!?
+com.preciousapp.tshirt.android.app,False,,sms,sms_string,False,
+com.programming.monk.morsecodetranslator,True,Both,is_screen_on,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.prueba.joel.sort,True,,location,return,0.5376549094375596,"START: Lcom/prueba/joel/sort/MainActivity$myWebClient;->onPageStarted(Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
+"
+com.pufa.oneside,True,,is_screen_off,native_log_string,0.0,"START: Lcom/pufa/oneside/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.qict.androidapp,True,,is_screen_off,stop_wifi,0.41298796059832177,"START: Lcom/qict/androidapp/adapters/MenuGridAdapter;->getView(ILandroid/view/View;Landroid/view/ViewGroup;)Landroid/view/View;
+"
+com.QRCode.SK,True,,is_screen_on,exit,0.0,"START: Lcom/QRCode/SK/MainActivity;->initialize(Landroid/os/Bundle;)V
+"
+com.rabbitcarrrot.jump,False,,sms,native_phone_number_network,False,
+com.radio.m8bd9ceaf8,True,,is_screen_off,set_text_reflection,0.0,"START: Lcom/radio/m8bd9ceaf8/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.raiiware.interceptor,True,,addition,native_phone_number_network,0.8762002158968241,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.raincontinues.transarde,True,Real,build,stop_wifi,0.9072635906806761,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.rapidapper.qrscanner,True,,location,set_text,0.9200287321920269,"START: Lcom/rapidapper/qrscanner/ScannerActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+com.ravelroads.kailash,True,,location,return,0.5311216733584966,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.rclaret1.player,True,,camera,native_log_model,0.917936694021102,"START: Lcom/ukrainestudios/cpsc/MainActivity$6$1;->run()V
+"
+com.reach.reacherp,True,,build,exit,0.5594907014750686,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.redpointglobal.redpointrewardtest,True,,is_screen_on,set_text_reflection,0.757765232968043,Different Entry Point!?
+com.ribblr.app,True,,sms,set_text_reflection,0.7547156199235371,Different Entry Point!?
+com.richanngolf.richanngolf,True,,sms,return,0.2847411444141689,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.ruleoffun.ebd,True,Both,build,native_log_model,0.3230021598272138,"START: Lcc/fovea/PurchasePlugin;->access$302(Lcc/fovea/PurchasePlugin;Lcom/android/billingclient/api/BillingResult;)Lcom/android/billingclient/api/BillingResult;
+"
+com.salesreport,True,,is_screen_off,native_log_model,0.5034965034965035,"START: Lcom/salesreport/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.samanyagyan2018.dhokha,True,,build,native_write_phone_number,0.2,"START: Lcom/startapp/android/publish/ads/banner/bannerstandard/BannerStandard;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
+"
+com.sandello.ndscalculator,True,,music,set_text_reflection,0.0032473009446693656,"START: Lcom/sandello/ndscalculator/MainActivity;->F()V
+"
+com.santoexpedito.oracao,True,Both,build,stop_wifi,0.4106288448393712,"START: Lcom/rjfun/cordova/ad/GenericAdPlugin;->onResume(Z)V
+"
+com.shex.startfromzero_tagalog,True,Real,build,exit,0.9804134929270947,"START: Lcom/shex/startfromzero_tagalog/Wi;->h()V
+"
+com.shubhmpro.biologymcq_11,False,,time,sms_imei,False,
+com.shyri.whitescreenapp,True,Both,build,native_write_phone_number,0.06889724360258012,"START: Lb/b/b/a/e/a/ca;->a(ILjava/lang/String;)Lb/b/b/a/e/a/ca;
+"
+com.siglimigliapps.benefitsofmeditation,False,,is_screen_off,sms_imei,False,
+com.smartdeveloper000.reelsvideodownloaderforinstagram,True,,sms,return,0.7231207104749267,Different Entry Point!?
+com.soccer_x.www.twa,True,,location,return,0.6579106569526756,Different Entry Point!?
+com.softsysworl.hajumracouncil,True,,network,native_phone_number_network,0.0,"START: Lcom/softsysworl/hajumracouncil/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.soulreap.developerstouch.interpolatorguide,True,Both,time,native_log_model,0.2801556420233463,"START: Lcom/soulreap/developerstouch/interpolatorguide/Helping/Interpole;->onCreate(Landroid/os/Bundle;)V
+"
+com.speakinghoroscope,True,Both,time,http_location,0.44538571504209246,"START: Lapplication/handlers/GlobalData;->setFirst_login(Ljava/lang/String;)V
+"
+com.speedymarks.android.averageFree,True,Real,music,native_write_phone_number,0.9561194818926778,"START: Lcom/speedymarks/android/averageFree/Main;->onCreate(Landroid/os/Bundle;)V
+"
+com.sppgc.sardarpatelpgcollege,True,,camera,set_text,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.ST.CELL,True,,is_screen_off,native_log_string,0.0072992700729927005,"START: Lcom/ukrainestudios/cpsc/MainActivity;->access$3(Lcom/ukrainestudios/cpsc/MainActivity;)Landroid/content/SharedPreferences;
+"
+com.starz_ven.rajvanyr,False,,music,sms_string,False,
+com.talmidimteologia.turma.twa,True,,is_screen_off,return,0.637000849617672,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.tappsolutions.calc_lsnic_joint,True,Both,camera,http_location,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.tiempo_english.rob,True,,location,stop_wifi,0.7350993377483444,"START: Lcom/tiempo_english/rob/InfoActivity;->onResume()V
+"
+com.tr.anadolu,True,Both,time,write_phone_number,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.training.aamc,True,,camera,return,0.668918918918919,"START: Ldatabase/DataHelper;->close()V
+"
+com.translatteh.com,True,,location,http_location,0.7161905748112645,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.trianguloy.openInWhatsapp,True,,music,return,0.6476301476301476,"START: La/a/a/a/b/d$a;->run()V
+"
+com.tunzor.ssls,False,,is_screen_off,sms_string,False,
+com.turbomedia.android,True,Both,camera,write_string,0.43558951732016,Different Entry Point!?
+com.ucoin.dateconverter,True,Real,is_screen_on,write_phone_number,0.907559832847917,"START: Lcom/ucoin/dateconverter/StartActivity;->setOnJapaneseBtnClick()V
+"
+com.ukrainestudios.cpsc,True,Both,is_screen_on,native_write_phone_number,0.0511212696615879,"START: Lcom/ukrainestudios/cpsc/MainActivity$6;->run()V
+"
+com.uppasocial,True,,is_screen_on,set_text,0.7807106598984772,"START: Lcom/uppasocial/SplashActivity;->onCreate(Landroid/os/Bundle;)V
+"
+com.vgsa.vgsa_mobile,True,,build,return,0.5380905001040315,"START: Lb/b/b/d;->h()V
+"
+com.viptronica.viptronicaapp,True,,music,set_text_reflection,0.0,"START: Lcom/viptronica/viptronicaapp/FullscreenActivity$1;->run()V
+"
+com.visualhdstudio.autoload,True,,network,http_location,0.7088508606140798,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+com.vitanaschools03.thecreedacademy,True,Both,time,stop_wifi,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+com.voxx.mobile.headrest,False,,time,sms_imei,False,
+com.weclean4you.weclean4you,True,,camera,set_text,0.0,"START: Lcom/weclean4you/weclean4you/Home;->onCreate(Landroid/os/Bundle;)V
+"
+com.wetracker.wetracker,True,,network,exit,0.530009015187123,Different Entry Point!?
+com.wizardsexe.rockvillerobotics.roverruckusscoutingapp,True,Both,addition,stop_wifi,0.0,"START: Lcom/wizardsexe/rockvillerobotics/roverruckusscoutingapp/MainActivity;->calculateScore()V
+"
+com.yarapps.applockwinter,True,,is_screen_on,sms_string,0.6581822821923629,Different Entry Point!?
+com.yiftach_rak.www.googleshortcutsbeta,True,,build,sms_string,0.2727272727272727,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+com.zeninfotech.typenepali_nepalitexttospeech,True,,location,http_location,0.003376571275742177,"START: La/f/k/g;->a(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+"
+com.zibtek.on_course,True,,addition,http_location,0.8229683482009673,"START: Ld/a/a/a/a/b/o;->a(Landroid/content/Context;)Ld/a/a/a/a/b/o;
+"
+config.gg.com.appconfigandroid,True,Both,addition,write_string,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+cst.stJoseph.SURESH,True,Both,is_screen_off,stop_wifi,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+de.airportpark24.car_tour24,True,Both,camera,http_location,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+de.musoftmedia.deutschtrainer_a1_a2,True,,time,write_string,0.6287790697674419,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+de.sammysoft.consumption,True,,time,native_phone_number_network,0.15691056910569107,"START: Lde/sammysoft/consumption/c;->a()I
+"
+de.sweety.shooting,True,,build,http_location,0.10045468172279405,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+de.tobiasbielefeld.brickgames,True,Both,network,native_log_string,0.11449016100178891,"START: Lde/tobiasbielefeld/brickgames/helper/LocaleChanger;->updateResources(Landroid/content/Context;Ljava/lang/String;)Landroid/content/Context;
+"
+deltagamabeta.cesketelevizevmobile,True,Real,build,exit,0.3793103448275862,"START: Ldeltagamabeta/cesketelevizevmobile/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+dongsan.church.viewer,True,Real,is_screen_on,write_phone_number,0.7796257796257796,"START: Ldongsan/church/viewer/Donsanch;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+es.hol.ing.ninochka,True,,addition,stop_wifi,0.23093093093093092,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+eu.bansko_gevgelija.app,True,,sms,set_text_reflection,0.7088329288511906,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->isMusicPlaying()Z
+"
+eu.dowellscience.dowellscienceapp,False,,time,sms_imei,False,
+fr.sitronman.geochampi,True,,sms,set_text,0.29526462395543174,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+free.girls.chat,True,Both,camera,http_location,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+gob.osinergmin.dglp,True,Both,music,native_write_phone_number,0.04096696807529064,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+hu.chefpro.android,True,,location,sms_string,0.7015754189944134,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+il.co.yoganow,True,,is_screen_on,return,0.29305555555555557,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+in.android.foneguru,True,Both,music,write_string,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+in.firm.stepsindia.orchardmart,True,Both,is_screen_on,write_string,0.3386034255599473,"START: Lin/firm/stepsindia/orchardmart/MainActivity$2;->onPageFinished(Landroid/webkit/WebView;Ljava/lang/String;)V
+"
+in.gov.wb.wbrelieffund,True,,network,native_phone_number_network,0.8020304568527918,"START: Lin/gov/wb/wbrelieffund/HomeActivity;->onCreate(Landroid/os/Bundle;)V
+"
+in.oxeshop.oxeshop,True,,camera,stop_wifi,0.3327991452991453,"START: Lcom/ukrainestudios/cpsc/MainActivity;->access$3(Lcom/ukrainestudios/cpsc/MainActivity;)Landroid/content/SharedPreferences;
+"
+infofixsolution.com.demon,False,,sms,sms_string,False,
+interpessoal.zarza.br.com.lcapuano,True,Both,time,write_phone_number,0.6235310949364449,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+io.appground.blek,True,,is_screen_on,native_write_phone_number,0.06676474519179075,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+io.github.visnkmr.bapl,True,,music,sms_imei,0.715762137650114,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+io.Moonstargame.sanliturktarihi3,True,Both,is_screen_off,native_write_phone_number,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+ioapp.ionic.starter,True,Both,camera,native_log_string,0.7373628958743788,"START: Lcom/onesignal/OneSignalPrefs$WritePrefHandlerThread;->scheduleFlushToDisk()V
+"
+ir.museumhikers.musem,True,,network,exit,0.8484848484848485,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+ishita.resortbooking,True,,addition,set_text,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+it.whiletrue.tvseriestweet3,True,,time,set_text_reflection,0.0,"START: Lit/whiletrue/tvseriestweet3/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+itsfreedating.com,True,Both,music,write_string,0.0,Different Entry Point!?
+iyapps.carrosusadosportugal,True,Real,location,native_log_model,0.6525285481239804,"START: Liyapps/carrosusadosportugal/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+"
+jp.co.opto.opn.opnime2,True,,time,native_write_phone_number,0.40430059523809525,Different Entry Point!?
+jp.golddisc.z80cheatsheet,True,Both,location,exit,0.3256880733944954,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+jp.simple_web_view,True,Both,music,exit,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+kr.co.webation.realserver1,True,,addition,sms_imei,0.719059405940594,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->isMusicPlaying()Z
+"
+kr.speedx,True,Both,location,stop_wifi,0.6875026238093044,Different Entry Point!?
+la.ggu.m16.m16chat,True,,camera,return,0.7138482056728356,Different Entry Point!?
+laundryonthewheels.app,True,,time,set_text,0.0,"START: Llaundryonthewheels/app/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+lp2i.radiodelta.fr,True,,is_screen_off,set_text,0.3169230769230769,"START: Llp2i/radiodelta/fr/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+mindmine.audiobook,True,,location,native_log_model,0.807094952347335,"START: Lmindmine/audiobook/settings/i0;->a(Ljava/lang/String;I)I
+"
+misol.alex.buttonfrontier,True,Real,location,native_log_string,0.656653247438312,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->isMusicPlaying()Z
+"
+moi.medisonlineindonesia.com,True,,location,sms_imei,0.738139713540324,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+mtw.app.vtu,False,,build,sms_string,False,
+nascenia.robi.com.digired,True,,is_screen_on,set_text_reflection,0.0,"START: Lnascenia/robi/com/digired/MainActivity;->onCreate(Landroid/os/Bundle;)V
+"
+navi.android.my_launcher,True,,is_screen_off,stop_wifi,0.681110938229345,"START: Lc/a/a/d;->getCount()I
+"
+net.classicelectronic.sms,True,,camera,exit,0.6888150609080842,"START: Lnet/classicelectronic/sms/MainActivity;->buttonsListners()V
+"
+net.myappy.charterchecklist,True,,build,return,0.0618413203420163,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+net.shapkin.timerchgk,True,,is_screen_on,return,0.25066666666666665,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+nl.candosoft.lifebalance,True,Real,location,stop_wifi,0.9418457648546145,"START: Lnl/candosoft/lifebalance/feature/MainActivity;->setupSwitches()V
+"
+nl.foodticket.app.orderapp658,True,,camera,native_phone_number_network,0.9409223458256831,"START: Lnl/foodticket/app/orderapp658/OrderApp$MyWebViewClient;->onLoadResource(Landroid/webkit/WebView;Ljava/lang/String;)V
+"
+nl.matthijsvh.screenoff,True,Both,is_screen_off,http_location,0.5,"START: Lnl/matthijsvh/screenoff/ScreenOffActivity$1;->run()V
+"
+nl.mijnschoolinfo.obsannefrank,True,Both,is_screen_on,native_log_model,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+nl.onlineafspraken.android.bodyteccenter,True,,addition,set_text_reflection,0.5389807627404657,"START: Lnl/onlineafspraken/android/bodyteccenter/GCMActivity;->checkPlayServices()Z
+"
+nl.sitedish.jodl,True,Both,music,native_phone_number_network,0.27222578576010265,"START: Lnl/sitedish/jodl/SplashActivity;->onCreate(Landroid/os/Bundle;)V
+"
+nl.sitedish.kofusushi,True,,build,native_log_model,0.5770535319274444,"START: Ldagger/internal/Preconditions;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+"
+nl.sitedish.maximiliano,True,Both,camera,return,0.2958810626370948,"START: Ldagger/internal/Preconditions;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+"
+nl.sitedish.monalisaweesp,True,,camera,native_write_phone_number,0.6194412770809579,"START: Lnl/sitedish/monalisaweesp/SplashActivity;->onCreate(Landroid/os/Bundle;)V
+"
+nl.winterblend.winterblendquiz,True,Both,is_screen_on,http_location,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+ohms.com.ohms,True,Both,camera,write_string,0.22206832871652815,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+org.js.oledsaver,True,,sms,write_string,0.6888488973234735,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+org.mystphysx.wallet.mygulfcoinwallet,False,Real,camera,return,False,
+org.project.pycalculator,True,,is_screen_off,native_write_phone_number,0.0,"START: Lb/b/b/a/b/m/a;->a(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+"
+org.sailonline.solclient,True,Real,is_screen_on,native_phone_number_network,0.05385505679698493,"START: Lcom/ukrainestudios/cpsc/MainActivity$6;->run()V
+"
+ortsspiegel.emilen.com.ortsspiegel,True,,location,sms_string,0.7284501719361537,"START: Lcom/androidandrew/volumelimiter/VolumeLimiterService;->limitVolume(II)V
+"
+ramya.xtremecoders.awhile,True,,network,exit,0.7225765651820399,Different Entry Point!?
+request.android,True,Both,music,native_log_string,0.0,"START: Ltomloprod/HeaderColor;->setColor(Ljava/lang/String;)V
+"
+ru.amartynov.bond_finder,True,Both,addition,native_write_phone_number,0.0,"START: Le/x/d/g;->b(Ljava/lang/Object;Ljava/lang/String;)V
+"
+ru.free.esplus,True,,camera,native_log_model,0.13234130125059362,"START: Lru/free/esplus/Main;->Landscape()Z
+"
+ru.imilka.randomfact,True,,build,write_string,0.6752124795006702,Different Entry Point!?
+ru.intour_online.intourist,True,,build,set_text_reflection,0.9244897959183673,"START: Lru/intour_online/intourist/MainActivity$1;->onProgressChanged(Landroid/webkit/WebView;I)V
+"
+ru.rucobe.wheeloflifeoffline,False,,sms,native_log_string,False,
+sitinoldae.qlauncher,True,,sms,set_text_reflection,0.7315206337102473,Different Entry Point!?
+sk.blade.globalvibratetoggledemo,False,,sms,set_text_reflection,False,
+statusfacebook.vvidmate.allvideodownloader,True,,network,write_phone_number,0.8268526455232603,"START: Lstatusfacebook/vvidmate/allvideodownloader/StartActivity;->k()Z
+"
+summersedge23.com.circuitbreaker.lite,True,Real,is_screen_off,write_phone_number,0.7995226730310262,"START: Lsummersedge23/com/circuitbreaker/lite/MainActivity;->onPause()V
+"
+taleb.elhadi.ntbApp,True,,sms,native_write_phone_number,0.7517967519397597,Different Entry Point!?
+tech.klinge.picksort,False,,network,native_log_string,False,
+thegoodshot.sandip.com.thegoodshot,False,,sms,exit,False,
+trex.tv.baharturktv.mobile,True,Both,location,native_phone_number_network,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+ua.com.gpsradar.gpsrb,True,Both,network,write_phone_number,0.41212305817849526,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+"
+utility.com.scoutdictionary,True,Both,is_screen_on,stop_wifi,0.47312925170068026,"START: Lutility/com/scoutdictionary/MainActivity;->access$002(Lutility/com/scoutdictionary/MainActivity;Ljava/lang/String;)Ljava/lang/String;
+"
+valhalldev.mwst,True,Real,location,write_string,0.7109561925395261,Different Entry Point!?
+weidoo.ultratipp,True,,time,set_text_reflection,0.0,"START: Lweidoo/ultratipp/FullscreenActivity;->onPostCreate(Landroid/os/Bundle;)V
+"
+za.drlocustfinance,False,,sms,sms_imei,False,

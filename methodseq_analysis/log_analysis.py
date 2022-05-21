@@ -2,6 +2,8 @@ import os
 import csv
 import subprocess
 import json
+from log_parser import get_first_evading_point
+
 if __name__ == "__main__":
 
     txt_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset'
@@ -10,7 +12,7 @@ if __name__ == "__main__":
     trigger = 'Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V'
     d = os.listdir(log_dir)
     apks_logs = {}
-    apk_csv = [['Package Name','Successfully Logged','Triggered(Real/Emu/Both,None)','Trigger Type','Behavior Type','Behavior Difference']] 
+    apk_csv = [['Package Name','Successfully Logged','Triggered(Real/Emu/Both,None)','Trigger Type','Behavior Type','Behavior Difference', 'Evasion Point']] 
     for dd in d:
         package_name = dd.split('(')[0]
         if package_name not in apks_logs:
@@ -48,7 +50,7 @@ if __name__ == "__main__":
     #input(f'hash_map:{hash_map}')
 
     for apk in apks_logs:
-        new_list = [apk, False, None,'','', False]
+        new_list = [apk, False, None,'','', False, None]
         txt_list = apks_logs[apk]
         index = len(txt_list)//2
 
@@ -74,13 +76,20 @@ if __name__ == "__main__":
             elif trigger_real and new_list[2] != 'Both': 
                 new_list[2] = 'Real'
             
+            #Evasion Point
+            if not new_list[-1] and len(logs_emu) > 0 and len(logs_real) > 0:
+                new_list[-1] = get_first_evading_point(logs_emu, logs_real)
+
             #Successfully Logged
             size_emu = os.path.getsize(emu_path)
             size_real = os.path.getsize(real_path)
             if size_emu != 0 and size_real != 0 :
                 new_list[1] = True  
-                new_list[-1] = (max(size_emu,size_real)-min(size_emu,size_real))/max(size_emu,size_real)
+                new_list[-2] = (max(size_emu,size_real)-min(size_emu,size_real))/max(size_emu,size_real)
             #print(f'Triggered:{new_list[2]},size_emu:{size_emu},size_real:{size_real}')
+
+            # if apk == 'com.auctionslive.bidding':
+            #     input(f'new_list:{new_list}\n')
         #input(f'new_list:{new_list}\n')
         apk_csv.append(new_list) 
         

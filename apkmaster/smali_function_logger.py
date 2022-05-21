@@ -23,7 +23,7 @@ def p_reg_to_v(p_reg,locals_num):
 	else:
 		raise ValueError('Wrong register name')
 
-def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
+def method_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 	in_method_flag = False
 	output_flag = 1
 	class_name = ''
@@ -33,7 +33,7 @@ def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 	# only_prototype = False #abstract, native method prototype
 	return_inst = False
 	locals_num = 0
-	param_num = 0
+	params_num = 0
 	instrumented_num = 0
 
 	for line in smali_lines:
@@ -44,7 +44,7 @@ def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 			in_method_flag = True
 			#method state init 
 			locals_num = 0
-			param_num = param_registers_num(line)	
+			params_num = param_registers_num(line)	
 			instrumented_num = 0
 			splitted_identifiers = line.strip('\n').split(' ')
 			#current_method_signature = line.strip('\n').split(' ')[-1]
@@ -76,33 +76,40 @@ def callee_logger(smali_lines,target_methods = None): # TODO: if no .prologue??
 			# new_content += (f'    const-string {free[0]}, \"{current_method_signature}\"\n\n')
 			# new_content += (f'    invoke-static {{{free[0]}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
 			
+			# new_content += ('    #Instrumentation by GeniusPudding\n')
+			# v_last = 'v' + str(locals_num)
+			
+			# if locals_num + params_num < 16:
+			# 	new_content += (f'    const-string {v_last}, \"{current_method_signature}\"\n\n') #len:86
+			# 	new_content += (f'    invoke-static {{{v_last}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
+			# elif locals_num >= 16: #can't invoke the register beyond v16
+			# 	new_content += (f'    move-object/from16 {v_last}, v0\n\n')
+			# 	new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
+			# 	new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')	
+			# 	new_content += (f'    move-object/from16 v0, {v_last}\n\n')#153
+			# else: ##  (locals_num < 16 and locals_num + params_num >= 16)
+			# 	new_content += (f'    const-string p0, \"{current_method_signature}\"\n\n')
+			# 	new_content += (f'    invoke-static {{p0}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
+			# 	#len:127
+
+
 		if in_method_flag:#method analysis
 			line = line.strip('\n')			
 			if line.startswith('    .locals '): #p naming default
 				try:
-					locals_num  = int(line.split(' ')[-1])					 
-					if 16-param_num >= 3:#if 16-param_num >= 4:	#param_num + locals_num	can't exceed 16?	 
-						instrumented_num = max(locals_num,3)#instrumented_num = max(locals_num,4)#4  2 for log and 2 for return (only return-wide use 2)
-						#instrumented_num = min(instrumented_num,max(16-registers_num,locals_num)) #Can't exceed 16 registers totally for smali
-						line = line.replace(str(locals_num),str(instrumented_num))
+					locals_num  = int(line.split(' ')[-1])
+					# if locals_num + params_num < 16:# or locals_num >= 16:
+					# 	line = line.replace(str(locals_num),str(locals_num + 1))
+
+					# if 16-params_num >= 3:#if 16-params_num >= 4:	#params_num + locals_num	can't exceed 16?	 
+					# 	instrumented_num = max(locals_num,3)#instrumented_num = max(locals_num,4)#4  2 for log and 2 for return (only return-wide use 2)
+					# 	#instrumented_num = min(instrumented_num,max(16-registers_num,locals_num)) #Can't exceed 16 registers totally for smali
+					# 	line = line.replace(str(locals_num),str(instrumented_num))
 					
 				except:
 					pass
 
 				new_content += (line+'\n')
-				# else : #v naming scheme #TODO
-				# 	input('.registers')
-				# 	registers_num = line.split(' ')[-1]
-				# 	instrumented_num = max(registers_num,4)
-				# 	line = line.replace(str(registers_num),str(instrumented_num))
-				# 	#need to parse the number of parameters and modified those registers' name used in the function
-				# 	#Hard to implement 
-				# 	#TODO
-				# 	#f.write(line+'\n')
-				# 	new_content += (line+'\n')
-
-				new_content += ('    \n')
-				new_content += ('    .prologue\n')
 				new_content += ('    #Instrumentation by GeniusPudding\n')
 				new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
 				new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodStartLog(Ljava/lang/String;)V\n\n')
@@ -157,7 +164,7 @@ def walk_smali_dir(smali_base_dir):
 				# print(f'Can\t read file:{full_name}')
 				continue
 			f.seek(0)
-			new_content = callee_logger(smali_lines)
+			new_content = method_logger(smali_lines)
 			f.write(new_content)
 			f.close()
 	#patch_log_file(smali_base_dir)
@@ -174,7 +181,7 @@ def walk_target_dir(smali_base_dir, graph):
 			f = open(smali_base_dir,'r+', encoding='utf-8')
 			smali_lines = list(f)
 			f.seek(0)
-			new_content = callee_logger(smali_lines,target_methods)
+			new_content = method_logger(smali_lines,target_methods)
 			f.write(new_content)
 			f.close()			
 		except :
