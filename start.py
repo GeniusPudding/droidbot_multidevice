@@ -115,7 +115,7 @@ def parse_args():
     return options
 
 
-#@timeout(1200, use_signals=False)
+@timeout(600, use_signals=False)
 def main(testing_apk_path, opts):
     """
     the main function
