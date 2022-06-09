@@ -1,8 +1,6 @@
 # helper file of droidbot
 # it parses command arguments and send the options to droidbot
 import argparse
-from fileinput import filename
-from re import A
 import subprocess
 from droidbot import input_manager
 from droidbot import input_policy
@@ -11,6 +9,7 @@ from droidbot import DroidBot
 from droidbot.droidmaster import DroidMaster
 from droidbot.utils import get_available_devices
 import threading
+import logging
 from apkmaster.apk_repacker import methodlog_instrumentation
 from apkmaster.datautils.apkinfo import get_min_sdkversion
 from methodseq_analysis.log_parser import parser2
@@ -18,6 +17,8 @@ import os
 from wrapt_timeout_decorator import *
 from tqdm import tqdm
 import random
+import json
+import sys
 def parse_args():
     """
     parse command line input
@@ -114,7 +115,7 @@ def parse_args():
     return options
 
 
-@timeout(180, use_signals=False)
+#@timeout(1200, use_signals=False)
 def main(testing_apk_path, opts):
     """
     the main function
@@ -129,7 +130,7 @@ def main(testing_apk_path, opts):
     #print('test main')    
     all_devices = get_available_devices()
     if len(all_devices) == 0:
-        self.logger.warning("ERROR: No device connected.")
+        print("ERROR: No device connected.")
         sys.exit(-1)
     droidbot = None
     repackaged_apk_path = None
@@ -209,7 +210,7 @@ def main(testing_apk_path, opts):
             pass
 
     success_logging_file = False        
-    if droidbot and len(all_devices) == 2:
+    if droidbot and len(all_devices) >= 2: #the third can be used to run other tests
         try:
             print('Start generating logs......')
             #target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs\\Difuzer'
@@ -236,6 +237,7 @@ if __name__ == "__main__":
         #print(f'mkdir:{target_dir}')
     # testing_apk_path = opts.apk_path
     #main(testing_apk_path,opts)
+    failed_apks = {'name_list':[]}
     if opts.apk_path:
         testing_apk_path = opts.apk_path
         main(testing_apk_path,opts)
@@ -262,7 +264,7 @@ if __name__ == "__main__":
         input(f'none_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
-        ran_apks = none_logged_apks #+ logged_apks
+        ran_apks = none_logged_apks + logged_apks
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
         # random.shuffle(ran_apks)
@@ -276,4 +278,8 @@ if __name__ == "__main__":
                 
             except:
                 print(f'Analyzing {a} failed')
+                failed_apks['name_list'].append(a)
         print(f'ran_apks:{ran_apks}')
+    
+    with open('failed_apks.json','w') as f:
+        json.dump(failed_apks, f)

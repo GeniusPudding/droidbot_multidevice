@@ -1,310 +1,178 @@
-Package Name,Successfully Logged,"Triggered(Real/Emu/Both,None)",Trigger Type,Behavior Type,Behavior Difference
-aait.sa.aspbranch.semsem,False,,is_screen_off,sms_string,False
-ahman.timo.tatargetfinder,True,,build,return,0.6722710442649944
-an.MalayArabTranslate,True,,camera,stop_wifi,0.7151075710209549
-app.bpbonline,True,Both,location,exit,0.7430789496026406
-app.wise.passwordgenerator,True,Real,music,exit,0.6577199043316503
-appinventor.ai_afandhirafa.EBOOK_CERITA_SUKSES,True,,location,write_string,0.39943248995034286
-appinventor.ai_bunjop.LifeFM,True,,build,native_log_string,0.5169760162550374
-at.my_chauffeur.my_chauffeur,True,,location,exit,0.5892232520118709
-athithi.gruha.foods,True,,network,set_text,0.4976947342877942
-blesskcoin.com.android.kt1q.blesskcoin,True,,is_screen_off,exit,0.7986870897155361
-br.com.audiobras.consagracaomp3,True,,network,native_phone_number_network,0.11674641148325358
-br.ici.corrida3.view,True,,music,sms_imei,0.7473501303214596
-buzzgrillindian.co.uk,True,,network,set_text,0.0
-ca.myfirstresponse.cdems,True,,music,set_text_reflection,0.0
-ca.myfirstresponse.ipco,True,,music,http_location,0.0
-co.adelgazarencasa.adelgazarencasa,True,,is_screen_off,set_text_reflection,0.0
-com.a2sxd.aplikasi.namabayilaki_lakiislam,True,Real,music,write_string,0.9308624376336422
-com.acr.minigun,False,,addition,sms_imei,False
-com.acrylplatform.client,True,Both,is_screen_on,native_write_phone_number,0.0
-com.activspaces.labs.bizcard,False,,camera,sms_imei,False
-com.ad.tutorialoffice,True,Both,is_screen_on,native_write_phone_number,0.0
-com.aiimspqms.mq,True,,network,stop_wifi,0.0
-com.alienshome.alabrat,True,Both,is_screen_off,native_phone_number_network,0.1488238902942164
-com.aliexpress.india,True,Both,addition,native_write_phone_number,0.3156673114119923
-com.amullabanaenterprisess.multirecharge,True,,is_screen_off,write_phone_number,0.8328729281767956
-com.androidandrew.volumelimiter,True,Both,time,native_phone_number_network,0.0
-com.androidtool.selectcontactnumber.checkphone.beingvalidinvalid.validatecontact,True,,network,set_text,0.0
-com.anncleaners.anncleaners,True,Both,camera,native_phone_number_network,0.0
-com.apinjari.chargerremovalalarm,True,,camera,write_phone_number,0.0
-com.apkinstaller,True,Both,addition,native_log_string,0.5041153934991597
-com.app.occeramics,True,Both,addition,native_log_model,0.7265983780063793
-com.app.penasultra,True,,music,write_string,0.0
-com.app.todosfolletoscanarias,False,,is_screen_off,sms_string,False
-com.application.anasi.connect3,False,,network,sms_imei,False
-com.apps.garwoodattributes.monetonsea,True,,is_screen_on,write_phone_number,0.5
-com.apps.offbeat.colorpalette,True,,time,return,0.0
-com.arabwomensports.sport,True,,camera,write_string,0.7338685808776219
-com.artharakshak.artharakshak,True,Both,music,native_log_string,0.4446823697359029
-com.ashensoftware.toolforyoutube,True,,network,native_log_model,0.0
-com.atmiyafadia.game.clickspeedtest,False,,sms,stop_wifi,False
-com.auctionslive.bidding,True,Both,is_screen_off,native_log_string,0.7495961227786753
-com.auralisoft.colorimeter,False,,music,sms_imei,False
-com.aurhe.ap37,True,Both,music,native_write_phone_number,0.3461664646843384
-com.baasgeo.cogoBeta,True,,music,stop_wifi,0.9131925190300952
-com.badep.demoodoo,True,,time,exit,0.8127536231884058
-com.bari.bandhan,True,,time,set_text,0.0
-com.BDPlus.BangladesherItihas,True,Both,time,native_log_model,0.2937799043062201
-com.beeflash.HotePenginapan,False,,network,sms_string,False
-com.birnepal.sciencekoguide,True,,camera,set_text_reflection,0.27060269176819723
-com.blood.bloodbank.newbank,True,,sms,sms_imei,0.2540322580645161
-com.bowtiemedia.verbouwen,False,,sms,set_text_reflection,False
-com.branah.farsiiran,True,Both,location,stop_wifi,0.6930199748913761
-com.brighteyetea.pilotkick,True,Real,time,return,0.9597238802096849
-com.cakemakeappp.appandappcakemakeappbake,True,,location,sms_string,0.7313565111427042
-com.CheckPointTexter,True,Real,location,native_write_phone_number,0.4833166736151923
-com.ciiskills.assessment,True,,is_screen_on,native_phone_number_network,0.15478076434622082
-com.ciopec.vremea,False,,sms,sms_string,False
-com.clinvivo.datacatcher,True,Both,is_screen_on,http_location,0.0
-com.cmusical.pc.culturamusical,True,Both,location,native_log_model,0.6633758693409486
-com.coconut_apps.stewartfrancisjokes,True,Both,is_screen_off,native_log_model,0.6497601096641535
-com.codebear.random_list,False,,is_screen_on,return,False
-com.completegardencuttings.adeknata,True,,network,http_location,0.6286039366262184
-com.comself.cameravideo,True,,is_screen_on,native_phone_number_network,0.6413396749436477
-com.cooolindia.cooolindi1,True,Both,music,native_log_model,0.0
-com.cygnus.calendar,True,,music,set_text_reflection,0.2
-com.dakshapps.junglewaterfall,True,,network,return,0.0
-com.darnijood.app,False,,sms,set_text,False
-com.datinglove.pet2,False,,build,sms_string,False
-com.dayna.yourloancalculator,True,Real,is_screen_off,http_location,0.26550520873131095
-com.ddangman.anythinggoespaint,True,,is_screen_on,set_text,0.0
-com.deepnetsecurity.safeidburner,True,Both,is_screen_on,stop_wifi,0.0
-com.designhunt.geeksmood,True,,location,set_text_reflection,0.5353938378363735
-com.diabetesid,True,,addition,native_phone_number_network,0.8180650005965289
-com.diemagd.interestcalculator,True,,camera,native_phone_number_network,0.11278917161270102
-com.digitalfuturesoft.mlbticketsapp,True,Both,time,stop_wifi,0.6518987341772152
-com.djl.html5_init,True,Both,addition,stop_wifi,0.5157995914934519
-com.doionline.flashlight,True,,time,return,0.0
-com.DrMoPhysics,True,Both,location,native_log_string,0.0
-com.ecoin.ecoin,True,,sms,set_text_reflection,0.746770563066
-com.electron.provjera,True,,music,return,0.9270833333333334
-com.elisoft.soaphandmade,True,Real,time,http_location,0.5509830348761687
-com.emm.app.masteranylanguage.farsi,True,,network,exit,0.0
-com.englistening.makeev.englisteningcom,True,,build,set_text,0.0
-com.exampl.alldecadesrado,True,,time,write_phone_number,0.9298504177393269
-com.ez.automatic.phonecall.recorder,True,,network,http_location,0.1791530944625407
-com.farhanaliqureshi.pakistanlandareacalculator,True,Real,network,native_write_phone_number,0.6947935368043088
-com.felsefe.notlari,True,,music,native_write_phone_number,0.6825651113927175
-com.flaps.herbfun,True,Both,camera,write_string,0.7224077669902913
-com.forts.forts,True,,music,write_string,0.5255382909345337
-com.framesizecalculator,True,,addition,set_text,0.7264871411718443
-com.frankburmo,True,,music,set_text_reflection,0.5338188790476054
-com.frederic.distanceAlarme,True,,network,exit,0.12932680946348532
-com.freedollarstore.app,True,,music,http_location,0.5068844535107917
-com.gamemob.minijump,True,,network,sms_string,0.7461110940717466
-com.gcart.android.deron,True,,is_screen_off,native_write_phone_number,0.6849734653081361
-com.gcart.android.fazha,True,,is_screen_on,stop_wifi,0.36065573770491804
-com.gcart.android.seraphim,True,,build,stop_wifi,0.3047337278106509
-com.gcart.android.twice,True,,music,http_location,0.0
-com.gilisztaturmixgmail.locus_addon_pebble,True,,is_screen_on,native_log_string,0.4753482636784275
-com.github.axet.hourlyreminder,True,,time,native_write_phone_number,0.6777176706908128
-com.github.fractals,True,,music,set_text_reflection,0.5534512250252781
-com.gmail.coolapps726.bankTester,True,,location,native_log_string,0.9645996043965007
-com.gnrdsoftsolution.news6teluguandroidapp,True,Both,is_screen_on,native_phone_number_network,0.0
-com.gocalsd.quicktile.launchers,True,,sms,stop_wifi,0.33394160583941607
-com.grc.lhc,True,,music,sms_string,0.7087794187205296
-com.gst.ihab.gst,True,,location,sms_string,0.3025568181818182
-com.hakimisolution.webapp,True,,sms,write_phone_number,0.6715101276937292
-com.health.mcardiac,True,,sms,set_text_reflection,0.7243414110650136
-com.helpwork,True,Both,music,native_write_phone_number,0.5874743852459017
-com.henkes.puzzel,False,,sms,sms_imei,False
-com.hlcsdev.x.shoppinglist,True,Real,is_screen_off,return,0.7130303999799257
-com.hotlunchorders.hotlunchorders,True,Both,is_screen_on,return,0.0
-com.huawei.agilecontroller.boarding,True,,build,native_log_model,0.15365773358793705
-com.iamadeel.resultcheck,True,Both,build,http_location,0.6963007873728352
-com.ilearn.chromecustomtab,False,,sms,native_log_string,False
-com.imorapid.com,True,,location,sms_imei,0.7331221285179821
-com.indiablo.diablo3paragoncalculator,True,,is_screen_off,sms_imei,0.7089158019311926
-com.indiagury.whitepaper,False,,build,sms_imei,False
-com.indiamatrix.saimaja,True,Both,location,write_string,0.0
-com.iwillh.iwillhelp,True,,is_screen_off,set_text_reflection,0.2966490596507755
-com.jakepolatty.highschoolsciencebowlpractice,False,,sms,stop_wifi,False
-com.jaskaran.freeweatherpro,False,,build,write_phone_number,False
-com.jmvtechnology.fmradiocidadedosol,True,Both,music,native_phone_number_network,0.0
-com.joticle.christology,True,,addition,exit,0.3933933933933934
-com.jsands.joaosantos.websocketclient,True,Both,addition,write_string,0.1171387421987518
-com.kholaygroup.covid_19tracker,True,,is_screen_off,sms_imei,0.7376802599708653
-com.kodam.child.kidsafe.browser,True,Both,camera,return,0.720771850170261
-com.krnhhd2.player,True,Real,is_screen_on,native_log_string,0.7846808510638298
-com.KSAebuy.app,False,,build,sms_imei,False
-com.kwaso.recorder,True,,sms,set_text,0.7356626451158799
-com.lab.flashlight.buddhalight6,True,,camera,http_location,0.7017543859649122
-com.ledger.live.managerapp,True,Both,time,http_location,0.0
-com.lockup.Lockup,True,Both,is_screen_on,write_phone_number,0.01925206101397905
-com.loeffler.votebeacon,True,Both,time,write_phone_number,0.026400918292810185
-com.loopcupcakes.invested,True,,is_screen_off,native_write_phone_number,0.005415915234442852
-com.lovemaths.lovemaths_eclair,True,Both,time,native_phone_number_network,0.53374734433731
-com.luckiespetstore.app,True,Both,addition,return,0.0
-com.magic.ultimate_android,True,,network,return,0.334136546184739
-com.malseriesguideextension,True,,camera,native_write_phone_number,0.6438631790744467
-com.mehdira.squarekilometerandacrekm2acconvertor,True,,network,native_write_phone_number,0.9626704953338119
-com.mexicojuegabasquetbol.app,True,Both,is_screen_off,http_location,0.0
-com.mjapplabs.tinybrightledflashlight,True,,build,set_text_reflection,0.8818316100443131
-com.mobilinkd.tncconfig,True,Real,location,stop_wifi,0.7100267677451788
-com.motivateinspirevids.inspireme,True,,is_screen_on,write_phone_number,0.054339171974522295
-com.mpsystemstore.iwaiter,True,Both,location,write_phone_number,0.00642630612585545
-com.mqsoftwares.neboshigc,True,,sms,set_text_reflection,0.7115144879129268
-com.mterp.citizen.calculator,True,Both,network,native_phone_number_network,0.0
-com.mynamecubeapps.ball,True,Real,time,native_phone_number_network,0.9642488550305839
-com.mynarski.mrev,True,,location,return,0.4855570839064649
-com.myradarconnect.securemessenger,False,,sms,native_write_phone_number,False
-com.myworldrules.newearth.earth,True,Both,network,native_write_phone_number,0.0
-com.nainfomatics.microphone.earspy,True,Both,network,stop_wifi,0.3059989205027373
-com.narb.passwordmanagement,True,,build,http_location,0.058351642736702264
-com.nativecamp.nativecampforteachers,True,Both,addition,native_log_string,0.9508238702879888
-com.netsells.rina_affairs,False,,sms,native_phone_number_network,False
-com.nicekit.android.timebosscloud,True,,music,http_location,0.3826918507959135
-com.nippon.shogun,True,Both,time,native_phone_number_network,0.0
-com.notebook.idealabs.deepsearch,True,Both,camera,write_phone_number,0.0
-com.nougadere.dev.guessthecolor,True,,time,return,0.7443505622478028
-com.oceanicsa.unoventas,True,,addition,sms_imei,0.7143065982240399
-com.osmanli.kilotakip,True,,network,write_string,0.6378581925055107
-com.pennmike.app,True,,is_screen_off,return,0.7171561051004637
-com.pentawire.netlook,True,,is_screen_off,write_string,0.7177066203257118
-com.perfectSys.psl,True,,sms,native_log_model,0.6748013331250325
-com.pit.roseandmango,True,,is_screen_off,write_string,0.0
-com.plena507.plena507,True,Both,location,write_string,0.6780130928507427
-com.preciousapp.tshirt.android.app,False,,sms,sms_string,False
-com.programming.monk.morsecodetranslator,True,Both,is_screen_on,native_phone_number_network,0.0
-com.prueba.joel.sort,True,,location,return,0.5376549094375596
-com.pufa.oneside,True,,is_screen_off,native_log_string,0.0
-com.qict.androidapp,True,,is_screen_off,stop_wifi,0.41298796059832177
-com.QRCode.SK,True,,is_screen_on,exit,0.0
-com.rabbitcarrrot.jump,False,,sms,native_phone_number_network,False
-com.radio.m8bd9ceaf8,True,,is_screen_off,set_text_reflection,0.0
-com.raiiware.interceptor,True,,addition,native_phone_number_network,0.8762002158968241
-com.raincontinues.transarde,True,Real,build,stop_wifi,0.9072635906806761
-com.rapidapper.qrscanner,True,,location,set_text,0.9200287321920269
-com.ravelroads.kailash,True,,location,return,0.5311216733584966
-com.rclaret1.player,True,,camera,native_log_model,0.917936694021102
-com.reach.reacherp,True,,build,exit,0.5594907014750686
-com.redpointglobal.redpointrewardtest,True,,is_screen_on,set_text_reflection,0.757765232968043
-com.ribblr.app,True,,sms,set_text_reflection,0.7547156199235371
-com.richanngolf.richanngolf,True,,sms,return,0.2847411444141689
-com.ruleoffun.ebd,True,Both,build,native_log_model,0.3230021598272138
-com.salesreport,True,,is_screen_off,native_log_model,0.5034965034965035
-com.samanyagyan2018.dhokha,True,,build,native_write_phone_number,0.2
-com.sandello.ndscalculator,True,,music,set_text_reflection,0.0032473009446693656
-com.santoexpedito.oracao,True,Both,build,stop_wifi,0.4106288448393712
-com.shex.startfromzero_tagalog,True,Real,build,exit,0.9804134929270947
-com.shubhmpro.biologymcq_11,False,,time,sms_imei,False
-com.shyri.whitescreenapp,True,Both,build,native_write_phone_number,0.06889724360258012
-com.siglimigliapps.benefitsofmeditation,False,,is_screen_off,sms_imei,False
-com.smartdeveloper000.reelsvideodownloaderforinstagram,True,,sms,return,0.7231207104749267
-com.soccer_x.www.twa,True,,location,return,0.6579106569526756
-com.softsysworl.hajumracouncil,True,,network,native_phone_number_network,0.0
-com.soulreap.developerstouch.interpolatorguide,True,Both,time,native_log_model,0.2801556420233463
-com.speakinghoroscope,True,Both,time,http_location,0.44538571504209246
-com.speedymarks.android.averageFree,True,Real,music,native_write_phone_number,0.9561194818926778
-com.sppgc.sardarpatelpgcollege,True,,camera,set_text,0.0
-com.ST.CELL,True,,is_screen_off,native_log_string,0.0072992700729927005
-com.talmidimteologia.turma.twa,True,,is_screen_off,return,0.637000849617672
-com.tappsolutions.calc_lsnic_joint,True,Both,camera,http_location,0.0
-com.tiempo_english.rob,True,,location,stop_wifi,0.7350993377483444
-com.tr.anadolu,True,Both,time,write_phone_number,0.0
-com.training.aamc,True,,camera,return,0.668918918918919
-com.translatteh.com,True,,location,http_location,0.7161905748112645
-com.trianguloy.openInWhatsapp,True,,music,return,0.6476301476301476
-com.tunzor.ssls,False,,is_screen_off,sms_string,False
-com.turbomedia.android,True,Both,camera,write_string,0.43558951732016
-com.ucoin.dateconverter,True,Real,is_screen_on,write_phone_number,0.907559832847917
-com.ukrainestudios.cpsc,True,Both,is_screen_on,native_write_phone_number,0.0511212696615879
-com.uppasocial,True,,is_screen_on,set_text,0.7807106598984772
-com.vgsa.vgsa_mobile,True,,build,return,0.5380905001040315
-com.viptronica.viptronicaapp,True,,music,set_text_reflection,0.0
-com.visualhdstudio.autoload,True,,network,http_location,0.7088508606140798
-com.vitanaschools03.thecreedacademy,True,Both,time,stop_wifi,0.0
-com.voxx.mobile.headrest,False,,time,sms_imei,False
-com.weclean4you.weclean4you,True,,camera,set_text,0.0
-com.wetracker.wetracker,True,,network,exit,0.530009015187123
-com.wizardsexe.rockvillerobotics.roverruckusscoutingapp,True,Both,addition,stop_wifi,0.0
-com.yarapps.applockwinter,True,,is_screen_on,sms_string,0.6581822821923629
-com.yiftach_rak.www.googleshortcutsbeta,True,,build,sms_string,0.2727272727272727
-com.zeninfotech.typenepali_nepalitexttospeech,True,,location,http_location,0.003376571275742177
-com.zibtek.on_course,True,,addition,http_location,0.8229683482009673
-config.gg.com.appconfigandroid,True,Both,addition,write_string,0.0
-cst.stJoseph.SURESH,True,Both,is_screen_off,stop_wifi,0.0
-de.airportpark24.car_tour24,True,Both,camera,http_location,0.0
-de.musoftmedia.deutschtrainer_a1_a2,True,,time,write_string,0.6287790697674419
-de.sammysoft.consumption,True,,time,native_phone_number_network,0.15691056910569107
-de.sweety.shooting,True,,build,http_location,0.10045468172279405
-de.tobiasbielefeld.brickgames,True,Both,network,native_log_string,0.11449016100178891
-deltagamabeta.cesketelevizevmobile,True,Real,build,exit,0.3793103448275862
-dongsan.church.viewer,True,Real,is_screen_on,write_phone_number,0.7796257796257796
-es.hol.ing.ninochka,True,,addition,stop_wifi,0.23093093093093092
-eu.bansko_gevgelija.app,True,,sms,set_text_reflection,0.7088329288511906
-eu.dowellscience.dowellscienceapp,False,,time,sms_imei,False
-fr.sitronman.geochampi,True,,sms,set_text,0.29526462395543174
-free.girls.chat,True,Both,camera,http_location,0.0
-gob.osinergmin.dglp,True,Both,music,native_write_phone_number,0.04096696807529064
-hu.chefpro.android,True,,location,sms_string,0.7015754189944134
-il.co.yoganow,True,,is_screen_on,return,0.29305555555555557
-in.android.foneguru,True,Both,music,write_string,0.0
-in.firm.stepsindia.orchardmart,True,Both,is_screen_on,write_string,0.3386034255599473
-in.gov.wb.wbrelieffund,True,,network,native_phone_number_network,0.8020304568527918
-in.oxeshop.oxeshop,True,,camera,stop_wifi,0.3327991452991453
-infofixsolution.com.demon,False,,sms,sms_string,False
-interpessoal.zarza.br.com.lcapuano,True,Both,time,write_phone_number,0.6235310949364449
-io.appground.blek,True,,is_screen_on,native_write_phone_number,0.06676474519179075
-io.github.visnkmr.bapl,True,,music,sms_imei,0.715762137650114
-io.Moonstargame.sanliturktarihi3,True,Both,is_screen_off,native_write_phone_number,0.0
-ioapp.ionic.starter,True,Both,camera,native_log_string,0.7373628958743788
-ir.museumhikers.musem,True,,network,exit,0.8484848484848485
-ishita.resortbooking,True,,addition,set_text,0.0
-it.whiletrue.tvseriestweet3,True,,time,set_text_reflection,0.0
-itsfreedating.com,True,Both,music,write_string,0.0
-iyapps.carrosusadosportugal,True,Real,location,native_log_model,0.6525285481239804
-jp.co.opto.opn.opnime2,True,,time,native_write_phone_number,0.40430059523809525
-jp.golddisc.z80cheatsheet,True,Both,location,exit,0.3256880733944954
-jp.simple_web_view,True,Both,music,exit,0.0
-kr.co.webation.realserver1,True,,addition,sms_imei,0.719059405940594
-kr.speedx,True,Both,location,stop_wifi,0.6875026238093044
-la.ggu.m16.m16chat,True,,camera,return,0.7138482056728356
-laundryonthewheels.app,True,,time,set_text,0.0
-lp2i.radiodelta.fr,True,,is_screen_off,set_text,0.3169230769230769
-mindmine.audiobook,True,,location,native_log_model,0.807094952347335
-misol.alex.buttonfrontier,True,Real,location,native_log_string,0.656653247438312
-moi.medisonlineindonesia.com,True,,location,sms_imei,0.738139713540324
-mtw.app.vtu,False,,build,sms_string,False
-nascenia.robi.com.digired,True,,is_screen_on,set_text_reflection,0.0
-navi.android.my_launcher,True,,is_screen_off,stop_wifi,0.681110938229345
-net.classicelectronic.sms,True,,camera,exit,0.6888150609080842
-net.myappy.charterchecklist,True,,build,return,0.0618413203420163
-net.shapkin.timerchgk,True,,is_screen_on,return,0.25066666666666665
-nl.candosoft.lifebalance,True,Real,location,stop_wifi,0.9418457648546145
-nl.foodticket.app.orderapp658,True,,camera,native_phone_number_network,0.9409223458256831
-nl.matthijsvh.screenoff,True,Both,is_screen_off,http_location,0.5
-nl.mijnschoolinfo.obsannefrank,True,Both,is_screen_on,native_log_model,0.0
-nl.onlineafspraken.android.bodyteccenter,True,,addition,set_text_reflection,0.5389807627404657
-nl.sitedish.jodl,True,Both,music,native_phone_number_network,0.27222578576010265
-nl.sitedish.kofusushi,True,,build,native_log_model,0.5770535319274444
-nl.sitedish.maximiliano,True,Both,camera,return,0.2958810626370948
-nl.sitedish.monalisaweesp,True,,camera,native_write_phone_number,0.6194412770809579
-nl.winterblend.winterblendquiz,True,Both,is_screen_on,http_location,0.0
-ohms.com.ohms,True,Both,camera,write_string,0.22206832871652815
-org.js.oledsaver,True,,sms,write_string,0.6888488973234735
-org.mystphysx.wallet.mygulfcoinwallet,False,Real,camera,return,False
-org.project.pycalculator,True,,is_screen_off,native_write_phone_number,0.0
-org.sailonline.solclient,True,Real,is_screen_on,native_phone_number_network,0.05385505679698493
-ortsspiegel.emilen.com.ortsspiegel,True,,location,sms_string,0.7284501719361537
-ramya.xtremecoders.awhile,True,,network,exit,0.7225765651820399
-request.android,True,Both,music,native_log_string,0.0
-ru.amartynov.bond_finder,True,Both,addition,native_write_phone_number,0.0
-ru.free.esplus,True,,camera,native_log_model,0.13234130125059362
-ru.imilka.randomfact,True,,build,write_string,0.6752124795006702
-ru.intour_online.intourist,True,,build,set_text_reflection,0.9244897959183673
-ru.rucobe.wheeloflifeoffline,False,,sms,native_log_string,False
-sitinoldae.qlauncher,True,,sms,set_text_reflection,0.7315206337102473
-sk.blade.globalvibratetoggledemo,False,,sms,set_text_reflection,False
-statusfacebook.vvidmate.allvideodownloader,True,,network,write_phone_number,0.8268526455232603
-summersedge23.com.circuitbreaker.lite,True,Real,is_screen_off,write_phone_number,0.7995226730310262
-taleb.elhadi.ntbApp,True,,sms,native_write_phone_number,0.7517967519397597
-tech.klinge.picksort,False,,network,native_log_string,False
-thegoodshot.sandip.com.thegoodshot,False,,sms,exit,False
-trex.tv.baharturktv.mobile,True,Both,location,native_phone_number_network,0.0
-ua.com.gpsradar.gpsrb,True,Both,network,write_phone_number,0.41212305817849526
-utility.com.scoutdictionary,True,Both,is_screen_on,stop_wifi,0.47312925170068026
-valhalldev.mwst,True,Real,location,write_string,0.7109561925395261
-weidoo.ultratipp,True,,time,set_text_reflection,0.0
-za.drlocustfinance,False,,sms,sms_imei,False
+File Name,Package Name,Successfully Logged,"Triggered(Real/Emu/Both,None)",Trigger Type,Behavior Type,Behavior Difference,First Evading Point,Selected Round
+B784A7215F2027DCA590C4B0FD9D418B051901683A8A9D880DF97D7C0891DAB2,ahman.timo.tatargetfinder,False,,build,return,False,,2
+EE0A181B2FBF5F7F7E4B435C4819D9C6E14E330E423DEDBCD4682506719B36EE,an.MalayArabTranslate,True,,camera,stop_wifi,0.25,"START: Lcom/appbrain/AppBrainInitProvider;->onCreate()Z
+",0
+F8A7EADC7157EEDBF8FBE1870A3B54C5C34C30E08522D037942BFAAE7373F915,app.bpbonline,True,Both,location,exit,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+1410886C5741B977BD015861AACCDA83FDD9761BEB25B5BBB3A2A34EBB2B63E9,appinventor.ai_afandhirafa.EBOOK_CERITA_SUKSES,False,,location,write_string,False,,3
+2E7347332D8A9B55456734B09F73831E42BBFFB4C869A64C88991847D1648251,appinventor.ai_bunjop.LifeFM,True,Real,build,native_log_string,0.8066544406602043,"END: Lappinventor/ai_bunjop/LifeFM/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",0
+FDD425EDC99338727AA903929C4A618A277E30DBFF41F727C1FB1FE524A346EB,at.my_chauffeur.my_chauffeur,True,,location,exit,0.0,"END: Lat/my_chauffeur/my_chauffeur/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",0
+A3C191D50AF53314A5E3F3AD67EC7F435D56D4252493D03A3E2A2A043B2230AE,com.activspaces.labs.bizcard,False,,camera,sms_imei,False,,3
+EA6A078775272EBCB50925A5B75ADDBC37417171D31F5DF97131360ED49F6371,com.anncleaners.anncleaners,True,Both,camera,native_phone_number_network,0.25,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+9F5FA29E48216F91644C451447BD6BD51ABF0686D1DDC8E0DA3CDE27E79FBE22,com.apinjari.chargerremovalalarm,True,,camera,write_phone_number,0.25,"END: Lb/c/b/a/b/m/a;->a(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+",0
+DEC64EB98E185858BEDF42491FCE45AE258EA644FAD02918A1CB2B6C7E719669,com.arabwomensports.sport,False,,camera,write_string,False,,4
+B7181B64452D0D6104E61CC0BBD9177FD7ED19E521A6F436F44A3BF9373F0ABE,com.bcs.marvlis.fle.psapmonitor,False,,build,set_text,False,,2
+81D56CE5A0E4EE7F17BAF609EFE5A0EE45A016AC713B5CA80EA92230C07D2804,com.birnepal.sciencekoguide,True,,camera,set_text_reflection,0.25688456741245563,"START: La/y/r/i;->c(Landroid/content/Context;La/y/b;)V
+",2
+489464241D1785DB3E30E05998873AB79214E7C8E9D2CB3C181D1D6BB023BA3D,com.branah.farsiiran,False,,location,stop_wifi,False,,4
+55EA0817845EBAB7DD7DB7EB662FEA2E0CBB9BE463581A9A0CAED33BC4F6BF51,com.cakemakeappp.appandappcakemakeappbake,False,,location,sms_string,False,,3
+317BE2812E6237888C24AA55F3CA352B6908F5970AF704ACE91D8F3932C9F633,com.CheckPointTexter,True,Both,location,native_write_phone_number,0.2603512094344495,"END: Lcom/CheckPointTexter/ActivityMain;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+",0
+6A121452E63225D3718A642FBEA2DCAF252413F301E937A056F469E56C361A8E,com.cmusical.pc.culturamusical,True,Both,location,native_log_model,0.25,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+A650EF195201976D8725E61B88095304959F8F5E7C94D488025EF94E8670B9DB,com.datinglove.pet2,False,,build,sms_string,False,,3
+000B390A3721379376B43BD4481DB65C7EDB7C05514EB681B172CA959F85CD1C,com.designhunt.geeksmood,False,,location,set_text_reflection,False,,4
+C37286A40A8BB4E8216C1D6541FE841E36DF2BF2FA23CA76C84BF298424FDB54,com.diemagd.interestcalculator,True,,camera,native_phone_number_network,0.013675940312509162,"END: La/b/d/d/j;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+",0
+43D44AF324B914E110EABF3C295FA8013C83A83CAA28E9CD079E2D3D0DF843FC,com.digitaltruth.fstop,True,Both,location,return,0.25,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+5A82F7C4C9A2AA6CEFFC11FB2F121ACA326B7CF854811B8B94F876ACFCD1F4E6,com.DrMoPhysics,False,,location,native_log_string,False,,0
+6029FC3BAD52334FE0DEAB40EEA9E938E16513660362576071C5BB7CC7B1A8D3,com.efa.fororiza,True,Real,location,stop_wifi,0.7910228108903605,"END: Lcom/efa/fororiza/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",0
+FCDCFA49ADDF813DB033CCB863407FF194AF3314E64AB75C3139A6AB6C2FB845,com.englistening.makeev.englisteningcom,False,,build,set_text,False,,0
+780800B6359328938A5D181C15D74085E860F1305559577130D14078899A8A0C,com.facom.lighting.apk,False,,location,native_phone_number_network,False,,2
+436D61DB00BE469D7AB0A09C4F91352AA653C0DBC440494BA63BF0C261742F7B,com.flaps.herbfun,True,Both,camera,write_string,0.5152137305943469,"START: Lcom/silkimen/cordovahttp/CordovaHttpPlugin;->setServerTrustMode(Lorg/json/JSONArray;Lorg/apache/cordova/CallbackContext;)Z
+",0
+6900C786343BE6A1CB8109E17CCC5541EC9CF6AE7456EDF7E14BA5B8F5E8ECA6,com.gcart.android.seraphim,True,,build,stop_wifi,0.9245283018867925,"END: Lcom/gcart/android/seraphim/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+",0
+84CD830A3C5A709DE87BE4A91D39B1CB55D46F0C1A493F2FB8908F97B7357FA4,com.gkarbeerlover.giorgoskaryofyllis.beerlover,True,,location,stop_wifi,0.0,"START: Lcom/a/a/i;->run()V
+",1
+5BC0E58D71C16AE4C65AF2ADE09C222F9CF6630EA3B12A4BE172500800DC4180,com.gmail.coolapps726.bankTester,False,,location,native_log_string,False,,3
+A38F2AC2FFBD49CD2F7B66E1EB699FA2A95D96570D5883F8B0A4344258EF67A5,com.gst.ihab.gst,False,,location,sms_string,False,,3
+444F918AA5B49CAA55B7065C6908CEE1040558CE9357CBB3E3716FFD9966D67F,com.huawei.agilecontroller.boarding,False,,build,native_log_model,False,,3
+76D4011AA6F04163030BFA27E7043DED27A4CB01D371B0C9DEC73D7107817416,com.hvt.camera2test,True,,camera,write_phone_number,0.9775376499617119,"END: Lcom/hvt/camera2test/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+",0
+E2935841F2528A6DC70601D10EA4101C54C6AF6AD6E2846CFAF6FCFE29508CCC,com.iamadeel.resultcheck,True,Both,build,http_location,0.0,"START: Lcom/iamadeel/resultcheck/MainActivity;->onBackPressed()V
+",0
+09AF0B0BE094C35CEBD15846CFEB030AEFDF6468A852EAC2F2F4EA33627F423B,com.imorapid.com,False,,location,sms_imei,False,,4
+4485DC8B4985340840AEE8A86CF7381954D4A5E74B884F2E62962D165D7F8ECC,com.indiagury.whitepaper,False,,build,sms_imei,False,,3
+CAFF12C0FFF2BD34EEE01C02CF3EF6526FD5BE3B6CDD758C8DBA78F37C320DD7,com.indiamatrix.saimaja,True,Both,location,write_string,0.058823529411764705,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+F0082B69E051AC75BDE22DD9DC74FD756D7AC80F003EF88FE3705DA6942E4E7B,com.jaskaran.freeweatherpro,False,,build,write_phone_number,False,,0
+4D4E60974DAA5B9780622E71C6B8EE9F32781B260FD0B6D3C45A9B04DFC14F2F,com.kodam.child.kidsafe.browser,True,Both,camera,return,0.4479048697621744,"END: Lcom/kodam/child/kidsafe/browser/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",0
+73BA4ACB6E11DB406250D00C771A270D86ADAC5C4F4AD6B2B44C746D3D83EF8B,com.KSAebuy.app,False,,build,sms_imei,False,,5
+937161C0564BE53529E2785E84C19B5866B355981656AA8DB6D2EA6BDC3489BF,com.lab.flashlight.buddhalight6,True,,camera,http_location,0.9549388242315726,"END: Lcom/lab/flashlight/buddhalight6/PermissionAcitivity;->onCreate(Landroid/os/Bundle;)V
+",0
+F65E08F04A7DD282BF6F4DBAAEE53D0414E9C06DB5D2C2EE86D854E3367726B9,com.lalymb.hui.nogrid,True,,location,set_text_reflection,0.16869405554280467,"START: Lcom/sdk/adcardsdk/util/ParamsUtil;->getAdvertisingId()V
+",0
+AC3F577D0A8928130089FA6896ABB8F3EF21CB0BFBAD44B0C312C9BE491ED780,com.malseriesguideextension,True,,camera,native_write_phone_number,0.0,"END: Lcom/malseriesguideextension/MainActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+",2
+C67C99188DC772E5ABB555D10610CAAA6053D42FD8633573DA2DF67D887F155C,com.mjapplabs.tinybrightledflashlight,True,,build,set_text_reflection,0.2131578947368421,"END: Lcom/mjapplabs/tinybrightledflashlight/MainActivity;->onStop()V
+",2
+63AC91778448A8D09AF1253B23D9308AC57D461194B84EE6004621E10CAFE051,com.mobilinkd.tncconfig,True,Real,location,stop_wifi,0.17562012756909992,"END: Lcom/mobilinkd/tncconfig/TncConfig;->onCreate(Landroid/os/Bundle;)V
+",1
+D1DD4A44F7052113B18B54E19E77F05225EB7BB556527300D53D0376E1EB402E,com.mpsystemstore.iwaiter,True,Both,location,write_phone_number,0.25,"END: Lb/a/n/d;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+",0
+E9E60E6BA28E5F954864B28ED09D71A16C1B21A09030D2A7A83619E649FA1E28,com.mynarski.mrev,False,,location,return,False,,2
+F9271DB76D4A7A21F6B132F96E6D45E12D04320888C24A73903A923817179789,com.namit.nightmode,False,,build,stop_wifi,False,,3
+DCEF322460C0EDA260F262BD6980048F9A9E9F80B30D5788AFE7A1E74CF087EB,com.narb.passwordmanagement,False,,build,http_location,False,,4
+666A95136B630391AA490F02496D85765E75D9B4AA0999EE7CABFAB92C86D6A6,com.notebook.idealabs.deepsearch,True,Both,camera,write_phone_number,0.18181818181818182,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+E2259D2A13DF664A673FEECFDB4DC4AAFB3B30C4EA86A5A2E589123E056C8395,com.plena507.plena507,True,Both,location,write_string,0.18181818181818182,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+F307E4DB2E5BDE85716A663FBA943073A880BB92031F1F052B81CB6B0FE7FDD2,com.prueba.joel.sort,True,,location,return,0.553014553014553,"END: Lcom/prueba/joel/sort/MainActivity$myWebClient;->onPageStarted(Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
+",0
+5D5DCEA4CC9CFC622B735940995214C329230A9D40031C285B30DA1DC3464EF2,com.raincontinues.transarde,True,,build,stop_wifi,0.38524590163934425,"END: Lcom/raincontinues/transarde/a/b;->c(Ljava/lang/String;)V
+",0
+D09E439BAA3ECD60D49BFC3900C394168CE7E9A96C2F6F93DEF6B5F5E44BB017,com.rapidapper.qrscanner,True,,location,set_text,0.4648465381870093,"END: Lcom/rapidapper/qrscanner/ScannerActivity;->onCreateOptionsMenu(Landroid/view/Menu;)Z
+",1
+C437D892E2EE231C570DB73B89B01379049ED7CF6F3152F65365C090577D746F,com.ravelroads.kailash,True,Emu,location,return,0.5079872204472844,"END: Lcom/ravelroads/kailash/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",1
+DF42ED256850DB7B95C17FF0A90379A23D60C6CC95284D675C37B3ADBC56FDA5,com.rclaret1.player,True,,camera,native_log_model,0.6990693739424704,"END: Lcom/rclaret1/player/MainActivity;->checkPlayServices()Z
+",2
+9FA30A5986E234C85E4D8166B548DD8E0CDED251DA8330990A212A9651F8F63B,com.reach.reacherp,False,,build,exit,False,,4
+3EC8A1DAACD71118F2D696084604F50C2C76BE25A947D6FA40B9B8AC60B1AAF4,com.respaper.resapp,False,,build,exit,False,,0
+9653EBB21E56D43F52BAB998B6A793BDD6C0B27007B8A3828A9EAA5818F0736B,com.ruleoffun.ebd,True,Both,build,native_log_model,0.36348343685300205,"START: Lcom/mesmotronic/plugins/FullScreenPlugin;->initialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
+",0
+36EB158C162B8893BB57036D534E4E377C2A3824ECC6B55DFE63E8D27F68D285,com.samanyagyan2018.dhokha,False,,build,native_write_phone_number,False,,3
+3E2126E6B9AAD3FCF383F61C57D3A5AD0B838AC8ADE9EE5B81235AC002B262EF,com.santoexpedito.oracao,True,Both,build,stop_wifi,0.1645119586296057,"END: Lcom/rjfun/cordova/admob/AdMobPlugin;->onResume(Z)V
+",0
+F5DA306896F0D8F52374637D82BFE513BCCCFFD89B95B6D1EE53947FB1091843,com.shex.startfromzero_tagalog,True,Real,build,exit,0.9973347998984685,"START: Lcom/shex/startfromzero_tagalog/Wi;->h()V
+",1
+A6F6CE4450563593EF8DD1F471FD353FF31569AAAEF6280C6BCAAEE5A931F255,com.shyri.whitescreenapp,True,,build,native_write_phone_number,0.25,"END: Lb/b/b/a/b/e/b;->a(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+",0
+F740C82ED49B2D930FF75352CD81875A80AB8B98F5061200F526A03CF630C4A6,com.sliding.ruler.o,False,,build,native_log_string,False,,3
+67CC36D6BE48A5C70B1A9DC245DACB0BB7F3B54FD3E51534DDDE196B1A8FA7DF,com.soccer_x.www.twa,True,,location,return,0.71752385545489,"END: Lb/c/c/k;->j(I)Lb/c/c/k;
+",0
+69CEC401828E692B0BDDDF1F35BC6AA3BA929317CB8926E7A76D08CF00A3D146,com.sppgc.sardarpatelpgcollege,True,,camera,set_text,0.11764705882352941,"START: Lcom/sppgc/sardarpatelpgcollege/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",2
+F38FA01AD748575873C32F3973F2C951AA222E1C577F7420A4B7C7FA10508144,com.tappsolutions.calc_lsnic_joint,True,Both,camera,http_location,0.18181818181818182,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+CC7FB6C4CFB6196745C16339DB9A96FDE931EF147A4DC94CF039C36B49331F7F,com.tiempo_english.rob,True,,location,stop_wifi,0.0,"END: Lcom/tiempo_english/rob/InfoActivity;->onResume()V
+",1
+0DE1220A0DC9713EE1EE686FC955943E83D8EDACD37C022ADF1A7C2601D2BA28,com.toni.toni21.camila12,False,Real,build,native_phone_number_network,False,,1
+5B174C1FEBB9E7EADDCF14245D62450ADEF523ECC4FE6D3E99C2E499ACD77ACD,com.training.aamc,False,,camera,return,False,,4
+B12887CB7C5CC15CE7CE119A26923A1819F643BA47F4FCD21C34A5DAC017109A,com.translatteh.com,False,,location,http_location,False,,4
+92EF38AF5CEB81AFEDF3D87788644629476BA3327C0C4392CAB68EA0869C18A3,com.turbomedia.android,False,,camera,write_string,False,,4
+1148784FACBFC63258303BB9B1EC8D1F212AE81A98DDE67F6808C283C1C90406,com.vgsa.vgsa_mobile,False,,build,return,False,,5
+B10D2B015819D22178907D7D10B4D048E7DE996E3F39A88A72788A72D63C3D74,com.weclean4you.weclean4you,True,,camera,set_text,0.25,"START: Lcom/weclean4you/weclean4you/Home;->onCreate(Landroid/os/Bundle;)V
+",0
+5C5E1A98D9176312EA8C9B52B6A67366D0C62D1A86BA99693B8C4273C4A8BEB2,com.yiftach_rak.www.googleshortcutsbeta,False,,build,sms_string,False,,3
+2D0B58E1A23273E668DD508F0C4A0BA6B104C81194C1DB9318DC94C46A004288,com.yiggdrasil.knou_answers_viewer,False,,location,sms_imei,False,,4
+27B8100BDA5D227D815DE254E177201F3E2546A360D04477B035814BDD763572,com.zeninfotech.typenepali_nepalitexttospeech,True,,location,http_location,0.26093258240848105,"END: La/a/n/i;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+",1
+65EAD12BE673B8380DFC9C268D8B5B468BFDECD9F1D6A71B28B6D6F5A9572122,de.airportpark24.car_tour24,True,Both,camera,http_location,0.24242424242424243,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+0548CB94AF84B7B96028A19A21D7416B733FBA15C65CAB370AB5BC5B3D0444B9,de.sweety.shooting,True,,build,http_location,0.3172910075898494,"START: Lde/sweety/shooting/CalculateResult;->calculateResults(Lde/sweety/shooting/ShootingApplication;Landroid/database/sqlite/SQLiteDatabase;Lde/sweety/shooting/CalculatedValues;Ljava/lang/String;Lde/sweety/shooting/InternalTextView;Lde/sweety/shooting/InternalTextView;ILjava/lang/String;)Ljava/lang/String;
+",1
+A2E6CD4D946065E5E4B16669E6F3D009D291E81A9EF77C7D6AEA9348F380F86C,deltagamabeta.cesketelevizevmobile,True,Real,build,exit,0.37906976744186044,"END: Ldeltagamabeta/cesketelevizevmobile/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",1
+D34D98B92642E41BE5450D85D62A43B8E913F11FDFCCC6D9B0463609E20ECD34,free.girls.chat,False,,camera,http_location,False,,3
+101EAE608EFA210A527FE1443851670D75021E74797A838A4FE56B6B32E69287,hu.chefpro.android,False,,location,sms_string,False,,5
+F1E7D5D25D22852312DCAB1584E5B4CB630F462157C3804673C95DA6AB05D36A,in.oxeshop.oxeshop,True,Real,camera,stop_wifi,0.9269188612732174,"END: Lin/oxeshop/oxeshop/MainActivity;->onPause()V
+",1
+ABE1F27D283211281D04FE081BB0AB0ECA04775C0EBD361F2614788AC484B4F1,ioapp.ionic.starter,True,,camera,native_log_string,0.0,"START: Lioapp/ionic/starter/OneSignals;->onCreate()V
+",2
+461DDD68CC3C644C32043A1447B0C034D13A314EEED6FA456A5BDBDF75A1E7CA,iyapps.carrosusadosportugal,True,Real,location,native_log_model,0.722192369693713,"END: Liyapps/carrosusadosportugal/MainActivity$2;->onTick(J)V
+",1
+A1C29845C28E24BE35F8A3288481D015FD99C082FD82865A209738FA7DD6497B,jp.golddisc.z80cheatsheet,True,Both,location,exit,0.0,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+CDC3BA8DB2C83D41544CC63B2587B5D1B98D9E189723A955C87D8B14DEF6F6DA,kr.ac.yjc.comwdj.andrstudy.babesleep,True,,location,set_text,0.04,"START: Lkr/ac/yjc/comwdj/andrstudy/babesleep/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",1
+657F014EF47C837F33BCC48E2892DA46E970B4F7E063630F7983494D697660D8,kr.speedx,False,,location,stop_wifi,False,,4
+13939D8A0FE5A14C1CCAAD547831E89AEE0D19716060B6A1D142AA4CD8E72C0E,la.ggu.m16.m16chat,True,,camera,return,0.0,"END: Lla/ggu/m16/m16chat/LoginActivity;->onCreate(Landroid/os/Bundle;)V
+",2
+F877509D2768C4953B049C14E7009B9D9C1139E9DE4EB7641F0CBE3A902F6252,mindmine.audiobook,True,,location,native_log_model,0.545993865992075,"END: Lmindmine/audiobook/Main;->onResume()V
+",2
+D877FF35AB4A8DE325CBCD072834D43C711506EA3B1E1F3F8DB9BD6C400C0C4F,misol.alex.buttonfrontier,True,,location,native_log_string,0.0,"END: Lmisol/alex/buttonfrontier/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",2
+33AB319CEDFEA22B4965012B47475FBB2CB3214BCA9B8F001034BC17A17CB136,moi.medisonlineindonesia.com,False,,location,sms_imei,False,,0
+1645F505C8528E777EE05B8AE687D849E03A1187AB5CA3D49B840B1F5C9B2C9F,mtw.app.vtu,False,,build,sms_string,False,,4
+C2E299B97FE5CCEE22B594F7525AE837B2E421EEE16752DFF12ABDD5EB102560,net.classicelectronic.sms,True,,camera,exit,0.6484771573604061,"END: Lnet/classicelectronic/sms/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",0
+988A948633D5D5D4D659A1B03035C926958F8EBED7F75ECD4F03D08E56798E3B,net.myappy.charterchecklist,True,,build,return,0.011739594450373533,"END: La/a/n/i;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+",1
+06C388340F5024793F1D14D413E2DE187ECD3F0427E9908B31E2BA11C93D6611,net.ruckman.iscwarn,True,,location,native_log_model,0.25,"START: Lnet/ruckman/iscwarn/c;->onCreate(Landroid/os/Bundle;)V
+",1
+5E0EBE018FBDC80DE1C9726DE3E8BE60526906DB7EB67D8ECAD1D1D086E9A38E,nl.candosoft.lifebalance,True,Both,location,stop_wifi,0.2773419473927088,"START: Lnl/candosoft/lifebalance/feature/MainActivity;->setupSwitches()V
+",0
+311062FD60E226EAC84CDBB73D0167665A048491AA01828BF858590B3AC78E82,nl.foodticket.app.orderapp658,True,,camera,native_phone_number_network,0.0,"END: Lnl/foodticket/app/orderapp658/OrderApp$MyWebViewClient;->onPageFinished(Landroid/webkit/WebView;Ljava/lang/String;)V
+",1
+F0AB4C62314F20C0FF896A0AEB1179BF7E6E092641F00F86423FDE7032DD2507,nl.sitedish.kofusushi,True,,build,native_log_model,0.25,"END: Ldagger/internal/DoubleCheck;->provider(Ljavax/inject/Provider;)Ljavax/inject/Provider;
+",1
+FF44DD4215E324FFF9E1C7B9ECE79572A73F210D66077C39B6FBF88DE2271C5C,nl.sitedish.maximiliano,True,,camera,return,0.18181818181818182,"END: Ldagger/internal/DoubleCheck;->provider(Ljavax/inject/Provider;)Ljavax/inject/Provider;
+",0
+1F4F4C771BD9F1DC307E713BFB62DE2C0AED032309244E25E455BC8AD2CCAC63,nl.sitedish.monalisaweesp,True,,camera,native_write_phone_number,0.46793061718434853,"END: Lnl/sitedish/monalisaweesp/MainActivity;->onStart()V
+",0
+8CCFFC2618111F4D05D3885617364222940F9208AE0E2633C66D83A8C09A9F84,ohms.com.ohms,True,Both,camera,write_string,0.10306249293705504,"END: Lohms/com/ohms/WebInterface/BrowserActivity;->onResume()V
+",0
+0E43605811A0D746B21D965C6DF5F81C37D7C3F41C131E8C9F0AED6ECE5277F2,org.mystphysx.wallet.mygulfcoinwallet,False,,camera,return,False,,1
+ED5ECA004EDAA738DDFC883C9679BC970E3194EA6DAE545CBAA251A0F41A141C,ortsspiegel.emilen.com.ortsspiegel,False,,location,sms_string,False,,3
+008EEAA66D7AFFEA85B4635EF6EC0E45B2AE69770A80AFD1723F166D3257CDE6,ru.articat.cmbc,False,,build,native_write_phone_number,False,,4
+74864B722D1F5ED38DBEFD8D97DB592EC9B75E624B5B679DEC3434A8542A047B,ru.free.esplus,True,,camera,native_log_model,0.13113194727544503,"END: Lru/free/esplus/Main;->Landscape()Z
+",0
+E18DF861CED0313A41E6D660E7C5436C5A0A045E4CF5B09E7AAB09AF4209F932,ru.imilka.randomfact,True,,build,write_string,0.11764705882352941,"START: Lru/imilka/randomfact/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",1
+D8B0DAE1745A0516DFB566581072C19E73EE3BB99C4FD9A38CED63C2B2DD2EEE,ru.intour_online.intourist,False,,build,set_text_reflection,False,,3
+DD8A83CB9F7FD7EA84AC9017A58B844F43AE596C96CF2D2A8520992B008CBE10,tax.almaliki.soft,False,,build,http_location,False,,3
+78421322EC4EA188F986FAC6F7A1D7590D7168BF959CA6D477A565F2CDD2293F,trex.tv.baharturktv.mobile,True,Both,location,native_phone_number_network,0.25,"START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V
+",0
+00C66E08A43923974757408F511E9BA233D19E2B207F6B0B708C40B190EB2FFF,usingnfc.com.mavricdemo,True,,camera,exit,0.23529411764705882,"START: Lusingnfc/com/mavricdemo/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",1
+D487749D22C36C05297CF97722F2241E0EB8B474DCE45287CC9D26E37532FEEA,valhalldev.mwst,True,Real,location,write_string,0.7599069406746801,"END: Lvalhalldev/mwst/MainActivity;->onCreate(Landroid/os/Bundle;)V
+",1

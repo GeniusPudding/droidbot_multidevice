@@ -62,6 +62,22 @@ def seq_compare(call_seq1,call_seq2):
             input('wait')
         i+=1
 
+def get_first_evading_point(call_seq1,call_seq2):
+    l = min(len(call_seq1),len(call_seq2))
+    i=0
+    if call_seq1[0] != call_seq2[0]:
+        return 'Different Entry Point!?'
+    evading_point = call_seq1[0]
+    while i<l:
+        s1 = call_seq1[i]
+        s2 = call_seq2[i]
+        if s1 != s2:
+            #input(f'evading_point:{evading_point}')
+            return evading_point
+        evading_point = s1
+        i+=1
+    return evading_point #The maximum common subsequnce is one of the two seq, which means one of them exits 
+        
 
 
 if __name__ == "__main__":
