@@ -262,7 +262,8 @@ def main(diff_name,p2f):
     #print(f'real_evading_index:{real_evading_index},emu_evading_index:{emu_evading_index}')
     #print(f'apk_name:{apk_name}')
     #然後在API序列中查找目標並生出與他相關的CFG資訊
-    evading_points = []
+    #並抓出那些diverse line上面一個block的分支(若存在)，輸出並儲存所有的evading points位置 (method, block)
+    evading_points = []#TODO 把hidden behavior也輸出一下
     
     for i in real_evading_index:
         if i == 'gap':
@@ -291,7 +292,7 @@ def main(diff_name,p2f):
         ep = get_evading_point(method_obj)
         if ep:
             evading_points.append(ep)
-    #抓出那些diverse line上面一個block的分支(若存在)，輸出並儲存所有的evading points位置 (method, block)   
+       
     output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
 
 
