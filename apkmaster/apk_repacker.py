@@ -4,6 +4,7 @@ import os
 from .smali_function_logger import walk_target_dir,walk_smali_dir  
 import sys
 from .apk_utils import *
+import json
 def methodlog_instrumentation(target_apk_path, redecompile):
     #print(f'methodlog_instrumentation:{methodlog_instrumentation}')
     # param: target apk path that want to apply instrumentation method 
@@ -29,10 +30,13 @@ def methodlog_instrumentation(target_apk_path, redecompile):
     try:
         #print(os.getcwd(),apktool_dir)
         with open('apkmaster/target_API_graph_all.json', 'r') as f:
-            graph = json.load(f)
+            target_API_graph = json.load(f)
+        # print()
+        # with open('target_API_graph_all.json') as f:
+        #     target_API_graph = json.load(f)
         for subdir in os.listdir(apktool_dir):
             if subdir.startswith('smali'):
-                walk_smali_dir(os.path.join(apktool_dir,subdir))
+                walk_smali_dir(os.path.join(apktool_dir,subdir),target_API_graph)
                 #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
         patch_log_file(os.path.join(apktool_dir,'smali'))
     except:   

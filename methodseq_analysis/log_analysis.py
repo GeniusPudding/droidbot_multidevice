@@ -2,10 +2,7 @@ import os
 import csv
 import subprocess
 import json
-<<<<<<< HEAD
 import sys
-=======
->>>>>>> 36a97fe6259990566a5a4e36c81ca0cd3a2a1437
 from log_parser import get_first_evading_point
 
 if __name__ == "__main__":
@@ -57,11 +54,7 @@ if __name__ == "__main__":
     #input(f'hash_map:{hash_map}')
 
     for apk in apks_logs:
-<<<<<<< HEAD
         new_list = ['', apk, False, None,'','', False, None, 0]
-=======
-        new_list = [apk, False, None,'','', False, None]
->>>>>>> 36a97fe6259990566a5a4e36c81ca0cd3a2a1437
         txt_list = apks_logs[apk]
         index = len(txt_list)//2
         #print(f'labels_dict[apk]:{labels_dict[apk]},apk:{apk}')
@@ -102,7 +95,6 @@ if __name__ == "__main__":
             size_emu = os.path.getsize(emu_path)
             size_real = os.path.getsize(real_path)
             if size_emu != 0 and size_real != 0 :
-<<<<<<< HEAD
                 tmp_new[2] = True  
                 tmp_new[-3] = (max(size_emu,size_real)-min(size_emu,size_real))/max(size_emu,size_real)
             
@@ -114,14 +106,6 @@ if __name__ == "__main__":
             if tmp_new[3] == 'Both': #Select this round
                 break
             
-=======
-                new_list[1] = True  
-                new_list[-2] = (max(size_emu,size_real)-min(size_emu,size_real))/max(size_emu,size_real)
-            #print(f'Triggered:{new_list[2]},size_emu:{size_emu},size_real:{size_real}')
-
-            # if apk == 'com.auctionslive.bidding':
-            #     input(f'new_list:{new_list}\n')
->>>>>>> 36a97fe6259990566a5a4e36c81ca0cd3a2a1437
         #input(f'new_list:{new_list}\n')
         new_list[2] = tmp_new[2]
         new_list[3] = tmp_new[3]

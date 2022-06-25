@@ -11,8 +11,11 @@ def parser2(txt1_path,txt2_path,log_path, appname):#for getting method seq from 
 
     # print(f'len of log 1:{len(t1)}')
     # print(f'len of log 2:{len(t2)}')
-    t1 = [api[api.find(': - Method ')+11:] for api in t1 if ': - Method ' in api]
-    t2 = [api[api.find(': - Method ')+11:] for api in t2 if ': - Method ' in api]
+    
+    t1 = [api[api.find(': - ')+4:] for api in t1 if ': - ' in api]
+    t2 = [api[api.find(': - ')+4:] for api in t2 if ': - ' in api]
+    # t1 = [api[api.find(': - Method ')+11:] for api in t1 if ': - Method ' in api]
+    # t2 = [api[api.find(': - Method ')+11:] for api in t2 if ': - Method ' in api]
     # t1 = [api[api.find('GeniusPudding: - Method START:')+31:] for api in t1 if 'GeniusPudding: - Method START:' in api]
     # t2 = [api[api.find('GeniusPudding: - Method START:')+31:] for api in t2 if 'GeniusPudding: - Method START:' in api]
     dirname1, basename1 = os.path.split(txt1_path)

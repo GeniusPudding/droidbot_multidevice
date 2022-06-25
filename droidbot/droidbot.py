@@ -131,7 +131,8 @@ class DroidBot(object):
                 script_path=script_path,
                 profiling_method=profiling_method,
                 master=master,
-                replay_output=replay_output)
+                replay_output=replay_output,
+                failed_record_file='failed_record_txt')
 
 
 

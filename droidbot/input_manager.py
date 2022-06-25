@@ -14,7 +14,7 @@ from .input_policy import UtgBasedInputPolicy, UtgNaiveSearchPolicy, UtgGreedySe
 
 DEFAULT_POLICY = POLICY_GREEDY_DFS
 DEFAULT_EVENT_INTERVAL = 1
-DEFAULT_EVENT_COUNT = 5#100000000
+DEFAULT_EVENT_COUNT = 1000#00000
 DEFAULT_TIMEOUT = -1
 
 
@@ -30,7 +30,7 @@ class InputManager(object):
     def __init__(self, device, device2, app, policy_name, random_input,
                  event_count, event_interval,repeat,
                  script_path=None, profiling_method=None, master=None,
-                 replay_output=None):
+                 replay_output=None, failed_record_file=None):
         """
         manage input event sent to the target device
         :param device: instance of Device
@@ -63,6 +63,10 @@ class InputManager(object):
 
         self.policy = self.get_input_policy(device, app, master)
         self.profiling_method = profiling_method
+
+        if failed_record_file:
+            self.failed_record_file = open(failed_record_file,'w+')
+                
 
     def get_input_policy(self, device, app, master):
         if self.policy_name == POLICY_NONE:
@@ -115,7 +119,12 @@ class InputManager(object):
 
         try:
             if self.policy is not None:
-                self.policy.start(self)#Default!
+                res = self.policy.start(self)#Default!
+                if res['status'] == 'failed':
+                    print(f'app:{self.app.package_name} crash, 紀錄')
+                    self.failed_record_file.write(f'App path:{self.app.app_path}\n')
+                    #TODO 直接把logcat error寫出來
+                    self.failed_record_file.write(f'屢次停止運作\n')
             elif self.policy_name == POLICY_NONE:
                 self.device.start_app(self.app)
                 if self.device2:
@@ -124,7 +133,7 @@ class InputManager(object):
                     return
                 while self.enabled:
                     time.sleep(1)
-            elif self.policy_name == POLICY_MONKEY:
+            elif self.policy_name == POLICY_MONKEY:#TODO 支援雙裝置
                 throttle = self.event_interval * 1000
                 monkey_cmd = "adb -s %s shell monkey %s --ignore-crashes --ignore-security-exceptions" \
                              " --throttle %d -v %d" % \
@@ -142,7 +151,7 @@ class InputManager(object):
                 # may be disturbed from outside
                 if self.monkey is not None:
                     self.monkey.wait()
-            elif self.policy_name == POLICY_MANUAL:
+            elif self.policy_name == POLICY_MANUAL:#TODO 研究一下這怎用?能改成雙裝置版本嗎
                 self.device.start_app(self.app)
                 while self.enabled:
                     keyboard_input = input("press ENTER to save current state, type q to exit...")

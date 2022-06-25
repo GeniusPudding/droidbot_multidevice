@@ -75,6 +75,12 @@ class InputPolicy(object):
                 event_list.append(event)
                 event_str = input_manager.add_event(event)
                 self.action_list.append(event_str)
+                print(f'event:{event}\event.__dict__:{event.__dict__}')# event是object
+                if 'text' in event.__dict__:#app crashes
+                    print(f'App text:{event.text}')
+                    if '屢次停止運作' in event.text:
+                        return {'status':'crashed'}
+                    #break
             except KeyboardInterrupt:
                 break
             except InputInterruptedException as e:
@@ -92,6 +98,7 @@ class InputPolicy(object):
 
         input_manager.add_event(KillAppEvent(app=self.app))
 
+        #重複實驗，重複送sequence (可用來看序列是否產生隨機性)
         for i in range(input_manager.repeat):
             repeat_count = 0 
             action_list2 = []
@@ -114,6 +121,7 @@ class InputPolicy(object):
             input_manager.add_event(KillAppEvent(app=self.app))
             # print(f'action_list:{self.action_list}')
             # print(f'action_list2:{action_list2}')
+        return {'status':'succeed'}
     @abstractmethod
     def generate_event(self):
         """

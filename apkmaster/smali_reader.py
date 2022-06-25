@@ -1,5 +1,7 @@
 #For reading semantics of smali files
-
+import re
+from rich.console import Console
+console = Console()
 def param_registers_num(reading_line):
 	param_string = reading_line[reading_line.index('(')+1:reading_line.index(')')]
 	param_list = read_param_string(param_string)
@@ -36,3 +38,165 @@ def read_param_string(param_string):
         last_p = p + 1
 
     return param_list
+
+def get_registers_in_line(dalvik_bytecode_line): 
+    #Check for all dalvik instructions in smali representation or androguard representation
+    def parse_smali_tokens(dalvik_bytecode_line):
+        #input: dalvik_bytecode_line needs to be a valid DVM instruction
+        #output: intruction name, register list
+        # console.print(f'dalvik_bytecode_line:[green bold]{dalvik_bytecode_line}[/green bold]')
+        dalvik_bytecode_line = dalvik_bytecode_line.strip()
+        
+        try:#parsing the smali syntax
+            # console.print(f'dalvik_bytecode_line:[green bold]{dalvik_bytecode_line}[/green bold]')
+            smali_tokens = dalvik_bytecode_line.split(' ')
+            # console.print(f'smali_tokens:[green bold]{smali_tokens}[/green bold]')
+            instruction = smali_tokens[0]
+            # console.print(f'instruction:[green bold]{instruction}[/green bold]')
+            if 'range' in instruction:
+                if len(smali_tokens) == 3: #invoke-virtual/range v16, Landroid/content/Intent;->getExtras()Landroid/os/Bundle;
+                    return instruction, [smali_tokens[1]]
+                fromreg = smali_tokens[1].strip('{')
+                toreg = smali_tokens[3].strip(',}')
+                reg_list = [toreg]
+                prefix = fromreg[0]
+                fromindex = int(fromreg[1:])
+                toindex = int(toreg[1:])
+                for index in range(fromindex,toindex):
+                    reg_list.append(prefix+str(index))
+                return instruction, reg_list
+            if '<init>' in dalvik_bytecode_line:
+                instruction += ' <init>'
+            # console.print(f'smali_tokens:[green bold]{smali_tokens}[/green bold]')
+            if len(smali_tokens)>1:
+                
+                register_form = smali_tokens[1:]
+                #need to find out if the last part is a register or class description
+                register_re =re.compile(r'^[vp][0-9]+$')
+                reg_list = register_form = [ r.strip('\{\},') for r in register_form]
+                # print(f'register_form:{register_form}')
+
+                for i in range(len(register_form)):
+                    if not re.match(register_re, register_form[i]):
+                        reg_list = register_form[:i]
+                        break
+                
+                if '' in reg_list:
+                    reg_list.remove('')
+            else:
+                reg_list = []
+
+        except:
+            raise ValueError(f'Not supported instruction: {dalvik_bytecode_line}')
+        return instruction, reg_list	
+
+    instruction,reg_list = parse_smali_tokens(dalvik_bytecode_line)
+	
+    result_regs = []
+    operand_regs = []
+    result_types = []
+    if reg_list == []:
+        return operand_regs,result_regs, result_types
+
+    try:
+        if any([i in instruction for i in ['nop','void','goto']]):
+            return #instruction with no register
+        if any([i in instruction for i in ['return','check','filled','throw', 'switch', 'if-','put','invoke']]):#先把沒有destination register的指令挑出(再處理例外)
+            #these ins have no target register, except for put- ins
+            operand_regs = reg_list.copy()
+            if 'put' in instruction: #'aput', 'iput', 'sput'     
+                if 'aput' in instruction or 'iput' in instruction:#sput也沒有輸出register
+                    result_regs = [reg_list[1]]
+                    if 'iput' in instruction and not 'object' in instruction:
+                        result_types = ['value']
+                    else:
+                        result_types = ['object']
+                    reg_list.remove(reg_list[1])
+                    operand_regs = operand_regs[:-1]
+                if 'wide' in instruction:
+                    operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg	                               
+                    
+            elif 'invoke' in instruction:#Maybe sometimes influences the obj register 
+                if '<init>' in instruction:
+                    result_regs = [reg_list[0]]
+                    result_types = ['object']
+
+            elif 'return-wide' in instruction :
+                operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg	             
+            
+        else:  
+            result_regs = [reg_list[0]]  #把都是第一個register作為output的指令放在這
+            result_types = ['value']
+            
+            if  'const' in instruction: #any([i in instruction for i in ['const','fill-array-data']]):#or others
+                if any([i in instruction for i in ['object','class' ,'string']]): 
+                    result_types = ['object']
+                # else:
+                #     result_types = ['value']
+                if 'wide' in instruction: 
+                    result_regs.append(result_regs[0][0]+str(int(result_regs[0][1:])+1))	#next order reg           
+                    result_types.append('value')     
+            elif 'new-' in instruction:#new-instance, new-array	
+                operand_regs = reg_list[1:]
+                result_types = ['object']
+            elif 'fill-array-data' == instruction:
+                operand_regs = [reg_list[0]]
+                result_types = ['object']
+            elif 'array' in instruction:#還有其他的指令目前有點看不懂
+                operand_regs = [reg_list[1]]
+                if 'new-array' == instruction:                    
+                    result_types = ['object']  
+                elif 'array-length' == instruction:
+                    result_types = ['value']  
+            elif 'get' in instruction:
+                #sget-{} vx,field_id;  #iget-{} vx,vy,field_id;  #aget-{} vx,vy,vz
+                if 'object' in instruction: 
+                    result_types = ['object']
+                operand_regs = reg_list[1:]
+                if 'wide' in instruction: 
+                    result_regs.append(result_regs[0][0]+str(int(result_regs[0][1:])+1))	#next order reg  
+                    result_types.append('value')  
+            elif 'move' in instruction:#move, move-result
+                if not '-result' in instruction and not '-exception' in instruction:#一般的move
+                    operand_regs = [reg_list[1]]
+                if 'object' in instruction or '-exception' in instruction: 
+                    result_types = ['object']
+                if 'wide' in instruction: 
+                    if 'result' not in instruction:#'move-result-wide' has no operand_regs
+                        operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg	 
+                    result_regs.append(result_regs[0][0]+str(int(result_regs[0][1:])+1))	#next order reg	 
+                    result_types.append('value')
+            elif 'monitor' in instruction:#monitor-enter v3, monitor-exit v3
+                operand_regs = reg_list.copy()
+            elif 'instance-of' in instruction:
+                operand_regs = [reg_list[1]]
+            elif 'cmp' in instruction:#cmpl-float, cmpg-double, ...
+                operand_regs = reg_list[1:]
+                if '-double' in instruction:#How about cmp-long??? Not mentioned in doc
+                    operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg	
+                    operand_regs.append(operand_regs[1][0]+str(int(operand_regs[1][1:])+1))	#next order reg	
+            elif '-to-' in instruction or 'neg-' in instruction or 'not-' in instruction: #unary operation
+                operand_regs = [reg_list[1]]
+                if '-double' in instruction or '-long' in instruction:
+                    result_regs.append(result_regs[0][0]+str(int(result_regs[0][1:])+1))	#next order reg	
+                    result_types.append('value')
+                elif 'double-' in instruction or 'long-' in instruction:
+                    operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg	
+            elif any([i in instruction for i in ['add-','sub-','mul-','div-','rem-','or-','and-','shr-','shl-']]) :  #binary operation
+                if '/2addr' in instruction:#first reg is also an operand and destination
+                    operand_regs = reg_list.copy()
+                else: #2or3 regs, such as sub-long, add-int/lit8 
+                    operand_regs = reg_list[1:]	
+                if '-double' in instruction or '-long' in instruction:
+                    result_regs.append(result_regs[0][0]+str(int(result_regs[0][1:])+1))	#next order reg	
+                    result_types.append('value')
+                    operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg		
+                    if 	len(reg_list) > 2:
+                        operand_regs.append(operand_regs[1][0]+str(int(operand_regs[1][1:])+1))	#next order reg	
+
+    except:
+        input(f'Exception instruction:{instruction},reg_list:{reg_list}')
+    return operand_regs,result_regs,result_types#src,dest
+def notCommonInstruction(smali_line):
+    return any([smali_line.startswith(e) for e in ['    .','    :','    #','.','     ']]) or smali_line.strip() == ''
+	

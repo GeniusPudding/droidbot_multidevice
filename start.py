@@ -115,7 +115,7 @@ def parse_args():
     return options
 
 
-@timeout(600, use_signals=False)
+# @timeout(600, use_signals=False)
 def main(testing_apk_path, opts):
     """
     the main function
@@ -218,7 +218,14 @@ def main(testing_apk_path, opts):
 
             app_name = droidbot.app.package_name
             logs = [l for l in os.listdir(target_dir) if app_name in l]
-            no = '('+str(len(logs)//2)+')'
+            print(f'logs:{logs}')
+            #no = '('+str(len(logs)//2)+')'
+            i = 0
+            while True:
+                if not any(['('+str(i)+')' in a for a in logs ]):
+                    break
+                i += 1
+            no = '('+str(i)+')'
             p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
             p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
             print(p1,p2)
@@ -265,6 +272,7 @@ if __name__ == "__main__":
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks
+        # ran_apks = logged_apks+none_logged_apks 
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
         # random.shuffle(ran_apks)

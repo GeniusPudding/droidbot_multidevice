@@ -4,7 +4,7 @@ import os
 import sys
 
 txt_dir = '~/c/Users/user/Desktop/testing/dataset/'
-log_dir = os.path.join('./') #log_dir = os.path.join(txt_dir,'method_seq_logs','RealJ6+_SamsungGalaxyS10','TriggerZoo_antiemulator_withend')
+log_dir = os.path.join('./') #log_dir = os.path.join(txt_dir,'method_seq_logs','RealJ6+_SamsungGalaxyS10','TriggerZoo_antiemulator_withalltargets')
 d = [t for t in os.listdir(log_dir) if '_logcat_' in t and t[-4:]=='.txt'  ]
 apks_logs = {}
 for dd in d:
@@ -21,5 +21,5 @@ for package_name in apks_logs:
         emu,real  = txt_list[2*i], txt_list[2*i+1]
         emu_path, real_path = os.path.join(log_dir,emu), os.path.join(log_dir,real)
         txt = package_name + '_' +  str(i) + '_diff.txt'
-        os.system('diff '+ real_path.replace('(','\(').replace(')','\)') + ' ' + emu_path.replace('(','\(').replace(')','\)') + ' > ' + os.path.join(txt_dir,'diffs',txt))
+        os.system('diff '+ real_path.replace('(','\(').replace(')','\)') + ' ' + emu_path.replace('(','\(').replace(')','\)') + ' > ' + os.path.join(txt_dir,'diff','diffs_all',txt))
 

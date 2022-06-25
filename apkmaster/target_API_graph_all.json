@@ -1,6 +1,9 @@
 {
     "java": {
         "lang": {
+            "Object":{
+                "getClass": "leaf"
+            },
             "Class": {
                 "desiredAssertionStatus": "leaf",
                 "equals": "leaf",
