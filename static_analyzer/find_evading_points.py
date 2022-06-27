@@ -137,7 +137,7 @@ def find_analysisobj_in_apitree(method_sign,api_tree):
 
     return method_analysis
 
-# def gen_cfg_info(logs,evading_index,parent_index,api_tree):
+
 def gen_cfg_info(line,parent_line,api_tree):
     #line = logs[evading_index]
     line = line[line.index('L'):].strip()
@@ -165,7 +165,7 @@ def get_evading_point_in_method(method_jsonObj):#TODO 需要實際evading案例�
     block_offset = method_jsonObj['from_offset'] 
     d = method_jsonObj['cfg']['toparents']
     if d[block_offset] == []:
-        print('Start diverge before 0x0 block, why?')
+        #print('Start diverge before 0x0 block, why?')
         return None #在最初的basic block就發生
     else:
         branch_ins = method_jsonObj['method_ins']['blocks'][d[block_offset][0]][-1]
@@ -199,8 +199,9 @@ def gen_dynamic_callgraph(logs):
             parent_call_map[i] = call_stack[-1] 
         else: #branch
             parent_call_map[i] = call_stack[-1]    
-        # input(f'call_stack:{call_stack},line {i}:{line},real_parent_index:{real_parent_index}')
+        input(f'call_stack:{call_stack},line {i}:{line},parent_call_map:{parent_call_map}')
 
+    input(f'parent_call_map:{parent_call_map}')
     return parent_call_map
 
 
@@ -235,7 +236,7 @@ def get_evading_points(evading_points,evading_index,parent_index,logs,api_tree):
 def main(diff_name,p2f):
     
     index = int(diff_name.split('_')[-2])
-    package_name = diff_name[:-11]#be careful of over 10 diffs for a same package
+    package_name = diff_name[:-11]#be careful of over 10 diffs for a same Start diverge before 0x0 block, why?
     #sess_name =  "androguard_session.ag"  # package_name + '_session.ag'
 
     #diff map to apk
