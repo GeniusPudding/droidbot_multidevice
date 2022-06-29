@@ -199,30 +199,55 @@ def gen_dynamic_callgraph(logs):
             parent_call_map[i] = call_stack[-1] 
         else: #branch
             parent_call_map[i] = call_stack[-1]    
-        input(f'call_stack:{call_stack},line {i}:{line},parent_call_map:{parent_call_map}')
+        # input(f'call_stack:{call_stack},line {i}:{line},parent_call_map:{parent_call_map}')
 
-    input(f'parent_call_map:{parent_call_map}')
+    # input(f'parent_call_map:{parent_call_map}')
     return parent_call_map
 
 
-def get_evading_points(evading_points,evading_index,parent_index,logs,api_tree):
+def get_evading_points(real_evading_index, real_parent_index, real_logs, emu_evading_index, emu_parent_index, emu_logs, api_tree):
     #print(f'parent_index:{parent_index},evading_index:{evading_index}')
-    for i in evading_index:
-        if i == 'gap':
-            continue
+    #把evading points的種類記錄下來 (real, emu, diff)
+    evading_points = []
+    for i in range(len(real_evading_index)):#real_evading_index跟emu_evading_index一樣長
+        ep_case = ''
+        r_i, e_i = real_evading_index[i], emu_evading_index[i]#到i這一項還會是同一個點位 下一項才開始出現分歧
 
-        p_i = parent_index[i]
-        if p_i == 'entry':#p_i == 'index'是原因不明的差異
-            continue
+        if r_i != 'gap' and e_i != 'gap':
+            ep_case = 'different behavior'
+        elif r_i == 'gap':
+            ep_case = 'emulator behavior'
+        elif e_i == 'gap':
+            ep_case = 'real behavior'
+
         
-        line = logs[i]
-        p_line = logs[p_i]
-        if line.strip().startswith('Branch'):
-            ep = {'instruction':line[8:], 'sign':p_line[p_line.index(': ')+2:]}
-            evading_points.append(ep)
+        pr_i, pe_i = real_parent_index[i], emu_parent_index[i]
+        if pr_i == 'entry' or pe_i == 'entry':#p_i == 'index'是原因不明的差異
+            continue
+    
+        r_line, e_line = real_logs[i], emu_logs[i]
+        dr_line, de_line = real_logs[i+1], emu_logs[i+1]
+        pr_line, pe_line = real_logs[pr_i], emu_logs[pe_i]
+        input(f'r_line:{r_line},e_line:{e_line},pr_line:{pr_line},pe_line:{pe_line}')
+        if pr_line != pe_line:#照理說兩邊第i項對應到的parent node會一樣，
             continue
 
-        method_obj = gen_cfg_info(line,logs[p_i],api_tree) 
+        if r_line.strip().startswith('Branch'):#and e_line.strip().startswith('Branch')  因為兩行一樣
+            if ('Case: True' in dr_line and 'Case: False' in de_line) \
+                or ('Case: True' in de_line and 'Case: False' in dr_line):#因為Branch造成的Divergence 
+                
+                #找到True EP了，開始解析他的HB    
+
+
+                ep = {'instruction':r_line[8:], 'sign':pr_line[pr_line.index(': ')+2:], 'ep_case': ep_case}
+                input(f'Got EP:{input}')
+                evading_points.append(ep)
+            else:
+                input(f'After Branch:\ndr_line:{dr_line}\nde_line:{de_line}')
+            continue
+
+        #那不是分支造成的EP是為何呢
+        method_obj = gen_cfg_info(r_line,real_logs[pr_i],api_tree) 
         if not method_obj:
             continue   
         #然後抓出branch的位子 
@@ -230,6 +255,7 @@ def get_evading_points(evading_points,evading_index,parent_index,logs,api_tree):
         #input(f'p_i:{p_i}\nmethod_obj:{method_obj},ep:{ep}')
         if ep:
             evading_points.append(ep)
+    return evading_points
 # if __name__ == '__main__':
     
     # diff_name = sys.argv[1]
@@ -291,13 +317,12 @@ def main(diff_name,p2f):
                     emu_evading_index.append(int(line_index[1].split(',')[0])-1)   #start line in emu 
             except:
                 raise ValueError(f'diff line error:{diff_line}')
-    #print(f'real_evading_index:{real_evading_index},emu_evading_index:{emu_evading_index}')
+    input(f'real_evading_index:{real_evading_index},emu_evading_index:{emu_evading_index}')
     #print(f'apk_name:{apk_name}')
     #然後在API序列中查找目標並生出與他相關的CFG資訊
     #並抓出那些diverse line上面一個block的分支(若存在)，輸出並儲存所有的evading points位置 (method, block)
-    evading_points = []#TODO 把hidden behavior也輸出一下
-    get_evading_points(evading_points,real_evading_index,real_parent_index,rr,api_tree)
-    get_evading_points(evading_points,emu_evading_index,emu_parent_index,er,api_tree)
+    #evading_points = []#TODO 把hidden behavior也輸出一下
+    evading_points = get_evading_points(real_evading_index,real_parent_index,rr,emu_evading_index,emu_parent_index,er,api_tree)
 
        
     output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
