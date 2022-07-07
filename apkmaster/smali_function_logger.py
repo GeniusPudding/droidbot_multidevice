@@ -1,13 +1,10 @@
 import os
-import shutil
-import sys
 import argparse
-from xml.sax.handler import feature_string_interning
-from xmlrpc.client import boolean
-from .apk_utils import *
+#from .apk_utils import *
 from .smali_reader import *
-
+import random
 official_prefix = ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','io','org','okhttp3','okio']
+
 def arg_parse():
 	parser = argparse.ArgumentParser(prog='python smali_function_hooker.py', description='Smali Instrumentor Tutorial')
 	parser.add_argument('--path', type=str, required=True, help='.smali files directory')
@@ -50,15 +47,18 @@ def is_target_method(method_sign,smali_base_dir,target_API_graph_all):#TODO Trig
 	# 	current_base = new_cur
 	# # if 'android' in method_sign:
 	# # 	input(f'boolean:{boolean}')
-	if boolean:
-		print(f'method_sign:{method_sign},boolean:{boolean}')
+	# if boolean:
+	# 	print(f'method_sign:{method_sign},boolean:{boolean}')
 	return boolean
+
+
+
 
 def invoke_logger(register_case, invoke_line, tmp_register, current_method_signature, reg16, reg16_is_object, moveresults_line=None,free_list = None,sixteen_types = None):#inline hook of system APIs, native APIs
 	#tmp_register: a legal free register in the caller 
 	# TODO 有辦法知道是在call native function嗎???
 	#return None 
-	print(f'Invoke logger: current_method_signature:{current_method_signature},\ninvoke_line:{invoke_line},reg16:{reg16},tmp_register:{tmp_register},moveresults_line:{moveresults_line}\nfree_list:{free_list},sixteen_types:{sixteen_types}')
+	#print(f'Invoke logger: current_method_signature:{current_method_signature},\ninvoke_line:{invoke_line},reg16:{reg16},tmp_register:{tmp_register},moveresults_line:{moveresults_line}\nfree_list:{free_list},sixteen_types:{sixteen_types}')
 	new_content = ''
 	invoke_sign = invoke_line.strip().split(' ')[-1]
 	is_object = '-object'
@@ -156,7 +156,7 @@ def invoke_logger(register_case, invoke_line, tmp_register, current_method_signa
 
 		new_content += (invoke_line+'\n\n')
 		if moveresults_line:
-			print('moveresults_line!')
+			#print('moveresults_line!')
 			new_content += (moveresults_line+'\n')
 			if log_param == moveresults_line.strip().split(' ')[-1]:#如果剛好要用的暫存器就是moveresult要蓋掉的
 				is_object = '-object' if 'object' in moveresults_line else ''
@@ -168,74 +168,117 @@ def invoke_logger(register_case, invoke_line, tmp_register, current_method_signa
 		new_content += '' if no_move else (f'    move{is_object}{move_wide}/16 {log_param}, {tmp_register}\n\n')	
 	return new_content
 
-def branch_logger(register_case, branch_line, tmp_register, current_method_signature,reg16,reg16_is_object,free_list = None,sixteen_types = None):
+def get_free_log_register_and_types(free_list, sixteen_types):
+	no_move = False
+	is_object = '-object'
+	if free_list and len(free_list) > 0:#找沒用過的register優先，照理說比算type來取的出錯率更低
+		log_param = free_list[0]
+		no_move = True
+		#input(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line}\ninvoke-static free reg list:{free_list},sixteen_types:{sixteen_types},log_param:{log_param}')
+	else:#不確定有誰可用，需要進一步的靜態分析，這時候會用到sixteen_types來判斷怎麼move資料
+		# return None
+		try:
+			ndx = sixteen_types.index('object')#先找object因為不想撞到J、D型別的
+		except:# v0~v15 都是value照理說機率很低...
+			ndx = 0
+			is_object = ''
+		log_param = 'v' + str(ndx)
+	return log_param, no_move, is_object
+def branch_logger(register_case, branch_line, tmp_register, current_method_signature,reg16,reg16_is_object,free_list = None,sixteen_types = None, is_switch = False):
 	#return None
 	new_content = ''
 	# if 'TypeToString(Ljava/lang/Object;Z)Ljava/lang/String;' in current_method_signature:
 	# 	input(f'\nbranch_line:{branch_line},register_case:{register_case}\n,tmp_register:{tmp_register}, reg16:{reg16}, reg16_is_object:{reg16_is_object} \
 	# 	\nfree_list:{free_list}, sixteen_types:{sixteen_types}\n')
 	#print(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line},reg16:{reg16},tmp_register:{tmp_register}')
-	tmp = branch_line.strip().split(', ')
-	regs = [tmp[0].split(' ')[1]] + tmp[1:-1]
 	is_object = '-object'
+	no_move = True
+	branch_randomid = str(random.getrandbits(32))
+	branch_str = current_method_signature + '->' + branch_line.strip()+'('+branch_randomid+')'
 	if register_case != 2:
 		if not reg16_is_object:
 			is_object = ''
-
-		new_content += ('    #Instrumentation by GeniusPudding\n')
-		new_content += (f'    const-string {tmp_register}, \"{branch_line.strip()}\"\n\n')
-		new_content += (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->branchLog(Ljava/lang/String;)V\n\n')		
-		instrumented_line = branch_line if (register_case == 0 or not reg16 in branch_line) else \
-			f'    move{is_object}/16 {tmp_register}, {reg16}\n\n' + \
-			branch_line.replace(reg16,tmp_register) + \
-			f'\n\n    move{is_object}/16 {reg16}, {tmp_register}\n\n' # case 1 且 reg16有被branch指令使用 
-			#TODO: 如果原本分支比較的運算元是J、D怎辦
-
-		new_content += (instrumented_line+'\n\n')	
+		log_param = tmp_register	
+		# new_content += ('    #Instrumentation by GeniusPudding\n')
+		# new_content += (f'    const-string {tmp_register}, \"{branch_str}\"\n\n')
+		# new_content += (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->branchLog(Ljava/lang/String;)V\n\n') \
+		# 	if not is_switch else (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->switchLog(Ljava/lang/String;)V\n\n')		
+		# instrumented_line = branch_line if (register_case == 0 or not reg16 in branch_line) else \
+		# 	f'    move{is_object}/16 {tmp_register}, {reg16}\n\n' + \
+		# 	branch_line.replace(reg16,tmp_register) + \
+		# 	f'\n\n    move{is_object}/16 {reg16}, {tmp_register}\n\n' # case 1 且 reg16有被branch指令使用 
+		# 	#TODO: 如果原本分支比較的運算元是J、D怎辦
+		# new_content += (instrumented_line+'\n\n')	
 	else:# Case 2 , v_last(tmp_register) > v15
-		no_move = False
-		log_param = None
-		# for reg in regs:#其實最多兩個Register
-		# 	index = int(reg[1:])
-		# 	if reg[0] == 'v' and index < 16:#因為case 2所以一定要是v開頭
-		# 		log_param = reg #reg 在v0~v15之內 可用 , 包含if-test系列和if-testz系列不用到v16以上的
-		# 		if sixteen_types[index] == 'value' : is_object = ''#理論上types不為空因為if指令之前暫存器應該已經賦值了
-		# 		break
-		# if not log_param:#這表示分支用到的暫存器都不是v15以內的
-		# 	if free_list and len(free_list) > 0:#找沒用過的register優先，照理說比算type來取的出錯率更低
-		# 		log_param = free_list[0]
-		# 		no_move = True
-		# 		#input(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line}\ninvoke-static free reg list:{free_list},sixteen_types:{sixteen_types},log_param:{log_param}')
-		# 	else:#不確定有誰可用，需要進一步的靜態分析，這時候會用到sixteen_types來判斷怎麼move資料
-		# 		# return None
-		# 		try:
-		# 			ndx = sixteen_types.index('object')#先找object因為不想撞到J、D型別的
-		# 		except:# v0~v15 都是value照理說機率很低...
-		# 			ndx = 0
-		# 			is_object = ''
-		# 		log_param = 'v' + str(ndx)
-		
-		
-		if free_list and len(free_list) > 0:#找沒用過的register優先，照理說比算type來取的出錯率更低
-			log_param = free_list[0]
-			no_move = True
-			#input(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line}\ninvoke-static free reg list:{free_list},sixteen_types:{sixteen_types},log_param:{log_param}')
-		else:#不確定有誰可用，需要進一步的靜態分析，這時候會用到sixteen_types來判斷怎麼move資料
-			# return None
-			try:
-				ndx = sixteen_types.index('object')#先找object因為不想撞到J、D型別的
-			except:# v0~v15 都是value照理說機率很低...
-				ndx = 0
-				is_object = ''
-			log_param = 'v' + str(ndx)
-		new_content += ('    #Instrumentation by GeniusPudding\n')
-		new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
-		new_content += (f'    const-string {log_param}, \"{branch_line.strip()}\"\n\n')
-		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchLog(Ljava/lang/String;)V\n\n')
-		new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')		
-		new_content += (branch_line+'\n\n')
+		log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
+		# new_content += ('    #Instrumentation by GeniusPudding\n')
+		# new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
+		# new_content += (f'    const-string {log_param}, \"{branch_str}\"\n\n')
+		# new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchLog(Ljava/lang/String;)V\n\n') \
+		# 	if not is_switch else (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->switchLog(Ljava/lang/String;)V\n\n')
+		# new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')		
+		# new_content += (branch_line+'\n\n')
 	#print(f'Branch injection! in {current_method_signature}')
-	return new_content
+
+	new_content += ('    #Instrumentation by GeniusPudding\n')
+	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
+	new_content += (f'    const-string {log_param}, \"{branch_str}\"\n\n')
+	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchLog(Ljava/lang/String;)V\n\n') \
+	if not is_switch else (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->switchLog(Ljava/lang/String;)V\n\n')
+	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')
+	instrumented_line = branch_line if (register_case != 1 or not reg16 in branch_line) else \
+		f'    move{is_object}/16 {tmp_register}, {reg16}\n\n' + \
+		branch_line.replace(reg16,tmp_register) + \
+		f'\n\n    move{is_object}/16 {reg16}, {tmp_register}\n\n' # case 1 且 reg16有被branch指令使用 
+		#TODO: 如果原本分支比較的運算元是J、D怎辦
+	new_content += (instrumented_line+'\n\n')	
+	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
+	new_content += (f'    const-string {log_param}, \"({branch_randomid})\"\n\n')
+	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchFalseLog(Ljava/lang/String;)V\n\n') if not is_switch else ''
+	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')
+	return new_content, branch_randomid
+
+def tag_logger(register_case, tmp_register, current_method_signature,tag_lines = None,tags = None, free_list = None,sixteen_types = None\
+	, branch_randomid=None, try_randomid=None, test_pause=False):#randomid 可能是try的也可能是branchTrue的(但不會同時)
+	#針對goto,try-catch,cond, 因為沒有要修改指令本身所以很簡單
+	#tags跟tag_lines一一對應，tag_lines用在log裡面的TAG參數，tags用來選擇要inject的log method
+	#tags包含tryStart,tryDone,tryCatch,branchTrue,goto
+	new_content = ''
+	is_object = '-object'
+	new_try_randomid = False
+	no_move = True
+	log_param = tmp_register
+	if register_case == 2:# Case 2 , v_last(tmp_register) > v15
+		log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
+	# if test_pause:
+	# 	input(f'current_method_signature:{current_method_signature},tag_lines:{tag_lines}\nfree_list:{free_list},sixteen_types:{sixteen_types}\nlog_param:{log_param},no_move:{no_move},is_object:{is_object}')
+	new_content += ('    #Instrumentation by GeniusPudding\n')
+	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
+	for i, line in enumerate(tag_lines):#中間是針對每一個tag下一次const-string跟invoke
+		tag_type = tags[i]
+		tag_str = current_method_signature + '->' + line.strip() if ':cond' not in line else '('+branch_randomid+')' #這邊的設計是為了後面序列比對用的
+		if 'try' in tag_type:
+			if tag_type == 'tryStart':#等到這行就重新分發一個新的ID
+				try_randomid = '('+str(random.getrandbits(32))+')'		
+				new_try_randomid = True
+			tag_str += try_randomid
+		new_content += (f'    const-string {log_param}, \"{tag_str}\"\n\n')
+		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->{tag_type}Log(Ljava/lang/String;)V\n\n')
+	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')	
+	if new_try_randomid:	#包含tryStart的時候
+		return new_content, try_randomid
+	else:
+		return new_content
+def check_reg_usage(line, free_list, sixteen_types):
+	operand_regs,result_regs,result_types = get_registers_in_line(line)
+	# if 'c(Landroid/app/Activity;)V' in current_method_signature and 'move-exception' in line:
+	# 	input(f'line:{line},result_regs:{result_regs},result_types:{result_types},free_list:{free_list}')					
+	for i,reg in enumerate(result_regs):
+		index = int(reg[1:])
+		if reg in free_list:
+			free_list.remove(reg)
+		if reg[0] == 'v' and index < 16:
+			sixteen_types[index] = result_types[i]#在free_list內的表示還沒用過，type會是''	
 
 def method_logger(smali_lines,smali_base_dir,target_API_graph_all):#, target_methods = None): 
 	#前面放每個method 都會reset到的屬性
@@ -255,6 +298,8 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all):#, target_met
 	param_types = []
 	invoke_tmp = None
 	no_move_result = True
+	try_randomid = ''#用來配對trystart-tryend-catch
+	branch_randomid = ''#用來配對branch指令跟兩個分支
 	#origin_line = ''
 	#下面這些在每個method結束會reset
 	case = 0 #0: locals + parameters < 16; 1: locals < 16 but locals + parameters >= 16; 2: locals >= 16
@@ -303,21 +348,22 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all):#, target_met
 
 			#分析指令用到的暫存器type，同時取得所需的free register資訊
 			if not notCommonInstruction(line):
-				# if 'onCreateOptionsMenu(Landroid/view/Menu;)Z' in current_method_signature:
-				# 	b = line.startswith('    invoke')
-				# 	print(f'line:{line},invoke:{b}')	
-				operand_regs,result_regs,result_types = get_registers_in_line(line)
-				
-				for i,reg in enumerate(result_regs):
-					index = int(reg[1:])
-					if reg in free_list:
-						free_list.remove(reg)
-					if reg[0] == 'v' and index < 16:
-						sixteen_types[index] = result_types[i]#在free_list內的表示還沒用過，type會是''
+				check_reg_usage(line, free_list, sixteen_types)
+				# operand_regs,result_regs,result_types = get_registers_in_line(line)
+				# # if 'c(Landroid/app/Activity;)V' in current_method_signature and 'move-exception' in line:
+				# # 	input(f'line:{line},result_regs:{result_regs},result_types:{result_types},free_list:{free_list}')					
+				# for i,reg in enumerate(result_regs):
+				# 	index = int(reg[1:])
+				# 	if reg in free_list:
+				# 		free_list.remove(reg)
+				# 	if reg[0] == 'v' and index < 16:
+				# 		sixteen_types[index] = result_types[i]#在free_list內的表示還沒用過，type會是''
 				# if 'TypeToString(Ljava/lang/Object;Z)Ljava/lang/String;' in current_method_signature:
 				# 	print(f'ins:{line}\n,operand_regs:{operand_regs}, result_regs:{result_regs}, result_types:{result_types} \
 				#  	\nfree_list:{free_list}, sixteen_types:{sixteen_types}')
-    
+				# if 'c(Landroid/app/Activity;)V' in current_method_signature and 'move-exception' in line:
+				# 	input(f'sixteen_types:{sixteen_types},free_list:{free_list}')					 
+				
 			# case 1 且用到v16的狀況先抓出來  	
 			if case == 1 and param_reg16 in line \
 				and not any([line.startswith(prefix) \
@@ -426,17 +472,96 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all):#, target_met
 
 			elif line.startswith('    if-'):
 				#print(current_method_signature)
-				tmp = branch_logger(case, line, v_last,current_method_signature,param_reg16,param_reg16_is_object,free_list,sixteen_types)
+				tmp, branch_randomid = branch_logger(case, line, v_last, current_method_signature, param_reg16, param_reg16_is_object, free_list, sixteen_types)
 				if tmp:
 					new_content += tmp
 					output_flag	= 0
+			elif line.startswith('    sparse-switch'):
+				tmp, branch_randomid = branch_logger(case, line, v_last, current_method_signature, param_reg16, param_reg16_is_object, free_list, sixteen_types, is_switch=True)
+				if tmp:					
+					new_content += tmp
+					output_flag	= 0
 			elif line.startswith('    move-result'):
-				# if '_vvv3(Lanywheresoftware/b4a/objects/LabelWrapper;Ljava/lang/String;)I' in current_method_signature:
+				# if 'hasPermissions(Landroid/content/Context;[Ljava/lang/String;)Z' in current_method_signature:
 				#  	input(f'invoke_tmp:{invoke_tmp}\n line:{line}:current_method_signature:{current_method_signature}')
 				if invoke_tmp:#代表前面target method的地方輸出過了 這邊不輸出
 					output_flag	= 0
 					invoke_tmp = None
-
+			elif line.startswith('    move-exception'):#都給前面出現的標籤catch, catch+try_start輸出
+				output_flag	= 0
+			elif line.startswith('    :'):#去注入ㄧ些分支跳轉相關的標籤, cond, goto, try_start 有時候會連在一起 很麻煩
+				# 實際指令的部分都不在這部分加入new_content
+				output_flag = 0
+				last_line = smali_lines[i-1]
+				next_line = smali_lines[i+1]
+				next2_line = smali_lines[i+2]
+				index = i
+				if line.startswith('    :catch'):	
+					new_content += (line+'\n')
+					if next_line.startswith('    move-exception'):#必須剛好接在catch後面的指令
+						check_reg_usage(next_line, free_list, sixteen_types)#提前檢查move-exception的指令
+						new_content += (next_line)
+						new_content +=tag_logger(case, v_last, current_method_signature, [line], ['tryCatch'], free_list, sixteen_types, try_randomid=try_randomid)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
+					elif next_line.startswith('    :try_start') and next2_line.startswith('    move-exception'):#需判斷move-exception的存在 不能讓這個被log超車
+						check_reg_usage(next2_line, free_list, sixteen_types)#提前檢查move-exception的指令
+						new_content += (next_line)
+						new_content += (next2_line)
+						tmp, try_randomid = tag_logger(case, v_last, current_method_signature, [line,next_line], ['tryCatch','tryStart'], free_list, sixteen_types, \
+							try_randomid=try_randomid)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
+						new_content += tmp	#這邊應該是先前面try的catch 再後面try的start
+					#看了一下文本發現好像沒有其他標籤會卡在:catch跟move-exception中間 所以沒有else
+				elif line.startswith('    :cond'):
+					new_content += (line+'\n')
+					if next_line.startswith('    :goto'):
+						new_content += (next_line)
+						is_next2_tag = True if next2_line.startswith('    :try_start') else False
+						new_content += (next2_line)	if is_next2_tag else ''
+						tmp = tag_logger(case, v_last, current_method_signature, [line, next_line, next2_line] if is_next2_tag else [line,next_line],\
+							 ['branchTrue', 'goto','tryStart'] if is_next2_tag else ['branchTrue', 'goto'], \
+								 free_list, sixteen_types, branch_randomid=branch_randomid)	
+						new_content += tmp[0] if is_next2_tag else tmp
+						if is_next2_tag: try_randomid = tmp[1] 
+					elif next_line.startswith('    :try_start'): 
+						new_content += (next_line)		#:try_start			
+						tmp, try_randomid = tag_logger(case, v_last, current_method_signature, [line,next_line], ['branchTrue','tryStart'], \
+							free_list, sixteen_types, branch_randomid=branch_randomid, try_randomid=try_randomid)	
+						new_content += tmp				
+					elif not notCommonInstruction(next_line): #後面直接接一般指令
+						new_content += tag_logger(case, v_last, current_method_signature, [line], ['branchTrue'], free_list, sixteen_types, \
+							branch_randomid=branch_randomid)
+					else:#當作沒看到好了
+						new_content += tag_logger(case, v_last, current_method_signature, [line], ['branchTrue'], free_list, sixteen_types, \
+							branch_randomid=branch_randomid)
+					# 	raise ValueError(f'next line of :cond is {next_line}')#預期之外的例外狀況 #例如 :sswitch_0
+				elif line.startswith('    :goto'):
+					if not last_line.startswith('    :cond'):#都從第一個標籤開始看 交給前面那裏輸出
+						new_content += (line+'\n')
+						is_next_tag = True if next_line.startswith('    :try_start') else False  # :goto再:try_start
+						new_content += (next_line) if is_next_tag else ''
+						tmp = tag_logger(case, v_last, current_method_signature, [line, next_line] if is_next_tag else [line]\
+							, ['goto', 'tryStart'] if is_next_tag else ['goto'], free_list, sixteen_types)
+						new_content += tmp[0] if is_next_tag else tmp
+						if is_next_tag: try_randomid = tmp[1] 
+				elif line.startswith('    :try_start'):
+					if not (last_line.startswith('    :cond') or last_line.startswith('    :goto') or last_line.startswith('    :catch')): #前面有其他標籤輸出過了(緊跟在cond或catch或goto之後的)
+						new_content += (line+'\n')
+						tmp, try_randomid = tag_logger(case, v_last, current_method_signature, [line], ['tryStart'], free_list, sixteen_types)
+						new_content += tmp
+				elif line.startswith('    :try_end'):
+					new_content += tag_logger(case, v_last, current_method_signature, [line], ['tryDone'], free_list, sixteen_types, try_randomid=try_randomid)
+					new_content += (line+'\n')
+				# elif line.startswith('    :sswitch'): #TODO 這部分好像會動到switch指令所需指向的資料偏移量 不曉得怎改動 也可能不重要
+				# 	if not last_line.startswith('    :goto'):#都從第一個標籤開始看 交給前面那裏輸出
+				# 		case_index = line.strip()[line.index(':')+9:]
+				# 		case_tmp = switch_case_logger(case, line, param_reg16, free_list, case_index,sixteen_types) 
+				# 		if case_tmp:
+				# 			new_content += case_tmp
+				# 			output_flag	= 0	
+				# elif line.startswith('    :sswitch_data'):
+				# 	pass
+				else :#還有什麼不知道的?
+					#input(f'Unknown Tag:{line}')
+					output_flag = 1
 			line += '\n'	
 		else:#(not in_method_flag)expandable for other features here 
 			if line.startswith('.class '):
@@ -519,3 +644,25 @@ def walk_target_dir(smali_base_dir, graph):
 			next_dir_path = os.path.join(smali_base_dir,subdir)
 			walk_target_dir(next_dir_path, graph[subdir[:-6]] if subdir[-6:]=='.smali' else graph[subdir])
 		
+def switch_case_logger(register_case, line, tmp_register, free_list, case_index,sixteen_types):#TODO 這部分還不知道怎麼做
+	new_content = line+'\n'
+	no_move = True
+	is_object = '-object'
+	log_param = tmp_register
+	if register_case == 2:
+		if free_list and len(free_list) > 0:#找沒用過的register優先，照理說比算type來取的出錯率更低
+			log_param = free_list[0]
+		else:#不確定有誰可用，需要進一步的靜態分析，這時候會用到sixteen_types來判斷怎麼move資料
+			# return None
+			try:
+				ndx = sixteen_types.index('object')#先找object因為不想撞到J、D型別的
+			except:# v0~v15 都是value照理說機率很低...
+				ndx = 0
+				is_object = ''
+			log_param = 'v' + str(ndx)
+			no_move = False #一樣得先把使用中的暫存器內容移動到v_last
+	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
+	new_content += (f'    const-string {log_param}, \"{case_index}\"\n\n')
+	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->switchCaseLog(Ljava/lang/String;)V\n\n')
+	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')	
+	return new_content

@@ -31,7 +31,7 @@ class Logcat(Adapter):
 
     def connect(self):
         self.device.adb.run_cmd("logcat -c")
-        self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "GeniusPudding:D", "*:S" "-v", "time"],#["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
+        self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "GeniusPudding:D", "*:S" "-v", "threadtime"],#["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
                                         
                                         stderr=subprocess.PIPE,
                                         stdout=subprocess.PIPE)

@@ -1,27 +1,48 @@
 import sys
 import os
 
+def symbolize_logcats(logs):#將PID, TID都用符號代替 來排除跟程式碼執行順序無關的差異資訊
+    new_logs = []
+    pid_pool = []
+    tid_pool = []    
+    for api in logs:
+        if ': - ' not in api:
+            continue
+        #print(f'api:{api}')
+        pid, tid = api.split(' ')[2], api.split(' ')[3]
+        #print(f'pid:{pid},tid:{tid}')
+        pid_txt = 'PID_'
+        if pid not in pid_pool:
+            pid_txt += str(len(pid_pool))
+            pid_pool.append(pid)
+        else:
+            pid_txt += str(pid_pool.index(pid))
+        #print(f'pid_pool:{pid_pool}')
+        tid_txt = 'TID_'
+        if tid not in tid_pool:
+            tid_txt += str(len(tid_pool))
+            tid_pool.append(tid)
+        else:
+            tid_txt += str(tid_pool.index(tid))
+        #print(f'tid_pool:{tid_pool}')
+        new_line = api[api.find(': - ')+4:].strip() + ' (' + pid_txt +',' + tid_txt + ')' 
+        #print(f'new_line:{new_line}')
+        new_logs.append(new_line)
+    return new_logs
+
 def parser2(txt1_path,txt2_path,log_path, appname):#for getting method seq from two-device analysis
     if not os.path.exists(log_path):
         os.makedirs(log_path)    
     with open(txt1_path, 'r',encoding='utf-8') as f1:
-        t1 = f1.read().split('\n')
+        tmp_t1 = f1.read().split('\n')
     with open(txt2_path, 'r',encoding='utf-8') as f2:
-        t2 = f2.read().split('\n')
+        tmp_t2 = f2.read().split('\n')
 
-    # print(f'len of log 1:{len(t1)}')
-    # print(f'len of log 2:{len(t2)}')
-    
-    t1 = [api[api.find(': - ')+4:] for api in t1 if ': - ' in api]
-    t2 = [api[api.find(': - ')+4:] for api in t2 if ': - ' in api]
-    # t1 = [api[api.find(': - Method ')+11:] for api in t1 if ': - Method ' in api]
-    # t2 = [api[api.find(': - Method ')+11:] for api in t2 if ': - Method ' in api]
-    # t1 = [api[api.find('GeniusPudding: - Method START:')+31:] for api in t1 if 'GeniusPudding: - Method START:' in api]
-    # t2 = [api[api.find('GeniusPudding: - Method START:')+31:] for api in t2 if 'GeniusPudding: - Method START:' in api]
+    t1 = symbolize_logcats(tmp_t1)
+    t2 = symbolize_logcats(tmp_t2)
+
     dirname1, basename1 = os.path.split(txt1_path)
     dirname2, basename2 = os.path.split(txt2_path)
-    # print(dirname1, basename1,dirname2, basename2, )
-    # input()
 
     path1 = os.path.join(log_path,appname+'_'+basename1)
     path2 = os.path.join(log_path,appname+'_'+basename2)

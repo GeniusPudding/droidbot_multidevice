@@ -104,6 +104,8 @@ def parse_args():
                         help="Ignore Ad views by checking resource_id.")
     parser.add_argument("-replay_output", action="store", dest="replay_output",
                         help="The droidbot output directory being replayed.")
+    parser.add_argument("-r", action="store_true", dest="reuse",
+                    help="Reuse the injected apk in dataset.")
     parser.add_argument("-i", action="store_true", dest="inject",
                     help="Inject method logging(hooking) to the apk.")
     parser.add_argument("-ni", action="store_false", dest="inject",
@@ -134,7 +136,12 @@ def main(testing_apk_path, opts):
         sys.exit(-1)
     droidbot = None
     repackaged_apk_path = None
-    if opts.inject:
+
+    if opts.reuse:
+        dirname, basename = os.path.split(testing_apk_path)
+        repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
+        input(f'reuse:{repackaged_apk_path}')
+    elif opts.inject:
         repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
     # input('test methodlog_instrumentation')
@@ -218,17 +225,17 @@ def main(testing_apk_path, opts):
 
             app_name = droidbot.app.package_name
             logs = [l for l in os.listdir(target_dir) if app_name in l]
-            print(f'logs:{logs}')
+            #print(f'logs:{logs}')
             #no = '('+str(len(logs)//2)+')'
             i = 0
-            while True:
+            while True:#補足檔案序號
                 if not any(['('+str(i)+')' in a for a in logs ]):
                     break
                 i += 1
             no = '('+str(i)+')'
             p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
             p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
-            print(p1,p2)
+            #print(p1,p2)
             success_logging_file = parser2(p1, p2, target_dir,  droidbot.app.package_name+no)
         except:
             print('Can\'t parse the log')
@@ -268,25 +275,27 @@ if __name__ == "__main__":
                 none_logged_apks.append(a)
         random.shuffle(logged_apks)
         random.shuffle(none_logged_apks)
-        input(f'none_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
+        input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks
-        # ran_apks = logged_apks+none_logged_apks 
+        #ran_apks = logged_apks+none_logged_apks 
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
-        # random.shuffle(ran_apks)
+        #random.shuffle(ran_apks)
 
         for a in tqdm(ran_apks):
-            try:
+            #try:
                 #input('wait')
-                result = main(os.path.join(dataset_path,a),opts)
+            result = main(os.path.join(dataset_path,a),opts)
+            if not result: print("Write Log Files Failed.") 
+                  
                 # if not result:
                 #     main(os.path.join(dataset_path,a),opts)
                 
-            except:
-                print(f'Analyzing {a} failed')
-                failed_apks['name_list'].append(a)
+            # except:
+            #     print(f'Analyzing {a} failed')
+            #     failed_apks['name_list'].append(a)
         print(f'ran_apks:{ran_apks}')
     
     with open('failed_apks.json','w') as f:
