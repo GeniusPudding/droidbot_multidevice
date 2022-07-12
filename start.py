@@ -117,8 +117,8 @@ def parse_args():
     return options
 
 
-# @timeout(600, use_signals=False)
-def main(testing_apk_path, opts):
+#@timeout(1200, use_signals=False)
+def main(testing_apk_path, opts, target_API_graph):
     """
     the main function
     it starts a droidbot according to the arguments given in cmd line
@@ -142,7 +142,7 @@ def main(testing_apk_path, opts):
         repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
         input(f'reuse:{repackaged_apk_path}')
     elif opts.inject:
-        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True)
+        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
     # input('test methodlog_instrumentation')
     if not opts.output_dir and opts.cv_mode:
@@ -249,12 +249,13 @@ if __name__ == "__main__":
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
         #print(f'mkdir:{target_dir}')
-    # testing_apk_path = opts.apk_path
-    #main(testing_apk_path,opts)
+
+    with open('apkmaster/target_API_graph_all.json', 'r') as f:
+        target_API_graph = json.load(f)
     failed_apks = {'name_list':[]}
     if opts.apk_path:
         testing_apk_path = opts.apk_path
-        main(testing_apk_path,opts)
+        main(testing_apk_path,opts, target_API_graph)
     else:
         dataset_path = opts.dataset
 
@@ -287,11 +288,11 @@ if __name__ == "__main__":
         for a in tqdm(ran_apks):
             #try:
                 #input('wait')
-            result = main(os.path.join(dataset_path,a),opts)
+            result = main(os.path.join(dataset_path,a),opts, target_API_graph)
             if not result: print("Write Log Files Failed.") 
                   
                 # if not result:
-                #     main(os.path.join(dataset_path,a),opts)
+                #     main(os.path.join(dataset_path,a),opts, target_API_graph)
                 
             # except:
             #     print(f'Analyzing {a} failed')

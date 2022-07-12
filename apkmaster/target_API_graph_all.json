@@ -1136,6 +1136,13 @@
                 "updatePersistentConfiguration": "Landroid/app/ActivityManagerNative;->updatePersistentConfiguration",
                 "wakingUp": "Landroid/app/ActivityManagerNative;->wakingUp"
             },
+            "admin": {
+                "DevicePolicyManager": {
+                    "isAdminActive": "Lapp/admin/DevicePolicyManager;->isAdminActive",
+                    "lockNow": "Lapp/admin/DevicePolicyManager;->lockNow",
+                    "resetPassword": "Lapp/admin/DevicePolicyManager;->resetPassword"
+                }
+            },
             "AlarmManager": {
                 "setTimeZone": "Landroid/app/AlarmManager;->setTimeZone",
                 "getNextAlarmClock": "Landroid/app/AlarmManager;->getNextAlarmClock"
@@ -24106,15 +24113,6 @@
                         }
                     }
                 }
-            }
-        }
-    },
-    "app": {
-        "admin": {
-            "DevicePolicyManager": {
-                "isAdminActive": "Lapp/admin/DevicePolicyManager;->isAdminActive",
-                "lockNow": "Lapp/admin/DevicePolicyManager;->lockNow",
-                "resetPassword": "Lapp/admin/DevicePolicyManager;->resetPassword"
             }
         }
     },

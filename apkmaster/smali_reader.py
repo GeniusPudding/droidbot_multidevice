@@ -1,16 +1,29 @@
-#For reading semantics of smali files
+#解析smali語法的功能都可以放這
+
+
 import re
 from rich.console import Console
 console = Console()
-def param_registers_num(reading_line):
-	param_string = reading_line[reading_line.index('(')+1:reading_line.index(')')]
-	param_list = read_param_string(param_string)
-	if 'static' != reading_line.split(' ')[1]:
-		param_list.insert(0,'this') # for non-static methods   		
-	return len(param_list) + param_list.count('J') + param_list.count('D')
+param_registers_num = lambda param_list: len(param_list) + param_list.count('J') + param_list.count('D')
+get_dirlist = lambda method_sign: method_sign[1:].split(';->')[0].split('/') + [method_sign[1:].split(';->')[1].split('(')[0]]
 
+is_main_activity = lambda class_name, main_activity: class_name[1:-1].split('/') == main_activity.split('.')
+entry_list = ['onCreate(Landroid/os/Bundle;)V', "onStart()V", 'onRestart()V',"onResume()V",  "onPause()V", "onStop()V", "onDestroy()V"\
+     ,'onStart(Landroid/content/Intent;I)V',  'onStartCommand(Landroid/content/Intent;II)I', "onReceive(Landroid/content/Context;Landroid/content/Intent;)V"]  
+#lifecycle methods
 
-def read_param_string(param_string):
+def get_param_list(line,  class_sign = None):#.method 或是invoke line, .method需要額外傳入class_sign
+    
+    if line.startswith('.method'):
+        is_static = 'static' in line.split(' ')
+        if not class_sign: raise ValueError(f'method line:{line} has no class_sign')
+    elif line.startswith('    invoke'):
+        is_static = line.startswith('    invoke-static')
+        class_sign = line.split('->')[0].split(' ')[-1]
+    else:
+        raise ValueError(f'line:{line} has no param string')
+    param_string = line[line.index('(')+1:line.index(')')]
+ 
     param_list = []
     #print(f'param_string:{param_string}')
     if param_string == '':
@@ -36,10 +49,44 @@ def read_param_string(param_string):
     for p in partitions_id:
         param_list.append(param_string[last_p:p+1])
         last_p = p + 1
+    if not is_static:
+        param_list = [class_sign] + param_list
 
     return param_list
 
-def get_registers_in_line(dalvik_bytecode_line): 
+def get_param_types(param_list,params_num):#params_num也可以用param_registers_num
+	param_types = ['value']*params_num
+	#print(f'init param_types:{param_types}')
+	_param_index = 0
+	for param in param_list: 
+		if param == 'J' or param == 'D':
+			_param_index += 2
+		else:
+			if len(param) > 1:
+				param_types[_param_index] = 'object'
+			_param_index += 1	
+	return param_types
+
+def get_registers_invoke_range(invoke_line, locals_num, register_case):
+	invoke_regs = invoke_line[invoke_line.index('{')+1:invoke_line.index('}')].split(' .. ')
+	actual_regs = []
+	start, end = invoke_regs[0], invoke_regs[1]
+	offset = 0 #如果是v-p這種需要搬動暫存器內容吧 range必須是連號
+	s_i, e_i = int(start[1:]), int(end[1:])	
+	if start[0] !=  end[0]: #v to p 
+		locals_num -= (2 if register_case == 2 else 1) 
+		offset = 2 if register_case == 2 else 1
+		for i in range(s_i, locals_num):
+			actual_regs.append('v'+str(i))
+		for i in range(e_i+1):	
+			actual_regs.append('p'+str(i))
+	else:
+		for i in range(s_i,e_i+1):
+			actual_regs.append('v'+str(i))
+	return actual_regs, offset
+
+
+def get_registers_usage_in_line(dalvik_bytecode_line): 
     #Check for all dalvik instructions in smali representation or androguard representation
     def parse_smali_tokens(dalvik_bytecode_line):
         #input: dalvik_bytecode_line needs to be a valid DVM instruction
@@ -200,3 +247,52 @@ def get_registers_in_line(dalvik_bytecode_line):
 def notCommonInstruction(smali_line):
     return any([smali_line.startswith(e) for e in ['    .','    :','    #','.','     ']]) or smali_line.strip() == ''
 	
+def is_4bit_instruction(line):
+    ins = line.strip().split(' ')[0]
+    if any([line.startswith(prefix) \
+        for prefix in ['    return', '    move-result', '    const ', '    const-wide', '    monitor', '    check-', \
+            '    new-instance', '    throw', '    cmp', '    fill-']]) \
+        or any([substr in ins for substr in ['16', 'range', 'switch']])\
+        or (line.startswith('if-') and 'z' in ins)\
+        or (('put' in ins or 'get' in ins) and not ins.startswith('i'))\
+        or (any([line.startswith(prefix) for prefix in ['    add', '    sub', '    mul', '    div', '    rem', '    and', \
+            '    or', '    xor', '    shl', '    shr', '    ushr']]) and not '2addr' in ins and not 'lit16' in ins) :
+        return False
+    return True
+
+def p_reg_to_v(p_reg,locals_num):
+	#if locals_num = 2, v2 = p0
+	if p_reg[0]=='p':
+		return 'v' + str(int(p_reg[1:])+locals_num)
+	elif p_reg[0]=='v':  		
+		return	p_reg
+	else:
+		raise ValueError('Wrong register name')
+
+def is_target_method(method_sign,smali_base_dir,target_API_graph_all):#TODO TriggerMethod重複算了 照理說有包含在apk內
+	# 應該看target method就好, 把native method考慮進去
+	#print(f'invoke:{method_sign}')
+	boolean = True
+	dir_list = get_dirlist(method_sign)
+	current_dict = target_API_graph_all
+	#print(f'dir_list:{dir_list}')
+	for dir in dir_list:
+		#print(f'dir:{dir}')
+		if dir not in current_dict:
+			boolean = False
+			break
+		current_dict = current_dict[dir]
+		
+	# not_exist = False
+	# current_base = smali_base_dir
+	# for dir in dir_list:
+	# 	new_cur = os.path.join(current_base,dir)
+	# 	if not os.path.isdir(new_cur):
+	# 		not_exist = True
+	# 		break
+	# 	current_base = new_cur
+	# if boolean and not not_exist:
+	# 	input(f'target function:{method_sign}的class在路徑上?')
+	# if boolean:
+	# 	print(f'method_sign:{method_sign},boolean:{boolean}')
+	return boolean

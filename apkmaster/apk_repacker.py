@@ -1,11 +1,11 @@
 import subprocess
 import json
 import os 
-from .smali_function_logger import walk_target_dir,walk_smali_dir  
+from .smali_function_logger import walk_target_dir,walk_smali_dir,gen_invoke_set_json  
 import sys
 from .apk_utils import *
 import json
-def methodlog_instrumentation(target_apk_path, redecompile):
+def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
     #print(f'methodlog_instrumentation:{methodlog_instrumentation}')
     # param: target apk path that want to apply instrumentation method 
     # return: repackaged apk path   
@@ -29,14 +29,21 @@ def methodlog_instrumentation(target_apk_path, redecompile):
     #2.apk's binary(bytecode) instrumentation
     try:
         #print(os.getcwd(),apktool_dir)
-        with open('apkmaster/target_API_graph_all.json', 'r') as f:
-            target_API_graph = json.load(f)
+        # with open('apkmaster/target_API_graph_all.json', 'r') as f:
+        #     target_API_graph = json.load(f)
         # print()
         # with open('target_API_graph_all.json') as f:
         #     target_API_graph = json.load(f)
+        cmd = ['aapt', 'dump', 'badging', target_apk_path, '|', 'findstr', 'launchable-activity: name=\'']# apktool_dir.rstrip('\\/')]
+        r = subprocess.run(cmd, capture_output=True).stdout.decode("utf-8").strip()
+        r = r[r.index('launchable-activity: name=\'')+27:]#不曉得有沒有更輕鬆的讀取方式
+        main_activity = r[:r.index('\'')]
+        #input(f'main activity:{main_activity}')
         for subdir in os.listdir(apktool_dir):
             if subdir.startswith('smali'):
-                walk_smali_dir(os.path.join(apktool_dir,subdir),target_API_graph)
+                smali_base_dir = os.path.join(apktool_dir,subdir)
+                #gen_invoke_set_json(smali_base_dir)
+                walk_smali_dir(smali_base_dir,target_API_graph, main_activity)
                 #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
         patch_log_file(os.path.join(apktool_dir,'smali'))
     except:   

@@ -16,6 +16,10 @@ import re
 from input_dependency_analysis import *
 from commons import *
 import subprocess
+import filecmp
+from tqdm import tqdm
+import random
+
 
 apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
 diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diffs_all'
@@ -109,6 +113,8 @@ def gen_API_analysis_tree(apk_path):
     mvs = get_all_method_analysis(apk_path)
     for mv in mvs:
         s = get_MethodAnalysis_signature(mv)
+        #if 'usingnfc' in s:
+        
         #input(f's:{s}')
         s = s[1:]#lstrip one 'L'
         sp = s.split(';->')
@@ -189,12 +195,21 @@ startmethodsign_from_log = lambda line: line[line.index('Method START')+22: line
     if line.startswith('Method START(target)') else line[line.index('Method START')+14: line.index(' (PID_')] 
 endmethodsign_from_log = lambda line: line[line.index('Method END')+20: line.index(' (PID_')] \
     if line.startswith('Method END(target)') else line[line.index('Method END')+12: line.index(' (PID_')]
-branchmethodsign_from_log = lambda line: line[line.index('Branch')+8: line.index('->if')]
+branchmethodsign_from_log = lambda line: line[line.index('Branch')+16: line.find('->', 2)] \
+    if line.startswith('Branch(Switch): ') else line[line.index('Branch')+8: line.index('->if')]
 PID_from_log = lambda line: line[line.index('PID_'):line.index(',TID_')]
 TID_from_log = lambda line: line[line.index('TID_'):].strip('\n)')
 get_callee = lambda method_analysis:  [get_MethodAnalysis_signature(methodobj) for _, methodobj, _ in method_analysis.xrefto] 
 get_caller = lambda method_analysis:  [get_MethodAnalysis_signature(methodobj) for _, methodobj, _ in method_analysis.xreffrom] 
 get_head_sign = lambda head_line: startmethodsign_from_log(head_line)
+
+def _test_find_start_in_seqs(calling_stacks,i, sign,logs):
+
+    for s in calling_stacks:
+        for index in reversed(s[1:]):
+            if sign == startmethodsign_from_log(logs[index]):
+                input(f'{sign} start at index:{index}, i={i}')
+
 
 def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
     parent_call_map = {'call_seqs':[],'cur_calling_method':[], 'calling_stacks':[], 'called_by':{}}
@@ -202,8 +217,8 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
     #cur_calling_method: 紀錄有那些正在呼叫中的method, 存入method sign,  
     #calling_stacks: 各條call seq的呼叫堆疊，存入index  以上三個參數的index會對應符合
     #called_by: 存各行跟parent行的行號對應
-
-    for i,line in enumerate(logs):
+    print(f'log len:{len(logs)}')
+    for i,line in tqdm(enumerate(logs)):
         PID = PID_from_log(line)
         TID = TID_from_log(line)
         
@@ -214,15 +229,12 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
         #print(f'{i}-th line:{line}') 
         if line.startswith('Method START'):#遇到Start需要檢查是否開了新的Thread跟Process
             #包含Target methods!
-            # 如果不是對應到stack上的就表示很可能是新的Thread或Process
+            # 如果不是對應到stack上的就表示很可能是新的seq(原因不明) (常常不是新的Thread或Process)
 
             # parent_call_map = {'call_seqs':[],'cur_calling_method':[], 'calling_stacks':[['entry']], 'called_by':{0:'entry'}}
             sign = startmethodsign_from_log(line)
             new_seq = True
             #print(f'sign of line:{sign}')
-            #thisline_analysis = find_analysisobj_in_apitree(sign,api_tree)
-            #thislinecaller_signs = get_caller(thisline_analysis) #[get_MethodAnalysis_signature(methodobj) for _, methodobj, _ in thisline_analysis.xreffrom] 
-            #print(f'Callers of this line:{thislinecaller_signs}')
 
             test_mismatch_IDs = False#測試用
             test_mismatch_signs = False#測試用
@@ -258,6 +270,7 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
                 # else:
                 #     print('看起來是一個全新的Method Start')
                 #     pass
+                input(f'New seq line: {line}calling_stacks:{calling_stacks}')
                 pass
             if new_seq:#新增一串call seq, call stack  但好像不一定有新的PID TID
                 #print('new_seq')
@@ -296,6 +309,7 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
                         test_mismatch_IDs = True    
                         break
             if not test_mismatch_IDs:
+                _test_find_start_in_seqs(calling_stacks,i, sign,logs)
                 continue
                 # if test_mismatch_signs:
                 #     raise ValueError(f'No Match PID/TID but Match sign of END line:{line}')
@@ -307,6 +321,7 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
         elif line.startswith('Branch'):#Branch
             try:
                 sign = branchmethodsign_from_log(line)
+                input(f'branchmethodsign_from_log:{sign}')
             except:
                 raise ValueError(f'branch line no sign?:{line}')
             #print(f'branch sign:{sign}')
@@ -325,6 +340,7 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
                         test_mismatch_IDs = True   
                         break
             if not test_mismatch_IDs:
+                _test_find_start_in_seqs(calling_stacks,i, sign,logs)
                 continue
                 # if test_mismatch_signs:
                 #     # raise ValueError(f'No Match PID/TID but Match sign of Branch line:{line}')
@@ -344,7 +360,7 @@ def gen_dynamic_callgraph(logs,api_tree):#希望支援多線程
     return parent_call_map['called_by'],  parent_call_map['call_seqs'], parent_call_map['cur_calling_method']
 
 
-def get_evading_points( evading_point_types,real_evading_index, real_parent_index, real_logs, emu_evading_index, emu_parent_index, emu_logs, api_tree):
+def gen_evading_points( evading_point_types,real_evading_index, real_parent_index, real_logs, emu_evading_index, emu_parent_index, emu_logs, api_tree):
     #print(f'parent_index:{parent_index},evading_index:{evading_index}')
     #把evading points的種類記錄下來 (real, emu, diff)
     evading_points = []
@@ -354,8 +370,11 @@ def get_evading_points( evading_point_types,real_evading_index, real_parent_inde
         fr_i, fe_i = real_evading_index[i][1], emu_evading_index[i][1]#結束divergence behavior的地方
 
         #先抓caller(parant line)
-        pr_i = real_parent_index[r_i] 
-        pe_i = emu_parent_index[e_i] 
+        try:
+            pr_i = real_parent_index[r_i] 
+            pe_i = emu_parent_index[e_i] 
+        except:
+            print(f'real_parent_index:{real_parent_index},emu_parent_index:{emu_parent_index}\nreal_line:{real_logs[r_i]}, {emu_logs[e_i]},r_i:{r_i},e_i:{e_i}')
         #print(f'抓出在兩邊log的真正的index:\n   r_i:{r_i},e_i:{e_i},pr_i:{pr_i},pe_i:{pe_i},fr_i:{fr_i},fe_i:{fe_i}')
 
         if pr_i == 'entry' or pe_i == 'entry':#是原因不明的差異(可能某些系統事件)
@@ -429,17 +448,6 @@ def get_evading_points( evading_point_types,real_evading_index, real_parent_inde
     return evading_points
 
 
-
-# def get_head_sign(head_line):
-#     if head_line.startswith('Method START'):
-#         head_sign = startmethodsign_from_log(head_line)
-#     elif head_line.startswith('Method END'):
-#         head_sign = 'END_'+endmethodsign_from_log(head_line)
-#     elif head_line.startswith('Branch'):
-#         head_sign = 'Branch_'+branchmethodsign_from_log(head_line)
-#     else:
-#         raise ValueError(f'head_line:{head_line} 格式不符')     
-#     return head_sign
 def multiple_seq_matching(log_name, diffs_basepath, real_seq_head,emu_seq_head, origin_r_logs, origin_e_logs, origin_real_callseqs, origin_emu_callseqs, layer = 0):
     #real_seq_head, emu_seq_head都是dict, key為log line, value為list of log seq 遞迴前須構造一個新的
     #origin_r_logs, e_logs是為了遞迴時抓原始log行當標籤
@@ -479,7 +487,7 @@ def multiple_seq_matching(log_name, diffs_basepath, real_seq_head,emu_seq_head, 
                         real_call_seq = s #抓出原本完整的call seq
                         true_head_line = origin_r_logs[s[0]] #用r或e來抓真正的head line (因為match)
                         head_sign = get_head_sign(true_head_line)   
-                        print(f'遞迴中 抓到 head_sign:{head_sign}')                  
+                        #print(f'遞迴中 抓到 head_sign:{head_sign}')                  
                         break
                 for s in origin_emu_callseqs:
                     if emu_call_seq[0] in s:
@@ -503,6 +511,7 @@ def multiple_seq_matching(log_name, diffs_basepath, real_seq_head,emu_seq_head, 
 
 def gen_log_seq_legalpath(cat, head_sign, count=None):#cat: 'realseq', 'emuseq' 
     #為了多個seq用同一個head_sign的edge case
+    head_sign = head_sign.replace('<', '[').replace('>', ']')
     if count:
         #print(f'gen_log_seq_legalpath...:\n diff_dir:{diff_dir}, log_name:{log_name},cat:{cat}, sign:{head_sign}')
         return os.path.join(diff_dir,log_name,cat,sign_to_legalpathstr(head_sign)+'('+str(count)+').txt')
@@ -541,52 +550,8 @@ def seq2head_map(callseqs, logs, write_cat=None):
     return seq_head
 
 
-def main(log_name,p2f):
-    package_name = log_name[:log_name.index('(')]
-    if package_name not in p2f:#TODO json內感覺缺了一些 待修正
-        return None, None
-    apk_name = p2f[package_name] + '.apk'
-    apk_path = os.path.join(apk_dir,apk_name)
-    print(f'log_name:{log_name},apk_name:{apk_name}')
-    #建表讓每一個API的分析類別都能被快速被查找
-    api_tree = gen_API_analysis_tree(apk_path)
-
-    #input(f'api_tree:{api_tree}')
-    #根據log，生出動態CG
-    real_log_path = os.path.join(log_path,log_name+'_logcat_cc98682b.txt')#寫死?這裡注意一下
-    emu_log_path = os.path.join(log_path,log_name+'_logcat_192.168.123.123_5555.txt')#
-    #print(f'real_log_path:{real_log_path},emu_log_path:{emu_log_path}')
-    with open(real_log_path,'r') as f:
-        #rr = f.readlines()
-        rr = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
-    with open(emu_log_path,'r') as f:
-        #er = f.readlines()    
-        er = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
-    real_parent_index, real_callseqs, real_cur_calling_method = gen_dynamic_callgraph(rr,api_tree)
-    emu_parent_index, emu_callseqs, emu_cur_calling_method  = gen_dynamic_callgraph(er,api_tree)
-    #把那些還沒終結的callseqs過濾掉 合理嗎?
-    real_callseqs = [real_callseqs[i] for i in range(len(real_cur_calling_method)) if real_cur_calling_method[i]=='entry']
-    emu_callseqs = [emu_callseqs[i] for i in range(len(emu_cur_calling_method)) if emu_cur_calling_method[i]=='entry']
-    #print(f'len rr:{len(rr)},len er:{len(er)}')
-    
-    #print(f'real_parent_index:{real_parent_index}\nemu_parent_index:{emu_parent_index}')
-    #print(f'Done real_callseqs:{real_callseqs}\nemu_callseqs:{emu_callseqs}\nlen(real_callseqs):{len(real_callseqs)},len(emu_callseqs):{len(emu_callseqs)}')
-    #將動態CG根據不同的seqs分開 
-
-    if not os.path.exists(os.path.join(diff_dir,log_name)): os.mkdir(os.path.join(diff_dir,log_name))
-    if not os.path.exists(os.path.join(diff_dir,log_name,'realseq')): os.mkdir(os.path.join(diff_dir,log_name,'realseq'))
-    if not os.path.exists(os.path.join(diff_dir,log_name,'emuseq')): os.mkdir(os.path.join(diff_dir,log_name,'emuseq'))
-    if not os.path.exists(os.path.join(diff_dir,log_name,'diffs')): os.mkdir(os.path.join(diff_dir,log_name,'diffs'))
-    #為了用seq首行配對，先將real_callseqs等等格式轉存
-    real_seq_head = seq2head_map(real_callseqs, rr, write_cat='realseq')
-    emu_seq_head = seq2head_map(emu_callseqs, er, write_cat='emuseq')#轉格式同時寫檔
-
-    #print(f'real_seq_head:{real_seq_head}\nemu_seq_head:{emu_seq_head}')
-    diffs_basepath = os.path.join(diff_dir,log_name,'diffs')
-    multiple_seq_matching(log_name, os.path.join(diff_dir,log_name,'diffs'),real_seq_head,emu_seq_head,rr,er,real_callseqs,emu_callseqs)
-    #input()
-
-    #針對diff出來差異的那幾項，整理出evading point的index
+def get_evading_index(diffs_basepath, real_callseqs, emu_callseqs):
+    #針對diff出來差異的那幾項，整理出evading point在兩串序列的index 還有evasion的type
     real_evading_index = []#每一項都存放 (Divergence Point, Last Index of Divergence) (gap會重疊)
     emu_evading_index = []#這樣直接可以抓Divergence Point看看是不是我們要的Branch
     evading_point_types = []
@@ -633,10 +598,63 @@ def main(log_name,p2f):
                     evading_point_types.append('D')
             except:
                 raise ValueError(f'diff line error:{diff_line}')
+    return real_evading_index, emu_evading_index, evading_point_types
+def main(log_name,p2f):
+    package_name = log_name[:log_name.index('(')]
+    if package_name not in p2f:#TODO json內感覺缺了一些 待修正
+        return None, None
+    apk_name = p2f[package_name] + '.apk'
+    apk_path = os.path.join(apk_dir,apk_name)
+    print(f'log_name:{log_name},apk_name:{apk_name}')
+    #建表讓每一個API的分析類別都能被快速被查找
+    api_tree = gen_API_analysis_tree(apk_path)
+
+    #根據log，生出動態CG
+    real_log_path = os.path.join(log_path,log_name+'_logcat_cc98682b.txt')#寫死?這裡注意一下
+    emu_log_path = os.path.join(log_path,log_name+'_logcat_192.168.123.123_5555.txt')#
+    #print(f'real_log_path:{real_log_path},emu_log_path:{emu_log_path}')
+    if filecmp.cmp(real_log_path,emu_log_path):
+        return apk_name, []
+    print('Start Analysis')
+    with open(real_log_path,'r') as f:
+        #rr = f.readlines()
+        rr = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
+    with open(emu_log_path,'r') as f:
+        #er = f.readlines()    
+        er = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
+
+
+    real_parent_index, real_callseqs, real_cur_calling_method = gen_dynamic_callgraph(rr,api_tree)
+    emu_parent_index, emu_callseqs, emu_cur_calling_method  = gen_dynamic_callgraph(er,api_tree)
+    print('dynamic_callgraph Done')
+    #把那些還沒終結的callseqs過濾掉 合理嗎?
+    real_callseqs = [real_callseqs[i] for i in range(len(real_cur_calling_method)) if real_cur_calling_method[i]=='entry']
+    emu_callseqs = [emu_callseqs[i] for i in range(len(emu_cur_calling_method)) if emu_cur_calling_method[i]=='entry']
+    #print(f'len rr:{len(rr)},len er:{len(er)}')
+    
+    #print(f'real_parent_index:{real_parent_index}\nemu_parent_index:{emu_parent_index}')
+    #print(f'Done real_callseqs:{real_callseqs}\nemu_callseqs:{emu_callseqs}\nlen(real_callseqs):{len(real_callseqs)},len(emu_callseqs):{len(emu_callseqs)}')
+    #將動態CG根據不同的seqs分開 
+
+    if not os.path.exists(os.path.join(diff_dir,log_name)): os.mkdir(os.path.join(diff_dir,log_name))
+    if not os.path.exists(os.path.join(diff_dir,log_name,'realseq')): os.mkdir(os.path.join(diff_dir,log_name,'realseq'))
+    if not os.path.exists(os.path.join(diff_dir,log_name,'emuseq')): os.mkdir(os.path.join(diff_dir,log_name,'emuseq'))
+    if not os.path.exists(os.path.join(diff_dir,log_name,'diffs')): os.mkdir(os.path.join(diff_dir,log_name,'diffs'))
+    #為了用seq首行配對，先將real_callseqs等等格式轉存
+    real_seq_head = seq2head_map(real_callseqs, rr, write_cat='realseq')
+    emu_seq_head = seq2head_map(emu_callseqs, er, write_cat='emuseq')#轉格式同時寫檔
+
+    #print(f'real_seq_head:{real_seq_head}\nemu_seq_head:{emu_seq_head}')
+    diffs_basepath = os.path.join(diff_dir,log_name,'diffs')
+    multiple_seq_matching(log_name, diffs_basepath,real_seq_head,emu_seq_head,rr,er,real_callseqs,emu_callseqs)
+    print('multiseq match Done')
+    #input()
+
+    real_evading_index, emu_evading_index, evading_point_types = get_evading_index(diffs_basepath, real_callseqs, emu_callseqs)
 
     #然後輸出並儲存所有的evading points位置 
     #evading_points = []#TODO 把hidden behavior也輸出一下
-    evading_points = get_evading_points(evading_point_types,real_evading_index,real_parent_index,rr,emu_evading_index,emu_parent_index,er,api_tree)
+    evading_points = gen_evading_points(evading_point_types,real_evading_index,real_parent_index,rr,emu_evading_index,emu_parent_index,er,api_tree)
 
     # output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
 
@@ -651,13 +669,19 @@ if __name__ == '__main__':
     f = open('EvadingPoints.csv', 'w')
     writer = csv.writer(f)
     writer.writerow(['diff filename','apk name','evading_points'])
-                   
+
+    if len(sys.argv) > 1:
+        log_name = sys.argv[1]
+        apk_name, evading_points = main(log_name,p2f)
+        print(f'test log_name:{log_name}, apk_name:{apk_name}, evading_points:{evading_points}')
+        exit()
     i = 0
     failed_list = []
     
 
     ldir = [f for f in os.listdir(log_path) if ')_logcat_' in f]
     l_list = []
+    l_list_done = []
     for i,l in enumerate(ldir):
         if i % 2 == 1:
             continue
@@ -667,24 +691,30 @@ if __name__ == '__main__':
         #print(real_log_path,emu_log_path)
         if os.path.getsize(real_log_path) == 0 or os.path.getsize(emu_log_path) == 0:
             continue
-        l_list.append(log_name)
-
-    for log_name in l_list:
-        try:
-            apk_name, evading_points = main(log_name,p2f)
-            with open(os.path.join(diff_dir,log_name,'evading_points.txt'), 'w') as f:
+        if os.path.exists(os.path.join(diff_dir,log_name)):
+            l_list_done.append(log_name)
+        else:
+            l_list.append(log_name)#還沒輸出過的優先
+    random.shuffle(l_list)
+    random.shuffle(l_list_done)
+    l_list += l_list_done
+    for log_name in tqdm(l_list):
+        # try:
+        apk_name, evading_points = main(log_name,p2f)
+        if evading_points != []:
+            with open(os.path.join(diff_dir,log_name,'evading_points.json'), 'w') as f:
                 j = {'apk_name':apk_name,'log_name':log_name,'evading_points':evading_points}
                 json.dump(j,f)
-            print(f'log_name:{log_name}, apk_name:{apk_name}, evading_points:{evading_points}')
-        #writer.writerow([log_name,apk_name,evading_points])   
-        except:
-            i += 1
-            failed_list.append([log_name])
-            print(f'failed_list:{failed_list}')
+        print(f'log_name:{log_name}, apk_name:{apk_name}, evading_points:{evading_points}')
+        writer.writerow([log_name,apk_name,evading_points])   
+        # except:
+        #     i += 1
+        #     failed_list.append([log_name])
+        #     print(f'failed_list:{failed_list}')
         #     pass
-    for d in os.listdir(diff_dir):
-        if os.listdir(os.path.join(diff_dir,d,'diffs')) == []:
-            shutil.rmtree(os.path.join(diff_dir,d))
+    #for d in os.listdir(diff_dir):
+        if os.path.exists(os.path.join(diff_dir,log_name)) and os.listdir(os.path.join(diff_dir,log_name,'diffs')) == []:#表示沒有出現diverge
+            shutil.rmtree(os.path.join(diff_dir,log_name))
 
     f.close()        
     #print(f'failed count:{i},failed_list:{failed_list}')
