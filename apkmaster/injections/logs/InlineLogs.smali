@@ -3,35 +3,37 @@
 .source "SourceFile"
 
 # static fields
-.field public static final debugger:Ljava/lang/String; = "GeniusPudding - debugger"
+.field public static debugger:Ljava/lang/String; = "GeniusPudding - debugger"
 
-.field public static final methodStart:Ljava/lang/String; = "GeniusPudding - methodStart"  #expect:  current_method_signature rand_method_id
+.field public static methodStart:Ljava/lang/String; = "GeniusPudding - methodStart"  #expect:  current_method_signature rand_method_id
 
-.field public static final methodEnd:Ljava/lang/String; = "GeniusPudding - methodEnd" #expect:  current_method_signature rand_method_id
+.field public static methodEnd:Ljava/lang/String; = "GeniusPudding - methodEnd" #expect:  current_method_signature rand_method_id
 
-.field public static final targetmethodStart:Ljava/lang/String; = "GeniusPudding - targetmethodStart"
+.field public static targetmethodStart:Ljava/lang/String; = "GeniusPudding - targetmethodStart" #expect:  current_method_signature rand_method_id
 
-.field public static final targetmethodEnd:Ljava/lang/String; = "GeniusPudding - targetmethodEnd"
+.field public static targetmethodEnd:Ljava/lang/String; = "GeniusPudding - targetmethodEnd" #expect:  current_method_signature rand_method_id
 
-.field public static final call:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])->$([rand 32 ID])
+.field public static callerID:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])
 
-.field public static final branch:Ljava/lang/String; = "GeniusPudding - branch"
+.field public static calleeID:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])
 
-.field public static final branchTrue:Ljava/lang/String; = "GeniusPudding - branchTrue"
+.field public static branch:Ljava/lang/String; = "GeniusPudding - branch"  #expect:  current_method_signature->branch_ins rand_method_id, rand_branch_id
 
-.field public static final branchFalse:Ljava/lang/String; = "GeniusPudding - branchFalse"
+.field public static branchTrue:Ljava/lang/String; = "GeniusPudding - branchTrue" #expect:  rand_method_id, rand_branch_id
 
-.field public static final switch:Ljava/lang/String; = "GeniusPudding - switch"
+.field public static branchFalse:Ljava/lang/String; = "GeniusPudding - branchFalse" #expect:  rand_method_id, rand_branch_id
 
-.field public static final switchCase:Ljava/lang/String; = "GeniusPudding - switchCase"
+.field public static switch:Ljava/lang/String; = "GeniusPudding - switch" 
 
-.field public static final tryStart:Ljava/lang/String; = "GeniusPudding - tryStart"
+.field public static switchCase:Ljava/lang/String; = "GeniusPudding - switchCase"
 
-.field public static final tryDone:Ljava/lang/String; = "GeniusPudding - tryDone"
+.field public static tryStart:Ljava/lang/String; = "GeniusPudding - tryStart"
 
-.field public static final tryCatch:Ljava/lang/String; = "GeniusPudding - tryCatch"
+.field public static tryDone:Ljava/lang/String; = "GeniusPudding - tryDone"
 
-.field public static final goto:Ljava/lang/String; = "GeniusPudding - goto"
+.field public static tryCatch:Ljava/lang/String; = "GeniusPudding - tryCatch"
+
+.field public static goto:Ljava/lang/String; = "GeniusPudding - goto"
 
 # direct methods
 .method public constructor <init>()V
@@ -65,7 +67,19 @@
 
     move-result-object v1
 
-    sget-object v0, Linjections/InlineLogs;->call:Ljava/lang/String;
+    sget-object v0, Linjections/InlineLogs;->callerID:Ljava/lang/String;
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v0, "->"
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    sget-object v0, Linjections/InlineLogs;->calleeID:Ljava/lang/String;
 
     invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
