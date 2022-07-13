@@ -4,7 +4,7 @@
 import re
 from rich.console import Console
 console = Console()
-param_registers_num = lambda param_list: len(param_list) + param_list.count('J') + param_list.count('D')
+param_registers_num = lambda params_list: len(params_list) + params_list.count('J') + params_list.count('D')
 get_dirlist = lambda method_sign: method_sign[1:].split(';->')[0].split('/') + [method_sign[1:].split(';->')[1].split('(')[0]]
 
 is_main_activity = lambda class_name, main_activity: class_name[1:-1].split('/') == main_activity.split('.')
@@ -12,10 +12,11 @@ entry_list = ['onCreate(Landroid/os/Bundle;)V', "onStart()V", 'onRestart()V',"on
      ,'onStart(Landroid/content/Intent;I)V',  'onStartCommand(Landroid/content/Intent;II)I', "onReceive(Landroid/content/Context;Landroid/content/Intent;)V"]  
 #lifecycle methods
 
-def get_param_list(line,  class_sign = None):#.method 或是invoke line, .method需要額外傳入class_sign
+def get_params_list(line,  class_sign = None):#.method 或是invoke line, .method需要額外傳入class_sign
     
     if line.startswith('.method'):
         is_static = 'static' in line.split(' ')
+        #print(f'line:{line},is_static:{is_static}')
         if not class_sign: raise ValueError(f'method line:{line} has no class_sign')
     elif line.startswith('    invoke'):
         is_static = line.startswith('    invoke-static')
@@ -24,10 +25,10 @@ def get_param_list(line,  class_sign = None):#.method 或是invoke line, .method
         raise ValueError(f'line:{line} has no param string')
     param_string = line[line.index('(')+1:line.index(')')]
  
-    param_list = []
+    params_list = []
     #print(f'param_string:{param_string}')
     if param_string == '':
-        return []
+        return [] if is_static else [class_sign]
     partitions_id = []
     l = len(param_string)
     in_class = False 
@@ -47,18 +48,18 @@ def get_param_list(line,  class_sign = None):#.method 或是invoke line, .method
 
     last_p = 0
     for p in partitions_id:
-        param_list.append(param_string[last_p:p+1])
+        params_list.append(param_string[last_p:p+1])
         last_p = p + 1
     if not is_static:
-        param_list = [class_sign] + param_list
+        params_list = [class_sign] + params_list
 
-    return param_list
+    return params_list
 
-def get_param_types(param_list,params_num):#params_num也可以用param_registers_num
+def get_param_types(params_list,params_num):#params_num也可以用param_registers_num
 	param_types = ['value']*params_num
 	#print(f'init param_types:{param_types}')
 	_param_index = 0
-	for param in param_list: 
+	for param in params_list: 
 		if param == 'J' or param == 'D':
 			_param_index += 2
 		else:
@@ -67,7 +68,7 @@ def get_param_types(param_list,params_num):#params_num也可以用param_register
 			_param_index += 1	
 	return param_types
 
-def get_registers_invoke_range(invoke_line, locals_num, register_case):
+def get_invoke_range_regs(invoke_line, locals_num, register_case):
 	invoke_regs = invoke_line[invoke_line.index('{')+1:invoke_line.index('}')].split(' .. ')
 	actual_regs = []
 	start, end = invoke_regs[0], invoke_regs[1]

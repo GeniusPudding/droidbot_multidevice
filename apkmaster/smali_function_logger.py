@@ -11,8 +11,10 @@ import sys
 official_lib_prefix = ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','android_maps_conflict_avoidance','io','org','okhttp3','okio','sun','libcore']
 com_list = ['android','facebook','google', 'adobe']
 get_invoke_sign = lambda line: line.strip().split(', ')[-1].strip()
+get_common_invoke_regs = lambda line: line[line.index('{')+1:line.index('}')].split(', ') if not '{}' in line else []
 preg_move_offset = lambda new_range_end_reg, offset, locals_num: 'p'+ str(int(new_range_end_reg[1:])-offset) if int(new_range_end_reg[1:]) > 1 else 'v' + str(int(new_range_end_reg[1:])+locals_num-offset)#算一下是v型還是p型
 next_reg = lambda reg: reg[0] + str(int(reg[1:])+1)
+p2v_reg = lambda reg, locals_num: 'p'+str(int(reg[1:])-locals_num) if reg[0] == 'v' and int(reg[1:]) >= locals_num else reg #盡量明確用vp type來寫register，免得比對出錯
 def arg_parse():
 	parser = argparse.ArgumentParser(prog='python smali_function_hooker.py', description='Smali Instrumentor Tutorial')
 	parser.add_argument('--path', type=str, required=True, help='.smali files directory')
@@ -21,26 +23,36 @@ def arg_parse():
 	return parser.parse_args()
 
 
-def get_free_log_register_and_types(free_list, sixteen_types):#TODO 不一定準確，有可能需要進一步分析 
+def get_free_log_register_and_types(free_list, sixteen_types, ban_list = None, locals_num = None):#TODO 不一定準確，有可能需要進一步分析 
 	no_move = False
 	is_object = '-object'
-	if free_list and len(free_list) > 0:#找沒用過的register優先，照理說比算type來取的出錯率更低
+	if free_list and len(free_list) > 0:#找沒用過的register優先，比算type來取的出錯率更低
 		log_param = free_list[0]
 		no_move = True
 		#input(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line}\ninvoke-static free reg list:{free_list},sixteen_types:{sixteen_types},log_param:{log_param}')
 	else:#不確定有誰可用，需要進一步的靜態分析，這時候會用到sixteen_types來判斷怎麼move資料
 		# return None
-		try:
-			ndx = sixteen_types.index('object')#先找object因為不想撞到J、D型別的
-		except:# v0~v15 都是value照理說機率很低...
-			ndx = 0
-			is_object = ''
+		if ban_list and locals_num:
+			ndx = None
+			#print(f'ban_list:{ban_list}')
+			ban_index = [int(r[1:]) if r[0]=='v' else int(r[1:])+7 for r in ban_list] 
+			legals = list(set(range(16)) - set(ban_index))
+			for i in range(16):
+				if sixteen_types[i] == 'object' and i in legals:#ban_index內的嚴格禁止使用(有立即用途)
+					ndx = i
+			if not ndx:  ndx = legals[0]; is_object = ''
+		else:
+			try:
+				ndx = sixteen_types.index('object')#先找object因為不想撞到J、D型別的
+			except:# v0~v15 都是value照理說機率很低...
+				ndx = 0
+				is_object = ''
 		log_param = 'v' + str(ndx)
 	return log_param, no_move, is_object
 	
-def not_exist_on_path(method_sign,smali_base_dir):	
-	dir_list = get_dirlist(method_sign)[:-1]#method name不需要
-
+def not_exist_on_path(method_sign,smali_base_dir):	#如果該smali file存在也必須掃一次看是否目標method存在 (避免虛方法)
+	dir_list = get_dirlist(method_sign)[:-1]#先取class dir
+	method_name = method_sign.split('->')[-1]
 	#input(f'method_sign:{method_sign}, dir_list:{dir_list}')
 	not_exist = False
 	current_base = smali_base_dir
@@ -52,6 +64,11 @@ def not_exist_on_path(method_sign,smali_base_dir):
 			break
 		current_base = new_cur
 	#input(f'not_exist:{not_exist}')
+	if not not_exist: #如果有這個class
+		smali_path = current_base + '.smali'
+		with open(smali_path, 'r' ) as f:
+			not_exist = not any([m_def for m_def in f.readlines() if m_def.startswith('.method') and method_name in m_def])
+		#input(f'current_base:{current_base},method_sign:{method_sign},exist:{not not_exist}')	
 	return not_exist
 
 def gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line):#用來產生因case 1,v16 產生的v16_moved_line_pack , param_reg16必是p開頭的
@@ -72,31 +89,30 @@ def gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line):#用來
 	#input(f'v16_pack:{v16_pack}')
 	return v16_pack
 
-def gen_moves_register_lines_range(range_regs, offset, param_list, locals_num):# 用在v-p時去搬動regs 讓其可以順利連號 , param_list包含static與否的判斷了
+def gen_moves_register_offset_range(range_regs, offset, params_list, locals_num):# 用在v-p時去搬動regs 讓其可以順利連號 , param_list包含static與否的判斷了
 	move_offset_lines = '' #整串p開頭的部分移動資料到正確的offset
 	move_back_offset_lines = '' #移動回原本的p-regs
 
 	moving_regs = [r for r in range_regs if r[0]=='p']
 	moved_regs = [preg_move_offset(r, offset, locals_num) for r in moving_regs]
-	params_num = param_registers_num(param_list)
-	param_types = get_param_types(param_list,params_num)[params_num-len(moved_regs):]
 
+	#input(f'range_regs:{range_regs}, moving_regs:{moving_regs},moved_regs:{moved_regs},param_types:{param_types}')
 	last_move_wide = False
 
-	for i, p in enumerate(param_types):
+	for i, p in enumerate(params_list):
 		if last_move_wide: 
 			last_move_wide = False
 			continue #上一個指令已經搬動過連續兩號的reg了
-		is_object = '-object' if p == 'object' else ''
+		is_object = '-object' if len(p) != 1 else ''
 		move_wide = '-wide' if p in ['J','D'] else ''
 		if p in ['J','D']: last_move_wide = True 
 		move_offset_lines += (f'    move{is_object}{move_wide}/16 {moved_regs[i]}, {moving_regs[i]}\n\n')#移過去
 
-	for i, p in enumerate(reversed(param_types)):
+	for i, p in enumerate(reversed(params_list)):
 		if last_move_wide: 
 			last_move_wide = False
 			continue #上一個指令已經搬動過連續兩號的reg了
-		is_object = '-object' if p == 'object' else ''
+		is_object = '-object' if len(p) != 1 else ''
 		move_wide = '-wide' if p in ['J','D'] else ''
 		if p in ['J','D']: last_move_wide = True 
 		move_back_offset_lines += (f'    move{is_object}{move_wide}/16 {reversed(moving_regs)[i]}, {reversed(moved_regs)[i]}\n\n')#移回來
@@ -104,10 +120,44 @@ def gen_moves_register_lines_range(range_regs, offset, param_list, locals_num):#
 	new_range_end_reg = moved_regs[-1]
 	return move_offset_lines, move_back_offset_lines, new_range_end_reg
 
+def invoke_userdef2range_logger(register_case, invoke_line, tmp_register, current_method_signature, rand_method_id, locals_num, moveresult, free_list, sixteen_types, v16_moved_line):
+	#invoke_line必然有五個register (parameter)
+	#TODO 讓tmp_register吃到JD型別時可以轉成字串再搬移
+	#嘗試用Bundle呢
+
+	new_content = ''
+	params_list = get_params_list(invoke_line)
+
+	invoke_regs = get_common_invoke_regs(invoke_line)#首項可不動 動後面四個使其連號就好
+	r1 = invoke_regs[0]
+	target_regs = [r1] + [p2v_reg(r1[0] + str(int(r1[1:])+i),locals_num) for i in range(1,5)]
+
+	for i,reg in enumerate(invoke_regs[1:]): #從小的號碼開始swap免得撞到
+		if last_moved:
+			last_moved = False
+			continue
+		is_object = ''
+		move_wide = '' 
+		last_moved = False #專門為了檢察wide type的是否已經被上一個移動過了
+		if params_list[i+1] in ['J','D']:
+			move_wide = '-wide'
+			last_moved = True
+		elif len(params_list[i+1]) > 1:
+			is_object = '-object'
+		new_content += (f'    move{is_object}{move_wide}/16 {tmp_register}, {reg}\n\n')
+		new_content += (f'    move{is_object}{move_wide}/16 {reg}, {tmp_register}\n\n')
+		new_content += (f'    move{is_object}{move_wide}/16 {tmp_register}, {reg}\n\n')
+
+	#改寫成invoke range
+
+	#反過來從大的號碼開始交換回去
+
+	return new_content
+
 def invoke_userdef_logger(register_case, invoke_line, tmp_register, current_method_signature, rand_method_id, locals_num, moveresults_line=None, free_list = None,sixteen_types = None, v16_moved_line = None):#rand_method_id要傳入到callee內的
 	#line = invoke_line[:invoke_line.index('}')] + {p_last} + invoke_line[invoke_line.index('}'):invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):]
 	#	這邊就是想辦法把這些user define的method加參數，改成多傳了caller random ID進去 
-	#	但沒辦法處理因為原本剛好5個參數要變成6個，沒辦法再用一般invoke的情況(幾乎不可能改成需要連號的range)
+	#	但這邊沒有處理因為原本剛好5個參數要變成6個，沒辦法再用一般invoke的情況(需搬動資料讓range可用連號暫存器)
 
 	#print(f'rand_method_id:{rand_method_id}')					
 	new_content = ''
@@ -116,13 +166,14 @@ def invoke_userdef_logger(register_case, invoke_line, tmp_register, current_meth
 	range_move = False
 	is_range = False
 	offset = 0
+	invoke_regs = get_common_invoke_regs(invoke_line)
 	if '/range {' in invoke_line:#特殊情況: invoke-range 先挑出來處理
 		is_range = True
-		range_regs, offset = get_registers_invoke_range(invoke_line, locals_num, register_case)
-		randID_param = next_reg(range_regs[-1])
+		invoke_regs, offset = get_invoke_range_regs(invoke_line, locals_num, register_case)#range的invoke_regs算法不同
+		randID_param = next_reg(invoke_regs[-1])
 	if offset != 0:
-		param_list = get_param_list(invoke_line)
-		move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_lines_range(range_regs, offset, param_list, locals_num)
+		params_list = get_params_list(invoke_line)
+		move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(invoke_regs, offset, params_list, locals_num)
 		randID_param = next_reg(new_range_end_reg)#移動完之後的下一項，這樣就可以傳遞rand ID參數到callee並且可以符合range語法
 		range_move = True
 		no_move = True #理論上randID_param原本是參數位置 已經搬動後就不用再暫存資料
@@ -131,19 +182,20 @@ def invoke_userdef_logger(register_case, invoke_line, tmp_register, current_meth
 		randID_param =  tmp_register
 
 	else:# Case 2 , v_last(tmp_register) > v15
-		randID_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
+		randID_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types, invoke_regs, locals_num)#randID_param不能跟invoke_regs重複!
 
 	if is_range: #range的不用再增加參數reg而是取代End
-		invoke_line = invoke_line.replace(range_regs[-1], randID_param)#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
+		invoke_line = invoke_line.replace(invoke_regs[-1], randID_param)#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
 		final_invoke_line = (invoke_line[:invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):] + '\n\n')
 	else:#一般invoke 需要增加Reg在後面
-		print(f'invoke_line:{invoke_line}')
+		#print(f'invoke_line:{invoke_line}')
 		if v16_moved_line:#需要來替換invoke_line
 			invoke_line = v16_moved_line['replaced_line']
-			print(f'替換後 invoke_line:{invoke_line}')
+			if register_case == 2 :
+				input(f'替換後 invoke_line:{invoke_line}')
 		final_invoke_line = (invoke_line[:invoke_line.index('}')] + (', ' if '{}' not in invoke_line else '') \
 		+ randID_param + invoke_line[invoke_line.index('}'):invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):] + '\n\n')
-		print(f'final_invoke_line:{final_invoke_line}')
+		#input(f'final_invoke_line:{final_invoke_line}')
 	new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
 	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {randID_param}\n\n')	#case 2 才可能需要move來搬移暫存器原有的值
 	new_content +=  (f'    const-string {randID_param}, \"{rand_method_id}\"\n\n')
@@ -173,25 +225,12 @@ def invoke_target_logger(register_case, invoke_line, tmp_register, current_metho
 	offset = 0
 	# 	#找一個實際案例來修看看
 
-	# if '/range {' in invoke_line: #v0 .. v5 #裡面的分支會跟後面類似，但併在一起可能不好讀
-	# 	range_regs, offset = get_registers_invoke_range(invoke_line, locals_num, register_case)
-	# 	if 'invoke-static' not in invoke_line:#int(invoke_regs[0][1:]) < 16:
-	# 		log_param =  range_regs[0] #這就是p0, object type
-	# 	else:#  'invoke-static' 所以看有無參數可用
-	# 		if int(range_regs[0][1:]) < 16:#這邊其實跟下面的分支很像，差別在這邊需要檢查是否超過v15 invoke-kind/range可以超過v15
-	# 			log_param =  range_regs[0]
-	# 			if len(param_list[0]) == 1: #means a basic type, not a class
-	# 				is_object = '' 
-	# 				move_wide = '-wide' if param_list[0] in 'JD' else '' # tmp_register的下一個也留好了
-	# 		else:
-	# 			log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
-
 	if '/range {' in invoke_line:#特殊麻煩情況先挑出來處理
 		is_range = True
-		range_regs, offset = get_registers_invoke_range(invoke_line, locals_num, register_case)
+		range_regs, offset = get_invoke_range_regs(invoke_line, locals_num, register_case) 
 	if offset != 0:
-		param_list = get_param_list(invoke_line)
-		move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_lines_range(range_regs, offset, param_list, locals_num)
+		params_list = get_params_list(invoke_line)
+		move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(range_regs, offset, params_list, locals_num)
 		range_move = True
 		invoke_line = invoke_line.replace(range_regs[-1], new_range_end_reg)#改寫invoke range裡面的範圍
 		if 'invoke-virtual/range ' in invoke_line:
@@ -225,21 +264,21 @@ def invoke_target_logger(register_case, invoke_line, tmp_register, current_metho
 		no_move = False
 		log_param = None
 		invoke_regs = range_regs if is_range else invoke_line[invoke_line.index('{')+1:invoke_line.index('}')].split(', ')
-		param_list = get_param_list(invoke_line)
+		params_list = get_params_list(invoke_line)
 		move_wide = '' # invoke-static 且又需要抓參數但撞到J、D的情況
 
 
 		if 'invoke-static' not in invoke_line: #非靜態函數 所以有p0 = this class
 			log_param =  invoke_regs[0]#這就是p0, object type
-			#print(f'param_list[0]:{param_list[0]}')
+			#print(f'params_list[0]:{params_list[0]}')
 
 		else: #  'invoke-static' 所以看有無參數可用
 			if invoke_regs != ['']:
 				log_param =  invoke_regs[0]
-				#print(f'invoke_line:{invoke_line}\ninvoke_regs:{invoke_regs},param_list:{param_list}')
-				if len(param_list[0]) == 1: #means a basic type, not a class
+				#print(f'invoke_line:{invoke_line}\ninvoke_regs:{invoke_regs},params_list:{params_list}')
+				if len(params_list[0]) == 1: #means a basic type, not a class
 					is_object = '' 
-					move_wide = '-wide' if param_list[0] in 'JD' else '' # tmp_register的下一個也留好了
+					move_wide = '-wide' if params_list[0] in 'JD' else '' # tmp_register的下一個也留好了
 
 			else: #  'invoke-static' 且沒有參數
 				log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
@@ -356,10 +395,10 @@ def is_invoke_offcial(invoke_line):#黑名單 但不知道要怎樣才會齊全
 		is_offcial = True
 	return is_offcial
 
-def gen_method_start_log(p_last, rand_method_id, current_method_signature):	
+def gen_method_start_log(p_last, rand_method_id, current_method_signature, no_caller):	
 	
 	new_content = ('    #Instrumentation by GeniusPudding\n')
-	if current_method_signature.split(';->')[-1] not in entry_list:
+	if not no_caller:
 		new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
 		new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
 		new_content += (f'    move-object/16 v0, {p_last}\n\n')
@@ -382,6 +421,7 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 	class_name = ''
 	current_method_signature = '' #without the access scope
 	origin_clone = smali_lines.copy()
+	in_main_init = False
 	#locate methods, registers
 	new_content = ''
 	# only_prototype = False #abstract, native method prototype
@@ -391,7 +431,7 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 	v_last = ''
 	v_last2 = '' #可以輕鬆解決 case 2 裡面invoke-static需要用到參數的時候撞到J、D型態的case
 	v16_moved_line = None #用來暫存case1剛好指令撞到v16的，包裝過move的指令 (另存一份 不要直接改line)
-	param_list = []
+	params_list = []
 	param_types = []
 	invoke_tmp = None
 	rand_method_id = '' #這個method專屬的隨機生成32位ID
@@ -412,8 +452,9 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 		if line.startswith('.method ') and '<clinit>(' not in line :# and (not target_methods or any([m in line for m in target_methods])): #
 			#filtered out the class constructor methods (<clinit>)
 			#會走到這的應該都不是official_prefix的
-			# if is_main_activity(class_name, main_activity) and 'constructor <init>(' in line:
-			# 	in_main_init = True
+	
+			if is_main_activity(class_name, main_activity) and 'constructor <init>(' in line:
+				in_main_init = True
 			# 	main_init += line
 			in_method_flag = True
 			
@@ -423,16 +464,17 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 			method_name = _splitted_identifiers[-1]
 
 			locals_num = 0	
-			#print(f'class_name:{class_name}')
-			param_list = get_param_list(line, class_name)
-			params_num = param_registers_num(param_list)#已經考慮了J、D type的長度
+			#print(f'current_method_signature:{current_method_signature},class_name:{class_name}')
+			params_list = get_params_list(line, class_name)
+			#print(f'method params_list:{params_list}')
+			params_num = param_registers_num(params_list)#已經考慮了J、D type的長度
 			p_last = 'p' + str(params_num)#已經由這個method的caller傳來了它的ID
 			
 			rand_method_id = '$(' + str(random.getrandbits(32)) + ')'
-			param_types = get_param_types(param_list, params_num)
+			param_types = get_param_types(params_list, params_num)
 
-			#除了lifecycle methods之外，插入參數在後面，全面監控
-			if method_name not in entry_list:
+			#除了lifecycle methods之外(然後不能是main init)，插入參數在後面，全面監控
+			if method_name not in entry_list and not in_main_init and params_num != 5: #TODO不希望有限制
 				line = line[:line.index(')')] + 'Ljava/lang/String;' + line[line.index(')'):]
 			
 			# if 'abstract' in _splitted_identifiers or 'native' in _splitted_identifiers:
@@ -441,26 +483,25 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 			line = line.strip('\n')	
 			#分析指令用到的暫存器type，同時取得所需的free register資訊
 			if not notCommonInstruction(line):
-				check_reg_usage(line, free_list, sixteen_types)
+				check_reg_usage(line, free_list, sixteen_types)#每一行指令都計算free_list跟sixteen_types的改動
 				
 				# 在分析一般指令時，將case 1 且用到v16的狀況先抓出來，
 				# 但那些可以用超過16號的指令不用管這個  	
 				#可能極小機率存在小bug (param_reg16這個暫存器本身字串存在於const-string內)
+				# if 'updateAddEmailEntry' in current_method_signature and  (line.startswith('    iput') or line.startswith('    iget')):
+				# 	input(f'current_method_signature:{current_method_signature},case:{case},param_reg16:{param_reg16}\nline:{line}\nis_4bit_instruction(line):{is_4bit_instruction(line)},params_list:{params_list},params_num:{params_num}')
 				if case == 1 and param_reg16 in line and is_4bit_instruction(line):
-					# not any([line.startswith(prefix) \
-					# for prefix in ['    return', '    move-result', '    const ', '    const-wide', '']]) \
-					# and '16' not in line.strip().split(' ')[0]:
 
-
-					#input(f'需要改動v16的line:{line}')
-	
 					is_object = '-object' if param_types[p_index] == 'object' else ''
 					#TODO 這邊有可能遇到param_reg16會是J、D型別的
 
-					#print(f'param_list:{param_list}, param_types:{param_types}, locals_num:{locals_num}, params_num:{params_num}, p_index:{p_index}')
+					#print(f'params_list:{params_list}, param_types:{param_types}, locals_num:{locals_num}, params_num:{params_num}, p_index:{p_index}')
 					#print(f'line:{line},current_method_signature:{current_method_signature},param_reg16:{param_reg16},case:{case}')
 						
 					v16_moved_line = gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line = smali_lines[i+2] if 'move-result' in smali_lines[i+2] else None )
+					# if (line.startswith('    iput') or line.startswith('    iget')) and 'updateAddEmailEntry' in current_method_signature:
+					# 	print(f'iget,iput:{line}')
+					# 	input(f'v16_moved_line:{v16_moved_line}')
 					if not any([line.startswith(prefix) for prefix in ['    invoke', '    if-', '    sparse-switch']  ]):
 						line = v16_moved_line['replaced_line']
 
@@ -496,13 +537,19 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 
 
 				new_content += (line+'\n')
-				new_content += gen_method_start_log(p_last, rand_method_id, current_method_signature)
+				no_caller = current_method_signature.split(';->')[-1] in entry_list or in_main_init
+				# if '<init>()V' in current_method_signature:
+					
+				# 	if is_main_activity(class_name, main_activity):
+				# 		input(f'current_method_signature:{current_method_signature},no_caller:{no_caller}')					
+				new_content += gen_method_start_log(p_last, rand_method_id, current_method_signature, no_caller)
 				output_flag = 0 
 			elif line.startswith('.end method'):#這邊要reset一些method內的屬性
-
+				if in_main_init:
+					in_main_init = False
 				#print('.end method\n')		
 				# if 'TypeToString(Ljava/lang/Object;Z)Ljava/lang/String;' in current_method_signature:
-				# 	input(f'current_method_signature:{current_method_signature}\n param_list:{param_list}:param_types:{param_types}')
+				# 	input(f'current_method_signature:{current_method_signature}\n params_list:{params_list}:param_types:{param_types}')
 				case = 0	
 				in_method_flag = False
 				sixteen_types = ['']*16
@@ -550,16 +597,26 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 						# invoke_tmp = None
 						if not is_mr: #因為後面沒有緊接move-result指令，必須reset invoke_tmp狀態 免得下一個非target method的move result誤判        
 							invoke_tmp = None #輸出下一個遇到的move result
-							#'V' == line.strip().split(')')[-1][0]:#即使不是V也不一定有抓回傳值哦
+
 					# if '_vvv3(Lanywheresoftware/b4a/objects/LabelWrapper;Ljava/lang/String;)I' in current_method_signature:
 					#  	input(f'invoke_tmp:{invoke_tmp}\n line:{line}:current_method_signature:{current_method_signature},moveresult:{moveresult}')
 				elif not is_invoke_offcial(line):
-					if not_exist_on_path(get_invoke_sign(line),smali_base_dir):
-						input(f'sign:{current_method_signature} 不在offcial list但也不在目錄中?')
-					else:#TODO 如果原本就有5個參數不能簡單地呼叫這個
-						#if params_num == 5: #這個case必須將invoke改成invoke-range
-						new_content += invoke_userdef_logger(case, line, v_last, current_method_signature, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
-						output_flag	= 0
+					if not_exist_on_path(get_invoke_sign(line),smali_base_dir):#可能包含一些因為invoke-virtual而沒被算進offcial list的
+						new_content += line
+						continue #什麼都不做	
+					else:#必須要在路徑上存在method def的才能去改參數
+						#TODO 如果原本就有5個參數不能簡單地呼叫這個
+						# if params_num == 5: #這個case必須將invoke改成invoke-range
+						# 	new_content += invoke_userdef2range_logger(case, line, v_last, current_method_signature, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
+						# else:
+						if len(get_params_list(line)) != 5:
+							invoke_tmp = invoke_userdef_logger(case, line, v_last, current_method_signature, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
+							if invoke_tmp:
+								new_content += invoke_tmp
+								output_flag	= 0
+								# invoke_tmp = None
+								if not is_mr: #因為後面沒有緊接move-result指令，必須reset invoke_tmp狀態 免得下一個非target method的move result誤判        
+									invoke_tmp = None #輸出下一個遇到的move result
 				else:#額外不重要的invoke 跟那些系統相關的code有點關係 但又不太清楚幹嘛用的
 					if v16_moved_line:
 						#input(f'額外的line:{line}, v16_moved_line:{v16_moved_line}')
@@ -670,9 +727,6 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 			new_content += line
 		else:
 			output_flag = 1	
-
-	if is_main_activity(class_name, main_activity):
-		new_content += ('\n\n' + main_init)
 
 	return new_content
 
