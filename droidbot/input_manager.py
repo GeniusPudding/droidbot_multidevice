@@ -76,7 +76,7 @@ class InputManager(object):
         elif self.policy_name in [POLICY_NAIVE_DFS, POLICY_NAIVE_BFS]:
             input_policy = UtgNaiveSearchPolicy(device, app, self.random_input, self.policy_name)
         elif self.policy_name in [POLICY_GREEDY_DFS, POLICY_GREEDY_BFS]:#Default!
-            input_policy = UtgGreedySearchPolicy(device, app, self.random_input, self.policy_name)
+            input_policy =  (device, app, self.random_input, self.policy_name)
         elif self.policy_name == POLICY_MEMORY_GUIDED:
             from .input_policy2 import MemoryGuidedPolicy
             input_policy = MemoryGuidedPolicy(device, app, self.random_input)

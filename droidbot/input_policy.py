@@ -2,8 +2,10 @@ import sys
 import json
 import logging
 import random
+import os
 from abc import abstractmethod
-
+sys.path.append("..")
+from methodseq_analysis.log_parser import get_log_filecount_index
 from .input_event import InputEvent, KeyEvent, IntentEvent, TouchEvent, ManualEvent, SetTextEvent, KillAppEvent
 from .utg import UTG
 
@@ -75,10 +77,10 @@ class InputPolicy(object):
                 event_list.append(event)
                 event_str = input_manager.add_event(event)
                 self.action_list.append(event_str)
-                print(f'event:{event}\event.__dict__:{event.__dict__}')# event是object
-                if 'text' in event.__dict__:#app crashes
-                    print(f'App text:{event.text}')
-                    if '屢次停止運作' in event.text:
+                print(f'event:{event}, event.__str__():{event.__str__}, event.__repr__:{event.__repr__}\n event.__dict__:{event.__dict__}')# event是object
+                if 'view' in event.__dict__ and 'view' in 'text' in event.view:#app crashes
+                    input(f'App text:{event.view}')
+                    if '屢次停止運作' in event.view.text:
                         return {'status':'crashed'}
                     #break
             except KeyboardInterrupt:
@@ -98,6 +100,22 @@ class InputPolicy(object):
 
         input_manager.add_event(KillAppEvent(app=self.app))
 
+        if not os.path.isdir(os.path.join('event_lists')):
+            os.mkdir(os.path.join('event_lists'))
+        no = get_log_filecount_index(os.path.join('event_lists'), self.app.package_name)
+        with open(os.path.join('event_lists', self.app.package_name +'_events'+no+'.json'), 'w') as f:
+            for i,e in enumerate(event_list):
+                #input(f'type:{type(e.__dict__)}')
+                s = json.dumps(e.__dict__)
+                print(e.__dict__.__str__())
+                print(f's:{s}')
+                #input(f'type:{type(e.__dict__.__str__())}')
+                f.write(s)
+                f.write('\n')
+        #input(f'event_list:{event_list}')
+            
+
+        
         #重複實驗，重複送sequence (可用來看序列是否產生隨機性)
         for i in range(input_manager.repeat):
             repeat_count = 0 
