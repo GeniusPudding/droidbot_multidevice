@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.englistening.makeev.englisteningcom"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.englistening.makeev.englisteningcom/com.englistening.makeev.englisteningcom.MainActivity"}

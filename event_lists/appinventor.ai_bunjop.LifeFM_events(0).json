@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop appinventor.ai_bunjop.LifeFM"}
+{"event_type": "intent", "log_lines": null, "intent": "am start appinventor.ai_bunjop.LifeFM/appinventor.ai_bunjop.LifeFM.MainActivity"}

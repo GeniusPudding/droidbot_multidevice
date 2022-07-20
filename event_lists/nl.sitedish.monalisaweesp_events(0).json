@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop nl.sitedish.monalisaweesp"}
+{"event_type": "intent", "log_lines": null, "intent": "am start nl.sitedish.monalisaweesp/nl.sitedish.monalisaweesp.SplashActivity"}

@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop mtw.app.vtu"}
+{"event_type": "intent", "log_lines": null, "intent": "am start mtw.app.vtu/mtw.app.vtu.MainActivity"}

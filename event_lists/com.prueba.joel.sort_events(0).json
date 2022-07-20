@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.prueba.joel.sort"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.prueba.joel.sort/com.prueba.joel.sort.MainActivity"}

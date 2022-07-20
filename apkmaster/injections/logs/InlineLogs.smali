@@ -3,6 +3,18 @@
 .source "SourceFile"
 
 # static fields
+.field public static hash_table:Ljava/util/Hashtable;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/Hashtable",
+            "<",
+            "Ljava/lang/String;",
+            "Ljava/lang/String;",
+            ">;"
+        }
+    .end annotation
+.end field
+
 .field public static debugger:Ljava/lang/String; = "GeniusPudding - debugger"
 
 .field public static methodStart:Ljava/lang/String; = "GeniusPudding - methodStart"  #expect:  current_method_signature rand_method_id
@@ -16,6 +28,10 @@
 .field public static callerID:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])
 
 .field public static calleeID:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])
+
+.field public static targetcallerID:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])
+
+.field public static targetcalleeID:Ljava/lang/String; = "GeniusPudding - call" #expect:  $([rand 32 ID])
 
 .field public static branch:Ljava/lang/String; = "GeniusPudding - branch"  #expect:  current_method_signature->branch_ins rand_method_id, rand_branch_id
 
@@ -34,6 +50,8 @@
 .field public static tryCatch:Ljava/lang/String; = "GeniusPudding - tryCatch"
 
 .field public static goto:Ljava/lang/String; = "GeniusPudding - goto"
+
+.field public static gotoTag:Ljava/lang/String; = "GeniusPudding - gotoTag"
 
 # direct methods
 .method public constructor <init>()V
@@ -54,9 +72,58 @@
     return-void
 .end method
 
-.method public static callLog()V
-    .locals 2
+.method public static genRandom()Ljava/lang/String;
+    .locals 4
 
+    new-instance v1, Ljava/util/Random;
+
+    invoke-direct {v1}, Ljava/util/Random;-><init>()V
+
+    const v0, 0x7fffffff
+
+    invoke-virtual {v1, v0}, Ljava/util/Random;->nextInt(I)I
+
+    move-result v0
+
+    sget-object v2, Ljava/lang/System;->out:Ljava/io/PrintStream;
+
+    new-instance v3, Ljava/lang/Integer;
+
+    invoke-direct {v3, v0}, Ljava/lang/Integer;-><init>(I)V
+
+    invoke-virtual {v3}, Ljava/lang/Integer;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v0, " $("
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v0, ")"
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    return-object v1    
+.end method
+
+.method public static callLog()V
+    .locals 4
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -67,21 +134,69 @@
 
     move-result-object v1
 
-    sget-object v0, Linjections/InlineLogs;->callerID:Ljava/lang/String;
+	invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;
 
-    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v0
+			
+    invoke-virtual {v0}, Ljava/lang/Thread;->getStackTrace()[Ljava/lang/StackTraceElement;
+			
+    move-result-object v0
+
+    array-length v3, v0
+
+    const/4 v2, 0x5
+
+    if-ge v3, v2, :cond_0
+
+    const-string v3, "(No Caller)"
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
-    const-string v0, "->"
+    goto :goto_0
 
-    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    :cond_0
+	const/4 v2, 0x4
+
+	aget-object v3, v0, v2
+
+	invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;
+			
+    move-result-object v3
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
-    sget-object v0, Linjections/InlineLogs;->calleeID:Ljava/lang/String;
+    sget-object v3, Linjections/InlineLogs;->callerID:Ljava/lang/String;
 
-    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    :goto_0
+    const-string v3, "->"
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const/4 v2, 0x3
+
+	aget-object v3, v0, v2
+
+	invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;
+			
+    move-result-object v3
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    sget-object v3, Linjections/InlineLogs;->calleeID:Ljava/lang/String;
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -89,9 +204,9 @@
 
     move-result-object v1
 
-    const-string v0, "GeniusPudding"
+    const-string v3, "GeniusPudding"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 .end method
@@ -653,7 +768,7 @@
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v0, "- Try Start:"
+    const-string v0, "- Try Start: "
 
     invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -770,7 +885,7 @@
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v0, "- Try: Catch"
+    const-string v0, "- Try Catch: "
 
     invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -880,6 +995,73 @@
     return-void
 .end method
 
+.method public static gotoTagLog()V #直接跳轉
+    .locals 2
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v0, "- Goto Tag: "
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    sget-object v0, Linjections/InlineLogs;->gotoTag:Ljava/lang/String;
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v0, "GeniusPudding"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+.end method
+
+.method public static gotoTagLog(Ljava/lang/String;)V
+    .locals 2
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v0, "- Goto Tag: "
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v0, "GeniusPudding"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+.end method
+
+
+.method public static stringLog(Ljava/lang/String;)V
+    .locals 1
+    const-string v0, "GeniusPudding"
+
+    invoke-static {v0, p0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+.end method
 
 .method public static testLog1()V
     .locals 2

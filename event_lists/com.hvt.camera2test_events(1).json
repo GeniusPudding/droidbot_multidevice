@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.hvt.camera2test"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.hvt.camera2test/com.hvt.camera2test.MainActivity"}

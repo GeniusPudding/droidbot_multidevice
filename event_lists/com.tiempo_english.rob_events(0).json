@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.tiempo_english.rob"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.tiempo_english.rob/com.tiempo_english.rob.InfoActivity"}

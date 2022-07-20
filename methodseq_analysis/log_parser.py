@@ -1,6 +1,22 @@
 import sys
 import os
 
+def get_log_filecount_index(target_logdir, package_name, condition = ''):
+    logs = [l for l in os.listdir(target_logdir) if package_name in l]
+    print(f'logs:{logs}')
+    no = '('+str(len(logs)//2)+')'
+    i = 0
+    while True:#補足檔案序號
+        #print(f'logs:{logs}')
+        a = ['('+str(i)+')' in a  and condition in a for a in logs ]
+        #print(f'any:{a}')
+        if not any(['('+str(i)+')' in a  and condition in a for a in logs ]):
+            break
+        i += 1
+    print(f'condition:{condition},i:{i}')
+    no = '('+str(i)+')'
+    return no
+
 def symbolize_logcats(logs):#將PID, TID都用符號代替 來排除跟程式碼執行順序無關的差異資訊
     new_logs = []
     pid_pool = []
@@ -60,19 +76,22 @@ def parser2(txt1_path,txt2_path,log_path, appname):#for getting method seq from 
         return True
 
 
-def parser(txt1_path,targetpath):#for getting method seq from one-device analysis
-    with open(txt1_path, 'r') as f1:
-        t1 = f1.read().split('\n')
-    print(len(t1))
-    print(t1)
-    t1 = [api[api.find(': - Method ')+11:] for api in t1 if ': - Method ' in api]
-    
+def parser(txt1_path, log_path, appname):#for getting method seq from one-device analysis
+
+    if not os.path.exists(log_path):
+        os.makedirs(log_path)    
+
+    with open(txt1_path, 'r',encoding='utf-8') as f1:
+        tmp_t1 = f1.read().split('\n')
+
+    t1 = symbolize_logcats(tmp_t1)
     dirname1, basename1 = os.path.split(txt1_path)
-    with open(os.path.join(dirname1, targetpath) , 'w') as f1:
+    path1 = os.path.join(log_path,appname+'_'+basename1)  
+    with open(path1, 'w',encoding='utf-8') as f1:
         for line in t1:
             f1.write(line+'\n')
-    return t1
-
+    return False if os.path.getsize(path1) == 0 else True
+        
 def seq_compare(call_seq1,call_seq2):
     l = min(len(call_seq1),len(call_seq2))
     i=0

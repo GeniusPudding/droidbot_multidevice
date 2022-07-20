@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop at.my_chauffeur.my_chauffeur"}
+{"event_type": "intent", "log_lines": null, "intent": "am start at.my_chauffeur.my_chauffeur/at.my_chauffeur.my_chauffeur.MainActivity"}

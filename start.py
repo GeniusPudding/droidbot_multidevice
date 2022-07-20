@@ -12,7 +12,7 @@ import threading
 import logging
 from apkmaster.apk_repacker import methodlog_instrumentation
 from apkmaster.datautils.apkinfo import get_min_sdkversion
-from methodseq_analysis.log_parser import parser2
+from methodseq_analysis.log_parser import parser2, get_log_filecount_index, parser
 import os 
 from wrapt_timeout_decorator import *
 from tqdm import tqdm
@@ -26,7 +26,7 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description="Start DroidBot to test an Android app.",
                                      formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("-d", action="store", dest="device_serial", required=False,
+    parser.add_argument("-d", action="store", dest="device_serial", required=False, default=None,#default: 不指定
                         help="The serial number of target device (use `adb devices` to find)")
     parser.add_argument("-a", action="store", dest="apk_path",
                         help="The file path to target APK")
@@ -109,9 +109,11 @@ def parse_args():
     parser.add_argument("-i", action="store_true", dest="inject",
                     help="Inject method logging(hooking) to the apk.")
     parser.add_argument("-ni", action="store_false", dest="inject",
-                    help="Not to inject the apk gor logging methods.")
+                    help="Not to inject the apk gor logging methods.")#-r -i -ni 三選一即可
     parser.add_argument("-repeat", action="store", dest="repeat", default=0, type=int,
                     help="Repeat sending same input sequence for testing.")
+    parser.add_argument("-only_repack", action="store_true", dest="only_repack", required=False, default=False,#default: 不指定
+                        help="純粹插樁，不運行droidbot")
     options = parser.parse_args()
     # print options
     return options
@@ -140,10 +142,13 @@ def main(testing_apk_path, opts, target_API_graph):
     if opts.reuse:
         dirname, basename = os.path.split(testing_apk_path)
         repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
-        input(f'reuse:{repackaged_apk_path}')
+        #input(f'reuse:{repackaged_apk_path}')
     elif opts.inject:
         repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
+        if opts.only_repack:
+            return ''
+
     # input('test methodlog_instrumentation')
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
@@ -186,8 +191,8 @@ def main(testing_apk_path, opts, target_API_graph):
         # for i,device_serial in enumerate(all_devices):
         try:
             droidbot = DroidBot(
-                app_path= repackaged_apk_path if opts.inject else testing_apk_path,#repackaged_apk_path,# a if condition else b
-                device_serials=all_devices,
+                app_path= repackaged_apk_path if opts.inject or opts.reuse else testing_apk_path,#repackaged_apk_path,# a if condition else b
+                device_serials=all_devices if not opts.device_serial else [opts.device_serial],#沒指定就跑雙裝置模式
                 is_emulator=opts.is_emulator,
                 output_dir=opts.output_dir,
                 # env_policy=opts.env_policy,
@@ -217,28 +222,26 @@ def main(testing_apk_path, opts, target_API_graph):
             pass
 
     success_logging_file = False        
-    if droidbot and len(all_devices) >= 2: #the third can be used to run other tests
-        try:
-            print('Start generating logs......')
-            #target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs\\Difuzer'
-            target_dir = opts.logdir
+    l = len(all_devices)
+    if droidbot: #the third can be used to run other tests
+        if l >= 2:
+            try:
+                print('Start generating logs......')
+                #target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs\\Difuzer'
 
-            app_name = droidbot.app.package_name
-            logs = [l for l in os.listdir(target_dir) if app_name in l]
-            #print(f'logs:{logs}')
-            #no = '('+str(len(logs)//2)+')'
-            i = 0
-            while True:#補足檔案序號
-                if not any(['('+str(i)+')' in a for a in logs ]):
-                    break
-                i += 1
-            no = '('+str(i)+')'
-            p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
-            p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
-            #print(p1,p2)
-            success_logging_file = parser2(p1, p2, target_dir,  droidbot.app.package_name+no)
-        except:
-            print('Can\'t parse the log')
+                p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
+                p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
+                #print(p1,p2)
+                success_logging_file = parser2(p1, p2, target_dir, droidbot.app.package_name + get_log_filecount_index(opts.logdir, droidbot.app.package_name))
+            except:
+                print('Can\'t parse the log')
+        if l == 1:#用來測試單一裝置重複跑的
+            try:
+                print('Start generating logs......')
+                p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
+                success_logging_file = parser(p1, os.path.join('event_lists'), droidbot.app.package_name + get_log_filecount_index(os.path.join('event_lists'), droidbot.app.package_name,'logcat_'))
+            except:
+                print('Can\'t parse the log')        
 
     return success_logging_file
 

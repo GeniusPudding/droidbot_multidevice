@@ -1,0 +1,315 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop net.classicelectronic.sms"}
+{"event_type": "intent", "log_lines": null, "intent": "am start net.classicelectronic.sms/net.classicelectronic.sms.MainActivity"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 60], [607, 151]], "resource_id": "net.classicelectronic.sms:id/textViewLOGO", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 5, "temp_id": 6, "size": "494*91", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/textViewLOGO[text]None[enabled,,]", "view_str": "dc9d450906454b9fdb18cb008c58a435", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/textViewLOGO"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 162], [355, 267]], "resource_id": "net.classicelectronic.sms:id/button1", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 7, "temp_id": 8, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button1[text]None[enabled,,]", "view_str": "4d8ec77f4b9e6fcda38006522f9eb89e", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button1"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[365, 162], [607, 267]], "resource_id": "net.classicelectronic.sms:id/button2", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 7, "temp_id": 9, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button2[text]None[enabled,,]", "view_str": "edc5bd0826956dbecdd3e076e06cb2ee", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button2"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 277], [355, 382]], "resource_id": "net.classicelectronic.sms:id/button3", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 10, "temp_id": 11, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button3[text]None[enabled,,]", "view_str": "ea6cda95fec99039079fb84ebb7ba6a0", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button3"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[365, 277], [607, 382]], "resource_id": "net.classicelectronic.sms:id/button4", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 10, "temp_id": 12, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button4[text]None[enabled,,]", "view_str": "ed56db6f09ad481892ddc2103a39a170", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button4"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 392], [355, 497]], "resource_id": "net.classicelectronic.sms:id/button5", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 13, "temp_id": 14, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button5[text]None[enabled,,]", "view_str": "6a5e3d82e4dddbe81ab4892e2cbcfc44", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button5"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[365, 392], [607, 497]], "resource_id": "net.classicelectronic.sms:id/button6", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 13, "temp_id": 15, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button6[text]None[enabled,,]", "view_str": "1b8c12b6155df4c2b4a34b8c619514c1", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button6"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 507], [355, 612]], "resource_id": "net.classicelectronic.sms:id/button1_1", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 16, "temp_id": 17, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button1_1[text]None[enabled,,]", "view_str": "a04185fe9286c9ee62c78946bf2141b8", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button1_1"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[365, 507], [607, 612]], "resource_id": "net.classicelectronic.sms:id/button1_2", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 16, "temp_id": 18, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button1_2[text]None[enabled,,]", "view_str": "e0e49c2f64abd2ae9556c43401a52ba2", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button1_2"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 622], [355, 727]], "resource_id": "net.classicelectronic.sms:id/button7", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 19, "temp_id": 20, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button7[text]None[enabled,,]", "view_str": "917642440c6ad7160d24e92e4bbe27b8", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button7"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[365, 622], [607, 727]], "resource_id": "net.classicelectronic.sms:id/button8", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 19, "temp_id": 21, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button8[text]None[enabled,,]", "view_str": "67a6da0b80aca4751bc7c3d109876d11", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button8"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[113, 737], [355, 842]], "resource_id": "net.classicelectronic.sms:id/button9", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 22, "temp_id": 23, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button9[text]None[enabled,,]", "view_str": "bcc30239ce1ba9dc7a9844ecb65221ea", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/button9"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "net.classicelectronic.sms", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[365, 737], [607, 842]], "resource_id": "net.classicelectronic.sms:id/buttonSettings", "checked": false, "text": null, "class": "android.widget.Button", "scrollable": false, "selected": false, "long_clickable": false, "parent": 22, "temp_id": 24, "size": "242*105", "signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/buttonSettings[text]None[enabled,,]", "view_str": "5de437d09d608b496203ec56239c9dfc", "content_free_signature": "[class]android.widget.Button[resource_id]net.classicelectronic.sms:id/buttonSettings"}}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [53], "focused": false, "bounds": [[42, 108], [365, 305]], "resource_id": null, "checked": false, "text": null, "class": "android.widget.FrameLayout", "scrollable": false, "selected": false, "long_clickable": false, "parent": 51, "temp_id": 52, "size": "323*197", "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]", "view_str": "7f805f51fe5f5a43f25ac21d726bb481", "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [55], "focused": false, "bounds": [[42, 108], [365, 305]], "resource_id": null, "checked": false, "text": null, "class": "android.widget.FrameLayout", "scrollable": false, "selected": false, "long_clickable": false, "parent": 53, "temp_id": 54, "size": "323*197", "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]", "view_str": "7f805f51fe5f5a43f25ac21d726bb481", "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"}}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "UP"}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "DOWN"}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "LEFT"}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "RIGHT"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [55], "focused": false, "bounds": [[42, 108], [365, 305]], "resource_id": null, "checked": false, "text": null, "class": "android.widget.FrameLayout", "scrollable": false, "selected": false, "long_clickable": false, "parent": 53, "temp_id": 54, "size": "323*197", "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]", "view_str": "7f805f51fe5f5a43f25ac21d726bb481", "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"}}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "UP"}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "DOWN"}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "LEFT"}
+{"event_type": "scroll", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 2, "editable": false, "clickable": false, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [52, 62], "focused": false, "bounds": [[0, 108], [720, 306]], "resource_id": "com.android.systemui:id/keyguard_facewidget_viewpager", "checked": false, "text": null, "class": "com.android.internal.widget.ViewPager", "scrollable": true, "selected": false, "long_clickable": false, "parent": 50, "temp_id": 51, "size": "720*198", "signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager[text]None[enabled,,]", "view_str": "e2a85ed18bb328b643882d01fdf8a97d", "content_free_signature": "[class]com.android.internal.widget.ViewPager[resource_id]com.android.systemui:id/keyguard_facewidget_viewpager"}, "direction": "RIGHT"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": false, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[0, 0], [720, 1480]], "resource_id": null, "checked": false, "text": null, "class": "android.widget.FrameLayout", "scrollable": false, "selected": false, "long_clickable": false, "parent": 1, "temp_id": 2, "size": "720*1480", "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]", "view_str": "225600bf122149a602b2be965a309c5d", "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": false, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[0, 0], [720, 1480]], "resource_id": "com.android.systemui:id/scrim_behind", "checked": false, "text": null, "class": "android.view.View", "scrollable": false, "selected": false, "long_clickable": false, "parent": 0, "temp_id": 3, "size": "720*1480", "signature": "[class]android.view.View[resource_id]com.android.systemui:id/scrim_behind[text]None[enabled,,]", "view_str": "09aee148b647e4f7f1b52afb0ecb0b54", "content_free_signature": "[class]android.view.View[resource_id]com.android.systemui:id/scrim_behind"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": false, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[0, 0], [720, 1480]], "resource_id": "com.android.systemui:id/scrim_in_front", "checked": false, "text": null, "class": "android.view.View", "scrollable": false, "selected": false, "long_clickable": false, "parent": 0, "temp_id": 4, "size": "720*1480", "signature": "[class]android.view.View[resource_id]com.android.systemui:id/scrim_in_front[text]None[enabled,,]", "view_str": "c5236e97d769c11dc0407a7eeec4e63b", "content_free_signature": "[class]android.view.View[resource_id]com.android.systemui:id/scrim_in_front"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.android.systemui", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [55], "focused": false, "bounds": [[42, 108], [365, 305]], "resource_id": null, "checked": false, "text": null, "class": "android.widget.FrameLayout", "scrollable": false, "selected": false, "long_clickable": false, "parent": 53, "temp_id": 54, "size": "323*197", "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]", "view_str": "7f805f51fe5f5a43f25ac21d726bb481", "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"}}

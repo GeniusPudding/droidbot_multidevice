@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop ahman.timo.tatargetfinder"}
+{"event_type": "intent", "log_lines": null, "intent": "am start ahman.timo.tatargetfinder/ahman.timo.tatargetfinder.TaTargetFinderActivity"}

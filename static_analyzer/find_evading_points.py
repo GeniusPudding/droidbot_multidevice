@@ -24,7 +24,7 @@ import random
 apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
 diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diffs_all'
 ag_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\static_analyzer'
-log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_SamsungGalaxyS10\\TriggerZoo_antiemulator_withalltargets_PID_TID'
+log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_SamsungGalaxyS10\\TriggerZoo_antiemulator_version2'
 entry_list = ["onCreate", "onStart", "onStartCommand","onResume", "onReStart", "onPause", "onStop", "onDestroy", "onTouch", "onReceive"]
 diffinfo_re = '\d+(,\d+)?[acd]\d+(,\d+)?'   
 def sign_to_legalpathstr(sign):

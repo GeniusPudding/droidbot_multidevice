@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop trex.tv.baharturktv.mobile"}
+{"event_type": "intent", "log_lines": null, "intent": "am start trex.tv.baharturktv.mobile/trex.tv.baharturktv.mobile.Bahart_rkTV"}

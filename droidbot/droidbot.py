@@ -163,15 +163,13 @@ class DroidBot(object):
                 self.timer.start()
 
             self.device.set_up()
-            if self.device2:
-                self.device2.set_up()  
+            if self.device2: self.device2.set_up()  
 
             if not self.enabled:
                 return
 
             self.device.connect()
-            if self.device2:
-                self.device2.connect()
+            if self.device2: self.device2.connect()
 
 
 
@@ -225,12 +223,10 @@ class DroidBot(object):
             self.device2.disconnect()
         if not self.keep_env:
             self.device.tear_down()
-            if self.device2:
-                self.device2.tear_down()
+            if self.device2:  self.device2.tear_down()
         if not self.keep_app:
             self.device.uninstall_app(self.app)
-            if self.device2:
-                self.device2.uninstall_app(self.app)
+            if self.device2:  self.device2.uninstall_app(self.app)
         if hasattr(self.input_manager.policy, "master") and \
            self.input_manager.policy.master:
             import xmlrpc.client

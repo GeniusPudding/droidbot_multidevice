@@ -69,6 +69,7 @@ class InputManager(object):
                 
 
     def get_input_policy(self, device, app, master):
+        print(f'self.policy_name:{self.policy_name}')
         if self.policy_name == POLICY_NONE:
             input_policy = None
         elif self.policy_name == POLICY_MONKEY:
@@ -76,7 +77,7 @@ class InputManager(object):
         elif self.policy_name in [POLICY_NAIVE_DFS, POLICY_NAIVE_BFS]:
             input_policy = UtgNaiveSearchPolicy(device, app, self.random_input, self.policy_name)
         elif self.policy_name in [POLICY_GREEDY_DFS, POLICY_GREEDY_BFS]:#Default!
-            input_policy =  (device, app, self.random_input, self.policy_name)
+            input_policy =  UtgGreedySearchPolicy(device, app, self.random_input, self.policy_name)
         elif self.policy_name == POLICY_MEMORY_GUIDED:
             from .input_policy2 import MemoryGuidedPolicy
             input_policy = MemoryGuidedPolicy(device, app, self.random_input)
@@ -90,6 +91,8 @@ class InputManager(object):
         if isinstance(input_policy, UtgBasedInputPolicy):
             input_policy.script = self.script
             input_policy.master = master
+
+        #input(f'input_policy:{input_policy}')
         return input_policy
 
     def add_event(self, event):#Default!
@@ -118,7 +121,10 @@ class InputManager(object):
         self.logger.info("start sending events, policy is %s" % self.policy_name)
 
         try:
+            
             if self.policy is not None:
+                
+                print(f'self.policy:{self.policy},self.policy_name:{self.policy_name}')
                 res = self.policy.start(self)#Default!
                 if res['status'] == 'failed':
                     print(f'app:{self.app.package_name} crash, 紀錄')

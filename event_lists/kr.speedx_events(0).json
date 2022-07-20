@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop kr.speedx"}
+{"event_type": "intent", "log_lines": null, "intent": "am start kr.speedx/kr.speedx.MainActivity"}

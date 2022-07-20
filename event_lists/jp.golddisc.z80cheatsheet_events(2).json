@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop jp.golddisc.z80cheatsheet"}
+{"event_type": "intent", "log_lines": null, "intent": "am start jp.golddisc.z80cheatsheet/jp.golddisc.z80cheatsheet.MainActivity"}

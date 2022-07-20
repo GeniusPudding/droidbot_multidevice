@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.kodam.child.kidsafe.browser"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.kodam.child.kidsafe.browser/com.kodam.child.kidsafe.browser.MainActivity"}

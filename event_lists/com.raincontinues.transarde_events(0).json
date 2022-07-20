@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.raincontinues.transarde"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.raincontinues.transarde/com.raincontinues.transarde.MainActivity"}

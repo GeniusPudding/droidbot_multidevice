@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop la.ggu.m16.m16chat"}
+{"event_type": "intent", "log_lines": null, "intent": "am start la.ggu.m16.m16chat/la.ggu.m16.m16chat.LoginActivity"}

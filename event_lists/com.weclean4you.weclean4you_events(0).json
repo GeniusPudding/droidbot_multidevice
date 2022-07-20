@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.weclean4you.weclean4you"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.weclean4you.weclean4you/com.weclean4you.weclean4you.Splash"}

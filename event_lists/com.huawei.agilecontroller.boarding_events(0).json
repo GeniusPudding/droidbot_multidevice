@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.huawei.agilecontroller.boarding"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.huawei.agilecontroller.boarding/com.huawei.agilecontroller.boarding.activity.BoardingActivity"}

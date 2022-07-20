@@ -1,10 +1,12 @@
 import subprocess
 import json
 import os 
-from .smali_function_logger import walk_target_dir,walk_smali_dir,gen_invoke_set_json  
 import sys
-from .apk_utils import *
 import json
+if __name__ != '__main__':
+    from .smali_function_logger import walk_smali_dir #,gen_invoke_set_json  #walk_target_dir,
+    from .apk_utils import *
+
 def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
     #print(f'methodlog_instrumentation:{methodlog_instrumentation}')
     # param: target apk path that want to apply instrumentation method 
@@ -143,5 +145,15 @@ def add_emulator_detection(smali_lines):
 
     return new_content
 
-if __name__ == '__main__':
-    evasion_instrumentation(sys.argv[1],false)
+if __name__ == '__main__':#TODO 有bug
+    from smali_function_logger import walk_smali_dir #,gen_invoke_set_json  #walk_target_dir,
+    from apk_utils import *
+    with open('target_API_graph_all.json', 'r') as f:
+        target_API_graph = json.load(f)
+    dataset_path = sys.argv[1]    
+    for a in os.listdir(dataset_path):
+        if a[-4:] != '.apk' or 'repacked_' in a :
+            continue
+        testing_apk_path = os.path.join(dataset_path,a)
+        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph)
+        print(f'methodlog_instrumentation:{repackaged_apk_path}')

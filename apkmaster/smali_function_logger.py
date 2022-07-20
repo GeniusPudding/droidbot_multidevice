@@ -1,8 +1,10 @@
 #主要放產生要注入的smali語法的地方
 import os
 import argparse
+from pydoc import classname
 #from .apk_utils import *
 from .smali_reader import *
+#from smali_reader import *
 import random
 import json
 import jsonpickle
@@ -15,13 +17,6 @@ get_common_invoke_regs = lambda line: line[line.index('{')+1:line.index('}')].sp
 preg_move_offset = lambda new_range_end_reg, offset, locals_num: 'p'+ str(int(new_range_end_reg[1:])-offset) if int(new_range_end_reg[1:]) > 1 else 'v' + str(int(new_range_end_reg[1:])+locals_num-offset)#算一下是v型還是p型
 next_reg = lambda reg: reg[0] + str(int(reg[1:])+1)
 p2v_reg = lambda reg, locals_num: 'p'+str(int(reg[1:])-locals_num) if reg[0] == 'v' and int(reg[1:]) >= locals_num else reg #盡量明確用vp type來寫register，免得比對出錯
-
-def arg_parse():
-	parser = argparse.ArgumentParser(prog='python smali_function_hooker.py', description='Smali Instrumentor Tutorial')
-	parser.add_argument('--path', type=str, required=True, help='.smali files directory')
-	parser.add_argument('--target', type=str, required=False, help='inject caller or callee', default='callee')
-	parser.print_help()
-	return parser.parse_args()
 
 
 def get_free_log_register_and_types(free_list, sixteen_types, ban_list = None, locals_num = None):#TODO 不一定準確，有可能需要進一步分析 
@@ -67,7 +62,7 @@ def not_exist_on_path(method_sign,smali_base_dir):	#如果該smali file存在也
 	#input(f'not_exist:{not_exist}')
 	if not not_exist: #如果有這個class
 		smali_path = current_base + '.smali'
-		with open(smali_path, 'r' ) as f:
+		with open(smali_path, 'r', encoding="utf-8" ) as f:
 			not_exist = not any([m_def for m_def in f.readlines() if m_def.startswith('.method') and method_name in m_def])
 		#input(f'current_base:{current_base},method_sign:{method_sign},exist:{not not_exist}')	
 	return not_exist
@@ -81,25 +76,50 @@ def gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line):#用來
 	v16_pack['replaced_line'] = line.replace(param_reg16,v_last) + '\n\n'
 	if line.startswith('    invoke'):
 		if moveresults_line:#抓到不用前後插log的invoke 還是要計算move result的暫存器影響
-			v16_pack['moveresults'] = (moveresults_line+'\n')
+			v16_pack['moveresults'] = (moveresults_line+'\n\n')
 			if param_reg16 in moveresults_line or ('wide' in moveresults_line and 'p'+str(int(param_reg16[1:])-1) in moveresults_line):
 				return v16_pack
 				#如果move result沒蓋掉v16才需要moveback移
-	v16_pack['moveback'] = f'    move{is_object}/16 {param_reg16}, {v_last}\n' #是不是其實不需要移動(因為本來param_reg16的值就沒有被其他指令assign)
+	#v16_pack['moveback'] = f'    move{is_object}/16 {param_reg16}, {v_last}\n\n' #是不是其實不需要移動(因為本來param_reg16的值就沒有被其他指令assign)
 	
 	#input(f'v16_pack:{v16_pack}')
 	return v16_pack
 
-def gen_moves_register_offset_range(range_regs, offset, params_list, locals_num):# 用在v-p時去搬動regs 讓其可以順利連號 , param_list包含static與否的判斷了
+def gen_moves_register_offset_range(range_regs, offset, params_list, locals_num):# 用在超過locals的範圍時去搬動regs 讓其可以順利連號 , param_list包含static與否的判斷了
+	#v-form有時候也會超過lcoals的範圍! #offset必須>0
+
 	move_offset_lines = '' #整串p開頭的部分移動資料到正確的offset
 	move_back_offset_lines = '' #移動回原本的p-regs
 
-	moving_regs = [r for r in range_regs if r[0]=='p']
-	moved_regs = [preg_move_offset(r, offset, locals_num) for r in moving_regs]
+	moving_regs = [r for r in range_regs if r[0]=='p' or (r[0]=='v' and int(r[1:]) >= locals_num-offset)] #需要移動資料的regs, 會是range_regs的後面一段
+	moved_regs = [preg_move_offset(r, offset, locals_num) if r[0]=='p' else 'v'+str(int(r[1:])-offset) for r in moving_regs]#移動過後的reg位置
+	#print(f'moving_regs:{moving_regs}, moved_regs:{moved_regs}')
+	new_range_end_reg = moved_regs[-1]
+	nomove_count = len(range_regs) - len(moving_regs)
+	r_count = 0
+	p_index = 0
+	while r_count < nomove_count:
+		r_count += 2 if params_list[p_index] in ['J', 'D'] else 1
+		p_index += 1
 
 	#input(f'range_regs:{range_regs}, moving_regs:{moving_regs},moved_regs:{moved_regs},param_types:{param_types}')
 	last_move_wide = False
 
+	#print(f'before params_list:{params_list}')
+	params_list = params_list[p_index:]
+	#print(f'after params_list:{params_list}')
+	for i, p in enumerate(params_list):
+		if last_move_wide:  
+			last_move_wide = False
+			continue #上一個指令已經搬動過連續兩號的reg了
+		is_object = '-object' if len(p) != 1 else ''
+		move_wide = '-wide' if p in ['J','D'] else ''
+		if p in ['J','D']: last_move_wide = True 
+		#print(f'i:{i},p:{p}')
+		move_offset_lines += (f'    move{is_object}{move_wide}/16 {moved_regs[i]}, {moving_regs[i]}\n\n')#移過去
+	params_list.reverse()
+	moving_regs.reverse()
+	moved_regs.reverse()
 	for i, p in enumerate(params_list):
 		if last_move_wide: 
 			last_move_wide = False
@@ -107,60 +127,20 @@ def gen_moves_register_offset_range(range_regs, offset, params_list, locals_num)
 		is_object = '-object' if len(p) != 1 else ''
 		move_wide = '-wide' if p in ['J','D'] else ''
 		if p in ['J','D']: last_move_wide = True 
-		move_offset_lines += (f'    move{is_object}{move_wide}/16 {moved_regs[i]}, {moving_regs[i]}\n\n')#移過去
+		move_back_offset_lines += (f'    move{is_object}{move_wide}/16 {moving_regs[i]}, {moved_regs[i]}\n\n')#移回來
 
-	for i, p in enumerate(reversed(params_list)):
-		if last_move_wide: 
-			last_move_wide = False
-			continue #上一個指令已經搬動過連續兩號的reg了
-		is_object = '-object' if len(p) != 1 else ''
-		move_wide = '-wide' if p in ['J','D'] else ''
-		if p in ['J','D']: last_move_wide = True 
-		move_back_offset_lines += (f'    move{is_object}{move_wide}/16 {reversed(moving_regs)[i]}, {reversed(moved_regs)[i]}\n\n')#移回來
-
-	new_range_end_reg = moved_regs[-1]
+	
 	return move_offset_lines, move_back_offset_lines, new_range_end_reg
 
-def invoke_userdef2range_logger(register_case, invoke_line, tmp_register, current_method_signature, rand_method_id, locals_num, moveresult, free_list, sixteen_types, v16_moved_line, new_version = True):
-	#invoke_line必然有五個register (parameter)
-	#TODO 讓tmp_register吃到JD型別時可以轉成字串再搬移
-	#嘗試用Bundle呢
-
-	new_content = ''
-	params_list = get_params_list(invoke_line)
-
-	invoke_regs = get_common_invoke_regs(invoke_line)#首項可不動 動後面四個使其連號就好
-	r1 = invoke_regs[0]
-	target_regs = [r1] + [p2v_reg(r1[0] + str(int(r1[1:])+i),locals_num) for i in range(1,5)]
-
-	for i,reg in enumerate(invoke_regs[1:]): #從小的號碼開始swap免得撞到
-		if last_moved:
-			last_moved = False
-			continue
-		is_object = ''
-		move_wide = '' 
-		last_moved = False #專門為了檢察wide type的是否已經被上一個移動過了
-		if params_list[i+1] in ['J','D']:
-			move_wide = '-wide'
-			last_moved = True
-		elif len(params_list[i+1]) > 1:
-			is_object = '-object'
-		new_content += (f'    move{is_object}{move_wide}/16 {tmp_register}, {reg}\n\n')
-		new_content += (f'    move{is_object}{move_wide}/16 {reg}, {tmp_register}\n\n')
-		new_content += (f'    move{is_object}{move_wide}/16 {tmp_register}, {reg}\n\n')
-
-	#改寫成invoke range
-
-	#反過來從大的號碼開始交換回去
-
-	return new_content
-
-def invoke_userdef_logger(register_case, invoke_line, tmp_register, current_method_signature, rand_method_id, locals_num, moveresults_line=None, free_list = None,sixteen_types = None, v16_moved_line = None, new_version = True):#rand_method_id要傳入到callee內的
+def invoke_userdef_logger(register_case, invoke_line, tmp_register, class_name, rand_method_id, locals_num, moveresults_line=None, free_list = None,sixteen_types = None, v16_moved_line = None, new_version = True):#rand_method_id要傳入到callee內的
 	#line = invoke_line[:invoke_line.index('}')] + {p_last} + invoke_line[invoke_line.index('}'):invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):]
 	#	這邊就是想辦法把這些user define的method加參數，改成多傳了caller random ID進去 
 	#	但這邊沒有處理因為原本剛好5個參數要變成6個，沒辦法再用一般invoke的情況(需搬動資料讓range可用連號暫存器)
 
-	#print(f'rand_method_id:{rand_method_id}')					
+	#print(f'rand_method_id:{rand_method_id}')
+	callee_class = invoke_line.split(' ')[-1].split('->')[0]	
+	invoke_line += '\n\n'	
+	
 	new_content = ''
 	if new_version:
 		range_move = False
@@ -175,11 +155,11 @@ def invoke_userdef_logger(register_case, invoke_line, tmp_register, current_meth
 				invoke_line = invoke_line.replace(invoke_regs[-1], new_range_end_reg)+'\n\n'#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
 		else:
 			if v16_moved_line:#需要來替換invoke_line
-				invoke_line = v16_moved_line['replaced_line']			
+				invoke_line = v16_moved_line['move'] + v16_moved_line['replaced_line']			
 
 		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
-		new_content +=  (f'    const-string {tmp_register}, \"{rand_method_id}\"\n\n')
-		new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->callerID:Ljava/lang/String;\n\n') 
+		new_content += (f'    sget-object {tmp_register}, {class_name}->thismethodID:Ljava/lang/String;\n\n') 
+		new_content += (f'    sput-object {tmp_register}, {callee_class}->callerID:Ljava/lang/String;\n\n') 
 		new_content += invoke_line #這邊就會sput calleeID然後呼叫callLog
 		if moveresults_line:
 			new_content += (moveresults_line+'\n')
@@ -228,16 +208,18 @@ def invoke_userdef_logger(register_case, invoke_line, tmp_register, current_meth
 	new_content += final_invoke_line #塞了一個
 	if moveresults_line:
 		new_content += (moveresults_line+'\n')
-	new_content += '' if not v16_moved_line else v16_moved_line['moveback']
+	#new_content += '' if not v16_moved_line else v16_moved_line['moveback']
 	new_content += '' if no_move else (f'    move{is_object}/16 {randID_param}, {tmp_register}\n\n')	
 	new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
 	return new_content
 
-def invoke_target_logger(register_case, invoke_line, tmp_register, current_method_signature, rand_method_id, reg16, reg16_is_object, locals_num, moveresults_line=None,free_list = None,sixteen_types = None, v16_moved_line = None, new_version = True):#inline hook of system APIs, native APIs
+def invoke_target_logger(register_case, invoke_line, tmp_register, class_name, rand_method_id, reg16, reg16_is_object, locals_num, moveresults_line=None,free_list = None,sixteen_types = None, v16_moved_line = None, new_version = True):#inline hook of system APIs, native APIs
 	#tmp_register: a legal free register in the caller 
 	# 主要策略: case2優先找被invoke的參數來當free register去打印log
 	# 這裡跟userdef不同，不需要加參數到invoke line，但仍需要move offset
 	new_content = ''
+	target_class = invoke_line.split(' ')[-1].split('->')[0]
+	invoke_line += '\n\n'	
 	if new_version:
 		invoke_sign = get_invoke_sign(invoke_line)
 		range_move = False
@@ -256,22 +238,23 @@ def invoke_target_logger(register_case, invoke_line, tmp_register, current_metho
 			if v16_moved_line:
 				invoke_line = (v16_moved_line['move'] + v16_moved_line['replaced_line'])
 		new_content += ('    #Instrumentation by GeniusPudding\n')	
-		new_content += (f'    const-string {tmp_register}, \"{rand_method_id}\"\n\n')
-		new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->caller:Ljava/lang/String;\n\n')
-		new_content += (f'    const-string {tmp_register}, \"{target_rand_method_id}\"\n\n')
-		new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->calleeID:Ljava/lang/String;\n\n')
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->callLog()V\n\n')	
-		new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
-		new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->targetmethodStart:Ljava/lang/String;\n\n') 
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->targetmethodStartLog()V\n\n')
+		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
+		new_content += (f'    move-result-object {tmp_register}\n\n')	
+		new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+		new_content += (f'    const-string {tmp_register}, \"{target_class}\"\n\n')
+		new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
+		new_content += (f'    invoke-static {{}}, {class_name}->targetcallLog()V\n\n')	
+		# new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
+		# new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodStart:Ljava/lang/String;\n\n') 
+		new_content += (f'    invoke-static {{}}, {class_name}->targetmethodStartLog()V\n\n')
 		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
 		new_content += invoke_line
 		if moveresults_line: new_content += (moveresults_line+'\n')	
-		if v16_moved_line:	new_content += v16_moved_line['moveback']
+		#if v16_moved_line:	new_content += v16_moved_line['moveback']
 		new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
-		new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')
-		new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->targetmethodEnd:Ljava/lang/String;\n\n') 
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->targetmethodEndLog()V\n\n')
+		# new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')
+		# new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodEnd:Ljava/lang/String;\n\n') 
+		new_content += (f'    invoke-static {{}}, {class_name}->targetmethodEndLog()V\n\n')
 
 		return new_content
 	# TODO 有辦法知道是在call native function嗎???
@@ -309,13 +292,13 @@ def invoke_target_logger(register_case, invoke_line, tmp_register, current_metho
 		new_content += (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->targetmethodStartLog(Ljava/lang/String;)V\n\n')	
 		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
 
-		if not v16_moved_line:#正常情況
-			new_content += (invoke_line+'\n\n')
-			if moveresults_line: new_content += (moveresults_line+'\n')
-		else:#需要搬動v16的 比較麻煩
-			new_content += (v16_moved_line['move'] + v16_moved_line['replaced_line'])
-			if moveresults_line: new_content += (moveresults_line+'\n')	
-			new_content += v16_moved_line['moveback'] 	
+		#if not v16_moved_line:#正常情況
+		new_content += (invoke_line+'\n\n') if not v16_moved_line else (v16_moved_line['move'] + v16_moved_line['replaced_line'])
+		if moveresults_line: new_content += (moveresults_line+'\n')
+		#else:#需要搬動v16的 比較麻煩
+			#new_content += (v16_moved_line['move'] + v16_moved_line['replaced_line'])
+			#if moveresults_line: new_content += (moveresults_line+'\n')	
+			#new_content += v16_moved_line['moveback'] 	
 		new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
 		#tmp_register是額外新增的 不會被move result蓋到
 		new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')
@@ -371,21 +354,22 @@ def invoke_target_logger(register_case, invoke_line, tmp_register, current_metho
 def branch_logger(register_case, branch_line, tmp_register, current_method_signature, rand_method_id, reg16, reg16_is_object, free_list = None,sixteen_types = None, v16_moved_line = None, is_switch = False, new_version = True):
 	#return None
 	new_content = ''
-	branch_randomid = '('+str(random.getrandbits(16))+')'
-	branch_str = current_method_signature + '->' + branch_line.strip()+ ' '+rand_method_id+','+branch_randomid
+	branch_tag = branch_line.strip().split(':')[-1]
+	class_name = current_method_signature.split('->')[0]
+	branch_str = current_method_signature + '->' + branch_line.strip()+ ' '+rand_method_id
 	if new_version:
 		#current_method_signature->branch_ins rand_method_id, rand_branch_id
 		new_content += ('    #Instrumentation by GeniusPudding\n')
 		new_content += (f'    const-string {tmp_register}, \"{branch_str}\"\n\n')		
 		branch = 'branch' if not is_switch else 'switch' 
-		new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->{branch}:Ljava/lang/String;\n\n')
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->{branch}Log()V\n\n') 
-		new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line'] + v16_moved_line['moveback']
+		new_content += (f'    sput-object {tmp_register}, {class_name}->{branch}:Ljava/lang/String;\n\n')
+		new_content += (f'    invoke-static {{}}, {class_name}->{branch}Log()V\n\n') 
+		new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line']# + v16_moved_line['moveback']
 		if not is_switch:
-			new_content += (f'    const-string {tmp_register}, \"{rand_method_id},{branch_randomid}\" \n\n')
-			new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->branchFalse:Ljava/lang/String;\n\n')	
-			new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->branchFalseLog()V\n\n')		
-		return new_content, branch_randomid
+			new_content += (f'    const-string {tmp_register}, \"{branch_tag}\"\n\n')
+			new_content += (f'    sput-object {tmp_register}, {class_name}->branchTag:Ljava/lang/String;\n\n')	
+			new_content += (f'    invoke-static {{}}, {class_name}->branchFalseLog()V\n\n')		
+		return new_content
 
 	# if 'TypeToString(Ljava/lang/Object;Z)Ljava/lang/String;' in current_method_signature:
 	# 	input(f'\nbranch_line:{branch_line},register_case:{register_case}\n,tmp_register:{tmp_register}, reg16:{reg16}, reg16_is_object:{reg16_is_object} \
@@ -415,39 +399,38 @@ def branch_logger(register_case, branch_line, tmp_register, current_method_signa
 	# 	f'\n\n    move{is_object}/16 {reg16}, {tmp_register}\n\n' # case 1 且 reg16有被branch指令使用 
 	# 	#TODO: 如果原本分支比較的運算元是J、D怎辦
 
-	new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line'] + v16_moved_line['moveback']  
+	new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line'] #+ v16_moved_line['moveback']  
 	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
-	new_content += (f'    const-string {log_param}, \"{rand_method_id},{branch_randomid}\" \n\n')
+	new_content += (f'    const-string {log_param}, \" {branch_str} {rand_method_id}\"\n\n')
 	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchFalseLog(Ljava/lang/String;)V\n\n') if not is_switch else ''
 	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')
-	return new_content, branch_randomid
+	return new_content
 
 def tag_logger(register_case, tmp_register, current_method_signature, rand_method_id, tag_lines = None,tags = None, free_list = None,sixteen_types = None\
-	, branch_randomid=None, try_randomid=None, test_pause=False, new_version = True):#randomid 可能是try的也可能是branchTrue的(但不會同時)
+	,try_catch_map = None, test_pause=False, new_version = True):#randomid 可能是try的也可能是branchTrue的(但不會同時)
 	#針對goto,try-catch,cond, 因為沒有要修改指令本身所以很簡單
 	#tags跟tag_lines一一對應，tag_lines用在log裡面的TAG參數，tags用來選擇要inject的log method
 	#tags包含tryStart,tryDone,tryCatch,branchTrue,goto
+	class_name = current_method_signature.split('->')[0]
 	new_content = ''
 	if new_version:
-		new_try_randomid = False
 		new_content += ('    #Instrumentation by GeniusPudding\n')	
 		for i, line in enumerate(tag_lines):#中間是針對每一個tag下一次const-string跟invoke
 			tag_type = tags[i]
-			tag_str = current_method_signature + '->' + line.strip() +' '+rand_method_id if ':cond' not in line else rand_method_id+','+branch_randomid #這邊的設計是為了後面序列比對用的
-			if 'try' in tag_type:
-				if tag_type == 'tryStart':#等到這行就重新分發一個新的ID
-					try_randomid = '('+str(random.getrandbits(16))+')'		
-					new_try_randomid = True
-				tag_str += try_randomid
+			if tag_type == 'tryDone':
+				t = line.strip()
+				if t not in try_catch_map:#測試用 不應該到這
+					input(f'try_catch_map:{try_catch_map}, line:{line}, current_method_signature:{current_method_signature}')
+			done = ('->'+try_catch_map[line.strip()] if tag_type == 'tryDone' else '')
+			tag_str = current_method_signature + '->' + line.strip() + done + ' ' + rand_method_id \
+				if ':cond' not in line and ':goto' not in line else ' '+line.strip()+ ' '+rand_method_id #這邊的設計是為了後面序列比對用的
+
 			new_content += (f'    const-string {tmp_register}, \"{tag_str}\"\n\n')
-			new_content += (f'    sput-object {tmp_register}, Linjections/InlineLogs;->{tag_type}:Ljava/lang/String;\n\n')	
-			new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->{tag_type}Log()V\n\n')
-		if new_try_randomid:	#包含tryStart的時候
-			return new_content, try_randomid
-		else:
-			return new_content		
+			new_content += (f'    sput-object {tmp_register}, {class_name}->{tag_type}:Ljava/lang/String;\n\n')	if tag_type != 'branchTrue' \
+				else (f'    sput-object {tmp_register}, {class_name}->branchTag:Ljava/lang/String;\n\n')	
+			new_content += (f'    invoke-static {{}}, {class_name}->{tag_type}Log()V\n\n')
+		return new_content		
 	is_object = '-object'
-	new_try_randomid = False
 	no_move = True
 	log_param = tmp_register
 	if register_case == 2:# Case 2 , v_last(tmp_register) > v15
@@ -458,19 +441,11 @@ def tag_logger(register_case, tmp_register, current_method_signature, rand_metho
 	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
 	for i, line in enumerate(tag_lines):#中間是針對每一個tag下一次const-string跟invoke
 		tag_type = tags[i]
-		tag_str = current_method_signature + '->' + line.strip() +' '+rand_method_id if ':cond' not in line else rand_method_id+','+branch_randomid #這邊的設計是為了後面序列比對用的
-		if 'try' in tag_type:
-			if tag_type == 'tryStart':#等到這行就重新分發一個新的ID
-				try_randomid = '('+str(random.getrandbits(16))+')'		
-				new_try_randomid = True
-			tag_str += try_randomid
+		tag_str = current_method_signature + '->' + line.strip() +' '+rand_method_id if ':cond' not in line else ' '+line.strip()+ ' '+rand_method_id #這邊的設計是為了後面序列比對用的
 		new_content += (f'    const-string {log_param}, \"{tag_str}\"\n\n')
 		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->{tag_type}Log(Ljava/lang/String;)V\n\n')
 	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')	
-	if new_try_randomid:	#包含tryStart的時候
-		return new_content, try_randomid
-	else:
-		return new_content
+	return new_content
 
 def check_reg_usage(line, free_list, sixteen_types):#計算free_list, sixteen_types的改動
 	operand_regs,result_regs,result_types = get_registers_usage_in_line(line)
@@ -493,14 +468,18 @@ def is_invoke_offcial(invoke_line):#黑名單 但不知道要怎樣才會齊全
 
 def gen_method_start_log(p_last, rand_method_id, current_method_signature, no_caller, new_version = True):	
 	if new_version:
+		class_name = current_method_signature.split('->')[0]
 		new_content = ('    #Instrumentation by GeniusPudding\n')
-		if not no_caller:
-			new_content += (f'    const-string v0, \"->{rand_method_id}\"\n\n')
-			new_content += (f'    sput-object v0, Linjections/InlineLogs;->calleeID:Ljava/lang/String;\n\n') #caller那邊sput caller ID，這邊放calleeID
-			new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->callLog()V\n\n')#然後再呼叫call log
-		new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
-		new_content += (f'    sput-object v0, Linjections/InlineLogs;->methodStart:Ljava/lang/String;\n\n') 
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->methodStartLog()V\n\n')
+		if not no_caller: 
+			new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
+			new_content += (f'    move-result-object v0\n\n')
+			new_content += (f'    sput-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n') #caller那邊sput caller ID，這邊放calleeID
+			new_content += (f'    invoke-static {{}}, {class_name}->callLog()V\n\n')#然後再呼叫call log
+		# new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
+		# new_content += (f'    sput-object v0, {class_name}->methodStart:Ljava/lang/String;\n\n') 
+		new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
+		new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
+		new_content += (f'    invoke-static {{}}, {class_name}->methodStartLog()V\n\n')
 		return new_content
 	new_content = ('    #Instrumentation by GeniusPudding\n')
 	if not no_caller:
@@ -509,7 +488,7 @@ def gen_method_start_log(p_last, rand_method_id, current_method_signature, no_ca
 		new_content += (f'    move-object/16 v0, {p_last}\n\n')
 		new_content += (f'    invoke-virtual {{v1, v0}}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 		new_content += (f'    move-result-object v1\n\n')
-		new_content += (f'    const-string v0, \"->{rand_method_id}\"\n\n')
+		new_content += (f'    const-string v0, \"{rand_method_id}\"\n\n')
 		new_content += (f'    invoke-virtual {{v1, v0}}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 		new_content += (f'    move-result-object v1\n\n')
 		new_content += (f'    invoke-virtual {{v1}}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
@@ -527,6 +506,7 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 	current_method_signature = '' #without the access scope
 	origin_clone = smali_lines.copy()
 	in_main_init = False
+	has_staticfields = False
 	#locate methods, registers
 	new_content = ''
 	# only_prototype = False #abstract, native method prototype
@@ -535,13 +515,12 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 	p_last = '' #為了塞一個從caller產生的randID到每一個invoke
 	v_last = ''
 	v_last2 = '' #可以輕鬆解決 case 2 裡面invoke-static需要用到參數的時候撞到J、D型態的case
-	v16_moved_line = None #用來暫存case1剛好指令撞到v16的，包裝過move的指令 (另存一份 不要直接改line)
+	vtry_catch_map16_moved_line = None #用來暫存case1剛好指令撞到v16的，包裝過move的指令 (另存一份 不要直接改line)
+	try_catch_map = {} #用來暫存catch跟try的ID對應，每個method會重置 
 	params_list = []
 	param_types = []
 	invoke_tmp = None
 	rand_method_id = '' #這個method專屬的隨機生成32位ID
-	try_randomid = ''#用來配對trystart-tryend-catch
-	branch_randomid = ''#用來配對branch指令跟兩個分支
 	#origin_line = ''
 	#下面這些在每個method結束會reset
 	case = 0 #0: locals + parameters < 16; 1: locals < 16 but locals + parameters >= 16; 2: locals >= 16
@@ -553,7 +532,8 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 	param_reg16_is_object = True#'object' #給case 1 用來判斷如果需要v16時要用哪種move指令
 
 	for i,line in enumerate(smali_lines):
-		v16_moved_line = None
+		v16_moved_line = None#每一行都初始化
+		tmp_line = line
 		if line.startswith('.method ') and '<clinit>(' not in line :# and (not target_methods or any([m in line for m in target_methods])): #
 			#filtered out the class constructor methods (<clinit>)
 			#會走到這的應該都不是official_prefix的
@@ -595,6 +575,9 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 				#可能極小機率存在小bug (param_reg16這個暫存器本身字串存在於const-string內)
 				# if 'updateAddEmailEntry' in current_method_signature and  (line.startswith('    iput') or line.startswith('    iget')):
 				# 	input(f'current_method_signature:{current_method_signature},case:{case},param_reg16:{param_reg16}\nline:{line}\nis_4bit_instruction(line):{is_4bit_instruction(line)},params_list:{params_list},params_num:{params_num}')
+				# if 'or-int/lit16' in line:
+				# 	b = is_4bit_instruction(line)
+				# 	input(f'是否為4bit:{b}')
 				if case == 1 and param_reg16 in line and is_4bit_instruction(line):
 
 					is_object = '-object' if param_types[p_index] == 'object' else ''
@@ -605,18 +588,23 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 					# if (line.startswith('    iput') or line.startswith('    iget')) and 'updateAddEmailEntry' in current_method_signature:
 					# 	print(f'iget,iput:{line}')
 					# 	input(f'v16_moved_line:{v16_moved_line}')
-					if not any([line.startswith(prefix) for prefix in ['    invoke', '    if-', '    sparse-switch']  ]):
-						line = v16_moved_line['replaced_line']
-
+					# if 'invoke-virtual {p0, v1}, Lru/free/esplus/AuditionWords;->getString(I)Ljava/lang/String;' in line:
+					# 	print(f'v16_moved_line:{v16_moved_line},line:{line}')
+					if not any([line.startswith(prefix) for prefix in ['    invoke', '    if-', '    sparse-switch']  ]):						
+						line =  v16_moved_line['move'] + v16_moved_line['replaced_line'] #+ v16_moved_line['moveback']
+					# if 'Lru/free/esplus/AuditionWords;->getString(' in line:
+					# 	input(f'line:{line}')
 			if line.startswith('    .locals '): #p naming default
 				try:
 					
 					locals_num  = int(line.split(' ')[-1])
 					if locals_num == 0:
+						#line = line.replace('0','1')
 						if params_num < 14:
 							line = line.replace('0','2') #用來下start method log
 						else:
-							input(f'sign:{current_method_signature} 沒有locals但有超過14個參數')
+							print(f'sign:{current_method_signature} 沒有locals但有超過14個參數') #case 1?
+							line = line.replace('0','1')
 					if locals_num >= 16:
 						case = 2
 						line = line.replace(str(locals_num),str(locals_num+2))
@@ -631,7 +619,7 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 
 					
 					#when case == 1, we can replace all v_16(actually p_x	) used in instructions
-					v_last = 'v'+str(locals_num)
+					v_last = 'v'+str(locals_num)  if locals_num < 256 else 'v255'
 					locals_num += 2 if case == 2 else 1
 					for i in range(min(locals_num,16)):
 						free_list.append('v'+str(i))	
@@ -658,45 +646,28 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 				sixteen_types = ['']*16
 				free_list = []
 				invoke_tmp = None
+				try_catch_map = {}
 			elif line.startswith('    return'):
 				v_free = v_last
 				if case == 2 and 'v0' in line:
 					v_free = 'v2'
-				# if '-wide' in line:
-				# 	if 'v0' in line:
-				# 		new_content += (f'    const-string {v_free}, \"{current_method_signature} {rand_method_id}\"\n\n')
-				# 		new_content += (f'    invoke-static {{{v_free}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')				
-				# 	else:
-				# 		new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
-				# 		new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
-				# elif '-void' in line:
-				# 	new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
-				# 	new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')				
-				# else:
-				# 	if 'v0' in line:
-				# 		new_content += (f'    const-string {v_free}, \"{current_method_signature} {rand_method_id}\"\n\n')
-				# 		new_content += (f'    invoke-static {{{v_free}}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')
-				# 	else:
-				# 		new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
-				# 		new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodEndLog(Ljava/lang/String;)V\n\n')					
+				
 				v_end = v_free if '-wide' in line or 'v0' in line else 'v0'
-				new_content += (f'    const-string {v_end}, \"{current_method_signature} {rand_method_id}\"\n\n')	
-				new_content += (f'    sput-object {v_end}, Linjections/InlineLogs;->methodEnd:Ljava/lang/String;\n\n') 
-				new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->methodEndLog()V\n\n')
+				# new_content += (f'    const-string {v_end}, \"{current_method_signature} {rand_method_id}\"\n\n')	
+				# new_content += (f'    sput-object {v_end}, Linjections/InlineLogs;->methodEnd:Ljava/lang/String;\n\n') 
+				new_content += (f'    invoke-static {{}}, {class_name}->methodEndLog()V\n\n')
 			#sensitive/permission APIs and branch
 			elif line.startswith('    invoke'):#如果case 1, invoke的參數有可能會撞到16需搬動到v_last之類的? 跟move-result一起考慮
-				if line.startswith('    invoke-interface'): #介面方法照理說是調用抽象類內方法來用的
-					new_content += line
-					continue #什麼都不做	
-
-
+				# if line.startswith('    invoke-interface'): #介面方法照理說是調用抽象類內方法來用的
+				# 	new_content += line
+				# 	continue #什麼都不做	
 				is_mr = 'move-result' in smali_lines[i+2]
 				moveresult = smali_lines[i+2] if is_mr else None
 
 				if is_target_method(get_invoke_sign(line),smali_base_dir,target_API_graph_all):
 					#把沒有被前面callee-log到的method在caller去下log, 在case 2的時候v_last後面連號的v_last2也要能使用
 
-					invoke_tmp = invoke_target_logger(case, line, v_last, current_method_signature, rand_method_id, param_reg16, param_reg16_is_object, locals_num, moveresult,free_list,sixteen_types, v16_moved_line)
+					invoke_tmp = invoke_target_logger(case, tmp_line, v_last, class_name, rand_method_id, param_reg16, param_reg16_is_object, locals_num, moveresult,free_list,sixteen_types, v16_moved_line)
 					if invoke_tmp:
 						new_content += invoke_tmp
 						output_flag	= 0
@@ -708,15 +679,19 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 					#  	input(f'invoke_tmp:{invoke_tmp}\n line:{line}:current_method_signature:{current_method_signature},moveresult:{moveresult}')
 				elif not is_invoke_offcial(line):
 					if not_exist_on_path(get_invoke_sign(line),smali_base_dir):#可能包含一些因為invoke-virtual而沒被算進offcial list的
-						new_content += line
-						continue #什麼都不做	
+						output_flag = 0
+						if v16_moved_line:
+							new_content += v16_moved_line['move'] + v16_moved_line['replaced_line']
+							if moveresult: new_content += moveresult
+							#new_content += v16_moved_line['moveback']
+							invoke_tmp = 'common offcial'
+							if not is_mr:
+								invoke_tmp = None
+						else:	
+							new_content += (line + '\n\n')
+							continue #什麼都不做	
 					else:#必須要在路徑上存在method def的才能去改參數
-						#TODO 如果原本就有5個參數不能簡單地呼叫這個
-						# if params_num == 5: #這個case必須將invoke改成invoke-range
-						# 	new_content += invoke_userdef2range_logger(case, line, v_last, current_method_signature, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
-						# else:
-						#if len(get_params_list(line)) != 5:
-						invoke_tmp = invoke_userdef_logger(case, line, v_last, current_method_signature, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
+						invoke_tmp = invoke_userdef_logger(case, tmp_line, v_last, class_name, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
 						if invoke_tmp:
 							new_content += invoke_tmp
 							output_flag	= 0
@@ -724,21 +699,26 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 							if not is_mr: #因為後面沒有緊接move-result指令，必須reset invoke_tmp狀態 免得下一個非target method的move result誤判        
 								invoke_tmp = None #輸出下一個遇到的move result
 				else:#額外不重要的invoke 跟那些系統相關的code有點關係 但又不太清楚幹嘛用的
+					output_flag = 0
 					if v16_moved_line:
 						#input(f'額外的line:{line}, v16_moved_line:{v16_moved_line}')
 						new_content += (v16_moved_line['move'] + v16_moved_line['replaced_line'])
-						if is_mr: 
-							new_content += v16_moved_line['moveresults']
-						new_content += v16_moved_line['moveback']
-						output_flag = 0
+						if is_mr: new_content += v16_moved_line['moveresults']
+						invoke_tmp = line
+						#input(f'不重要的 line:{line},v16_moved_line:{v16_moved_line}')
+						if not is_mr:
+							invoke_tmp = None
+					else:	
+						new_content += (line + '\n\n')
+						continue #什麼都不做	
 			elif line.startswith('    if-'):
 				#print(current_method_signature)
-				tmp, branch_randomid = branch_logger(case, line, v_last, current_method_signature, rand_method_id, param_reg16, param_reg16_is_object, free_list, sixteen_types, v16_moved_line)
+				tmp = branch_logger(case, tmp_line, v_last, current_method_signature, rand_method_id, param_reg16, param_reg16_is_object, free_list, sixteen_types, v16_moved_line)
 				if tmp:
 					new_content += tmp
 					output_flag	= 0
 			elif line.startswith('    sparse-switch'):
-				tmp, branch_randomid = branch_logger(case, line, v_last, current_method_signature, rand_method_id, param_reg16, param_reg16_is_object, free_list, sixteen_types, v16_moved_line, is_switch=True)
+				tmp = branch_logger(case, tmp_line, v_last, current_method_signature, rand_method_id, param_reg16, param_reg16_is_object, free_list, sixteen_types, v16_moved_line, is_switch=True)
 				if tmp:					
 					new_content += tmp
 					output_flag	= 0
@@ -750,6 +730,14 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 					invoke_tmp = None
 			elif line.startswith('    move-exception'):#都給前面出現的標籤catch, catch+try_start輸出
 				output_flag	= 0
+			# elif line.startswith('    .catch'):
+			# 	catch_list = line.strip().split(' ')	
+			# 	try_catch_map[catch_list[-2][:-1]] = catch_list[-1]
+			elif line.startswith('    goto'):
+				tag = line.strip().split(' ')[-1]
+				new_content += (f'    const-string {v_last}, \"{current_method_signature} {tag}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
+				new_content += (f'    sput-object {v_last}, {class_name}->goto:Ljava/lang/String;\n\n') 
+				new_content += (f'    invoke-static {{}}, {class_name}->gotoLog()V\n\n')				
 			elif line.startswith('    :'):#去注入ㄧ些分支跳轉相關的標籤, cond, goto, try_start 有時候會連在一起 很麻煩
 				# 實際指令的部分都不在這部分加入new_content
 				output_flag = 0
@@ -762,14 +750,12 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 					if next_line.startswith('    move-exception'):#必須剛好接在catch後面的指令
 						check_reg_usage(next_line, free_list, sixteen_types)#提前檢查move-exception的指令
 						new_content += (next_line)
-						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['tryCatch'], free_list, sixteen_types, try_randomid=try_randomid)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['tryCatch'], free_list, sixteen_types)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
 					elif next_line.startswith('    :try_start') and next2_line.startswith('    move-exception'):#需判斷move-exception的存在 不能讓這個被log超車
 						check_reg_usage(next2_line, free_list, sixteen_types)#提前檢查move-exception的指令
 						new_content += (next_line)
 						new_content += (next2_line)
-						tmp, try_randomid = tag_logger(case, v_last, current_method_signature, rand_method_id, [line,next_line], ['tryCatch','tryStart'], free_list, sixteen_types, \
-							try_randomid=try_randomid)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
-						new_content += tmp	#這邊應該是先前面try的catch 再後面try的start
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line,next_line], ['tryCatch','tryStart'], free_list, sixteen_types)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
 					#看了一下文本發現好像沒有其他標籤會卡在:catch跟move-exception中間 所以沒有else
 				elif line.startswith('    :cond'):
 					new_content += (line+'\n')
@@ -777,39 +763,36 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 						new_content += (next_line)
 						is_next2_tag = True if next2_line.startswith('    :try_start') else False
 						new_content += (next2_line)	if is_next2_tag else ''
-						tmp = tag_logger(case, v_last, current_method_signature, rand_method_id, [line, next_line, next2_line] if is_next2_tag else [line,next_line],\
-							 ['branchTrue', 'goto','tryStart'] if is_next2_tag else ['branchTrue', 'goto'], \
-								 free_list, sixteen_types, branch_randomid=branch_randomid)	
-						new_content += tmp[0] if is_next2_tag else tmp
-						if is_next2_tag: try_randomid = tmp[1] 
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line, next_line, next2_line] if is_next2_tag else [line,next_line],\
+							 ['branchTrue', 'gotoTag','tryStart'] if is_next2_tag else ['branchTrue', 'gotoTag'], \
+								 free_list, sixteen_types)	
 					elif next_line.startswith('    :try_start'): 
 						new_content += (next_line)		#:try_start			
-						tmp, try_randomid = tag_logger(case, v_last, current_method_signature, rand_method_id, [line,next_line], ['branchTrue','tryStart'], \
-							free_list, sixteen_types, branch_randomid=branch_randomid, try_randomid=try_randomid)	
-						new_content += tmp				
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line,next_line], ['branchTrue','tryStart'], \
+							free_list, sixteen_types)					
 					elif not notCommonInstruction(next_line): #後面直接接一般指令
-						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['branchTrue'], free_list, sixteen_types, \
-							branch_randomid=branch_randomid)
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['branchTrue'], free_list, sixteen_types)
 					else:#當作沒看到好了
-						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['branchTrue'], free_list, sixteen_types, \
-							branch_randomid=branch_randomid)
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['branchTrue'], free_list, sixteen_types)
 					# 	raise ValueError(f'next line of :cond is {next_line}')#預期之外的例外狀況 #例如 :sswitch_0
 				elif line.startswith('    :goto'):
 					if not last_line.startswith('    :cond'):#都從第一個標籤開始看 交給前面那裏輸出
 						new_content += (line+'\n')
 						is_next_tag = True if next_line.startswith('    :try_start') else False  # :goto再:try_start
 						new_content += (next_line) if is_next_tag else ''
-						tmp = tag_logger(case, v_last, current_method_signature, rand_method_id, [line, next_line] if is_next_tag else [line]\
-							, ['goto', 'tryStart'] if is_next_tag else ['goto'], free_list, sixteen_types)
-						new_content += tmp[0] if is_next_tag else tmp
-						if is_next_tag: try_randomid = tmp[1] 
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line, next_line] if is_next_tag else [line]\
+							, ['gotoTag', 'tryStart'] if is_next_tag else ['gotoTag'], free_list, sixteen_types)
 				elif line.startswith('    :try_start'):
 					if not (last_line.startswith('    :cond') or last_line.startswith('    :goto') or last_line.startswith('    :catch')): #前面有其他標籤輸出過了(緊跟在cond或catch或goto之後的)
 						new_content += (line+'\n')
-						tmp, try_randomid = tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['tryStart'], free_list, sixteen_types)
-						new_content += tmp
+						new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['tryStart'], free_list, sixteen_types)
 				elif line.startswith('    :try_end'):
-					new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['tryDone'], free_list, sixteen_types, try_randomid=try_randomid)
+					l = next_line.strip().split(' ')  #    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+					end_id, catch_id = l[-2][:-1], l[-1]
+					catch_list = next_line.strip().split(' ')	
+					try_catch_map[catch_list[-2][:-1]] = catch_list[-1]
+					#print(f'catch_id:{catch_id},end_id:{end_id}')
+					new_content += tag_logger(case, v_last, current_method_signature, rand_method_id, [line], ['tryDone'], free_list, sixteen_types, try_catch_map)
 					new_content += (line+'\n')
 				# elif line.startswith('    :sswitch'): #TODO 這部分好像會動到switch指令所需指向的資料偏移量 不曉得怎改動 也可能不重要
 				# 	if not last_line.startswith('    :goto'):#都從第一個標籤開始看 交給前面那裏輸出
@@ -826,30 +809,414 @@ def method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity
 			line += '\n'	
 		else:#(not in_method_flag)expandable for other features here 
 			if line.startswith('.class '):
-				class_name = line.split(' ')[-1].strip('\n')		
+				class_name = line.split(' ')[-1].strip('\n')
+		
 				if 'interface abstract' in line:#這些應該都是透過invoke-interface呼叫? 應該是都可以先忽略
-					return origin_clone
+					return ''.join(origin_clone)
+			elif line.startswith('# static fields'):
+				has_staticfields = True
+			elif line.startswith('# direct methods'):
+				if not has_staticfields:
+					new_content += '# static fields\n\n' #後面要用來塞每個class都額外加入的static fields
 		if output_flag:
 			new_content += line
 		else:
 			output_flag = 1	
 
+	new_content = replace_fields(new_content)
+	new_content += gen_logs_methoddef(class_name)
+
 	return new_content
 
-def gen_invoke_set_json(smali_base_dir):
-	smali_index = os.path.basename(smali_base_dir)
-	# par = os.path.abspath(os.path.join(smali_base_dir,'..')) 
-	# input(f'smali_base_dir:{smali_base_dir} parentdir:{par}')
-	par_path = os.path.abspath(os.path.join(smali_base_dir,'..')) 
-	apk_name = os.path.basename(par_path)	
+def replace_fields(new_content):
+	new_staticfields = ('\n# static fields\n')
+	new_staticfields += ('.field public static thismethodSign:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static targetmethodSign:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static callerID:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static thismethodID:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static targetmethodID:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static branch:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static branchTag:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static switch:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static switchCase:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static tryStart:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static tryDone:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static tryCatch:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static goto:Ljava/lang/String; = ""\n\n')
+	new_staticfields += ('.field public static gotoTag:Ljava/lang/String; = ""\n\n')
+	return new_content.replace('\n# static fields\n', new_staticfields) 
 
-	invoke_set = walk_smali_dir(smali_base_dir, log_mode = False)
-	#input(f'invoke_set:{invoke_set}')
-	invoke_json = jsonpickle.encode(invoke_set)
-	info_path = os.path.join(par_path,'..',apk_name+smali_index+'_invoke.json') 
-	with open(info_path,'w') as f:
-		json.dump(invoke_json, f)
-	return
+def gen_logs_methoddef(class_name):
+
+	new_content = gen_callLog(class_name)
+	new_content += gen_methodStartLog(class_name)
+	new_content += gen_methodEndLog(class_name)
+	new_content += gen_targetcallLog(class_name)
+	new_content += gen_targetmethodStartLog(class_name)
+	new_content += gen_targetmethodEndLog(class_name)
+	new_content += gen_branchLog(class_name)
+	new_content += gen_branchTrueLog(class_name)
+	new_content += gen_branchFalseLog(class_name)
+	new_content += gen_gotoLog(class_name)	
+	new_content += gen_gotoTagLog(class_name)
+	new_content += gen_tryStartLog(class_name)
+	new_content += gen_tryDoneLog(class_name)
+	new_content += gen_tryCatchLog(class_name)
+	return new_content
+	
+def gen_callLog(class_name):
+	new_content = ('.method public static callLog()V\n')
+	new_content += ('    .locals 4\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, \"- CALL Relation: \"\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('	 invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;\n\n')
+	new_content += ('    move-result-object v0\n\n')
+	new_content += ('    invoke-virtual {v0}, Ljava/lang/Thread;->getStackTrace()[Ljava/lang/StackTraceElement;\n\n')
+	new_content += ('    move-result-object v0\n\n')
+	new_content += ('    array-length v3, v0\n\n')
+	new_content += ('    const/4 v2, 0x5\n\n')
+	new_content += ('    if-ge v3, v2, :cond_0\n\n')
+	new_content += ('    const-string v3, "(No Caller)"\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    goto :goto_0\n\n')
+	new_content += ('    :cond_0\n')
+	new_content += ('    const/4 v2, 0x4\n\n')
+	new_content += ('    aget-object v3, v0, v2\n\n')
+	new_content += ('    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v3\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v3, {class_name}->callerID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    :goto_0\n')
+	new_content += ('    const-string v3, "->"\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const/4 v2, 0x3\n\n')
+	new_content += ('	aget-object v3, v0, v2\n\n')
+	new_content += ('	invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v3\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v3, {class_name}->thismethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v3, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v3, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content
+
+def gen_targetcallLog(class_name):
+	new_content = ('.method public static targetcallLog()V\n')
+	new_content += ('    .locals 4\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, \"- CALL Relation: \"\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('	 invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;\n\n')
+	new_content += ('    move-result-object v0\n\n')
+	new_content += ('    invoke-virtual {v0}, Ljava/lang/Thread;->getStackTrace()[Ljava/lang/StackTraceElement;\n\n')
+	new_content += ('    move-result-object v0\n\n')
+	new_content += ('    const/4 v2, 0x3\n\n')
+	new_content += ('    aget-object v3, v0, v2\n\n')
+	new_content += ('    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v3\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v3, {class_name}->thismethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v3, "->"\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const/4 v2, 0x2\n\n')
+	new_content += ('	aget-object v3, v0, v2\n\n')
+	new_content += ('	invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v3\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v3, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v3, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v3, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content
+
+def gen_methodStartLog(class_name):
+	new_content = ('.method public static methodStartLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Method START: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_methodEndLog(class_name):
+	new_content = ('.method public static methodEndLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Method END: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_targetmethodStartLog(class_name):
+	new_content = ('.method public static targetmethodStartLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Method START(target): "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_targetmethodEndLog(class_name):
+	new_content = ('.method public static targetmethodEndLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Method END(target): "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_branchLog(class_name):
+	new_content = ('.method public static branchLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Branch: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->branch:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_switchLog(class_name):
+	new_content = ('.method public static switchLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Branch(Switch): "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->switch:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_branchTrueLog(class_name):
+	new_content = ('.method public static branchTrueLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Case True:"\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->branchTag:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_branchFalseLog(class_name):
+	new_content = ('.method public static branchFalseLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Case False:"\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->branchTag:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_gotoLog(class_name):
+	new_content = ('.method public static gotoLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Goto: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->goto:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_gotoTagLog(class_name):
+	new_content = ('.method public static gotoTagLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Goto Tag: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->gotoTag:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_tryStartLog(class_name):
+	new_content = ('.method public static tryStartLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Try Start: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->tryStart:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_tryDoneLog(class_name):
+	new_content = ('.method public static tryDoneLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Try Done:"\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->tryDone:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
+def gen_tryCatchLog(class_name):
+	new_content = ('.method public static tryCatchLog()V\n')
+	new_content += ('    .locals 2\n\n')
+	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+	new_content += ('    const-string v0, "- Try Catch: "\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v0, {class_name}->tryCatch:Ljava/lang/String;\n\n')
+	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+	new_content += ('    return-void\n')
+	new_content += ('.end method\n\n')
+	return new_content	
+
 
 def walk_smali_dir(smali_base_dir, target_API_graph_all = None, main_activity = None, log_mode = True):#default mode: Logging
 	#print(f'smali_base_dir:{smali_base_dir}')
@@ -889,6 +1256,7 @@ def walk_smali_dir(smali_base_dir, target_API_graph_all = None, main_activity = 
 					continue
 				f.seek(0)
 				new_content = method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity)
+				#input(f'new_content:{new_content}')
 				f.write(new_content)
 				f.close()
 			else:
@@ -900,33 +1268,33 @@ def walk_smali_dir(smali_base_dir, target_API_graph_all = None, main_activity = 
 
 	#patch_log_file(smali_base_dir)
 
-def walk_target_dir(smali_base_dir, graph):
-	#print(f'walk to smali_base_dir:{smali_base_dir},keys:{graph.keys()}')
-	if os.path.isfile(smali_base_dir) and smali_base_dir[-6:] == '.smali' :# a method node
-		if list(graph.values())[0] != 'leaf': #identical basename of dir and smali file! 
-			return
-		# basename = os.path.basename(smali_base_dir)
-		target_methods = graph.keys()
-		input(f'smali_base_dir:{smali_base_dir}\graph:{graph}')
-		try:
-			f = open(smali_base_dir,'r+', encoding='utf-8')
-			smali_lines = list(f)
-			f.seek(0)
-			new_content = method_logger(smali_lines,smali_base_dir,target_API_graph_all,target_methods, main_activity)
-			f.write(new_content)
-			f.close()			
-		except :
-			input('log inject failed')				
-			return
-		return 
+# def walk_target_dir(smali_base_dir, graph):
+# 	#print(f'walk to smali_base_dir:{smali_base_dir},keys:{graph.keys()}')
+# 	if os.path.isfile(smali_base_dir) and smali_base_dir[-6:] == '.smali' :# a method node
+# 		if list(graph.values())[0] != 'leaf': #identical basename of dir and smali file! 
+# 			return
+# 		# basename = os.path.basename(smali_base_dir)
+# 		#target_methods = graph.keys()
+# 		input(f'smali_base_dir:{smali_base_dir}\graph:{graph}')
+# 		try:
+# 			f = open(smali_base_dir,'r+', encoding='utf-8')
+# 			smali_lines = list(f)
+# 			f.seek(0)
+# 			new_content = method_logger(smali_lines,smali_base_dir,target_API_graph_all, main_activity)
+# 			f.write(new_content)
+# 			f.close()			
+# 		except :
+# 			input('log inject failed')				
+# 			return
+# 		return 
 
-	for subdir in os.listdir(smali_base_dir):
-		#print(f'subdir:{subdir}')
-		if subdir in graph or (subdir[-6:]=='.smali' and subdir[:-6] in graph): 
-			next_dir_path = os.path.join(smali_base_dir,subdir)
-			walk_target_dir(next_dir_path, graph[subdir[:-6]] if subdir[-6:]=='.smali' else graph[subdir])
+# 	for subdir in os.listdir(smali_base_dir):
+# 		#print(f'subdir:{subdir}')
+# 		if subdir in graph or (subdir[-6:]=='.smali' and subdir[:-6] in graph): 
+# 			next_dir_path = os.path.join(smali_base_dir,subdir)
+# 			walk_target_dir(next_dir_path, graph[subdir[:-6]] if subdir[-6:]=='.smali' else graph[subdir])
 		
-def switch_case_logger(register_case, line, tmp_register, free_list, case_index,sixteen_types,rand_method_id):#TODO 這部分還不知道怎麼做
+def switch_case_logger(register_case, line, tmp_register, free_list, case_index,sixteen_types,rand_method_id, new_version):#TODO 這部分還不知道怎麼做
 	new_content = line+'\n'
 	no_move = False
 	is_object = '-object'
@@ -936,6 +1304,9 @@ def switch_case_logger(register_case, line, tmp_register, free_list, case_index,
 			
 	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
 	new_content += (f'    const-string {log_param}, \"{rand_method_id},{case_index}\"\n\n')
-	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->switchCaseLog(Ljava/lang/String;)V\n\n')
+	new_content += (f'    invoke-static {{{log_param}}}, {class_name}->switchCaseLog(Ljava/lang/String;)V\n\n')
 	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')	
 	return new_content
+
+
+# if __name__ == "__main__":

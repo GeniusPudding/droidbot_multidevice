@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop net.ruckman.iscwarn"}
+{"event_type": "intent", "log_lines": null, "intent": "am start net.ruckman.iscwarn/net.ruckman.iscwarn.ISCWarnActivity"}

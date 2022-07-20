@@ -1,0 +1,6 @@
+Method START: Lcom/gst/ihab/gst/MainActivity;-><init>()V $(3718721074) (PID_0,TID_0)
+Method END: Lcom/gst/ihab/gst/MainActivity;-><init>()V $(3718721074) (PID_0,TID_0)
+Method START: Lcom/gst/ihab/gst/MainActivity;->onCreate(Landroid/os/Bundle;)V $(1496616685) (PID_0,TID_0)
+Method START: Lcom/gst/ihab/gst/MainActivity;-><init>()V $(3718721074) (PID_1,TID_1)
+Method END: Lcom/gst/ihab/gst/MainActivity;-><init>()V $(3718721074) (PID_1,TID_1)
+Method START: Lcom/gst/ihab/gst/MainActivity;->onCreate(Landroid/os/Bundle;)V $(1496616685) (PID_1,TID_1)

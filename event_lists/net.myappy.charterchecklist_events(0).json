@@ -1,0 +1,2 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop net.myappy.charterchecklist"}
+{"event_type": "intent", "log_lines": null, "intent": "am start net.myappy.charterchecklist/net.myappy.charterchecklist.ui.activity.IntroActivity"}
