@@ -1,0 +1,30 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.shyri.whitescreenapp"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "5f4ac25f1df120cb7b52e8c9f8bb52fa", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.shyri.whitescreenapp", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [6], "focused": false, "bounds": [[0, 0], [720, 1480]], "resource_id": "com.shyri.whitescreenapp:id/kapper", "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": false, "parent": 4, "temp_id": 5, "size": "720*1480", "signature": "[class]android.view.ViewGroup[resource_id]com.shyri.whitescreenapp:id/kapper[text]None[enabled,,]", "view_str": "b844cad331c4686e806260997a84c938", "content_free_signature": "[class]android.view.ViewGroup[resource_id]com.shyri.whitescreenapp:id/kapper"}}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.shyri.whitescreenapp", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": false, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [], "focused": false, "bounds": [[0, 1323], [720, 1480]], "resource_id": "com.shyri.whitescreenapp:id/adView", "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": false, "parent": 5, "temp_id": 6, "size": "720*157", "signature": "[class]android.view.ViewGroup[resource_id]com.shyri.whitescreenapp:id/adView[text]None[enabled,,]", "view_str": "05f922ab19cbb39ae5dd3da13cf69aac", "content_free_signature": "[class]android.view.ViewGroup[resource_id]com.shyri.whitescreenapp:id/adView"}}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.shyri.whitescreenapp/com.shyri.whitescreenapp.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}

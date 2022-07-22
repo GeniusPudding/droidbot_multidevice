@@ -22,9 +22,9 @@ import random
 
 
 apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diffs_all'
-ag_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\static_analyzer'
-log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_SamsungGalaxyS10\\TriggerZoo_antiemulator_version2'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver2'
+# ag_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\static_analyzer'
+log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_version2'
 entry_list = ["onCreate", "onStart", "onStartCommand","onResume", "onReStart", "onPause", "onStop", "onDestroy", "onTouch", "onReceive"]
 diffinfo_re = '\d+(,\d+)?[acd]\d+(,\d+)?'   
 def sign_to_legalpathstr(sign):
@@ -610,18 +610,18 @@ def main(log_name,p2f):
     api_tree = gen_API_analysis_tree(apk_path)
 
     #根據log，生出動態CG
-    real_log_path = os.path.join(log_path,log_name+'_logcat_cc98682b.txt')#寫死?這裡注意一下
-    emu_log_path = os.path.join(log_path,log_name+'_logcat_192.168.123.123_5555.txt')#
+    real_log_path = os.path.join(log_path,log_name+'_logcat_cc98682b.txt') #寫死?這裡注意一下
+    emu_log_path = os.path.join(log_path,log_name+'_logcat_emulator-5556.txt')    #192.168.123.123_5555.txt')#
     #print(f'real_log_path:{real_log_path},emu_log_path:{emu_log_path}')
     if filecmp.cmp(real_log_path,emu_log_path):
         return apk_name, []
     print('Start Analysis')
     with open(real_log_path,'r') as f:
-        #rr = f.readlines()
-        rr = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
+        rr = f.readlines()
+        #rr = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
     with open(emu_log_path,'r') as f:
-        #er = f.readlines()    
-        er = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
+        er = f.readlines()    
+        #er = [line for line in f.readlines() if line.startswith('M') or line.startswith('B')]
 
 
     real_parent_index, real_callseqs, real_cur_calling_method = gen_dynamic_callgraph(rr,api_tree)

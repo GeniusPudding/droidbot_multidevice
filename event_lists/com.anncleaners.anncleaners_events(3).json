@@ -1,0 +1,198 @@
+{"event_type": "kill_app", "log_lines": null, "stop_intent": "am force-stop com.anncleaners.anncleaners"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "aa4c45cead6587fefaa5e639748f95bb", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.daemonapp", "visible": true, "checkable": false, "child_count": 3, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": null, "children": [11, 12, 33], "focused": false, "bounds": [[33, 110], [688, 314]], "resource_id": "com.sec.android.daemonapp:id/widget_main_layout", "checked": false, "text": null, "class": "android.widget.FrameLayout", "scrollable": false, "selected": false, "long_clickable": false, "parent": 9, "temp_id": 10, "size": "655*204", "signature": "[class]android.widget.FrameLayout[resource_id]com.sec.android.daemonapp:id/widget_main_layout[text]None[enabled,,]", "view_str": "d3656bd51e1b1f8df74bd1608edbb578", "content_free_signature": "[class]android.widget.FrameLayout[resource_id]com.sec.android.daemonapp:id/widget_main_layout"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.daemonapp", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": "\u66f4\u65b0\u5929\u6c23", "children": [], "focused": false, "bounds": [[618, 213], [688, 284]], "resource_id": "com.sec.android.daemonapp:id/widget_refresh_icon_touch_area", "checked": false, "text": null, "class": "android.widget.ImageView", "scrollable": false, "selected": false, "long_clickable": false, "parent": 33, "temp_id": 34, "size": "70*71", "signature": "[class]android.widget.ImageView[resource_id]com.sec.android.daemonapp:id/widget_refresh_icon_touch_area[text]None[enabled,,]", "view_str": "7720146ff34b5853406910356c52bd4c", "content_free_signature": "[class]android.widget.ImageView[resource_id]com.sec.android.daemonapp:id/widget_refresh_icon_touch_area"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": "Chrome", "children": [], "focused": false, "bounds": [[27, 322], [158, 538]], "resource_id": "com.sec.android.app.launcher:id/home_icon", "checked": false, "text": "Chrome", "class": "android.widget.TextView", "scrollable": false, "selected": false, "long_clickable": true, "parent": 8, "temp_id": 35, "size": "131*216", "signature": "[class]android.widget.TextView[resource_id]com.sec.android.app.launcher:id/home_icon[text]Chrome[enabled,,]", "view_str": "963f0263dd20102414d5c8430d67e624", "content_free_signature": "[class]android.widget.TextView[resource_id]com.sec.android.app.launcher:id/home_icon"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": "Facebook", "children": [], "focused": false, "bounds": [[161, 322], [292, 538]], "resource_id": "com.sec.android.app.launcher:id/home_icon", "checked": false, "text": "Facebook", "class": "android.widget.TextView", "scrollable": false, "selected": false, "long_clickable": true, "parent": 8, "temp_id": 36, "size": "131*216", "signature": "[class]android.widget.TextView[resource_id]com.sec.android.app.launcher:id/home_icon[text]Facebook[enabled,,]", "view_str": "576ea0ba77ff056e9c6415c3a85e972f", "content_free_signature": "[class]android.widget.TextView[resource_id]com.sec.android.app.launcher:id/home_icon"}}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 0, "editable": false, "clickable": true, "is_password": false, "focusable": true, "enabled": true, "content_description": "\u5a92\u9ad4\u700f\u89bd\u5668", "children": [], "focused": false, "bounds": [[27, 540], [158, 756]], "resource_id": "com.sec.android.app.launcher:id/home_icon", "checked": false, "text": "\u5a92\u9ad4\u700f\u89bd\u5668", "class": "android.widget.TextView", "scrollable": false, "selected": false, "long_clickable": true, "parent": 8, "temp_id": 37, "size": "131*216", "signature": "[class]android.widget.TextView[resource_id]com.sec.android.app.launcher:id/home_icon[text]\u5a92\u9ad4\u700f\u89bd\u5668[enabled,,]", "view_str": "8cbeffc88c53ea51e5afb40b831ebf6f", "content_free_signature": "[class]android.widget.TextView[resource_id]com.sec.android.app.launcher:id/home_icon"}}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}
+{"event_type": "intent", "log_lines": null, "intent": "am start com.anncleaners.anncleaners/com.anncleaners.anncleaners.MainActivity"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "key", "log_lines": null, "name": "BACK"}
+{"event_type": "touch", "log_lines": null, "x": null, "y": null, "view": {"package": "com.sec.android.app.launcher", "visible": true, "checkable": false, "child_count": 1, "editable": false, "clickable": true, "is_password": false, "focusable": false, "enabled": true, "content_description": null, "children": [8], "focused": false, "bounds": [[18, 97], [702, 1202]], "resource_id": null, "checked": false, "text": null, "class": "android.view.ViewGroup", "scrollable": false, "selected": false, "long_clickable": true, "parent": 6, "temp_id": 7, "size": "684*1105", "signature": "[class]android.view.ViewGroup[resource_id]None[text]None[enabled,,]", "view_str": "d8caaa538d39b7b7673017511acb7177", "content_free_signature": "[class]android.view.ViewGroup[resource_id]None"}}

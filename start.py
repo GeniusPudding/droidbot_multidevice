@@ -143,10 +143,10 @@ def main(testing_apk_path, opts, target_API_graph):
         dirname, basename = os.path.split(testing_apk_path)
         repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
         #input(f'reuse:{repackaged_apk_path}')
-    elif opts.inject:
+    elif opts.inject or opts.only_repack:
         repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
-        if opts.only_repack:
+        if opts.only_repack:#紀錄一下總時間
             return ''
 
     # input('test methodlog_instrumentation')
@@ -289,17 +289,17 @@ if __name__ == "__main__":
         #random.shuffle(ran_apks)
 
         for a in tqdm(ran_apks):
-            #try:
+            try:
                 #input('wait')
-            result = main(os.path.join(dataset_path,a),opts, target_API_graph)
-            if not result: print("Write Log Files Failed.") 
+                    result = main(os.path.join(dataset_path,a),opts, target_API_graph)
+                    if not result: print("Write Log Files Failed.") 
                   
                 # if not result:
                 #     main(os.path.join(dataset_path,a),opts, target_API_graph)
                 
-            # except:
-            #     print(f'Analyzing {a} failed')
-            #     failed_apks['name_list'].append(a)
+            except:
+                print(f'Analyzing {a} failed')
+                failed_apks['name_list'].append(a)
         print(f'ran_apks:{ran_apks}')
     
     with open('failed_apks.json','w') as f:

@@ -41,12 +41,16 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
         r = r[r.index('launchable-activity: name=\'')+27:]#不曉得有沒有更輕鬆的讀取方式
         main_activity = r[:r.index('\'')]
         #input(f'main activity:{main_activity}')
-        for subdir in os.listdir(apktool_dir):
-            if subdir.startswith('smali'):
-                smali_base_dir = os.path.join(apktool_dir,subdir)
-                #gen_invoke_set_json(smali_base_dir)
-                walk_smali_dir(smali_base_dir,target_API_graph, main_activity)
-                #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
+
+        smali_dirs = [subdir for subdir in os.listdir(apktool_dir) if subdir.startswith('smali')]
+        next_smali_dir = os.path.join(apktool_dir,'smali_classes2' if len(smali_dirs) == 1 else 'smali_classes' + str(len(smali_dirs)+1))
+        os.mkdir(next_smali_dir)
+        for subdir in smali_dirs:
+            #if subdir.startswith('smali'):
+            smali_base_dir = os.path.join(apktool_dir,subdir)
+            #gen_invoke_set_json(smali_base_dir)
+            walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
+            #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
         patch_log_file(os.path.join(apktool_dir,'smali'))
     except:   
         print('test Failed to do instrumentation')
