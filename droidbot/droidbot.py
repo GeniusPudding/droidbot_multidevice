@@ -46,7 +46,8 @@ class DroidBot(object):
                  repeat=None,
                  ignore_ad=False,
                  replay_output=None,
-                 get_min_sdkversion=None):
+                 get_min_sdkversion=None,
+                 monitor_event=False):
         """
         initiate droidbot with configurations
         :return:
@@ -83,7 +84,7 @@ class DroidBot(object):
         self.humanoid = humanoid
         self.ignore_ad = ignore_ad
         self.replay_output = replay_output
-
+        self.monitor_event = monitor_event
         self.enabled = True
 
         try:
@@ -96,7 +97,8 @@ class DroidBot(object):
                 enable_accessibility_hard=self.enable_accessibility_hard,
                 humanoid=self.humanoid,
                 ignore_ad=ignore_ad,
-                get_min_sdkversion=get_min_sdkversion)
+                get_min_sdkversion=get_min_sdkversion,
+                monitor_event=self.monitor_event)
             self.app = App(app_path, output_dir=self.output_dir)
                 
 

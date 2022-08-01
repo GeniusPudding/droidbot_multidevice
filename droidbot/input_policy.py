@@ -3,6 +3,7 @@ import json
 import logging
 import random
 import os
+import socket
 from abc import abstractmethod
 sys.path.append("..")
 from methodseq_analysis.log_parser import get_log_filecount_index
@@ -70,6 +71,10 @@ class InputPolicy(object):
                 #     event = KeyEvent(name="HOME")
                 # elif self.action_count == 1 and self.master is None:
                 #     event = IntentEvent(self.app.get_start_intent())
+                input_manager.device.event_logs.append('Event:')
+                if input_manager.device2: input_manager.device2.event_logs.append('Event:')
+                #print(f'clear device.event_logs...id:{id(self.device)}')
+
                 if self.action_count == 0 and self.master is None:
                     event = KillAppEvent(app=self.app)
                 else:
@@ -77,7 +82,12 @@ class InputPolicy(object):
                 event_list.append(event)
                 event_str = input_manager.add_event(event)
                 self.action_list.append(event_str)
-                print(f'event:{event}, event.__str__():{event.__str__}, event.__repr__:{event.__repr__}\n event.__dict__:{event.__dict__}')# event是object
+                
+                # print(f'Device 1 logs: {input_manager.device.event_logs}')
+                # if input_manager.device2:
+                #     print(f'Device 2 logs: {input_manager.device2.event_logs}')
+                #f'event:{event}, event.__str__():{event.__str__}, event.__repr__:{event.__repr__}\n 
+                #input(f'event.__dict__:{event.__dict__}')# event是object
                 # if 'view' in json.dumps(event.__dict__) and 'text' in json.dumps(event.__dict__):#app crashes
                 #     input(f'App text:{event.view}')
                 if '屢次停止運作' in json.dumps(event.__dict__):
