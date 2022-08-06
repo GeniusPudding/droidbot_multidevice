@@ -28,7 +28,7 @@ class Device(object):
     def __init__(self, device_serial=None, is_emulator=False, output_dir=None,
                  cv_mode=False, grant_perm=False, telnet_auth_token=None,
                  enable_accessibility_hard=False, humanoid=None, ignore_ad=False,
-                get_min_sdkversion=None, second_device=False):#get_min_sdkversion for apk's requirement
+                get_min_sdkversion=None, second_device=False,monitor_event=False):#get_min_sdkversion for apk's requirement
         """
         initialize a device connection
         :param device_serial: serial number of target device
@@ -77,6 +77,7 @@ class Device(object):
         self.last_know_state = None
         self.__used_ports = []
         self.pause_sending_event = False
+        self.event_logs = [] #將每個input event造成的log解析後暫存這裡
 
         # adapters
         self.adb = ADB(device=self)

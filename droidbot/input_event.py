@@ -251,6 +251,7 @@ class EventLog(object):
         start sending event
         """
         self.from_state = self.device.get_current_state()
+        
         self.start_profiling()
         self.event_str = self.event.get_event_str(self.from_state)
         # print("Action: %s" % self.event_str)

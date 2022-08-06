@@ -107,6 +107,9 @@ class InputManager(object):
 
         event_log = EventLog(self.device, self.device2, self.app, event, self.profiling_method)
         event_str = event_log.start() #default! Sending event here!
+        # print(f'manager add_event id:{id(self.device)}')
+        # print(f'Device 1 logs: {self.device.event_logs}')
+        # if self.device2: print(f'Device 2 logs: {self.device2.event_logs}')
         while True:
             time.sleep(self.event_interval)
             if not self.device.pause_sending_event:

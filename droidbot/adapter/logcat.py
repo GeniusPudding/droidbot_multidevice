@@ -2,8 +2,8 @@ import subprocess
 import logging
 import copy
 from .adapter import Adapter
-
-
+import socket
+get_log = lambda line: line[line.index('GeniusPudding: - ')+17:] if 'GeniusPudding: - ' in line else None
 class Logcat(Adapter):
     """
     A connection with the target device through logcat.
@@ -19,6 +19,7 @@ class Logcat(Adapter):
             from droidbot.device import Device
             device = Device()
         self.device = device
+        print(f'logcat device id:{id(self.device)}')
         self.connected = False
         self.process = None
         self.parsers = []
@@ -60,7 +61,7 @@ class Logcat(Adapter):
         if self.out_file is not None:
             f = open(self.out_file, 'w', encoding='utf-8')#
             w = f.write('test\n')
-        print(f'self.out_file:{self.out_file},f:{f},w:{w}')
+        print(f'Logcat self.out_file:{self.out_file},f:{f},w:{w}')
         while self.connected:
             #print(f'connecting')
             if self.process is None:
@@ -69,6 +70,8 @@ class Logcat(Adapter):
             if not isinstance(line, str):
                 line = line.decode()
             #print(f'Read log line:{line}')
+            info = get_log(line)
+            if info: self.device.event_logs.append(info)
             self.recent_lines.append(line)
             self.parse_line(line)
             if f is not None:

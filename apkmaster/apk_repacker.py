@@ -3,11 +3,14 @@ import json
 import os 
 import sys
 import json
+import re 
+randID_re = '\$\([0-9]+\)'
+from androguard.core.bytecodes.apk import APK
 if __name__ != '__main__':
     from .smali_function_logger import walk_smali_dir #,gen_invoke_set_json  #walk_target_dir,
     from .apk_utils import *
 
-def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
+def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, add_dummy_evasion):
     #print(f'methodlog_instrumentation:{methodlog_instrumentation}')
     # param: target apk path that want to apply instrumentation method 
     # return: repackaged apk path   
@@ -36,11 +39,16 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
         # print()
         # with open('target_API_graph_all.json') as f:
         #     target_API_graph = json.load(f)
-        cmd = ['aapt', 'dump', 'badging', target_apk_path, '|', 'findstr', 'launchable-activity: name=\'']# apktool_dir.rstrip('\\/')]
-        r = subprocess.run(cmd, capture_output=True).stdout.decode("utf-8").strip()
-        r = r[r.index('launchable-activity: name=\'')+27:]#不曉得有沒有更輕鬆的讀取方式
-        main_activity = r[:r.index('\'')]
-        #input(f'main activity:{main_activity}')
+        apk = APK(target_apk_path)
+        #package_name = apk.get_package()
+        main_activity = apk.get_main_activity()        
+        # input(f'package_name:{package_name}, main_activity:{main_activity}')
+
+        # cmd = ['aapt', 'dump', 'badging', target_apk_path, '|', 'findstr', 'launchable-activity: name=\'']# apktool_dir.rstrip('\\/')]
+        # r = subprocess.run(cmd, capture_output=True).stdout.decode("utf-8").strip()
+        # r = r[r.index('launchable-activity: name=\'')+27:]#不曉得有沒有更輕鬆的讀取方式
+        # main_activity = r[:r.index('\'')]
+        # input(f'main activity:{main_activity}')
 
         smali_dirs = [subdir for subdir in os.listdir(apktool_dir) if subdir.startswith('smali')]
         next_smali_dir = os.path.join(apktool_dir,'smali_classes2' if len(smali_dirs) == 1 else 'smali_classes' + str(len(smali_dirs)+1))
@@ -52,6 +60,10 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
             walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
             #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
         patch_log_file(os.path.join(apktool_dir,'smali'))
+
+        if add_dummy_evasion:
+            input('add_dummy_evasion')
+            evasion_instrumentation(target_apk_path,False, 'methodStartLog()V')
     except:   
         print('test Failed to do instrumentation')
         raise RuntimeError('Failed to do instrumentation')
@@ -75,7 +87,7 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph ):
 
     return  os.path.join(dirname,'repacked_'+apkname+'.apk')
 
-def evasion_instrumentation(target_apk_path, redecompile):#TODO install for two device   
+def evasion_instrumentation(target_apk_path, redecompile, replace_sign = '    .locals'):#TODO install for two device   
     dirname, basename = os.path.split(target_apk_path)
     apkname = os.path.splitext(basename)[0]
     apktool_dir = os.path.join(dirname,apkname)
@@ -98,19 +110,28 @@ def evasion_instrumentation(target_apk_path, redecompile):#TODO install for two 
         # find the main activity file and inject smali code
         for smali_dir in [d for d in os.listdir(apktool_dir) if 'smali' in d]:
             main_activity_path = os.path.join(apktool_dir,'smali',activity.replace('.','\\')+'.smali')
+            #print(f'main_activity_path:{main_activity_path}')
             if os.path.isfile(main_activity_path):   
+                print(f'main_activity_path:{main_activity_path} exists')
                 with open(main_activity_path,'r+', encoding='utf-8') as f:
                     smali_lines = list(f)
                     #print(f'smali_lines:{smali_lines}')
                     f.seek(0)
-                    new_content = add_emulator_detection(smali_lines)
-                    f.write(new_content)
-                input(f'smali_dir:{smali_dir},smali_base_dir:{smali_base_dir}')
+                    #input(f'activity:{activity}')
+                    class_name = 'L' + activity.replace('.','/') + ';'
+                    new_content, result = add_emulator_detection(smali_lines, replace_sign, class_name)
+                    if result:
+                        f.write(new_content)
+                    else:
+                        print('找不到main activity onCreate')
+                        raise ValueError()
+                #input(f'smali_dir:{smali_dir},smali_base_dir:{smali_base_dir}')
                 smali_base_dir = os.path.join(apktool_dir,smali_dir)
                 patch_protection_file(smali_base_dir)
                 patch_log_file(smali_base_dir)
                 break
-
+            else:
+                raise ValueError(f'main_activity_path:{main_activity_path} not exists')
 
     except:   
         raise RuntimeError('Failed to do instrumentation')
@@ -129,25 +150,51 @@ def evasion_instrumentation(target_apk_path, redecompile):#TODO install for two 
     except:
         raise RuntimeError('Failed to repackage')
 
-    return  os.path.join(dirname,'repacked_'+apkname+'.apk')
+    #return  os.path.join(dirname,'repacked_'+apkname+'.apk')
 
-def add_emulator_detection(smali_lines):
+def add_emulator_detection(smali_lines, replace_sign, class_name):
     in_method_flag = False
     new_content = ''
+    success = False
+    rand_ID = '$(00000000)'
+    #class_log = class_name[1:-1].replace('/', '.')
     for line in smali_lines:
-        if not line.startswith('    .prologue'):          
-            new_content += line
-        else:
-            new_content += ('    .prologue\n\n')
+        if line.startswith('.method ') and ' onCreate(' in line:          
+            in_method_flag = True
+        
+        if in_method_flag and replace_sign in line:
+            new_content += (line + '\n') if not '    .locals 0' in line else line.replace('.locals 0', '.locals 1')
+            new_content += (f'    const-string v0, \"- CALL Relation(target): {class_name}->onCreate(Landroid/os/Bundle;)V {rand_ID}=>Linjections/AntiEmulator;->isBuildEmulator()Z $(000000000)\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')
+            new_content += ('    const-string v0, \"- Method START(target): Linjections/AntiEmulator;->isBuildEmulator()Z $(000000000)\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')
             new_content += ('    invoke-static {}, Linjections/AntiEmulator;->isBuildEmulator()Z\n\n')
             new_content += ('    move-result v0\n\n')
+            new_content += ('    const-string v1, \"- Method END(target): Linjections/AntiEmulator;->isBuildEmulator()Z $(000000000)\"\n\n')
+            new_content += ('    invoke-static {v1}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')
+            new_content += (f'    const-string v1, \"- Branch: {class_name}->isBuildEmulator()Z->if-nez v0, :cond_emu {rand_ID}\"\n\n')
+            new_content += ('    invoke-static {v1}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')
             new_content += ('    if-nez v0, :cond_emu\n\n')
+            new_content += (f'    const-string v0, \"- Case False: :cond_emu {rand_ID}\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')     
+            new_content += (f'    const-string v0, \"- CALL Relation(target): {class_name}->onCreate(Landroid/os/Bundle;)V {rand_ID}=>Linjections.AntiEmulator.testEvasionBehavior()V $(000000001)\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')       
+            new_content += ('    const-string v0, \"- Method START(target): Linjections/AntiEmulator;->testEvasionBehavior()V $(000000001)\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')
             new_content += ('    invoke-static {}, Linjections/AntiEmulator;->testEvasionBehavior()V\n\n')
-            new_content += ('    :cond_emu\n\n')
-    if '.locals 0' in new_content:
-        new_content = new_content.replace('.locals 0', '.locals 1')
+            new_content += ('    const-string v0, \"- Method END(target): Linjections/AntiEmulator;->testEvasionBehavior()V $(000000001)\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')
+            new_content += ('    :cond_emu\n')
+            new_content += (f'    const-string v0, \"- Case True: :cond_emu {rand_ID}\"\n\n')
+            new_content += ('    invoke-static {v0}, Linjections/InlineLogs;->stringLog(Ljava/lang/String;)V\n\n')            
+            success = True
+            in_method_flag = False
+        else:
+            #if in_method_flag:
 
-    return new_content
+            new_content += line
+
+    return new_content, success
 
 if __name__ == '__main__':#TODO 有bug
     from smali_function_logger import walk_smali_dir #,gen_invoke_set_json  #walk_target_dir,

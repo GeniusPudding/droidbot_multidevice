@@ -24128,5 +24128,10 @@
                 }
             }
         }
+    },
+    "injections":{
+        "AntiEmulator":{
+            "testEvasionBehavior":"Linjections/AntiEmulator;->testEvasionBehavior"
+        }
     }
 }

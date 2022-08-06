@@ -114,6 +114,10 @@ def parse_args():
                     help="Repeat sending same input sequence for testing.")
     parser.add_argument("-only_repack", action="store_true", dest="only_repack", required=False, default=False,#default: 不指定
                         help="純粹插樁，不運行droidbot")
+    parser.add_argument("-monitor_event", action="store_true", dest="monitor_event",
+                    help="Monitor logs per each event.")
+    parser.add_argument("-e", action="store_true", dest="add_dummy_evasion", default=False,
+                    help="額外新增模擬器檢查到Main Activity的onCreate的開頭")                    
     options = parser.parse_args()
     # print options
     return options
@@ -144,7 +148,7 @@ def main(testing_apk_path, opts, target_API_graph):
         repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
         #input(f'reuse:{repackaged_apk_path}')
     elif opts.inject or opts.only_repack:
-        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph)
+        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph, opts.add_dummy_evasion)
         print(f'methodlog_instrumentation:{repackaged_apk_path}')
         if opts.only_repack:#紀錄一下總時間
             return ''
@@ -215,6 +219,7 @@ def main(testing_apk_path, opts, target_API_graph):
                 repeat=opts.repeat,
                 ignore_ad=opts.ignore_ad,
                 replay_output=opts.replay_output,
+                monitor_event=opts.monitor_event,
                 get_min_sdkversion=get_min_sdkversion)
             droidbot.start()
         except Exception as e:
@@ -282,8 +287,8 @@ if __name__ == "__main__":
         input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
-        ran_apks = none_logged_apks + logged_apks
-        #ran_apks = logged_apks+none_logged_apks 
+        ran_apks = none_logged_apks + logged_apks 
+        ran_apks = logged_apks+none_logged_apks 
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
         #random.shuffle(ran_apks)
