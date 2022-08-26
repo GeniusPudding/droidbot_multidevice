@@ -1,0 +1,49 @@
+{
+  "tag": "2022-08-21_154837",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          720,
+          42
+        ]
+      ],
+      "resource_id": "com.android.systemui:id/phone_status_bar_background",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 82,
+      "temp_id": 83,
+      "size": "720*42",
+      "signature": "[class]android.widget.FrameLayout[resource_id]com.android.systemui:id/phone_status_bar_background[text]None[enabled,,]",
+      "view_str": "027221d116dd3d9a6dbee4e5253bc8e1",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]com.android.systemui:id/phone_status_bar_background"
+    }
+  },
+  "start_state": "2457ce7e8e4af1edc837b9eb76e125d9",
+  "stop_state": "2457ce7e8e4af1edc837b9eb76e125d9",
+  "event_str": "TouchEvent(state=2457ce7e8e4af1edc837b9eb76e125d9, view=027221d116dd3d9a6dbee4e5253bc8e1(MainActivity/FrameLayout-))"
+}

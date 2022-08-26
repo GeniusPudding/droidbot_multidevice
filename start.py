@@ -288,7 +288,7 @@ if __name__ == "__main__":
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks 
-        ran_apks = logged_apks+none_logged_apks 
+        #ran_apks = logged_apks+none_logged_apks 
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
         #random.shuffle(ran_apks)

@@ -1,0 +1,11 @@
+{
+  "tag": "2022-08-21_153223",
+  "event": {
+    "event_type": "key",
+    "log_lines": null,
+    "name": "BACK"
+  },
+  "start_state": "5063543a9b43f615aa6937940d3bca6a",
+  "stop_state": "5063543a9b43f615aa6937940d3bca6a",
+  "event_str": "KeyEvent(state=5063543a9b43f615aa6937940d3bca6a, name=BACK)"
+}

@@ -1,0 +1,11 @@
+{
+  "tag": "2022-08-21_153022",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.narb.passwordmanagement/com.narb.passwordmanagement.MainActivity"
+  },
+  "start_state": "7e1aa32f426eb42f4b954eeaa79addf2",
+  "stop_state": "4066dbc88c24ee13c162e6f1a806e5f9",
+  "event_str": "IntentEvent(intent='am start com.narb.passwordmanagement/com.narb.passwordmanagement.MainActivity')"
+}

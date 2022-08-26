@@ -1,0 +1,49 @@
+{
+  "tag": "2022-08-21_154655",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          121,
+          165
+        ],
+        [
+          189,
+          232
+        ]
+      ],
+      "resource_id": "com.samsung.android.app.clockpack:id/common_minute",
+      "checked": false,
+      "text": "30",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 56,
+      "temp_id": 59,
+      "size": "68*67",
+      "signature": "[class]android.widget.TextView[resource_id]com.samsung.android.app.clockpack:id/common_minute[text]30[enabled,,]",
+      "view_str": "2cf5ff5e3bb4a3d1679eb54f6d2ec78e",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]com.samsung.android.app.clockpack:id/common_minute"
+    }
+  },
+  "start_state": "2457ce7e8e4af1edc837b9eb76e125d9",
+  "stop_state": "2457ce7e8e4af1edc837b9eb76e125d9",
+  "event_str": "TouchEvent(state=2457ce7e8e4af1edc837b9eb76e125d9, view=2cf5ff5e3bb4a3d1679eb54f6d2ec78e(MainActivity/TextView-30))"
+}

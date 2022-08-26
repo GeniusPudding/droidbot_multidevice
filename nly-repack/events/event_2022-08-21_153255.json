@@ -1,0 +1,11 @@
+{
+  "tag": "2022-08-21_153255",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am force-stop com.narb.passwordmanagement"
+  },
+  "start_state": "5063543a9b43f615aa6937940d3bca6a",
+  "stop_state": "d7d3d88ad35c6490126c0eb8fcbb3380",
+  "event_str": "IntentEvent(intent='am force-stop com.narb.passwordmanagement')"
+}

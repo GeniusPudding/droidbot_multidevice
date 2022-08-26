@@ -1,0 +1,11 @@
+{
+  "tag": "2022-08-21_153017",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop com.narb.passwordmanagement"
+  },
+  "start_state": "d7d3d88ad35c6490126c0eb8fcbb3380",
+  "stop_state": "684e7ffb1d2152efe3cf8c2fead87f8e",
+  "event_str": "KillAppEvent()"
+}

@@ -55,3 +55,5 @@ if __name__ == '__main__':
     for a in apk_map:
         writer.writerow([a,apk_map[a]])
     f.close()
+
+    print(f'Triggered ratio:{sum([apk_map[apk_name] for apk_name in apk_map])}/{len(apk_map)}')

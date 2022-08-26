@@ -1,0 +1,49 @@
+{
+  "tag": "2022-08-21_154459",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.android.systemui",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          43,
+          0
+        ],
+        [
+          599,
+          42
+        ]
+      ],
+      "resource_id": "com.android.systemui:id/notification_icon_area",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 87,
+      "temp_id": 89,
+      "size": "556*42",
+      "signature": "[class]android.widget.FrameLayout[resource_id]com.android.systemui:id/notification_icon_area[text]None[enabled,,]",
+      "view_str": "e0914996a228454f0276839c34483151",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]com.android.systemui:id/notification_icon_area"
+    }
+  },
+  "start_state": "e2a21958bf6e87ba118cc4be9cc35750",
+  "stop_state": "e2a21958bf6e87ba118cc4be9cc35750",
+  "event_str": "TouchEvent(state=e2a21958bf6e87ba118cc4be9cc35750, view=e0914996a228454f0276839c34483151(MainActivity/FrameLayout-))"
+}
