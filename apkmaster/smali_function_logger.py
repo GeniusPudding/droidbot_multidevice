@@ -262,7 +262,7 @@ def invoke_target_logger(register_case, invoke_line, tmp_register, class_name, r
 		new_content += (f'    const-string {tmp_register}, \"{invoke_sign}\"\n\n')
 		new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
 		new_content += (f'    invoke-static {{}}, {class_name}->targetcallLog()V\n\n')	
-		new_content += (f'    invoke-static {{}}, {class_name}->targetmethodStartLog()V\n\n')
+		#new_content += (f'    invoke-static {{}}, {class_name}->targetmethodStartLog()V\n\n')
 		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
 		new_content += invoke_line
 		if moveresults_line: new_content += (moveresults_line+'\n')	
@@ -487,14 +487,15 @@ def gen_method_start_log(p_last, rand_method_id, class_name, current_method_sign
 		new_content = ('    #Instrumentation by GeniusPudding\n')
 		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
 		new_content += (f'    move-result-object v0\n\n')
-		new_content += (f'    sput-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n') #caller那邊sput caller ID，這邊放calleeID
-		#if not no_caller: 
+		new_content += (f'    sput-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n') #caller那邊sput caller ID，這邊放calleeID 
+		new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
+		new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
 		new_content += (f'    invoke-static {{}}, {class_name}->callLog()V\n\n')#然後再呼叫call log
 		# new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
 		# new_content += (f'    sput-object v0, {class_name}->methodStart:Ljava/lang/String;\n\n') 
-		new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
-		new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
-		new_content += (f'    invoke-static {{}}, {class_name}->methodStartLog()V\n\n')
+		#new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
+		#new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
+		#new_content += (f'    invoke-static {{}}, {class_name}->methodStartLog()V\n\n')
 		return new_content
 	new_content = ('    #Instrumentation by GeniusPudding\n')
 	if not no_caller:
@@ -882,10 +883,10 @@ def replace_fields():#def replace_fields(new_content):
 
 def gen_logs_methoddef(class_name):
 	new_content = gen_callLog(class_name)
-	new_content += gen_methodStartLog(class_name)
+	#new_content += gen_methodStartLog(class_name)
 	new_content += gen_methodEndLog(class_name)
 	new_content += gen_targetcallLog(class_name)
-	new_content += gen_targetmethodStartLog(class_name)
+	#new_content += gen_targetmethodStartLog(class_name)
 	new_content += gen_targetmethodEndLog(class_name)
 	new_content += gen_branchLog(class_name)
 	new_content += gen_branchTrueLog(class_name)
@@ -937,6 +938,12 @@ def gen_callLog(class_name):
 	new_content += ('	aget-object v3, v0, v2\n\n')
 	new_content += ('	invoke-virtual {v3}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;\n\n')
 	new_content += ('    move-result-object v3\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += ('    const-string v3, ", "\n\n')
+	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	new_content += ('    move-result-object v1\n\n')
+	new_content += (f'    sget-object v3, {class_name}->thismethodSign:Ljava/lang/String;\n\n')
 	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 	new_content += ('    move-result-object v1\n\n')
 	new_content += (f'    sget-object v3, {class_name}->thismethodID:Ljava/lang/String;\n\n')

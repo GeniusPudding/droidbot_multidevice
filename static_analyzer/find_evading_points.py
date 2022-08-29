@@ -25,7 +25,7 @@ com_list = ['android','facebook','google', 'adobe'] #不是很好的辦法
 
 
 apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver2'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
 output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
 # ag_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\static_analyzer'
 log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
@@ -174,7 +174,7 @@ def gen_cfg_info(line,parent_line,api_tree):
     #input(f'Evading Points!')
     method_obj = gen_method_json(method_analysis,parent_line,line)
     return method_obj
-def get_evading_point_in_method(method_jsonObj):#TODO 需要實際evading案例來Debug
+def get_evading_point_in_method(method_jsonObj):
     #print(f'method_jsonObj:{method_jsonObj}')
     block_offset = method_jsonObj['from_offset'] 
     d = method_jsonObj['cfg']['toparents']
@@ -208,13 +208,23 @@ calleesign_from_log = lambda line: line.split('=>')[1].split('(')[0]
 casesign_from_log = lambda line: 'C:'+get_tag_sign(line) + line[5:line.index(':')]
 gotosign_from_log = lambda line: ('GT:'+get_tag_sign(line)) if line.startswith('Goto Tag') else ('G:'+line[6:].split(' $(')[0].replace(' :', ' '))
 trysign_from_log = lambda line: ('TD:'+line.split(') :')[1].split(' $(')[0].replace(':', '')) if line.startswith('Try Done') else (('TS:' if line.startswith('Try Start') else 'TC:')+ get_tag_sign(line))
-callrelsign_from_log = lambda line: line[:line.index(':')] + ': ' + line[line.index(':')+2:].split('=>')[0].split('(')[0]+'=>'+line[line.index(':')+2:].split('=>')[1].split('(')[0]
+# callrelsign_from_log = lambda line: line[:line.index(':')] + ': ' + line[line.index(':')+2:].split('=>')[0].split('(')[0]+'=>'+line[line.index(':')+2:].split('=>')[1].split('(')[0] \
+#     if not line.startswith('CALL Relation(target):') else 
+
+def callrelsign_from_log(line):
+    tmp = line.split('=>')
+    if not line.startswith('CALL Relation(target):'):
+        tmp1 = tmp[1]
+        return tmp[0].split('(')[0]+'=>'+ tmp1[tmp1.index(', ')+2:tmp1.index(' $')]
+    else:
+        return tmp[0].split(' $')[0]+'=>'+ tmp[1].split(' $')[0]
+
 
 PID_from_log = lambda line: line[line.index('PID_'):line.index(',TID_')]
 TID_from_log = lambda line: line[line.index('TID_'):].strip('\n)')
 get_callee = lambda method_analysis:  [get_MethodAnalysis_signature(methodobj) for _, methodobj, _ in method_analysis.xrefto] 
 get_caller = lambda method_analysis:  [get_MethodAnalysis_signature(methodobj) for _, methodobj, _ in method_analysis.xreffrom] 
-#get_head_sign = lambda head_line: startmethodsign_from_log(head_line)
+
 def get_head_sign(head_line):
     if not head_line.startswith('CALL Relation'):
         raise ValueError(f'head_line:{head_line}不是call rel')
@@ -276,7 +286,6 @@ def gen_dynamic_callgraph(path, logs, api_tree = None, new_version = True):#希�
         print(f'總行數:{len(logs)}')
         for i,line in tqdm(enumerate(logs)):
             relation = re.findall(randID_re, line)   
-
             this_method_id = relation[-1]
             #PT = line.strip()[line.index('(PID_'):]
             #print(f'{i}-th line:{line}, this_method_id:{this_method_id}, cur_calling_method:{cur_calling_method}')
@@ -288,29 +297,14 @@ def gen_dynamic_callgraph(path, logs, api_tree = None, new_version = True):#希�
                     caller_id = relation[0]
                 if '(target)' not in line:
                     tmp = line[15:line.index(' (PID_')].split('=>')#分解一下call relation的log
-                    caller, callee = tmp[0].split('(')[0], tmp[1].split('(')[0]
+                    caller, callee = tmp[0].split('(')[0], tmp[1].split('(')[0]#TODO
                 else:
                     tmp = line[23:line.index(' (PID_')].split('=>')#分解一下call relation的log
                     caller, callee = tmp[0].split('(')[0].lstrip('L').replace(';->','.').replace('/', '.') , tmp[1].split('(')[0].lstrip('L').replace(';->','.').replace('/', '.')     
                     #input(f'caller:{caller}, callee:{callee}, line:{line}')
                 id_sign[callee_id] = callee
                 sign_id[callee] = callee_id 
-                #print(f'id_sign:{id_sign},callee_id:{callee_id},caller:{caller}, callee:{callee}')
-
-                # if caller in sign_id and sign_id[caller] != caller_id: 
-                #     #如果caller在sign_id內就表示可能是因為虛方法或介面方法造成caller與caller ID不一致 (但也有極低機率不同thread蓋到同一個Caller)
-                #     # 
-                #     print(f'sign_id:{sign_id}, caller:{caller}, caller_id:{caller_id}')
-                #     logs[i] = logs[i].replace('(No Caller)', ' '+sign_id[caller]) if '(No Caller)' in line else logs[i].replace(caller_id, sign_id[caller])     #!!替換成正確的Caller_id 
-                #     caller_id = sign_id[caller]
-                #     res = _append_seq(cur_calling_method, calling_stacks, call_seqs, caller_id, callee_id, i)
-                #     if not res:
-                #         input(f'替換虛方法的caller後，caller_id不在cur_calling_method內 cur_calling_method:{cur_calling_method}\n line:{line},caller_id:{caller_id}, sign_id:{sign_id}')    
-                #     #input(f'test:{t}, Caller對不到ID line:{line},caller_id:{caller_id}, sign_id[caller]:{sign_id[caller]}')            
-                # if caller == callee:#CALL Relation只能從stack上印出method name但無法得知param sign所以很可能不唯一 (或許也有可能是遞迴)
-                #     res = _append_seq(cur_calling_method, calling_stacks, call_seqs, caller_id, callee_id, i)
-                #     if not res:
-                #         input(f'caller跟callee相同 cur_calling_method:{cur_calling_method}\n line:{line},caller_id:{caller_id}, sign_id:{sign_id}')                      
+                   
                 if '(No Caller)' in line or '<clinit>' in caller :  #這些是seq的頭  #<clinit>代表某函數執行到一半因為要呼叫別的class method而去init class
                     if caller in sign_id:
                         #input(f'No Caller line:{line}, sign_id:{sign_id}, caller:{caller}, caller_id:{caller_id}')
@@ -337,67 +331,23 @@ def gen_dynamic_callgraph(path, logs, api_tree = None, new_version = True):#希�
                         #print(f'caller根本不在id_sign內 照樣新增new seq line:{line}, id_sign:{id_sign},caller_id:{caller_id},caller:{caller}')
                         _new_seq(call_seqs, calling_stacks, cur_calling_method, this_method_id, i)
 
-                    # if not caller: 
-                    #     raise ValueError(f'沒有caller_id, sign_id:{sign_id}, caller:{caller}, line:{line}')#input(f'沒有caller_id, sign_id:{sign_id}, caller:{caller}, line:{line}')
-                    # if caller in sign_id:#這個caller曾經有被呼叫到過
-                    #     if sign_id[caller] != caller_id: #caller_id是存在invoke指令指到的class
-                    #         #如果到這就表示可能是因為虛方法或介面方法造成caller與caller ID不一致 (但也有極低機率不同thread蓋到同一個Caller)
-                    #         print(f'??? Caller對不到ID line:{line}, sign_id:{sign_id},cur_calling_method:{cur_calling_method}')
-                    #         logs[i] = logs[i].replace(caller_id, sign_id[caller])#!!替換成正確的Caller_id
-                    #         caller_id = sign_id[caller]    
-                    #         res = _append_seq(cur_calling_method, calling_stacks, call_seqs, caller_id, callee_id, i)     
-                    #         if not res:
-                    #             input(f'caller曾經有被呼叫到過但caller_id不在cur_calling_method內 cur_calling_method:{cur_calling_method}\n line:{line},caller_id:{caller_id}, sign_id:{sign_id}')    
-
-                    #     else:#caller是符合的， 一般的calling relation解析
-                    #         res = _append_seq(cur_calling_method, calling_stacks, call_seqs, caller_id, callee_id, i)                   
-                    #         if not res:# _test_start:
-                    #             #fail_count += 1
-                    #             #input(f'call rel錯誤 i:{i}, line:{line}  cur_calling_method:{cur_calling_method} 找不到Seq, path:{path}') #不曉得為何有logcat錯誤 照樣算成新的seq 雖然可能也沒啥意義
-                    #             _new_seq(call_seqs, calling_stacks, cur_calling_method, this_method_id, i)
-       
-                    # else:#如果caller根本不在sign_id內就表示沒有這個class (那就應該是system API?)  
-
-                    #     input(f'caller根本不在sign_id內 line:{line}')
-                    #     # if caller in sign_id and sign_id[caller] == caller_id:#照理說不會到這
-                    #     #     raise ValueError(f'不應該 caller:{caller}, sign_id:{sign_id}, caller_id:{caller_id}')
-                    #     _new_seq(call_seqs, calling_stacks, cur_calling_method, this_method_id, i)
-    
-
             else: #剩下的都可以先用ID來判斷是哪一串seq, 除了end其他都不會動到cur_calling_method, calling_stacks
                 if this_method_id not in id_sign: #出現沒有被call rel log到的ID
                     #input(f'i:{i} 不存在任何seq中的 this_method_id:{this_method_id}, id_sign:{id_sign}, line:{line}')
                     fail_count += 1
                     continue
 
-                # _test_start = False
-                # for ii, cur_id in enumerate(cur_calling_method):
-                #     if cur_id == this_method_id:
                 if this_method_id in cur_calling_method:
                     ii = cur_calling_method[this_method_id]
-                    #print(f'cur_id:{cur_id}')
-                    #called_by[i] = calling_stacks[ii][-1] 
-                    #try:
                     call_seqs[ii].append(i)
-                    # except:
-                    #     input(f'call_seqs:{call_seqs}, len(call_seqs):{len(call_seqs)}, ii:{ii}, i:{i}, line:{line},cur_calling_method:{cur_calling_method}')
 
-                    # if line.startswith('Method START'):
-                    #     calling_stacks[ii].append(i)
                     if line.startswith('Method END'):
                         _test_end.append(line)
-                        #print(f'Method end, 一開始:{cur_calling_method[ii]},calling_stacks[{ii}]:{calling_stacks[ii]}')
-                        
-                        # if calling_stacks[ii][-1] == 'entry': #完成一串call seq
-                        #     cur_calling_method[ii] = 'entry' #第ei個seq不會再參與後續的分析
-                        # else:
+
                         try:
                             calling_stacks[ii].pop(-1)
                             if calling_stacks[ii][-1] != 'entry':
-                                #caller_rel = re.findall(randID_re, logs[calling_stacks[ii][-1]]) 
-                                #print(f'line:{line},caller_rel:{caller_rel},cur_calling_method:{cur_calling_method}')
-                                
-                                
+
                                 del cur_calling_method[this_method_id]
                                 this_method_id = calling_stacks[ii][-1]
                                 cur_calling_method[this_method_id] = ii
@@ -412,16 +362,9 @@ def gen_dynamic_callgraph(path, logs, api_tree = None, new_version = True):#希�
                         #print(f'Method end, cur[{ii}]變成:{cur_calling_method[ii]},calling_stacks[{ii}]:{calling_stacks[ii]}')
                     elif line.startswith('Try Start'):#用id去暫存try start這行的State來避免途中catch到例外狀況
                         id_trystate[this_method_id] = {}
-                        #id_trystate[this_method_id]['called_by'] = called_by[i]
                         id_trystate[this_method_id]['calling_stacks'] = calling_stacks[ii].copy()#只儲存value
-                        #id_trystate[this_method_id]['cur_calling_method'] = cur_calling_method[ii]
                         id_trystate[this_method_id]['index'] = ii
-                        # _test_start = True  
-                        # if this_method_id == '$(1573231865)' or this_method_id == '$(2099085059)':
-                        #     input(f'this_method_id i:{i}, line:{line} , calling_stacks[{ii}]:{calling_stacks[ii]},cur_calling_method[{ii}]:{cur_calling_method[ii]}')    
-                        #break
-                        
-                #if not _test_start:
+
                 else:
                     if line.startswith('Method END'):
                         fail_count += 1
@@ -632,8 +575,7 @@ def gen_evading_points( evading_point_types,real_evading_index, real_parent_inde
         if callrelsign_from_log(pr_line) != callrelsign_from_log(pe_line):##照理說兩邊第i項對應到的parent node會一樣，跑到這可能表示前面有輸出錯
             if calleesign_from_log(pr_line) != calleesign_from_log(pe_line):
                 #input(f'caller 不同但callee相同? pr_line:{pr_line}pe_line:{pe_line}')
-            # print(f'callrelsign_from_log(pr_line):{callrelsign_from_log(pr_line)}')
-            # print(f'callrelsign_from_log(pe_line):{callrelsign_from_log(pe_line)}')
+
                 continue
         
         hidden_behavior = []   
@@ -656,61 +598,7 @@ def gen_evading_points( evading_point_types,real_evading_index, real_parent_inde
         if de_line : ep['emu diverge'] = de_line.split(' $(')[0]
         #print(f'Got EP:{ep}')
         evading_points.append(ep)
-        # if r_line and r_line.strip().startswith('Branch'): #主要期望要找的Case, 因為兩行一樣 檢查其中一個是Branch就表示另一個也一樣
-        #     # if not dr_line or not de_line: #到底了或是有Gap 想一下還有沒有其他True EP的可能
-        #     #     continue
-        #     # if ('Case: True' in dr_line and 'Case: False' in de_line) \
-        #     #     or ('Case: True' in de_line and 'Case: False' in dr_line):#因為Branch造成的Divergence 
 
-        #     hidden_behavior = []   
-        #     #TODO 找到True EP了，開始解析他的HB    
-        #     if not ep_case == 'R':#不是R case就能印出模擬器的TM
-        #         for line_i in range(e_i,fe_i+1):
-        #             l = emu_logs[line_i]
-        #             #print(f'emu :{l}')
-        #             if '(target)' in l:
-        #                 #print(f'Target Method:{l}')
-        #                 hidden_behavior.append('Emu: '+l)
-        #     if not ep_case == 'E':#不是E case就能印出實體機的TM
-        #         for line_i in range(r_i,fr_i+1):
-        #             l = real_logs[line_i]
-        #             #print(f'real :{l}')
-        #             if '(target)' in l:
-        #                 #print(f'Target Method:{l}')
-        #                 hidden_behavior.append('Real: '+l)
-        #     ep = {'instruction':r_line, 'sign':pr_line[pr_line.index(': ')+2:], 'ep_case': ep_case,'hidden behavior':hidden_behavior}
-        #     if dr_line : ep['real diverge'] = dr_line
-        #     if de_line : ep['emu diverge'] = de_line
-        #     #print(f'Got EP:{ep}')
-        #     evading_points.append(ep)
-        #     # else:#怎出現正常分支case以外的分歧?
-        #     #     #input(f'After Branch:\ndr_line:{dr_line}\nde_line:{de_line}')
-        #     #     continue
-        #     # continue
-        # elif not dr_line or not de_line:
-        #     #到底了或是有Gap 想一下還有沒有其他True EP的可能
-        #     continue    
-        # #這邊開始不是因為Branch分支 要怎麼抓出try catch? (斷點位置不一定 可能在try start到try end中間任何地方)
-        # elif not dr_line.startswith('Method') or not de_line.startswith('Method'):#處理特殊標籤
-
-        #     #input(f'處理特殊標籤，dr_line:{dr_line},de_line:{de_line}')
-        #     continue
-        # elif dr_line[dr_line.index(';->')+3:dr_line.index('(')] in entry_list: #Divergence Point 出現entry method，可能是接收到某系統事件造成的lifecycle callback
-        #     #期望在前面抓parent line的部分就過濾掉
-        #     #input(f'Divergence Point 出現entry method\npr_line:{pr_line},pe_line:{pe_line}')
-        #     continue
-
-        
-        # #那不是分支造成的EP是為何呢，理論上包含try catch
-        # method_obj = gen_cfg_info(r_line,real_logs[pr_i],api_tree) 
-        # if not method_obj:
-        #     continue   
-        # #然後抓出branch的位子 
-        # ep = get_evading_point_in_method(method_obj)
-        # #input(f'p_i:{p_i}\nmethod_obj:{method_obj},ep:{ep}')
-        # if ep:
-        #     ep['ep_case'] = ep_case
-        #     evading_points.append(ep)
 
     return evading_points
 
@@ -722,7 +610,7 @@ def multiple_seq_matching(log_name, diffs_basepath, real_seq_head,emu_seq_head, 
     #print(f'multiple seq matching...len(real_seq_head):{len(real_seq_head)}, len(emu_seq_head):{len(emu_seq_head)},real_seq_head.keys():{real_seq_head.keys()},emu_seq_head.keys():{emu_seq_head.keys()}')
 
 
-    #TODO 如果遞迴到最後仍無法分辨多對一之中是哪一條真正對到呢 (例如後面的項都一樣或都不一樣)
+    #如果遞迴到最後仍無法分辨多對一之中是哪一條真正對到呢 (例如後面的項都一樣或都不一樣)
     if len(real_seq_head) == 0 or len(emu_seq_head) == 0: return
     if len(real_seq_head) == 1 and len(emu_seq_head) == 1 and real_seq_head.keys() != emu_seq_head.keys(): return
     if layer > 500: return#這些基本重合的seq感覺就沒有evasion
@@ -852,10 +740,7 @@ def _write_sub_seq(path, callseq, logs):
     with open(path ,'w') as f:
         f.writelines([logs[line_i][:logs[line_i].index(' $(')]+'\n' if not logs[line_i].startswith('CALL') else \
         callrelsign_from_log(logs[line_i])+'\n' for line_i in callseq])   
-    # for line_i in callseq:
-    #     if logs[line_i].startswith('CALL'):
-    #         s = callrelsign_from_log(logs[line_i])+'\n'  #+logs[line_i][logs[line_i].index('=>')+2:logs[line_i].index(' $(')]+'\n'
-            #print(f'Write: {s}, logs\[line_i\]:{logs[line_i]}, line_i:{line_i}')
+
 def seq2head_map(callseqs, logs, write_cat=None):
     seq_head = {}
     for seq in callseqs:
@@ -949,6 +834,7 @@ def gen_new_basicblock(cur_basicblock, line, cur_cfg ,get_sign_func,device):
         parent_block['child_block'] = [line_sign]
     else:
         if line_sign not in parent_block['child_block']: parent_block['child_block'].append(line_sign)
+    #print(f'parent_block:{parent_block}')
     if line_sign not in cur_cfg: #第一次走到這個block
         cur_cfg[line_sign] = {'id':len(cur_cfg), 'sign':line_sign, 'real_count':0, 'emu_count':0, 'parant_block': [parent_block['sign']]}#first basic block
         cur_cfg[line_sign][device+'_count'] = 1
@@ -970,40 +856,35 @@ def analysis_seqs(apk_dcg,callseqs,logs,device):
         lines = [logs[i] for i in seq]
         #print(f'lines:{lines},len{len(lines)}')
         cur_method = ''
-        #parent_method = ''
+        parent_method = ''
         cur_cfg = {}
         cur_basicblock = {}
         for i,line in enumerate(lines):
             #line = logs[seq[i]]
-            if line.startswith('CALL'):#可以忽略 
-                if i<l-1 and not lines[i+1].startswith('Method START'):
-                    test = 1
-                    #print(f'callseqs解析錯誤, i:{i},line i:{lines[i]}, line i+1:{lines[i+1]}')
-                    break
-            elif line.startswith('Method START:'): #basic block entry 
-                # if not cur_method == '':#不是第一個method
-                #     parent_method = cur_method#指定
-                # relation = re.findall(randID_re, line)
-                # this_method_id = relation[-1]
-                cur_method = line[line.index(': ')+2: line.index(' $')]
-                line_sign = startmethodsign_from_log(line)
-                if cur_method not in apk_dcg:#第一次創建這個cfg
-                    apk_dcg[cur_method] = {}
-                    cur_cfg = apk_dcg[cur_method]
-                    if line_sign not in cur_cfg: #第一次創建這個
-                        cur_cfg[line_sign] = {'id':0, 'sign':line_sign, 'real_count':0, 'emu_count':0}#first basic block
-                        cur_cfg[line_sign][device+'_count'] = 1
+            if line.startswith('CALL Relation:'):#可以忽略 
+                if cur_method != '': parant_method = cur_method
+
+
+                tmp = line.split('=>')[1]
+                cur_method = tmp[tmp.index(', ')+2: tmp.index(' $')]  #cur_method同時也當第一個block的sign
+                #print(f'cur_method:{cur_method},i:{i},line:{line}')
+                if cur_method not in apk_dcg:#第一次創建這個callee的cfg
+                    apk_dcg[cur_method] = {'parent_method':''}
+                    cur_cfg = apk_dcg[cur_method]#每一個method都會對應到一個他內部的cfg
+                    if cur_method not in cur_cfg: #第一次創建這個
+                        cur_cfg[cur_method] = {'id':0, 'sign':cur_method, 'real_count':0, 'emu_count':0}#first basic block
+                        cur_cfg[cur_method][device+'_count'] = 1
                     else:
                         test = 2
-                        #print(f'不應該到這 cur_cfg:{cur_cfg} line_sign:{line_sign}')
+                        #print(f'不應該到這 cur_cfg:{cur_cfg} cur_method:{cur_method}')
                         break
                 else:#直接載入cur_method對應的cfg
                     cur_cfg = apk_dcg[cur_method]
-                    if line_sign not in cur_cfg:   
+                    if cur_method not in cur_cfg:   
                         test = 3
-                        #print(f'不應該到這 直接載入的cfg不應該沒有這個sign cur_cfg:{cur_cfg} line_sign:{line_sign}')
+                        #print(f'不應該到這 直接載入的cfg不應該沒有這個sign cur_cfg:{cur_cfg} cur_method:{cur_method}')
                         break
-                    cur_cfg[line_sign][device+'_count'] += 1 #第二次以後走到這
+                    cur_cfg[cur_method][device+'_count'] += 1 #第二次以後走到這
 
                 # if 'parent_method' not in cur_cfg:
                 #     cur_cfg['parent_method'] = parent_method
@@ -1011,35 +892,44 @@ def analysis_seqs(apk_dcg,callseqs,logs,device):
                 #     t = cur_cfg['parent_method']
                 #     if parent_method != cur_cfg['parent_method'] : input(f'不應該到這 parent_method:{parent_method}跟之前紀錄的{t}不相等')
 
-
-                cur_basicblock = cur_cfg[line_sign]
-                #print(f'cur_basicblock:{cur_basicblock},line_sign:{line_sign}')
+                if parent_method != '': cur_cfg['parent_method'] = parent_method
+                if cur_basicblock != {}: cur_cfg[cur_method]['caller_block'] = cur_basicblock
+                cur_basicblock = cur_cfg[cur_method]
+                
+                #print(f'cur_basicblock:{cur_basicblock},cur_method:{cur_method}')
             elif line.startswith('Method END:'):
                 cur_basicblock['return'] = endmethodsign_from_log(line)
-                #print(f'End, cur_method:{cur_method}')
-                #cur_method = parent_method
+                #print(f'End, cur_method:{cur_method},cur_cfg:{cur_cfg},i:{i},line:{line}')
+                if 'caller_block' in cur_basicblock:
+                    cur_basicblock = cur_basicblock['caller_block']
+                # else:
+                #     cur_basicblock = {}
+                cur_method = cur_cfg['parent_method'] 
                 if cur_method != '':
                     #print(f'After end, cur_method:{cur_method},apk_dcg:{apk_dcg}')
                     cur_cfg = apk_dcg[cur_method]
                     #parent_method = cur_cfg['parent_method']
-                else:#有需要嗎+
-                    cur_cfg = {}
-            elif line.startswith('Method START(target)'):
-                line_sign = startmethodsign_from_log(line)
+
+            elif line.startswith('CALL Relation(target)'):
+                target_method = line.split('=>')[1].split(' $')[0]
                 if 'target' not in cur_basicblock:
-                    cur_basicblock['target'] = [line_sign]
+                    cur_basicblock['target'] = [target_method]
                 else:
-                    if line_sign not in cur_basicblock['target']: cur_basicblock['target'].append(line_sign)
-                if i<l-1 and not lines[i+1].startswith('Method END(target)'):
-                    test = 4
-                    #print(f'target seqs解析錯誤, i:{i},line i:{lines[i]}, line i+1:{lines[i+1]}')
+                    if target_method not in cur_basicblock['target']: cur_basicblock['target'].append(target_method)             
+                #print(f'i:{i},line i:{lines[i]}, target_method:{target_method},cur_basicblock:{cur_basicblock}')
+            elif line.startswith('Method END(target)'):
+                line_sign = endmethodsign_from_log(line)[4:]
+                # if not lines[i-1].startswith('CALL Relation(target)'):
+                #     test = 4
+                #     print(f'target seqs解析錯誤, i:{i},line i:{lines[i]}, line i-1:{lines[i-1]}, lines:{lines}')
+                #     break
+
+                if 'target' not in cur_basicblock or line_sign not in cur_basicblock['target']: 
+                    test = 5
+                    #b1  = 'target' in cur_basicblock
+                    #b2 = line_sign in cur_basicblock['target']
+                    #print(f'END target seqs解析錯誤, i:{i},line i:{lines[i]}, line_sign:{line_sign},cur_basicblock:{cur_basicblock}, target in cur_basicblock:{b1}')
                     break
-            # elif line.startswith('Method END(target)'):
-            #     line_sign = endmethodsign_from_log(line)
-            #     if 'target' not in cur_basicblock or line_sign not in cur_basicblock['target']: 
-            #         test = 5
-            #         print(f'END target seqs解析錯誤, i:{i},line i:{lines[i]},cur_basicblock:{cur_basicblock}')
-            #         break
             elif line.startswith('Branch'):    
                 cur_basicblock['has_branch'] = branchmethodsign_from_log(line)
 
@@ -1059,6 +949,8 @@ def analysis_seqs(apk_dcg,callseqs,logs,device):
             elif line.startswith('Goto:'):           
                 cur_basicblock['has_goto'] = gotosign_from_log(line)  
 
+            # if i>65:
+            #print(f'i:{i},line i:{lines[i]},cur_basicblock:{cur_basicblock}')
         else:
             continue
         #input(f't:{t}, test:{test}, len(callseqs):{len(callseqs)}')
@@ -1146,8 +1038,6 @@ def main(log_name,apk_name,apk_dcg):#,real_apk_dcg,emu_apk_dcg):
 
     real_evading_index, emu_evading_index, evading_point_types = get_evading_index(diffs_basepath, real_callseqs, emu_callseqs)
 
-    #然後輸出並儲存所有的evading points位置 
-    #evading_points = []#TODO 把hidden behavior也輸出一下
     evading_points = gen_evading_points(evading_point_types,real_evading_index,real_parent_index,rr,emu_evading_index,emu_parent_index,er,api_tree)
 
     #os.system(f'start: {ev}')
@@ -1171,7 +1061,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         log_name = sys.argv[1]
         package_name = log_name[:log_name.index('(')]
-        if package_name not in p2f:#TODO json內感覺缺了一些 待修正
+        if package_name not in p2f:
             input(f'package_name:{package_name}不在p2f內')
         apk_name = p2f[package_name] + '.apk'
         apk_dcg = {}
@@ -1216,46 +1106,46 @@ if __name__ == '__main__':
     total_fail_lines = [0,0,0,0]
     total_fail_seqs = [0,0,0,0]
     for log_name in tqdm(l_list):
-        #try:
-        if os.path.exists(os.path.join(diff_dir,log_name)) and not log_name in l_list_done:#表示跑到一半可能被卡掉過的 (或是在l_list_done內但是想要重跑的
-            shutil.rmtree(os.path.join(diff_dir,log_name))
+        try:
+            if os.path.exists(os.path.join(diff_dir,log_name)) and not log_name in l_list_done:#表示跑到一半可能被卡掉過的 (或是在l_list_done內但是想要重跑的
+                shutil.rmtree(os.path.join(diff_dir,log_name))
 
-        package_name = log_name[:log_name.index('(')]
-        if package_name not in p2f:#TODO json內感覺缺了一些 待修正
-            raise ValueError(f'package_name:{package_name}不在p2f內')
-        apk_name = p2f[package_name] + '.apk'
-        if os.path.isfile(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json')):
-            with open(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json'), 'r') as f:
-                apk = json.load(f)
-            apk_dcg = apk['dcg']
-        else:
-            apk_dcg = {}
+            package_name = log_name[:log_name.index('(')]
+            if package_name not in p2f:
+                raise ValueError(f'package_name:{package_name}不在p2f內')
+            apk_name = p2f[package_name] + '.apk'
+            if os.path.isfile(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json')):
+                with open(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json'), 'r') as f:
+                    apk = json.load(f)
+                apk_dcg = apk['dcg']
+            else:
+                apk_dcg = {}
+                apk = {'dcg':apk_dcg,'package_name':package_name}
+            # if apk_name in apk_dcgs:#log_name一樣的檔案應該會有很多個
+            #     # real_apk_dcg = apk_dcgs[apk_name][0]
+            #     # emu_apk_dcg = apk_dcgs[apk_name][1]
+            #     apk_dcg = apk_dcgs[apk_name]
+            # else:
+            # #     real_apk_dcg = {}
+            # #     emu_apk_dcg = {}
+            #     apk_dcg = {}
+            #     apk_dcgs[apk_name] = apk_dcg#[real_apk_dcg, emu_apk_dcg]
+            evading_points, failed_res, failed_seq_count = main(log_name,apk_name,apk_dcg)
+            
             apk = {'dcg':apk_dcg,'package_name':package_name}
-        # if apk_name in apk_dcgs:#log_name一樣的檔案應該會有很多個
-        #     # real_apk_dcg = apk_dcgs[apk_name][0]
-        #     # emu_apk_dcg = apk_dcgs[apk_name][1]
-        #     apk_dcg = apk_dcgs[apk_name]
-        # else:
-        # #     real_apk_dcg = {}
-        # #     emu_apk_dcg = {}
-        #     apk_dcg = {}
-        #     apk_dcgs[apk_name] = apk_dcg#[real_apk_dcg, emu_apk_dcg]
-        evading_points, failed_res, failed_seq_count = main(log_name,apk_name,apk_dcg)
-        
-        apk = {'dcg':apk_dcg,'package_name':package_name}
-        with open(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json'), 'w') as f:
-            json.dump(apk, f)
-        print(f'test log_name:{log_name}, apk_name:{apk_name}, evading_points:{evading_points}, failed_res:{failed_res}, failed_seq_count:{failed_seq_count}')
+            with open(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json'), 'w') as f:
+                json.dump(apk, f)
+            print(f'test log_name:{log_name}, apk_name:{apk_name}, evading_points:{evading_points}, failed_res:{failed_res}, failed_seq_count:{failed_seq_count}')
 
-        total_fail_lines[0] += failed_res[0]
-        total_fail_lines[1] += failed_res[1]
-        total_fail_lines[2] += failed_res[2]
-        total_fail_lines[3] += failed_res[3]
+            total_fail_lines[0] += failed_res[0]
+            total_fail_lines[1] += failed_res[1]
+            total_fail_lines[2] += failed_res[2]
+            total_fail_lines[3] += failed_res[3]
 
-        total_fail_seqs[0] += failed_seq_count[0]
-        total_fail_seqs[1] += failed_seq_count[1]
-        total_fail_seqs[2] += failed_seq_count[2]
-        total_fail_seqs[3] += failed_seq_count[3]
+            total_fail_seqs[0] += failed_seq_count[0]
+            total_fail_seqs[1] += failed_seq_count[1]
+            total_fail_seqs[2] += failed_seq_count[2]
+            total_fail_seqs[3] += failed_seq_count[3]
         # if evading_points != []:
         #     ev = os.path.join(diff_dir,log_name+'_evasions.json')
         #     with open(ev, 'w') as f:
@@ -1265,10 +1155,10 @@ if __name__ == '__main__':
         # writer.writerow([log_name,apk_name,evading_points])   
 
 
-        # except:
-        #     i += 1
-        #     print('failed')
-        #     failed_list.append([log_name])
+        except:
+            i += 1
+            print('failed')
+            failed_list.append([log_name])
             
             # pass
     #for d in os.listdir(diff_dir):
@@ -1276,7 +1166,7 @@ if __name__ == '__main__':
         #     shutil.rmtree(os.path.join(diff_dir,log_name))
 
     f.close()        
-    print(f'total_fail_lines:{total_fail_lines}, total_fail_seqs:{total_fail_seqs}, failed_list:{failed_list}')
+    print(f'total_fail_lines:{total_fail_lines}, total_fail_seqs:{total_fail_seqs}, failed_list:{failed_list},i:{i}')
 
     # for apk_name in apk_dcgs:
     #     apk_dcg = apk_dcgs[apk_name]
