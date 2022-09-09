@@ -1155,10 +1155,10 @@ if __name__ == '__main__':
         # writer.writerow([log_name,apk_name,evading_points])   
 
 
-        except:
+        except Exception as e:
             i += 1
             print('failed')
-            failed_list.append([log_name])
+            failed_list.append((log_name,e))
             
             # pass
     #for d in os.listdir(diff_dir):

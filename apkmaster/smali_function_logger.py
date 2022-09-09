@@ -30,7 +30,6 @@ def get_free_log_register_and_types(free_list, sixteen_types, ban_list = None, l
 	if free_list and len(free_list) > 0:#找沒用過的register優先，比算type來取的出錯率更低
 		log_param = free_list[0]
 		no_move = True
-		#input(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line}\ninvoke-static free reg list:{free_list},sixteen_types:{sixteen_types},log_param:{log_param}')
 	else:#不確定有誰可用，需要進一步的靜態分析，這時候會用到sixteen_types來判斷怎麼move資料
 		# return None
 		if ban_list and locals_num:
@@ -90,7 +89,7 @@ def gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line):#用來
 			if param_reg16 in moveresults_line or ('wide' in moveresults_line and 'p'+str(int(param_reg16[1:])-1) in moveresults_line):
 				return v16_pack
 				#如果move result沒蓋掉v16才需要moveback移
-	#v16_pack['moveback'] = f'    move{is_object}/16 {param_reg16}, {v_last}\n\n' #是不是其實不需要移動(因為本來param_reg16的值就沒有被其他指令assign)
+	v16_pack['moveback'] = f'    move{is_object}/16 {param_reg16}, {v_last}\n\n' #是不是其實不需要移動(因為本來param_reg16的值就沒有被其他指令assign)
 	
 	#input(f'v16_pack:{v16_pack}')
 	return v16_pack
@@ -160,7 +159,7 @@ def invoke_userdef_logger(register_case, invoke_line, tmp_register, class_name, 
 				move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(invoke_regs, offset, params_list, locals_num)
 				range_move = True
 				invoke_line = invoke_line.replace(invoke_regs[-1], new_range_end_reg)+'\n\n'#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
-				tmp_register = invoke_regs[-1] #如果range被v_last斷掉 則不能再使用這個reg當作暫存空間
+				tmp_register = invoke_regs[-1] #如果range被v_last斷掉 則不能再使用這個reg當作暫存空間, 用原本invoke range的最後一個暫存器(已被清空)
 		else:
 			if v16_moved_line:#需要來替換invoke_line
 				# if 'invoke-static {p0}, La/b/c/a/k;->X(Landroid/animation/Animator;)Z' in invoke_line:
@@ -596,11 +595,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 				# 在分析一般指令時，將case 1 且用到v16的狀況先抓出來，
 				# 但那些可以用超過16號的指令不用管這個  	
 				#可能極小機率存在小bug (param_reg16這個暫存器本身字串存在於const-string內)
-				# if 'updateAddEmailEntry' in current_method_signature and  (line.startswith('    iput') or line.startswith('    iget')):
-				# 	input(f'current_method_signature:{current_method_signature},case:{case},param_reg16:{param_reg16}\nline:{line}\nis_4bit_instruction(line):{is_4bit_instruction(line)},params_list:{params_list},params_num:{params_num}')
-				# if 'or-int/lit16' in line:
-				# 	b = is_4bit_instruction(line)
-				# 	input(f'是否為4bit:{b}')
+
 				if case == 1 and param_reg16 in line and is_4bit_instruction(line):
 
 					is_object = '-object' if param_types[p_index] == 'object' else ''
@@ -608,13 +603,8 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 
 					
 					v16_moved_line = gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line = smali_lines[i+2] if 'move-result' in smali_lines[i+2] else None )
-					# if (line.startswith('    iput') or line.startswith('    iget')) and 'updateAddEmailEntry' in current_method_signature:
-					# 	print(f'iget,iput:{line}')
-					# 	input(f'v16_moved_line:{v16_moved_line}')
-					# if 'invoke-virtual {p0, v1}, Lru/free/esplus/AuditionWords;->getString(I)Ljava/lang/String;' in line:
-					# 	print(f'v16_moved_line:{v16_moved_line},line:{line}')
 					if not any([line.startswith(prefix) for prefix in ['    invoke', '    if-', '    sparse-switch']  ]):						
-						line =  v16_moved_line['move'] + v16_moved_line['replaced_line'] #+ v16_moved_line['moveback']
+						line =  v16_moved_line['move'] + v16_moved_line['replaced_line'] + v16_moved_line['moveback']
 					# if 'Lru/free/esplus/AuditionWords;->getString(' in line:
 					# 	input(f'line:{line}')
 			if line.startswith('    .locals '): #p naming default
@@ -622,7 +612,6 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 					
 					locals_num  = int(line.split(' ')[-1])
 					if locals_num == 0:
-						#line = line.replace('0','1')
 						if params_num <= 14:
 							line = line.replace('0','2') #用來下start method log
 						else:
@@ -640,7 +629,6 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 							param_reg16 = 'p' + str(p_index)
 							param_reg16_is_object = (param_types[p_index] == 'object')#v16對應到的parameter, 看是object還是value (這是可以確定的
 
-					
 					#when case == 1, we can replace all v_16(actually p_x	) used in instructions
 					v_last = 'v'+str(locals_num)  if locals_num < 256 else 'v255'
 					
@@ -654,19 +642,12 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 
 
 				new_content += (line+'\n')
-				no_caller = current_method_signature.split(';->')[-1] in entry_list or in_main_init
-				# if '<init>()V' in current_method_signature:
-					
-				# 	if is_main_activity(class_name, main_activity):
-				# 		input(f'current_method_signature:{current_method_signature},no_caller:{no_caller}')					
+				no_caller = current_method_signature.split(';->')[-1] in entry_list or in_main_init				
 				new_content += gen_method_start_log(p_last, rand_method_id, new_class_name, current_method_signature, no_caller)
 				output_flag = 0 
 			elif line.startswith('.end method'):#這邊要reset一些method內的屬性
 				if in_main_init:
 					in_main_init = False
-				#print('.end method\n')		
-				# if 'TypeToString(Ljava/lang/Object;Z)Ljava/lang/String;' in current_method_signature:
-				# 	input(f'current_method_signature:{current_method_signature}\n params_list:{params_list}:param_types:{param_types}')
 				case = 0	
 				in_method_flag = False
 				sixteen_types = ['']*16
@@ -679,8 +660,6 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 					v_free = 'v2'
 				
 				v_end = v_free if '-wide' in line or 'v0' in line else 'v0'
-				# new_content += (f'    const-string {v_end}, \"{current_method_signature} {rand_method_id}\"\n\n')	
-				# new_content += (f'    sput-object {v_end}, Linjections/InlineLogs;->methodEnd:Ljava/lang/String;\n\n') 
 				new_content += (f'    invoke-static {{}}, {new_class_name}->methodEndLog()V\n\n')
 				
 			#sensitive/permission APIs and branch
@@ -688,6 +667,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 				# if line.startswith('    invoke-interface'): #介面方法照理說是調用抽象類內方法來用的
 				# 	new_content += line
 				# 	continue #什麼都不做	
+				print(f'line:{line}')
 				is_mr = 'move-result' in smali_lines[i+2]
 				moveresult = smali_lines[i+2] if is_mr else None
 
@@ -710,7 +690,6 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 						if v16_moved_line:
 							new_content += v16_moved_line['move'] + v16_moved_line['replaced_line']
 							if moveresult: new_content += moveresult
-							#new_content += v16_moved_line['moveback']
 							invoke_tmp = 'common offcial'
 							if not is_mr:
 								invoke_tmp = None

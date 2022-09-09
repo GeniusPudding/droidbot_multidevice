@@ -286,7 +286,7 @@ def p_reg_to_v(p_reg,locals_num):
 
 def is_target_method(method_sign,smali_base_dir,target_API_graph_all):#TODO TriggerMethod重複算了 照理說有包含在apk內
 	# 應該看target method就好, 把native method考慮進去
-	#print(f'invoke:{method_sign}')
+	print(f'invoke:{method_sign}')
 	boolean = True
 	dir_list = get_dirlist(method_sign)
 	current_dict = target_API_graph_all

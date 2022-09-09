@@ -4,17 +4,19 @@ import random
 from tqdm import tqdm
 import csv
 log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver2'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
 
 if __name__ == '__main__':
     with open('jsons/packagename2filename.json','r') as f:
         p2f = json.load(f)
+    with open('jsons/filename2packagename.json','r') as f:
+        f2p = json.load(f)
     # if os.path.exists('EvadingPoints.csv'):
     #     os.remove('EvadingPoints.csv')
     # f = open('EvadingPoints.csv', 'w')
     # writer = csv.writer(f)
     # writer.writerow(['diff filename','apk name','evading_points'])
-    label = 'Method START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V'
+    label =  ', Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V $' #'Method START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V'
     ldir = [f for f in os.listdir(log_path) if ')_logcat_' in f]
     apk_map = {}
     rlog_map = {}
@@ -48,12 +50,13 @@ if __name__ == '__main__':
 
         apk_map[apk_name] = is_label
 
-    print(apk_map)
+    #print(apk_map)
+    ta = [(a,f2p[a]) for a in apk_map if apk_map[a] == True]
     f = open('Labels.csv', 'w')
     writer = csv.writer(f)
     writer.writerow(['apk name','has label'])
     for a in apk_map:
         writer.writerow([a,apk_map[a]])
     f.close()
-
+    print(ta)
     print(f'Triggered ratio:{sum([apk_map[apk_name] for apk_name in apk_map])}/{len(apk_map)}')
