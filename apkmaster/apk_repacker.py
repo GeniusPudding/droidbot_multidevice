@@ -11,7 +11,6 @@ if __name__ != '__main__':
     from .apk_utils import *
 
 def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, add_dummy_evasion):
-    #print(f'methodlog_instrumentation:{methodlog_instrumentation}')
     # param: target apk path that want to apply instrumentation method 
     # return: repackaged apk path   
     dirname, basename = os.path.split(target_apk_path)
@@ -21,52 +20,36 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, ad
     if redecompile:
         try:
             print('apktool -rf d '+os.path.join(target_apk_path)+' -o '+apktool_dir)
-            f = os.popen('apktool -rf d '+'\"'+target_apk_path+'\"'+' -o '+'\"'+apktool_dir+'\"').read()#.read() for blocking
-            # r = subprocess.run(['apktool', '-rf', 'd','\"'+target_apk_path+'\"', '-o', '\"'+apktool_dir+'\"'], capture_output=True)
-            # s = r.stdout.decode("utf-8").strip()
-            # s1 = r.stderr.decode("utf-8").strip()
-            # print(f'error:{s1}')
-            #print(f'apktool decompile:{f}')
+            f = os.popen('apktool -rf d --only-main-classes '+'\"'+target_apk_path+'\"'+' -o '+'\"'+apktool_dir+'\"').read()#.read() for blocking
+
         except :
             print('apktool decompile failed, check the apktool')
             raise RuntimeError('Failed to decompile this apk, check the apktool') 
     print('bytecode instrumentation')
     #2.apk's binary(bytecode) instrumentation
-    try:
-        #print(os.getcwd(),apktool_dir)
-        # with open('apkmaster/target_API_graph_all.json', 'r') as f:
-        #     target_API_graph = json.load(f)
-        # print()
-        # with open('target_API_graph_all.json') as f:
-        #     target_API_graph = json.load(f)
-        apk = APK(target_apk_path)
-        #package_name = apk.get_package()
-        main_activity = apk.get_main_activity()        
-        # input(f'package_name:{package_name}, main_activity:{main_activity}')
+    #try:
 
-        # cmd = ['aapt', 'dump', 'badging', target_apk_path, '|', 'findstr', 'launchable-activity: name=\'']# apktool_dir.rstrip('\\/')]
-        # r = subprocess.run(cmd, capture_output=True).stdout.decode("utf-8").strip()
-        # r = r[r.index('launchable-activity: name=\'')+27:]#不曉得有沒有更輕鬆的讀取方式
-        # main_activity = r[:r.index('\'')]
-        # input(f'main activity:{main_activity}')
+    apk = APK(target_apk_path)
+    #package_name = apk.get_package()
+    main_activity = apk.get_main_activity()        
 
-        smali_dirs = [subdir for subdir in os.listdir(apktool_dir) if subdir.startswith('smali')]
-        next_smali_dir = os.path.join(apktool_dir,'smali_classes2' if len(smali_dirs) == 1 else 'smali_classes' + str(len(smali_dirs)+1))
-        os.mkdir(next_smali_dir)
-        for subdir in smali_dirs:
-            #if subdir.startswith('smali'):
-            smali_base_dir = os.path.join(apktool_dir,subdir)
-            #gen_invoke_set_json(smali_base_dir)
-            walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
-            #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
-        patch_log_file(os.path.join(apktool_dir,'smali'))
+    smali_dirs = [subdir for subdir in os.listdir(apktool_dir) if subdir.startswith('smali')]
+    next_smali_dir = os.path.join(apktool_dir,'smali_classes2' if len(smali_dirs) == 1 else 'smali_classes' + str(len(smali_dirs)+1))
+    os.mkdir(next_smali_dir)
+    for subdir in smali_dirs:
+        #if subdir.startswith('smali'):
+        smali_base_dir = os.path.join(apktool_dir,subdir)
+        #gen_invoke_set_json(smali_base_dir)
+        walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
+        #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
+    patch_log_file(os.path.join(apktool_dir,'smali'))
 
-        if add_dummy_evasion:
-            input('add_dummy_evasion')
-            evasion_instrumentation(target_apk_path,False, 'methodStartLog()V')
-    except:   
-        print('test Failed to do instrumentation')
-        raise RuntimeError('Failed to do instrumentation')
+    if add_dummy_evasion:
+        input('add_dummy_evasion')
+        evasion_instrumentation(target_apk_path,False, 'methodStartLog()V')
+    # except:   
+    #     print('test Failed to do instrumentation')
+    #     raise RuntimeError('Failed to do instrumentation')
     #print('test repackage')
     #3.apk repackage
     try:
@@ -207,4 +190,3 @@ if __name__ == '__main__':#TODO 有bug
             continue
         testing_apk_path = os.path.join(dataset_path,a)
         repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph)
-        print(f'methodlog_instrumentation:{repackaged_apk_path}')

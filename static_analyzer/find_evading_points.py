@@ -20,15 +20,16 @@ import filecmp
 from tqdm import tqdm
 import random
 import json
+
 official_lib_prefix = ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','android_maps_conflict_avoidance','io','org','okhttp3','okio','sun','libcore']
 com_list = ['android','facebook','google', 'adobe'] #不是很好的辦法 
 
 
-apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
-output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
+apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\security' #apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\security' #diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
+o1utput_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
 # ag_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\static_analyzer'
-log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
+log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\security' #log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
 entry_list = ["onCreate", "onStart", "onStartCommand","onResume", "onReStart", "onPause", "onStop", "onDestroy", "onTouch", "onReceive"]
 diffinfo_re = '\d+(,\d+)?[acd]\d+(,\d+)?'   
 randID_re = '\$\([0-9]+\)'
@@ -1050,14 +1051,8 @@ def main(log_name,apk_name,apk_dcg):#,real_apk_dcg,emu_apk_dcg):
 if __name__ == '__main__':
     with open('../jsons/packagename2filename.json','r') as f:
         p2f = json.load(f)
-    # with open('../jsons/filename2packagename.json','r') as f:
-    #     f2p = json.load(f)
-    # if os.path.exists('EvadingPoints.csv'):
-    #     os.remove('EvadingPoints.csv')
-    # f = open('EvadingPoints.csv', 'w')
-    # writer = csv.writer(f)
-    # writer.writerow(['diff filename','apk name','evading_points'])
-    
+    f2p, p2f = get_mapping(apk_dir)
+
     if len(sys.argv) > 1:
         log_name = sys.argv[1]
         package_name = log_name[:log_name.index('(')]
@@ -1114,8 +1109,9 @@ if __name__ == '__main__':
             if package_name not in p2f:
                 raise ValueError(f'package_name:{package_name}不在p2f內')
             apk_name = p2f[package_name] + '.apk'
-            if os.path.isfile(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json')):
-                with open(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json'), 'r') as f:
+            dcg_path = os.path.join(diff_dir,  apk_name[:-4]+'_multiple_dcg.json')
+            if os.path.isfile(dcg_path):
+                with open(dcg_path, 'r') as f:
                     apk = json.load(f)
                 apk_dcg = apk['dcg']
             else:
@@ -1133,7 +1129,7 @@ if __name__ == '__main__':
             evading_points, failed_res, failed_seq_count = main(log_name,apk_name,apk_dcg)
             
             apk = {'dcg':apk_dcg,'package_name':package_name}
-            with open(os.path.join(diff_dir,apk_name[:-4]+'_multiple_dcg.json'), 'w') as f:
+            with open(dcg_path, 'w') as f:
                 json.dump(apk, f)
             print(f'test log_name:{log_name}, apk_name:{apk_name}, evading_points:{evading_points}, failed_res:{failed_res}, failed_seq_count:{failed_seq_count}')
 

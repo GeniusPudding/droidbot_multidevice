@@ -4,6 +4,7 @@ import re
 from rich.progress import track
 from rich.console import Console
 from rich import print
+import subprocess
 import os
 import json
 console = Console()
@@ -86,3 +87,27 @@ def is_targeted_APIs(method_sign):
     else:
         return False
     
+def get_mapping(dataset_path):
+
+    p2f = {"Package Name": "File Name"}
+    f2p = {"File Name": "Package Name"}
+
+    for apk in os.listdir(dataset_path):
+        if apk[-4:] != '.apk':
+            continue
+        apk_path = os.path.join(dataset_path,apk)
+        apk_name = apk[:-4]
+        try:
+            r = subprocess.run(['packagename.bat',apk_path], capture_output=True)   
+            packagename = r.stdout.decode("utf-8").strip()
+            p2f[packagename] = apk_name
+            f2p[apk_name] = packagename
+        except:
+            input(f'apk:{apk} packagename failed')
+        
+    # with open('filename2packagename.json', 'w') as f:
+    #     json.dump(f2p,f)
+    # with open('packagename2filename.json', 'w') as f:
+    #     json.dump(p2f,f)
+
+    return f2p, p2f

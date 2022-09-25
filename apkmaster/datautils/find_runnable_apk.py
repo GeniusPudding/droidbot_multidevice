@@ -31,9 +31,10 @@ if __name__ == '__main__':
     # walking_list = list(os.walk(apkdir))
     # print(f'walking_list:{walking_list}')
     legal_count = 0
-    
+    a = [apks for apks in os.listdir(apkdir) if apks[-4:] == '.apk' and apks[:9] != 'repacked_']
     all_devices = get_available_devices()
-    for file_name in [apks for apks in os.listdir(apkdir) if apks[-4:] == '.apk']:
+
+    for file_name in a:
         # if file_name[-4:] != '.apk':
         #     continue
         # print(f'file_name:{file_name}')
@@ -42,7 +43,7 @@ if __name__ == '__main__':
             continue 
         else:
             print(f'check {file_name}!') 
-
+        #input(f'{file_name}:')    
         targetname = file_name
         if '(' in file_name and ')' in file_name:
             targetname = file_name[:file_name.index('(')] + file_name[file_name.index(')')+1:]
@@ -60,11 +61,11 @@ if __name__ == '__main__':
         except: 
             target_sdk_version = 100 #NOT EXISTS
         if target_sdk_version < 23:
-            print(f'{file_name}:target_sdk_version < 23')
+            print(f'{file_name}:target_sdk_version:{target_sdk_version} < 23')
             continue
-
+        #input(f'{file_name}:target_sdk_version:{target_sdk_version}')    
         natives = get_nativecode(full_path)
-        print(f'natives:{natives}')
+        #print(f'natives:{natives}')
         if not natives or ('x86' in natives and any(['arm' in nn for nn in natives])):
             success_install = True 
             for d in all_devices:
@@ -77,10 +78,10 @@ if __name__ == '__main__':
                     success_install = False
                     break
                 r = subprocess.run(["packagename.bat", full_path], capture_output=True)
-                print(f'packagename return:{r}')
+                #print(f'packagename return:{r}')
                 s = r.stdout.decode("utf-8").strip()
                 r = subprocess.run(["adb","-s",d,"uninstall", s], capture_output=True)
-                print(f'uninstall return:{r}')
+                #print(f'uninstall return:{r}')
 
 
             if success_install:

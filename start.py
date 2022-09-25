@@ -28,8 +28,8 @@ def parse_args():
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-d", action="store", dest="device_serial", required=False, default=None,#default: 不指定
                         help="The serial number of target device (use `adb devices` to find)")
-    parser.add_argument("-a", action="store", dest="apk_path",
-                        help="The file path to target APK")
+    parser.add_argument("-a", action="store", dest="apk_name",
+                        help="The target APK filename")
     parser.add_argument("-dataset", action="store", dest="dataset", required=True,
                     help="The path to target APKs dir")
     parser.add_argument("-o", action="store", dest="output_dir",default='../testing/test_droidbot_output',
@@ -114,6 +114,8 @@ def parse_args():
                     help="Repeat sending same input sequence for testing.")
     parser.add_argument("-only_repack", action="store_true", dest="only_repack", required=False, default=False,#default: 不指定
                         help="純粹插樁，不運行droidbot")
+    parser.add_argument("-decom", action="store_true", dest="decompile",#default: 不指定
+                        help="純粹apktool拆包，不運行droidbot")
     parser.add_argument("-monitor_event", action="store_true", dest="monitor_event",
                     help="Monitor logs per each event.")
     parser.add_argument("-e", action="store_true", dest="add_dummy_evasion", default=False,
@@ -134,7 +136,7 @@ def main(testing_apk_path, opts, target_API_graph):
     # print(f'testing_apk_path:{testing_apk_path}')
     if not os.path.exists(testing_apk_path):
         print("APK does not exist.")
-        return  
+        return None
     #print('test main')    
     all_devices = get_available_devices()
     if len(all_devices) == 0:
@@ -146,12 +148,31 @@ def main(testing_apk_path, opts, target_API_graph):
     if opts.reuse:
         dirname, basename = os.path.split(testing_apk_path)
         repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
+        if not os.path.exists(repackaged_apk_path):
+            return None
         #input(f'reuse:{repackaged_apk_path}')
-    elif opts.inject or opts.only_repack:
-        repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph, opts.add_dummy_evasion)
-        print(f'methodlog_instrumentation:{repackaged_apk_path}')
-        if opts.only_repack:#紀錄一下總時間
-            return ''
+    elif opts.inject:
+        try:
+            repackaged_apk_path = methodlog_instrumentation(testing_apk_path,True, target_API_graph, opts.add_dummy_evasion)
+            print(f'methodlog_instrumentation:{repackaged_apk_path}')
+            if opts.only_repack:#紀錄一下總時間
+                return ''
+        except:
+            return 'fail_repackage'
+    elif opts.decompile:
+        dirname, basename = os.path.split(testing_apk_path)
+        apkname = os.path.splitext(basename)[0]
+        apktool_dir = os.path.join(dirname,apkname)
+        try:
+            print('apktool -rf d --only-main-classes '+os.path.join(testing_apk_path)+' -o '+apktool_dir)
+            f = os.popen('apktool -rf d --only-main-classes '+'\"'+testing_apk_path+'\"'+' -o '+'\"'+apktool_dir+'\"').read()#.read() for blocking
+
+        except :
+            print('apktool decompile failed, check the apktool')
+            raise RuntimeError('Failed to decompile this apk, check the apktool') 
+
+        return None
+
 
     # input('test methodlog_instrumentation')
     if not opts.output_dir and opts.cv_mode:
@@ -251,7 +272,6 @@ def main(testing_apk_path, opts, target_API_graph):
     return success_logging_file
 
 if __name__ == "__main__":
-    # main()
     opts = parse_args()
     target_dir = opts.logdir
     if not os.path.exists(target_dir):
@@ -261,8 +281,8 @@ if __name__ == "__main__":
     with open('apkmaster/target_API_graph_all.json', 'r') as f:
         target_API_graph = json.load(f)
     failed_apks = {'name_list':[]}
-    if opts.apk_path:
-        testing_apk_path = opts.apk_path
+    if opts.apk_name:
+        testing_apk_path =  os.path.join(opts.dataset, opts.apk_name)  
         main(testing_apk_path,opts, target_API_graph)
     else:
         dataset_path = opts.dataset
@@ -293,19 +313,22 @@ if __name__ == "__main__":
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
         #random.shuffle(ran_apks)
 
+        failed_repacked = []
         for a in tqdm(ran_apks):
             try:
                 #input('wait')
-                    result = main(os.path.join(dataset_path,a),opts, target_API_graph)
-                    if not result: print("Write Log Files Failed.") 
-                  
+                result = main(os.path.join(dataset_path,a),opts, target_API_graph)
+                #if not result: print("Write Log Files Failed.") 
+                if result == 'fail_repackage':
+                    failed_repacked.append(a)
+                    print(f'{a} fail_repackage')
                 # if not result:
                 #     main(os.path.join(dataset_path,a),opts, target_API_graph)
                 
             except:
                 print(f'Analyzing {a} failed')
                 failed_apks['name_list'].append(a)
-        print(f'ran_apks:{ran_apks}')
-    
+        #print(f'ran_apks:{ran_apks}')
+        input(failed_repacked)
     with open('failed_apks.json','w') as f:
         json.dump(failed_apks, f)
