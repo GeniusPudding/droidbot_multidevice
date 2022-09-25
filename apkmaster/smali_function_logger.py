@@ -51,28 +51,53 @@ def get_free_log_register_and_types(free_list, sixteen_types, ban_list = None, l
 	return log_param, no_move, is_object
 	
 def not_exist_in_path(method_sign,smali_base_dir):	#如果該smali file存在也必須掃一次看是否目標method存在 (避免虛方法)
-	dir_list = get_dirlist(method_sign)[:-1]#先取class dir
-	method_name = method_sign.split('->')[-1]
-	#input(f'method_sign:{method_sign}, dir_list:{dir_list}')
+	try:
+		dir_list = get_dirlist(method_sign)[:-1]#先取class dir
+	except:
+		return True
+
+	smali_path = ''
+	tmp = method_sign.split('->')
+	
+	class_name, method_name = tmp[0], tmp[-1]
+	#print(f'method_sign:{method_sign}, dir_list:{dir_list}')
 	not_exist = False
 	apk_dir = os.path.dirname(smali_base_dir.rstrip('/'))
 	#current_base = smali_base_dir
 	for d in [d for d in os.listdir(apk_dir) if d.startswith('smali')]:#在multidex的情況必須看完每一個smali dir
 		current_base = os.path.join(apk_dir,d)
 		not_exist = False
-		for dir in dir_list:
+		for dir in dir_list[:-1]: #dir_list[-1]是class name 但有可能跟檔名不一樣 所以這邊先排除
 			new_cur = os.path.join(current_base,dir)
 			#print(f'new_cur:{new_cur}')
-			if not os.path.isdir(new_cur) and not (dir == dir_list[-1] and os.path.isfile(new_cur+'.smali')):
-				not_exist = True
+
+			if not os.path.isdir(new_cur):
+				not_exist = True #這個class路徑根本不存在 不用跑後面class name的部分 直接去看下一個dex
 				break
 			current_base = new_cur
-		#input(f'not_exist:{not_exist}')
+		#print(f'current_base:{current_base}, not_exist:{not_exist}')
+		if not not_exist:#觀察最後一層目錄內所有的smali 如果有跟class name符合的就設為smali_path
+			smalis = [s for s in os.listdir(current_base) if s[-6:] == '.smali']
+			for s in smalis:
+				
+				with open(os.path.join(current_base, s), 'r') as f:
+					line = f.readline()
+					if line.strip().split(' ')[-1] == class_name:
+						#input(f'line:{line},class_name:{class_name}')
+						smali_path = os.path.join(current_base, s)
+						break
+			else:
+				#input(f'class_name:{class_name}')
+				not_exist = True #這個smali class檔案根本不存在 不用跑後面的讀檔 直接去看下一個dex
+
 		if not not_exist: #如果有這個class (current_base剛好是class name
-			smali_path = current_base + '.smali'
-			with open(smali_path, 'r', encoding="utf-8" ) as f:
-				not_exist = not any([m_def for m_def in f.readlines() if m_def.startswith('.method') and method_name in m_def])
-			#input(f'current_base:{current_base},method_sign:{method_sign},exist:{not not_exist}')	
+			#smali_path = current_base + '.smali'
+			try:
+				with open(smali_path, 'r', encoding="utf-8" ) as f:
+					not_exist = not any([m_def for m_def in f.readlines() if m_def.startswith('.method') and method_name in m_def])
+
+			except:
+				input(f'current_base:{current_base},method_sign:{method_sign},exist:{not not_exist},dir_list:{dir_list}')	
 		if not not_exist: return not_exist #
 	return not_exist
 
@@ -538,7 +563,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 	v_last = ''
 	v_last2 = '' #可以輕鬆解決 case 2 裡面invoke-static需要用到參數的時候撞到J、D型態的case
 	vtry_catch_map16_moved_line = None #用來暫存case1剛好指令撞到v16的，包裝過move的指令 (另存一份 不要直接改line)
-	#try_catch_map = {} #用來暫存catch跟try的ID對應，每個method會重置 
+	#try_catch_map = {} #用來暫存catch跟try的ID對應，每個method會重置  
 	params_list = []
 	param_types = []
 	invoke_tmp = None
@@ -667,7 +692,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 				# if line.startswith('    invoke-interface'): #介面方法照理說是調用抽象類內方法來用的
 				# 	new_content += line
 				# 	continue #什麼都不做	
-				print(f'line:{line}')
+				#print(f'line:{line}')
 				is_mr = 'move-result' in smali_lines[i+2]
 				moveresult = smali_lines[i+2] if is_mr else None
 
@@ -736,9 +761,6 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 					invoke_tmp = None
 			elif line.startswith('    move-exception'):#都給前面出現的標籤catch, catch+try_start輸出
 				output_flag	= 0
-			# elif line.startswith('    .catch'):
-			# 	catch_list = line.strip().split(' ')	
-			# 	try_catch_map[catch_list[-2][:-1]] = catch_list[-1]
 			elif line.startswith('    goto'):
 				tag = line.strip().split(' ')[-1]
 				new_content += (f'    const-string {v_last}, \"line:{str(i)}, {current_method_signature} {tag}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
@@ -757,10 +779,10 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 						check_reg_usage(next_line, free_list, sixteen_types)#提前檢查move-exception的指令
 						new_content += (next_line)
 						new_content += tag_logger(case, v_last, new_class_name, current_method_signature, rand_method_id, [line], ['tryCatch'], free_list, sixteen_types)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
-					elif next_line.startswith('    :try_start') and next2_line.startswith('    move-exception'):#需判斷move-exception的存在 不能讓這個被log超車
-						check_reg_usage(next2_line, free_list, sixteen_types)#提前檢查move-exception的指令
+					elif next_line.startswith('    :try_start'):# and next2_line.startswith('    move-exception'):#需判斷move-exception的存在 不能讓這個被log超車
+						if next2_line.startswith('    move-exception'): check_reg_usage(next2_line, free_list, sixteen_types)#提前檢查move-exception的指令
 						new_content += (next_line)
-						new_content += (next2_line)
+						if next2_line.startswith('    move-exception'): new_content += (next2_line)
 						new_content += tag_logger(case, v_last, new_class_name, current_method_signature, rand_method_id, [line,next_line], ['tryCatch','tryStart'], free_list, sixteen_types)#, test_pause=('c(Landroid/app/Activity;)V' in current_method_signature))
 					#看了一下文本發現好像沒有其他標籤會卡在:catch跟move-exception中間 所以沒有else
 				elif line.startswith('    :cond'):
@@ -1361,28 +1383,37 @@ def walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph_all = None, 
 			continue
 
 		if d == 'com':#處理一下特殊情況 忽略ㄧ些com底下的
-			os.makedirs(os.path.join(next_smali_dir,d))
+			if not os.path.exists(os.path.join(next_smali_dir,d)):
+				os.makedirs(os.path.join(next_smali_dir,d))
 			for dd in os.listdir(os.path.join(smali_base_dir,'com')): 
 				if dd in com_list:
 					continue
 				#print(f'dd:{dd}')
 				w = list(os.walk(os.path.join(smali_base_dir,'com',dd)))
-				walking_list += w#list(os.walk(os.path.join(smali_base_dir,'com',dd)))
-				total_smali_counts, next_smali_dir, next_smali_dir_index = _count_smali_and_walk(w, os.path.join('com',dd), smali_base_dir, next_smali_dir, total_smali_counts)
-				next_smali_index_list += [next_smali_dir_index]*len(w)
+				if len(w) > 0:
+					walking_list += w#list(os.walk(os.path.join(smali_base_dir,'com',dd)))
+					total_smali_counts, next_smali_dir, next_smali_dir_index = _count_smali_and_walk(w, os.path.join('com',dd), smali_base_dir, next_smali_dir, total_smali_counts)
+					next_smali_index_list += [next_smali_dir_index]*len(w)
 		else:	
 			#print(f'd:{d}')
 			w = list(os.walk(os.path.join(smali_base_dir,d)))
-			walking_list += w#list(os.walk(os.path.join(smali_base_dir,d)))
-			total_smali_counts, next_smali_dir, next_smali_dir_index = _count_smali_and_walk(w, d, smali_base_dir, next_smali_dir, total_smali_counts)
-			next_smali_index_list += [next_smali_dir_index]*len(w)
+			if len(w) > 0:
+				walking_list += w#list(os.walk(os.path.join(smali_base_dir,d)))
+				total_smali_counts, next_smali_dir, next_smali_dir_index = _count_smali_and_walk(w, d, smali_base_dir, next_smali_dir, total_smali_counts)
+				next_smali_index_list += [next_smali_dir_index]*len(w)
 	#input(f'final total_smali_counts:{total_smali_counts*16}')
 	#for the instrumentation
 	if not log_mode:
 		read_signs_set = set()
+	
+	#print('檔案數')
+	#a = [len(walking_tuple[2]) for walking_tuple in walking_list]
+	#print(a)
+	#input(sum(a))
 	for i, walking_tuple in enumerate(walking_list):
 		if len(walking_tuple[2]) == 0:
 			continue
+		
 		for file_name in walking_tuple[2]:
 			if file_name[-6:] != '.smali':
 				continue
@@ -1430,11 +1461,13 @@ def _count_smali_and_walk(w, makedir_path, smali_base_dir, next_smali_dir, total
 		next_smali_dir = next_smali_dir[:count_index] + str(int(next_smali_dir[count_index:])+1)#抓smali_classes後面的數字 
 		total_smali_counts = 0 #TODO:萬一smail_counts一個就超過怎辦?
 		#input(f'new next_smali_dir:{next_smali_dir}, total_smali_counts:{smail_counts*16}')
-	os.makedirs(os.path.join(next_smali_dir, makedir_path))
+	if not os.path.isdir(os.path.join(next_smali_dir, makedir_path)):
+		os.makedirs(os.path.join(next_smali_dir, makedir_path))
 	
 	for t in w:#tuple (base, subdir, files)
 		for subdir in t[1]:
-			os.makedirs(os.path.join(t[0].replace(smali_base_dir, next_smali_dir),subdir))
+			if not os.path.isdir(os.path.join(t[0].replace(smali_base_dir, next_smali_dir),subdir)):
+				os.makedirs(os.path.join(t[0].replace(smali_base_dir, next_smali_dir),subdir))
 		total_smali_counts += len(t[2])
 	return total_smali_counts, next_smali_dir, next_smali_dir[count_index:]#回傳是第幾個smali dir (用字串存)
 
