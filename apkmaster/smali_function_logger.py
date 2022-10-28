@@ -55,7 +55,7 @@ def not_exist_in_path(method_sign,smali_base_dir):	#如果該smali file存在也
 		dir_list = get_dirlist(method_sign)[:-1]#先取class dir
 	except:
 		return True
-
+	#print(f'method_sign:{method_sign}, smali_base_dir:{smali_base_dir}')
 	smali_path = ''
 	tmp = method_sign.split('->')
 	
@@ -75,16 +75,21 @@ def not_exist_in_path(method_sign,smali_base_dir):	#如果該smali file存在也
 				not_exist = True #這個class路徑根本不存在 不用跑後面class name的部分 直接去看下一個dex
 				break
 			current_base = new_cur
-		#print(f'current_base:{current_base}, not_exist:{not_exist}')
+		#print(f'current_base:{current_base}, not_exist:{not_exist}, class_name:{class_name}, method_name:{method_name} ')
 		if not not_exist:#觀察最後一層目錄內所有的smali 如果有跟class name符合的就設為smali_path
 			smalis = [s for s in os.listdir(current_base) if s[-6:] == '.smali']
+			#print(f'smalis:{smalis}')
 			for s in smalis:
-				
-				with open(os.path.join(current_base, s), 'r') as f:
+				#print(f's:{s}')
+				t = os.path.join(current_base, s)
+				#print(f't:{t}, exists:{os.path.exists(t)}')
+				with open(t, 'r',encoding='utf-8') as f:
 					line = f.readline()
+					#print(f'line:{line}')
 					if line.strip().split(' ')[-1] == class_name:
 						#input(f'line:{line},class_name:{class_name}')
 						smali_path = os.path.join(current_base, s)
+						#print(f'smali_path:{smali_path}')
 						break
 			else:
 				#input(f'class_name:{class_name}')
@@ -544,10 +549,10 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 	in_method_flag = False
 	output_flag = 1
 	#class_name = ''
-	origin_clone = smali_lines.copy()
+	#origin_clone = smali_lines.copy()
 	class_name = smali_lines[0].split(' ')[-1].strip('\n')
 	if 'interface abstract' in smali_lines[0]:#這些應該都是透過invoke-interface呼叫? 應該是都可以先忽略
-		return ''.join(origin_clone), None
+		return ''.join(smali_lines), None
 	current_method_signature = '' #without the access scope
 	new_class_name = next_dex_class_name(class_name)
 
@@ -581,6 +586,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 	for i,line in enumerate(smali_lines):
 		v16_moved_line = None#每一行都初始化
 		tmp_line = line
+		#print(f'i;{i}, line:{line}')
 		if line.startswith('.method ') and '<clinit>(' not in line :# and (not target_methods or any([m in line for m in target_methods])): #
 			#filtered out the class constructor methods (<clinit>)
 			#會走到這的應該都不是official_prefix的
@@ -697,6 +703,8 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 				moveresult = smali_lines[i+2] if is_mr else None
 
 				if is_target_method(get_invoke_sign(line),smali_base_dir,target_API_graph_all):
+
+					#print('test1')
 					#把沒有被前面callee-log到的method在caller去下log, 在case 2的時候v_last後面連號的v_last2也要能使用
 
 					invoke_tmp = invoke_target_logger(case, tmp_line, v_last, new_class_name, rand_method_id, param_reg16, param_reg16_is_object, locals_num, moveresult,free_list,sixteen_types, v16_moved_line)
@@ -710,7 +718,9 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 					# if '_vvv3(Lanywheresoftware/b4a/objects/LabelWrapper;Ljava/lang/String;)I' in current_method_signature:
 					#  	input(f'invoke_tmp:{invoke_tmp}\n line:{line}:current_method_signature:{current_method_signature},moveresult:{moveresult}')
 				elif not is_invoke_offcial(line):
+					#print('test2')
 					if not_exist_in_path(get_invoke_sign(line),smali_base_dir):#可能包含一些因為invoke-virtual而沒被算進offcial list的
+						#print('test3')
 						output_flag = 0
 						if v16_moved_line:
 							new_content += v16_moved_line['move'] + v16_moved_line['replaced_line']
@@ -721,7 +731,8 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 						else:	
 							new_content += (line + '\n\n')
 							continue #什麼都不做	
-					else: #TODO 呼叫到.class public interface abstract裡面的
+					else: #TODO 呼叫到.class public interface abstract裡面的要怎找到其instance
+						#print('test4')
 						invoke_tmp = invoke_userdef_logger(case, tmp_line, v_last, new_class_name, rand_method_id, locals_num , moveresult, free_list,sixteen_types, v16_moved_line)
 						if invoke_tmp:
 							new_content += invoke_tmp
@@ -1407,19 +1418,19 @@ def walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph_all = None, 
 		read_signs_set = set()
 	
 	#print('檔案數')
-	#a = [len(walking_tuple[2]) for walking_tuple in walking_list]
-	#print(a)
+	# a = [len(walking_tuple[2]) for walking_tuple in walking_list]
+	#print(walking_list)
 	#input(sum(a))
 	for i, walking_tuple in enumerate(walking_list):
 		if len(walking_tuple[2]) == 0:
 			continue
-		
+		#print(f'walking_tuple:{walking_tuple},log_mode:{log_mode}')
 		for file_name in walking_tuple[2]:
 			if file_name[-6:] != '.smali':
 				continue
 			# start to parse the smali files
 			full_name = os.path.join(os.path.abspath(walking_tuple[0]),file_name)
-			#print(os.path.basename(walking_tuple[0]))
+			#print(full_name)
 			# if 'injections' ==  os.path.basename(walking_tuple[0]) :
 			# 	#input(f'walking_tuple[0]:{walking_tuple[0]}不用改寫')
 			# 	break
@@ -1435,8 +1446,9 @@ def walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph_all = None, 
 					input(f'Can\t read file:{full_name}')
 					continue
 				f.seek(0)
+				#input(f'smali_lines:{smali_lines}')
 				new_content,log_content = method_logger(smali_lines, smali_base_dir, target_API_graph_all, main_activity)
-				#input(f'log_content:{log_content}')
+				#input(f'new_content:{new_content},log_content:{log_content}')
 				f.write(new_content)
 				f.close()
 				if log_content:
@@ -1459,6 +1471,8 @@ def _count_smali_and_walk(w, makedir_path, smali_base_dir, next_smali_dir, total
 	#print(f'smail_counts:{smail_counts}')
 	if total_smali_counts + smail_counts > 3640: #一個dex總共可以65536個method 一個smali檔案預計多產生18個method
 		next_smali_dir = next_smali_dir[:count_index] + str(int(next_smali_dir[count_index:])+1)#抓smali_classes後面的數字 
+		if smail_counts > 3640:
+			input(total_smali_counts,smail_counts)
 		total_smali_counts = 0 #TODO:萬一smail_counts一個就超過怎辦?
 		#input(f'new next_smali_dir:{next_smali_dir}, total_smali_counts:{smail_counts*16}')
 	if not os.path.isdir(os.path.join(next_smali_dir, makedir_path)):
@@ -1471,31 +1485,6 @@ def _count_smali_and_walk(w, makedir_path, smali_base_dir, next_smali_dir, total
 		total_smali_counts += len(t[2])
 	return total_smali_counts, next_smali_dir, next_smali_dir[count_index:]#回傳是第幾個smali dir (用字串存)
 
-# def walk_target_dir(smali_base_dir, graph):
-# 	#print(f'walk to smali_base_dir:{smali_base_dir},keys:{graph.keys()}')
-# 	if os.path.isfile(smali_base_dir) and smali_base_dir[-6:] == '.smali' :# a method node
-# 		if list(graph.values())[0] != 'leaf': #identical basename of dir and smali file! 
-# 			return
-# 		# basename = os.path.basename(smali_base_dir)
-# 		#target_methods = graph.keys()
-# 		input(f'smali_base_dir:{smali_base_dir}\graph:{graph}')
-# 		try:
-# 			f = open(smali_base_dir,'r+', encoding='utf-8')
-# 			smali_lines = list(f)
-# 			f.seek(0)
-# 			new_content = method_logger(smali_lines,smali_base_dir,next_smali_dir, target_API_graph_all, main_activity)
-# 			f.write(new_content)
-# 			f.close()			
-# 		except :
-# 			input('log inject failed')				
-# 			return
-# 		return 
-
-# 	for subdir in os.listdir(smali_base_dir):
-# 		#print(f'subdir:{subdir}')
-# 		if subdir in graph or (subdir[-6:]=='.smali' and subdir[:-6] in graph): 
-# 			next_dir_path = os.path.join(smali_base_dir,subdir)
-# 			walk_target_dir(next_dir_path, graph[subdir[:-6]] if subdir[-6:]=='.smali' else graph[subdir])
 		
 def switch_case_logger(register_case, line, tmp_register, free_list, case_index,sixteen_types,rand_method_id, new_version):#TODO 這部分還不知道怎麼做
 	new_content = line+'\n'

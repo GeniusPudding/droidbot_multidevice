@@ -1,7 +1,7 @@
 import json 
 import os
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\security'
-output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\10av_virus'
+output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg1009'
 
 
 if __name__ == '__main__':
@@ -46,7 +46,6 @@ if __name__ == '__main__':
                 if real_only and emu_only: #兩條專屬路徑皆存在
                     print('\n')
                     print(f'rcb:{rcb}, ecb:{ecb}')
-                    #input(f'發現evasion的basic block:{b}, sign:{sign}')
                     evading_point.append( {'evasion': b ,'rcb':rcb, 'ecb':ecb, 'sign':sign, 'apkname':t[:-18],'package_name':package_name})
     
     da = {}

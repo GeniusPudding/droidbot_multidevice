@@ -291,23 +291,30 @@ if __name__ == "__main__":
         ran_apks = []
         logged_apks = []
         none_logged_apks = []
+        none_repackaged_apks = []
+
         log_list = [f[:f.index('(')] for f in os.listdir(target_dir) if '(' in f and os.path.getsize(os.path.join(target_dir,f)) != 0 ]
-        for a in os.listdir(dataset_path):
+        dd = os.listdir(dataset_path)
+        for a in dd:
             if a[-4:] != '.apk' or 'repacked_' in a :
                 continue
             r = subprocess.run(['packagename.bat',os.path.join(dataset_path,a)], capture_output=True)   
             packagename = r.stdout.decode("utf-8").strip()
             #input(f'packagename:{packagename}')
+            if 'repacked_' + a not in dd:
+                none_repackaged_apks.append(a)
             if packagename in log_list:
                 logged_apks.append(a)
             else:
                 none_logged_apks.append(a)
         random.shuffle(logged_apks)
         random.shuffle(none_logged_apks)
-        input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
+        input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}\nnone_repackaged_apks:{none_repackaged_apks},len:{len(none_repackaged_apks)}')
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks 
+        if opts.only_repack:
+            ran_apks = none_repackaged_apks
         #ran_apks = logged_apks+none_logged_apks 
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']

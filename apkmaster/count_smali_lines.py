@@ -14,7 +14,11 @@ for i, walking_tuple in enumerate(w):
 
         try:
             f = open(full_name,'r', encoding='utf-8')
-            count += len(list(f))
+            for l in list(f):
+                if l.startswith('.method'):
+                    count +=1 
+
+            #count += len(list(f))
         except:
             print(f'except {full_name}')
 print(f'count:{count}')
