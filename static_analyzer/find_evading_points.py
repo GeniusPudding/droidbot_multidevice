@@ -24,12 +24,12 @@ import json
 official_lib_prefix = ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','android_maps_conflict_avoidance','io','org','okhttp3','okio','sun','libcore']
 com_list = ['android','facebook','google', 'adobe'] #不是很好的辦法 
 
-
-apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\security' #apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\security' #diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
-o1utput_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
+dataset_name = 'TriggerZoo_x86' 
+apk_dir = 'C:\\Users\\user\\Desktop\\'+dataset_name #'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\10av_virus' #apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\'+dataset_name #diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
+#output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points'
 # ag_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\static_analyzer'
-log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\security' #log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
+log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\'+dataset_name #log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
 entry_list = ["onCreate", "onStart", "onStartCommand","onResume", "onReStart", "onPause", "onStop", "onDestroy", "onTouch", "onReceive"]
 diffinfo_re = '\d+(,\d+)?[acd]\d+(,\d+)?'   
 randID_re = '\$\([0-9]+\)'

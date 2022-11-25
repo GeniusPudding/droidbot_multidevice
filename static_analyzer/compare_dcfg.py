@@ -1,22 +1,29 @@
 import json 
 import os
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\security'
-output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg'
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\TriggerZoo_x86'
+output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg1121'
 
 
 if __name__ == '__main__':
     evading_point = []
-
+    failed_list = []
     for t in os.listdir(diff_dir):
         if not t.endswith('_multiple_dcg.json'):   
             continue
         with open(os.path.join(diff_dir,t), 'r') as f:
-            apk = json.load(f)
+            try:
+                apk = json.load(f)
+            except Exception as e:
+                print(f't:{t} failed')
+                failed_list.append((t,e))
+                
         print(f'File: {t}')
         apk_dcg = apk['dcg']
+        #print(apk_dcg)
+        #print("keys:",apk_dcg.keys())
         package_name = apk['package_name']
         for m in apk_dcg:
-            print(f'    m:{m}')
+            #input(f'    m:{m}')
             cfg = apk_dcg[m]
             for sign in cfg:
                 b = cfg[sign]
@@ -45,10 +52,11 @@ if __name__ == '__main__':
                         continue
                 if real_only and emu_only: #兩條專屬路徑皆存在
                     print('\n')
-                    print(f'rcb:{rcb}, ecb:{ecb}')
+                    #print(f'rcb:{rcb}, ecb:{ecb}')
                     #input(f'發現evasion的basic block:{b}, sign:{sign}')
-                    evading_point.append( {'evasion': b ,'rcb':rcb, 'ecb':ecb, 'sign':sign, 'apkname':t[:-18],'package_name':package_name})
+                    evading_point.append( {'evasion': b ,'rcb':rcb, 'ecb':ecb, 'sign':m+' : '+sign, 'apkname':t[:-18],'package_name':package_name})
     
+    input(failed_list)
     da = {}
     for d in evading_point:
         a = d['apkname']

@@ -638,11 +638,11 @@ class Device(object):
             waiting = 0
             while self.connected and package_name not in self.adb.get_installed_apps():
                 print("Please wait while installing the app...")#may be infinite loop
-                time.sleep(2)
+                time.sleep(1)
                 waiting += 1
                 if waiting % 10 == 0:
                     install_p = subprocess.Popen(install_cmd, stdout=subprocess.PIPE)
-                if waiting > 100:
+                if waiting > 30:
                     raise Exception('Waiting too long time while installing the app!')
             if not self.connected:
                 install_p.terminate()
@@ -731,7 +731,7 @@ class Device(object):
             uninstall_p = subprocess.Popen(uninstall_cmd, stdout=subprocess.PIPE)
             while package_name in self.adb.get_installed_apps():
                 print("Please wait while uninstalling the app...")
-                time.sleep(2)
+                time.sleep(3)
             uninstall_p.terminate()
 
     def get_app_pid(self, app):

@@ -1,7 +1,7 @@
 #some functions related to dalvik bytecode
 import re
-from rich.console import Console
-console = Console()
+# from rich.console import Console
+# console = Console()
 def read_param_string(param_string):
     param_list = []
     #print(f'param_string:{param_string}')

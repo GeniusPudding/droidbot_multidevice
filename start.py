@@ -19,6 +19,7 @@ from tqdm import tqdm
 import random
 import json
 import sys
+from time import process_time 
 def parse_args():
     """
     parse command line input
@@ -291,30 +292,40 @@ if __name__ == "__main__":
         ran_apks = []
         logged_apks = []
         none_logged_apks = []
+        none_repackaged_apks = []
+
         log_list = [f[:f.index('(')] for f in os.listdir(target_dir) if '(' in f and os.path.getsize(os.path.join(target_dir,f)) != 0 ]
-        for a in os.listdir(dataset_path):
+        dd = os.listdir(dataset_path)
+        for a in dd:
             if a[-4:] != '.apk' or 'repacked_' in a :
                 continue
             r = subprocess.run(['packagename.bat',os.path.join(dataset_path,a)], capture_output=True)   
             packagename = r.stdout.decode("utf-8").strip()
             #input(f'packagename:{packagename}')
+            if 'repacked_' + a not in dd:
+                none_repackaged_apks.append(a)
             if packagename in log_list:
                 logged_apks.append(a)
             else:
                 none_logged_apks.append(a)
         random.shuffle(logged_apks)
         random.shuffle(none_logged_apks)
-        input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}')
+        input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}\nnone_repackaged_apks:{none_repackaged_apks},len:{len(none_repackaged_apks)}')
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks 
-        #ran_apks = logged_apks+none_logged_apks 
+        ran_apks = logged_apks + none_logged_apks 
+        # # if opts.only_repack:
+        # #     ran_apks = none_repackaged_apks
+        
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
         #random.shuffle(ran_apks)
 
         failed_repacked = []
+        mean = 0
         for a in tqdm(ran_apks):
+            t1_start = process_time()  
             try:
                 #input('wait')
                 result = main(os.path.join(dataset_path,a),opts, target_API_graph)
@@ -328,7 +339,12 @@ if __name__ == "__main__":
             except:
                 print(f'Analyzing {a} failed')
                 failed_apks['name_list'].append(a)
-        #print(f'ran_apks:{ran_apks}')
+            t1_stop = process_time() 
+            t = t1_stop-t1_start
+            print(f'Time for {a}: {t}')  
+            mean += t
+        mean /= len(ran_apks)
+        print(f'平均值行時間:{mean}')
         input(failed_repacked)
     with open('failed_apks.json','w') as f:
         json.dump(failed_apks, f)

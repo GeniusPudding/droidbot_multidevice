@@ -2,7 +2,7 @@ import json
 import subprocess
 import os
 import sys
-dataset_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\TriggerZoo\\infected'
+# dataset_path = 'C:\\Users\\user\\Desktop\\TriggerZoo_x86'
 
 def get_mapping(dataset_path):
 

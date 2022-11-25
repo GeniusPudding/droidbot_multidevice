@@ -20,8 +20,8 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, ad
     if redecompile:
         try:
             print('apktool -rf d '+os.path.join(target_apk_path)+' -o '+apktool_dir)
-            f = os.popen('apktool -rf d --only-main-classes '+'\"'+target_apk_path+'\"'+' -o '+'\"'+apktool_dir+'\"').read()#.read() for blocking
-
+            f = os.popen('apktool.bat -rf d --only-main-classes '+'\"'+target_apk_path+'\"'+' -o '+'\"'+apktool_dir+'\"').read()#.read() for blocking
+            print(f)
         except :
             print('apktool decompile failed, check the apktool')
             raise RuntimeError('Failed to decompile this apk, check the apktool') 
@@ -32,15 +32,18 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, ad
     apk = APK(target_apk_path)
     #package_name = apk.get_package()
     main_activity = apk.get_main_activity()        
-
+    #print(f'main_activity:{main_activity}')
     smali_dirs = [subdir for subdir in os.listdir(apktool_dir) if subdir.startswith('smali')]
     next_smali_dir = os.path.join(apktool_dir,'smali_classes2' if len(smali_dirs) == 1 else 'smali_classes' + str(len(smali_dirs)+1))
     os.mkdir(next_smali_dir)
     for subdir in smali_dirs:
         #if subdir.startswith('smali'):
+        #print(f'subdir:{subdir}')
+        
         smali_base_dir = os.path.join(apktool_dir,subdir)
         #gen_invoke_set_json(smali_base_dir)
-        walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
+        s = walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
+        #print(f's:{s}')
         #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
     patch_log_file(os.path.join(apktool_dir,'smali'))
 
@@ -50,17 +53,18 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, ad
     # except:   
     #     print('test Failed to do instrumentation')
     #     raise RuntimeError('Failed to do instrumentation')
-    #print('test repackage')
+    print('test repackage')
     #3.apk repackage
     try:
         #on win10
-        f = os.popen('apktool b '+'\"'+apktool_dir+'\"').read()#.read() for blocking
+        f = os.popen('apktool.bat b '+'\"'+apktool_dir+'\"').read()#.read() for blocking
         print(f'apktool build:{f}')
         # r = subprocess.run(['apktool', 'b', apktool_dir], capture_output=True)
         # s = r.stdout.decode("utf-8").strip()
         # input(f'apktool build:{s}')
         repackage = os.path.join(os.getcwd(), 'apkmaster','batches','repackage.bat')
         cmd = [repackage,dirname,apkname]# apktool_dir.rstrip('\\/')]
+        print(f'cmd:{cmd}')
         r = subprocess.check_output(cmd).decode()
         packagename = r.split('\r\n')[-2]
         print(f'check output:{r}')
