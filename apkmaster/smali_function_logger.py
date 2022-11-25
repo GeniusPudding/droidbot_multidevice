@@ -585,6 +585,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 	for i,line in enumerate(smali_lines):
 		v16_moved_line = None#每一行都初始化
 		tmp_line = line
+		#print(f'i;{i}, line:{line}')
 		if line.startswith('.method ') and '<clinit>(' not in line :# and (not target_methods or any([m in line for m in target_methods])): #
 			#filtered out the class constructor methods (<clinit>)
 			#會走到這的應該都不是official_prefix的

@@ -1,7 +1,12 @@
 import json 
 import os
+<<<<<<< HEAD
 diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\TriggerZoo_x86'
 output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg1121'
+=======
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\10av_virus'
+output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg1009'
+>>>>>>> 2a7a398fe9630a311f60e5e652c1f73d5691672d
 
 
 if __name__ == '__main__':
