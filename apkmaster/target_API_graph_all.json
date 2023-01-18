@@ -211,6 +211,9 @@
             },
             "Integer": {
                 "byteValue": "Ljava/lang/Integer;->byteValue"
+            },
+            "System": {
+                "exit": "Ljava/lang/System;->exit"
             }
         },
         "beans": {
@@ -226,7 +229,8 @@
             "File": {
                 "createNewFile": "Ljava/io/File;->createNewFile",
                 "mkdirs": "Ljava/io/File;->mkdirs",
-                "<init>": "Ljava/io/File;-><init>"
+                "<init>": "Ljava/io/File;-><init>",
+                "exists": "Ljava/io/File;->exists"
             },
             "ObjectOutputStream": {
                 "writeObject": "Ljava/io/ObjectOutputStream;->writeObject",
@@ -6014,21 +6018,6 @@
             }
         },
         "util": {
-            "Log$1": {
-                "onTerribleFailure": "Landroid/util/Log$1;->onTerribleFailure"
-            },
-            "Log": {
-                "println": "Landroid/util/Log;->println",
-                "v": "Landroid/util/Log;->v",
-                "d": "Landroid/util/Log;->d",
-                "e": "Landroid/util/Log;->e",
-                "i": "Landroid/util/Log;->i",
-                "w": "Landroid/util/Log;->w",
-                "wtf": "Landroid/util/Log;->wtf"
-            },
-            "Slog": {
-                "v": "Landroid/util/Slog;->v"
-            },
             "Base64": {
                 "encode": "Landroid/util/Base64;->encode"
             }
