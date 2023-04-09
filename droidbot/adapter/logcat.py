@@ -30,9 +30,15 @@ class Logcat(Adapter):
             self.out_file = f"{device.output_dir}/logcat_{device.serial}.txt"   #"%s/logcat.txt" % device.output_dir
             self.out_file = self.out_file.replace(':', '_')
 
+        self.error_file = 'logcat_runtime_error.txt'
+
     def connect(self):
         self.device.adb.run_cmd("logcat -c")
-        self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "GeniusPudding:D", "*:S" "-v", "threadtime"],#["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
+        self.process = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "GeniusPudding:D", "*:S"],#["adb", "-s", self.device.serial, "logcat", "-v", "threadtime", "*:I"],
+                                        
+                                        stderr=subprocess.PIPE,
+                                        stdout=subprocess.PIPE)
+        self.process_error = subprocess.Popen(["adb", "-s", self.device.serial, "logcat", "AndroidRuntime:E", "*:S"],
                                         
                                         stderr=subprocess.PIPE,
                                         stdout=subprocess.PIPE)
@@ -44,7 +50,8 @@ class Logcat(Adapter):
         self.connected = False
         if self.process is not None:
             self.process.terminate()
-
+        if self.process_error is not None:
+            self.process_error.terminate()
     def check_connectivity(self):
         return self.connected
 
@@ -61,15 +68,17 @@ class Logcat(Adapter):
         if self.out_file is not None:
             f = open(self.out_file, 'w', encoding='utf-8')#
             w = f.write('test\n')
-        print(f'Logcat self.out_file:{self.out_file},f:{f},w:{w}')
+
+        # fe = open(self.error_file, 'w+', encoding='utf-8')#
+        # we = fe.write('test\n')
+        # print(f'Logcat self.out_file:{self.out_file},f:{f},w:{w},fe:{fe},we:{we}')
         while self.connected:
-            #print(f'connecting')
             if self.process is None:
                 continue
             line = self.process.stdout.readline()
             if not isinstance(line, str):
                 line = line.decode()
-            #print(f'Read log line:{line}')
+            #print(f'\nRead log line:{line},  f:{f}')
             info = get_log(line)
             if info: self.device.event_logs.append(info)
             self.recent_lines.append(line)
@@ -77,9 +86,20 @@ class Logcat(Adapter):
             if f is not None:
                 #input(f'write line:{line}')
                 w = f.write(line)
-                #print(f'line:{line}.w:{w}')
+                #print(f'write line:{line}.w:{w}')
+
+            # if self.process_error is None:
+            #     continue
+            # line_error = self.process_error.stdout.readline()
+            
+            # if not isinstance(line_error, str): line_error = line_error.decode() 
+            # print(f'line_error:{line_error}')
+            # fe.write(line_error.strip())      
+            # if 'AndroidRuntime: java' in line_error:
+            #     raise RuntimeError("此apk無法運行，可能是因為instrumentation錯誤")         
         if f is not None:
             f.close()
+        #fe.close()
         print("[CONNECTION] %s is disconnected" % self.__class__.__name__)
 
     def parse_line(self, logcat_line):

@@ -1,0 +1,178 @@
+.class public final Lcom/ldoublem/loadingviewlib/R$color;
+.super Ljava/lang/Object;
+.source "R.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/ldoublem/loadingviewlib/R;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "color"
+.end annotation
+
+
+# static fields
+.field public static final abc_background_cache_hint_selector_material_dark:I = 0x7f040000
+
+.field public static final abc_background_cache_hint_selector_material_light:I = 0x7f040001
+
+.field public static final abc_color_highlight_material:I = 0x7f040004
+
+.field public static final abc_input_method_navigation_guard:I = 0x7f040007
+
+.field public static final abc_primary_text_disable_only_material_dark:I = 0x7f040008
+
+.field public static final abc_primary_text_disable_only_material_light:I = 0x7f040009
+
+.field public static final abc_primary_text_material_dark:I = 0x7f04000a
+
+.field public static final abc_primary_text_material_light:I = 0x7f04000b
+
+.field public static final abc_search_url_text:I = 0x7f04000c
+
+.field public static final abc_search_url_text_normal:I = 0x7f04000d
+
+.field public static final abc_search_url_text_pressed:I = 0x7f04000e
+
+.field public static final abc_search_url_text_selected:I = 0x7f04000f
+
+.field public static final abc_secondary_text_material_dark:I = 0x7f040010
+
+.field public static final abc_secondary_text_material_light:I = 0x7f040011
+
+.field public static final accent_material_dark:I = 0x7f040018
+
+.field public static final accent_material_light:I = 0x7f040019
+
+.field public static final background_floating_material_dark:I = 0x7f04001a
+
+.field public static final background_floating_material_light:I = 0x7f04001b
+
+.field public static final background_material_dark:I = 0x7f04001c
+
+.field public static final background_material_light:I = 0x7f04001d
+
+.field public static final bright_foreground_disabled_material_dark:I = 0x7f04001e
+
+.field public static final bright_foreground_disabled_material_light:I = 0x7f04001f
+
+.field public static final bright_foreground_inverse_material_dark:I = 0x7f040020
+
+.field public static final bright_foreground_inverse_material_light:I = 0x7f040021
+
+.field public static final bright_foreground_material_dark:I = 0x7f040022
+
+.field public static final bright_foreground_material_light:I = 0x7f040023
+
+.field public static final button_material_dark:I = 0x7f040024
+
+.field public static final button_material_light:I = 0x7f040025
+
+.field public static final dim_foreground_disabled_material_dark:I = 0x7f040036
+
+.field public static final dim_foreground_disabled_material_light:I = 0x7f040037
+
+.field public static final dim_foreground_material_dark:I = 0x7f040038
+
+.field public static final dim_foreground_material_light:I = 0x7f040039
+
+.field public static final foreground_material_dark:I = 0x7f04003c
+
+.field public static final foreground_material_light:I = 0x7f04003d
+
+.field public static final highlighted_text_material_dark:I = 0x7f04003f
+
+.field public static final highlighted_text_material_light:I = 0x7f040040
+
+.field public static final material_blue_grey_800:I = 0x7f040046
+
+.field public static final material_blue_grey_900:I = 0x7f040047
+
+.field public static final material_blue_grey_950:I = 0x7f040048
+
+.field public static final material_deep_teal_200:I = 0x7f040049
+
+.field public static final material_deep_teal_500:I = 0x7f04004a
+
+.field public static final material_grey_100:I = 0x7f04004b
+
+.field public static final material_grey_300:I = 0x7f04004c
+
+.field public static final material_grey_50:I = 0x7f04004d
+
+.field public static final material_grey_600:I = 0x7f04004e
+
+.field public static final material_grey_800:I = 0x7f04004f
+
+.field public static final material_grey_850:I = 0x7f040050
+
+.field public static final material_grey_900:I = 0x7f040051
+
+.field public static final primary_dark_material_dark:I = 0x7f040055
+
+.field public static final primary_dark_material_light:I = 0x7f040056
+
+.field public static final primary_material_dark:I = 0x7f040057
+
+.field public static final primary_material_light:I = 0x7f040058
+
+.field public static final primary_text_default_material_dark:I = 0x7f040059
+
+.field public static final primary_text_default_material_light:I = 0x7f04005a
+
+.field public static final primary_text_disabled_material_dark:I = 0x7f04005b
+
+.field public static final primary_text_disabled_material_light:I = 0x7f04005c
+
+.field public static final ripple_material_dark:I = 0x7f040061
+
+.field public static final ripple_material_light:I = 0x7f040062
+
+.field public static final secondary_text_default_material_dark:I = 0x7f040063
+
+.field public static final secondary_text_default_material_light:I = 0x7f040064
+
+.field public static final secondary_text_disabled_material_dark:I = 0x7f040065
+
+.field public static final secondary_text_disabled_material_light:I = 0x7f040066
+
+.field public static final switch_thumb_disabled_material_dark:I = 0x7f040067
+
+.field public static final switch_thumb_disabled_material_light:I = 0x7f040068
+
+.field public static final switch_thumb_material_dark:I = 0x7f040069
+
+.field public static final switch_thumb_material_light:I = 0x7f04006a
+
+.field public static final switch_thumb_normal_material_dark:I = 0x7f04006b
+
+.field public static final switch_thumb_normal_material_light:I = 0x7f04006c
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 2
+    #Instrumentation by GeniusPudding
+    invoke-static {}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;
+
+    move-result-object v0
+
+    sput-object v0, Lcom/ldoublem/loadingviewlib/RNextDexcolor;->thismethodID:Ljava/lang/String;
+
+    const-string v0, "Lcom/ldoublem/loadingviewlib/R$color;-><init>()V"
+
+    sput-object v0, Lcom/ldoublem/loadingviewlib/RNextDexcolor;->thismethodSign:Ljava/lang/String;
+
+    invoke-static {}, Lcom/ldoublem/loadingviewlib/RNextDexcolor;->callLog()V
+
+
+    .line 238
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    invoke-static {}, Lcom/ldoublem/loadingviewlib/RNextDexcolor;->methodEndLog()V
+
+    return-void
+.end method

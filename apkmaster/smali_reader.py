@@ -3,6 +3,7 @@
 
 import re
 from rich.console import Console
+import hashlib
 console = Console()
 param_registers_num = lambda params_list: len(params_list) + params_list.count('J') + params_list.count('D')
 get_dirlist = lambda method_sign: method_sign[1:].split(';->')[0].split('/') + [method_sign[1:].split(';->')[1].split('(')[0]]
@@ -11,6 +12,11 @@ is_main_activity = lambda class_name, main_activity: class_name[1:-1].split('/')
 entry_list = ['onCreate(Landroid/os/Bundle;)V', "onStart()V", 'onRestart()V',"onResume()V",  "onPause()V", "onStop()V", "onDestroy()V"\
      ,'onStart(Landroid/content/Intent;I)V',  'onStartCommand(Landroid/content/Intent;II)I', "onReceive(Landroid/content/Context;Landroid/content/Intent;)V"]  
 #lifecycle methods
+pattern = r'[0-9]'
+# function: use regex to filter out all numbers of the method sign string sha256 result, and return
+get_mspace_fieldname = lambda method_sign: re.sub(pattern, '', hashlib.sha256(method_sign.encode('utf-8')).hexdigest())
+
+
 
 def get_params_list(line,  class_sign = None):#.method 或是invoke line, .method需要額外傳入class_sign
     

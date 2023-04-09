@@ -1,15 +1,20 @@
+# Component 4: Dynamic Control Flow Passing Counter
+
 import json 
 import os
-<<<<<<< HEAD
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\TriggerZoo_x86'
-output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg1121'
-=======
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\10av_virus'
-output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg1009'
->>>>>>> 2a7a398fe9630a311f60e5e652c1f73d5691672d
+import shutil
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\TriggerZoo_x86_0205' #test' #TriggerZoo_x86_1205' #TriggerZoo_x86
+output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg0205' #test' #' #dcfg1121
 
 
 if __name__ == '__main__':
+    try:
+        shutil.rmtree(output_dir)
+    except:
+        pass
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)      
+
     evading_point = []
     failed_list = []
     for t in os.listdir(diff_dir):
@@ -47,10 +52,10 @@ if __name__ == '__main__':
                     try:
                         c = cfg[csign]
                         rc, ec = c['real_count'], c['emu_count']
-                        if rc > 0.9*rb and ec < 0.1*eb:
+                        if rc > 0.99*rb and ec < 0.01*eb:
                             real_only = True
                             rcb = c
-                        elif ec > 0.9*eb and rc < 0.1*rb:
+                        elif ec > 0.99*eb and rc < 0.01*rb:
                             emu_only = True
                             ecb = c
                     except:

@@ -3,20 +3,19 @@ import json
 import random
 from tqdm import tqdm
 import csv
-log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
+log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_x86_0128'
 
 if __name__ == '__main__':
-    with open('jsons/packagename2filename.json','r') as f:
+    with open('jsons/TriggerZoo_x86_packagename2filename.json','r') as f:
         p2f = json.load(f)
-    with open('jsons/filename2packagename.json','r') as f:
+    with open('jsons/TriggerZoo_x86_filename2packagename.json','r') as f:
         f2p = json.load(f)
     # if os.path.exists('EvadingPoints.csv'):
     #     os.remove('EvadingPoints.csv')
     # f = open('EvadingPoints.csv', 'w')
     # writer = csv.writer(f)
     # writer.writerow(['diff filename','apk name','evading_points'])
-    label =  ', Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V $' #'Method START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V'
+    label =  'Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V' #'Method START: Llu/uni/trux/TriggerClass;->TriggerMethod(Landroid/app/Activity;)V'
     ldir = [f for f in os.listdir(log_path) if ')_logcat_' in f]
     apk_map = {}
     rlog_map = {}
@@ -25,9 +24,10 @@ if __name__ == '__main__':
     
     print()
     for i,l in enumerate(ldir):
-        #print(l)
+        
         if i % 2 == 1:
             continue
+        print(i//2,l)
         logtxt = os.path.join(log_path,l)
         if os.path.getsize(logtxt) == 0 or os.path.getsize(os.path.join(log_path,ldir[i+1])) == 0:
             continue
@@ -42,7 +42,7 @@ if __name__ == '__main__':
             rlog_map[apk_name] = logtxt
         elif 'emulator' in l and apk_name not in elog_map:
             elog_map[apk_name] = logtxt
-        with  open(logtxt, 'r') as f:
+        with  open(logtxt, 'r', encoding='utf-8') as f:
             r = f.readlines()
         is_label = False
         if any([label in line for line in r]):

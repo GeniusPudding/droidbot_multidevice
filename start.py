@@ -1,4 +1,5 @@
-# helper file of droidbot
+# Component 1: Bytecode Instrumentation
+# Component 2: Two-Device UI Fuzzer (based on droidbot)
 # it parses command arguments and send the options to droidbot
 import argparse
 import subprocess
@@ -19,6 +20,7 @@ from tqdm import tqdm
 import random
 import json
 import sys
+import csv
 from time import process_time 
 def parse_args():
     """
@@ -134,22 +136,32 @@ def main(testing_apk_path, opts, target_API_graph):
     """
     # opts = parse_args()
     import os
-    # print(f'testing_apk_path:{testing_apk_path}')
+    print(f'testing_apk_path:{testing_apk_path}')
     if not os.path.exists(testing_apk_path):
         print("APK does not exist.")
         return None
-    #print('test main')    
+    print('test main')    
     all_devices = get_available_devices()
+    print(all_devices)
     if len(all_devices) == 0:
         print("ERROR: No device connected.")
         sys.exit(-1)
+
+    for d in all_devices:
+        print(d)
+        try:
+            subprocess.run(['adb' , '-s', d , 'shell', 'svc', 'wifi', 'enable'])#確保連網
+            os.system('adb -s ' + d + ' logcat -G 16M')#增加logcat緩衝區大小
+        except:
+            print('init exception')
     droidbot = None
     repackaged_apk_path = None
-
+    #input(opts.reuse)
     if opts.reuse:
         dirname, basename = os.path.split(testing_apk_path)
         repackaged_apk_path = os.path.join(dirname,'repacked_'+basename)
         if not os.path.exists(repackaged_apk_path):
+            print(f'repackaged_apk_path:{repackaged_apk_path}')
             return None
         #input(f'reuse:{repackaged_apk_path}')
     elif opts.inject:
@@ -173,9 +185,9 @@ def main(testing_apk_path, opts, target_API_graph):
             raise RuntimeError('Failed to decompile this apk, check the apktool') 
 
         return None
+    
 
-
-    # input('test methodlog_instrumentation')
+    #input('test methodlog_instrumentation')
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
 
@@ -282,9 +294,11 @@ if __name__ == "__main__":
     with open('apkmaster/target_API_graph_all.json', 'r') as f:
         target_API_graph = json.load(f)
     failed_apks = {'name_list':[]}
+    
     if opts.apk_name:
         testing_apk_path =  os.path.join(opts.dataset, opts.apk_name)  
         main(testing_apk_path,opts, target_API_graph)
+        #print(opts.apk_name)
     else:
         dataset_path = opts.dataset
 
@@ -310,13 +324,29 @@ if __name__ == "__main__":
                 none_logged_apks.append(a)
         random.shuffle(logged_apks)
         random.shuffle(none_logged_apks)
-        input(f'logged_apks:{logged_apks}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}\nnone_repackaged_apks:{none_repackaged_apks},len:{len(none_repackaged_apks)}')
+
+
+        input(f'logged_apks:{logged_apks},len:{len(logged_apks)}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}\nnone_repackaged_apks:{none_repackaged_apks},len:{len(none_repackaged_apks)}')
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks 
-        ran_apks = logged_apks + none_logged_apks 
-        # # if opts.only_repack:
-        # #     ran_apks = none_repackaged_apks
+
+        # unlabeled = []
+        # with open('Labels.csv', 'r') as f:
+        #     reader = csv.reader(f)
+        #     a = list(reader)[1:]
+        #     try:
+        #         for name, bool in a:
+        #             apk = name+'.apk'
+        #             if bool == 'FALSE' and apk not in none_logged_apks :
+        #                 unlabeled.append(apk)         
+        #     except:
+        #         pass
+        #ran_apks = logged_apks# + none_logged_apks 
+        #ran_apks = unlabeled
+        #ran_apks = none_logged_apks
+        # if opts.only_repack:
+        #     ran_apks = none_repackaged_apks
         
         #For running all samples
         # ran_apks = [a for a in os.listdir(dataset_path) if a[-4:] == '.apk' and a[:9] != 'repacked_']
@@ -333,8 +363,7 @@ if __name__ == "__main__":
                 if result == 'fail_repackage':
                     failed_repacked.append(a)
                     print(f'{a} fail_repackage')
-                # if not result:
-                #     main(os.path.join(dataset_path,a),opts, target_API_graph)
+
                 
             except:
                 print(f'Analyzing {a} failed')
@@ -345,6 +374,6 @@ if __name__ == "__main__":
             mean += t
         mean /= len(ran_apks)
         print(f'平均值行時間:{mean}')
-        input(failed_repacked)
+        input(f'failed_repacked:{failed_repacked}')
     with open('failed_apks.json','w') as f:
         json.dump(failed_apks, f)

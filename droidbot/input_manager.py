@@ -65,7 +65,7 @@ class InputManager(object):
         self.profiling_method = profiling_method
 
         if failed_record_file:
-            self.failed_record_file = open(failed_record_file,'w+')
+            self.failed_record_file = open(failed_record_file,'w+', encoding='utf-8')
                 
 
     def get_input_policy(self, device, app, master):

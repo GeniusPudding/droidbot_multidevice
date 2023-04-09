@@ -1,13 +1,9 @@
 
 import sys
 import re
-from rich.progress import track
-from rich.console import Console
-from rich import print
 import subprocess
 import os
 import json
-console = Console()
 sysAPIprefixs = ['Landroid/', 'Ljava/', 'Lorg/', 'Ljavax/', 'Ljunit/','Ldalvik']
 entry_list = ["onCreate", "onStart", "onStartCommand","onResume", "onReStart", "onPause", "onStop", "onDestroy", "onTouch", "onReceive"]
 entry_list = ['->'+middle+'(' for middle in entry_list]

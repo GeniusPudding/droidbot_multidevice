@@ -213,7 +213,8 @@
                 "byteValue": "Ljava/lang/Integer;->byteValue"
             },
             "System": {
-                "exit": "Ljava/lang/System;->exit"
+                "exit": "Ljava/lang/System;->exit",
+                "loadLibrary": "Ljava/lang/System;->loadLibrary"
             }
         },
         "beans": {
@@ -305,7 +306,8 @@
                 "getRequestMethod": "Ljava/net/HttpURLConnection;->getRequestMethod",
                 "getResponseMessage": "Ljava/net/HttpURLConnection;->getResponseMessage",
                 "getPermission": "Ljava/net/HttpURLConnection;->getPermission",
-                "getHeaderFieldDate": "Ljava/net/HttpURLConnection;->getHeaderFieldDate"
+                "getHeaderFieldDate": "Ljava/net/HttpURLConnection;->getHeaderFieldDate",
+                "setRequestMethod" : "Ljava/net/HttpURLConnection;->setRequestMethod"
             },
             "MulticastSocket": {
                 "<init>": "Ljava/net/MulticastSocket;-><init>"
