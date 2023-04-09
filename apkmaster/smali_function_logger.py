@@ -9,7 +9,7 @@ import json
 import sys
 import re
 from functools import reduce
-official_lib_prefix = ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','android_maps_conflict_avoidance','io','org','okhttp3','okio','sun','libcore']
+official_lib_prefix = ['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit', 'org']#['android','androidx', 'kotlin', 'kotlinx', 'java', 'javax','dalvik','junit','android_maps_conflict_avoidance','io','org','okhttp3','okio','sun','libcore']
 com_list = ['android','facebook','google', 'adobe']
 get_invoke_sign = lambda line: line.strip().split(', ')[-1].strip()
 get_common_invoke_regs = lambda line: line[line.index('{')+1:line.index('}')].split(', ') if not '{}' in line else []
@@ -21,6 +21,7 @@ p2v_reg = lambda reg, locals_num: 'p'+str(int(reg[1:])-locals_num) if reg[0] == 
 inject_class_suffix = 'NextDex'
 R_re = 'R(\$[a-zA-Z0-9]+)?.smali'
 next_dex_class_name = lambda class_name: class_name[:-1]+inject_class_suffix+';' if '$' not in class_name else class_name.replace('$', inject_class_suffix)
+
 
 
 def get_free_log_register_and_types(free_list, sixteen_types, ban_list = None, locals_num = None):#TODO 不一定準確，有可能需要進一步分析 
@@ -109,6 +110,7 @@ def gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line):#用來
 	#TODO 若v16撞到J, D型別怎辦
 
 	#增加reg後替換所有4bit指令中v_last跟p_x(v_16)
+
 	v16_pack = {'moveresults': None, 'moveback' : ''}
 	v16_pack['move'] = f'    move{is_object}/16 {v_last}, {param_reg16}\n\n'
 	v16_pack['replaced_line'] = line.replace(param_reg16,v_last) + '\n\n'
@@ -119,7 +121,8 @@ def gen_v16_pack(line, is_object, v_last, param_reg16, moveresults_line):#用來
 				return v16_pack
 				#如果move result沒蓋掉v16才需要moveback移
 	v16_pack['moveback'] = f'    move{is_object}/16 {param_reg16}, {v_last}\n\n' #是不是其實不需要移動(因為本來param_reg16的值就沒有被其他指令assign)
-	
+	if 'invoke-virtual {v0, p0}, Lcom/wizardsexe/rockvillerobotics/roverruckusscoutingapp/DataLogger;->saveDataLogger(Landroid/content/Context;)Z' in line:
+		print(f'line:{line}, v_last:{v_last}, v16_pack:{v16_pack}')	
 	#input(f'v16_pack:{v16_pack}')
 	return v16_pack
 
@@ -170,325 +173,134 @@ def gen_moves_register_offset_range(range_regs, offset, params_list, locals_num)
 	
 	return move_offset_lines, move_back_offset_lines, new_range_end_reg
 
-def invoke_userdef_logger(register_case, invoke_line, tmp_register, class_name, rand_method_id, locals_num, moveresults_line=None, free_list = None,sixteen_types = None, v16_moved_line = None, new_version = True):#rand_method_id要傳入到callee內的
+def invoke_userdef_logger(register_case, invoke_line, tmp_register, class_name, rand_method_id, locals_num, moveresults_line=None, free_list = None,sixteen_types = None, v16_moved_line = None):#rand_method_id要傳入到callee內的
 	#line = invoke_line[:invoke_line.index('}')] + {p_last} + invoke_line[invoke_line.index('}'):invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):]
 	#print(f'rand_method_id:{rand_method_id}')
 	callee_class = invoke_line.split(' ')[-1].split('->')[0]	
 	invoke_line += '\n\n'	
 	
 	new_content = ''
-	if new_version:
-		range_move = False
-		offset = 0
-		invoke_regs = get_common_invoke_regs(invoke_line)
-		if '/range {' in invoke_line:#特殊情況: invoke-range 先挑出來處理
-			invoke_regs, offset = get_invoke_range_regs(invoke_line, locals_num, register_case)#range的invoke_regs算法不同
-			if offset != 0:#被新增進來的v_last斷掉range 因此需要偏移
-				params_list = get_params_list(invoke_line)
-				move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(invoke_regs, offset, params_list, locals_num)
-				range_move = True
-				invoke_line = invoke_line.replace(invoke_regs[-1], new_range_end_reg)+'\n\n'#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
-				tmp_register = invoke_regs[-1] #如果range被v_last斷掉 則不能再使用這個reg當作暫存空間, 用原本invoke range的最後一個暫存器(已被清空)
-		else:
-			if v16_moved_line:#需要來替換invoke_line
-				# if 'invoke-static {p0}, La/b/c/a/k;->X(Landroid/animation/Animator;)Z' in invoke_line:
-				# 	input(f'v16_moved_line:{v16_moved_line},free_list:{free_list}')
-				invoke_line = (v16_moved_line['move'] + v16_moved_line['replaced_line']).replace(tmp_register, free_list[0] if len(free_list) > 0 else 'v0') #一時找不到free只好先用v0 還是有可能會出錯 TODO: 基於上下文的free register算法	
-
-		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
-		new_content += (f'    sget-object {tmp_register}, {class_name}->thismethodID:Ljava/lang/String;\n\n') if not 'invoke-interface ' in invoke_line else ''
-		new_content += (f'    sput-object {tmp_register}, {next_dex_class_name(callee_class)}->callerID:Ljava/lang/String;\n\n') if not 'invoke-interface ' in invoke_line else ''
-		
-		new_content += (f'    invoke-static {{}}, {class_name}->concate()V\n\n') 
-		new_content += (f'    sget-object {tmp_register}, {class_name}->tmp:Ljava/lang/String;\n\n') 
-		new_content += invoke_line #這邊就會sput calleeID然後呼叫callLog
-		if moveresults_line:
-			new_content += (moveresults_line+'\n')
-		new_content += (f'    sput-object {tmp_register}, {class_name}->tmp:Ljava/lang/String;\n\n') 
-		new_content += (f'    invoke-static {{}}, {class_name}->split()V\n\n') 
-		new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
-		return new_content
-		
-	is_object = '-object'
-	no_move = True #判斷是否暫存資料
 	range_move = False
-	is_range = False
 	offset = 0
 	invoke_regs = get_common_invoke_regs(invoke_line)
 	if '/range {' in invoke_line:#特殊情況: invoke-range 先挑出來處理
-		is_range = True
 		invoke_regs, offset = get_invoke_range_regs(invoke_line, locals_num, register_case)#range的invoke_regs算法不同
-		randID_param = next_reg(invoke_regs[-1])
-	if offset != 0:
-		params_list = get_params_list(invoke_line)
-		move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(invoke_regs, offset, params_list, locals_num)
-		randID_param = next_reg(new_range_end_reg)#移動完之後的下一項，這樣就可以傳遞rand ID參數到callee並且可以符合range語法
-		range_move = True
-		no_move = True #理論上randID_param原本是參數位置 已經搬動後就不用再暫存資料
+		if offset != 0:#被新增進來的v_last斷掉range 因此需要偏移
+			params_list = get_params_list(invoke_line)
+			move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(invoke_regs, offset, params_list, locals_num)
+			range_move = True
+			invoke_line = invoke_line.replace(invoke_regs[-1], new_range_end_reg)+'\n\n'#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
+			tmp_register = invoke_regs[-1] #如果range被v_last斷掉 則不能再使用這個reg當作暫存空間, 用原本invoke range的最後一個暫存器(已被清空)
+	else:
+		if v16_moved_line:#需要來替換invoke_line，但因為v_last要用來存ID在method scope內，這邊的參數要換成別的，需要另開變量空間暫存資料
+			# if 'invoke-static {p0}, La/b/c/a/k;->X(Landroid/animation/Animator;)Z' in invoke_line:
+			# 	input(f'v16_moved_line:{v16_moved_line},free_list:{free_list}')
+			invoke_line = (v16_moved_line['move'] + v16_moved_line['replaced_line']).replace(tmp_register, free_list[0] if len(free_list) > 0 else 'v0') #一時找不到free只好先用v0 還是有可能會出錯 TODO: 基於上下文的free register算法	
 
-	elif register_case == 0 or register_case == 1: 
-		randID_param =  tmp_register
-
-	else:# Case 2 , v_last(tmp_register) > v15
-		randID_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types, invoke_regs, locals_num)#randID_param不能跟invoke_regs重複!
-
-	if is_range: #range的不用再增加參數reg而是取代End
-		invoke_line = invoke_line.replace(invoke_regs[-1], randID_param)#改寫invoke range裡面的範圍(range的end可能會不一樣,扣offset之後再+1)
-		final_invoke_line = (invoke_line[:invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):] + '\n\n')
-	else:#一般invoke 需要增加Reg在後面
-		#print(f'invoke_line:{invoke_line}')
-		if v16_moved_line:#需要來替換invoke_line
-			invoke_line = v16_moved_line['replaced_line']
-			if register_case == 2 :
-				input(f'替換後 invoke_line:{invoke_line}')
-		final_invoke_line = (invoke_line[:invoke_line.index('}')] + (', ' if '{}' not in invoke_line else '') \
-		+ randID_param + invoke_line[invoke_line.index('}'):invoke_line.index(')')] + 'Ljava/lang/String;' + invoke_line[invoke_line.index(')'):] + '\n\n')
-		#input(f'final_invoke_line:{final_invoke_line}')
 	new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
-	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {randID_param}\n\n')	#case 2 才可能需要move來搬移暫存器原有的值
-	new_content +=  (f'    const-string {randID_param}, \"{rand_method_id}\"\n\n')
-	new_content += '' if not v16_moved_line else v16_moved_line['move']
-	new_content += final_invoke_line #塞了一個
+	new_content += (f'    sget-object {tmp_register}, {class_name}->thismethodID:Ljava/lang/String;\n\n') if not 'invoke-interface ' in invoke_line else ''
+	new_content += (f'    sput-object {tmp_register}, {next_dex_class_name(callee_class)}->callerID:Ljava/lang/String;\n\n') if not 'invoke-interface ' in invoke_line else ''
+	
+	new_content += (f'    invoke-static {{}}, {class_name}->concate()V\n\n') 
+	new_content += (f'    sget-object {tmp_register}, {class_name}->tmp:Ljava/lang/String;\n\n') 
+	new_content += invoke_line #這邊就會sput calleeID然後呼叫callLog
 	if moveresults_line:
 		new_content += (moveresults_line+'\n')
-	#new_content += '' if not v16_moved_line else v16_moved_line['moveback']
-	new_content += '' if no_move else (f'    move{is_object}/16 {randID_param}, {tmp_register}\n\n')	
+	new_content += (f'    sput-object {tmp_register}, {class_name}->tmp:Ljava/lang/String;\n\n') 
+	new_content += (f'    invoke-static {{}}, {class_name}->split()V\n\n') 
 	new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
 	return new_content
+	
 
-def invoke_target_logger(register_case, invoke_line, tmp_register, class_name, rand_method_id, reg16, reg16_is_object, locals_num, moveresults_line=None,free_list = None,sixteen_types = None, v16_moved_line = None, new_version = True):#inline hook of system APIs, native APIs
+
+def invoke_target_logger(register_case, invoke_line, tmp_register, class_name, rand_method_id, reg16, reg16_is_object, locals_num, moveresults_line=None,free_list = None,sixteen_types = None, v16_moved_line = None):#inline hook of system APIs, native APIs
 	#tmp_register: a legal free register in the caller 
 	# 主要策略: case2優先找被invoke的參數來當free register去打印log
 	# 這裡跟userdef不同，不需要加參數到invoke line，但仍需要move offset
 	new_content = ''
 	#target_class = invoke_line.split(' ')[-1].split('->')[0]
 	invoke_line += '\n\n'	
-	if new_version:
-		# if 'invoke-interface' in invoke_line:
-		# 	input(f'invoke interface:{invoke_line} is target')
+	# if 'invoke-interface' in invoke_line:
+	# 	input(f'invoke interface:{invoke_line} is target')
 
-		invoke_sign = get_invoke_sign(invoke_line)
-		range_move = False
-		target_rand_method_id = '$(' + str(random.getrandbits(32)) + ')'
-		offset = 0
-		# 	#找一個實際案例來修看看
-
-		if '/range {' in invoke_line:#特殊麻煩情況先挑出來處理
-			range_regs, offset = get_invoke_range_regs(invoke_line, locals_num, register_case) 
-			if offset != 0:
-				params_list = get_params_list(invoke_line)
-				move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(range_regs, offset, params_list, locals_num)
-				range_move = True
-				invoke_line = invoke_line.replace(range_regs[-1], new_range_end_reg) + '\n\n' #改寫invoke range裡面的範圍
-		else:
-			if v16_moved_line:
-				invoke_line = (v16_moved_line['move'] + v16_moved_line['replaced_line'])
-		new_content += ('    #Instrumentation by GeniusPudding\n')	
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
-		new_content += (f'    move-result-object {tmp_register}\n\n')	
-		new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
-		new_content += (f'    const-string {tmp_register}, \"{invoke_sign}\"\n\n')
-		new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
-		new_content += (f'    invoke-static {{}}, {class_name}->targetcallLog()V\n\n')	
-		#new_content += (f'    invoke-static {{}}, {class_name}->targetmethodStartLog()V\n\n')
-		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
-		new_content += invoke_line
-		if moveresults_line: new_content += (moveresults_line+'\n')	
-		#if v16_moved_line:	new_content += v16_moved_line['moveback']
-		new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
-		new_content += (f'    invoke-static {{}}, {class_name}->targetmethodEndLog()V\n\n')
-
-		return new_content
-	# TODO 有辦法知道是在call native function嗎???
-	#return None 
-	#print(f'Invoke logger: current_method_signature:{current_method_signature},\ninvoke_line:{invoke_line},reg16:{reg16},tmp_register:{tmp_register},moveresults_line:{moveresults_line}\nfree_list:{free_list},sixteen_types:{sixteen_types}')
-	
 	invoke_sign = get_invoke_sign(invoke_line)
-	is_object = '-object'
 	range_move = False
-	is_range = False
 	target_rand_method_id = '$(' + str(random.getrandbits(32)) + ')'
 	offset = 0
 	# 	#找一個實際案例來修看看
 
 	if '/range {' in invoke_line:#特殊麻煩情況先挑出來處理
-		is_range = True
 		range_regs, offset = get_invoke_range_regs(invoke_line, locals_num, register_case) 
-	if offset != 0:
-		params_list = get_params_list(invoke_line)
-		move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(range_regs, offset, params_list, locals_num)
-		range_move = True
-		invoke_line = invoke_line.replace(range_regs[-1], new_range_end_reg)#改寫invoke range裡面的範圍
-		if 'invoke-virtual/range ' in invoke_line:
-			input(f'new invoke_line:{invoke_line}') 
-	
-	if register_case == 0 or register_case == 1: #tmp_register = v_last <= v15	
-		#return None
-		if not reg16_is_object:
-			is_object = ''
+		if offset != 0:
+			params_list = get_params_list(invoke_line)
+			move_offset_lines, move_back_offset_lines, new_range_end_reg = gen_moves_register_offset_range(range_regs, offset, params_list, locals_num)
+			range_move = True
+			invoke_line = invoke_line.replace(range_regs[-1], new_range_end_reg) + '\n\n' #改寫invoke range裡面的範圍
+	else:
+		if v16_moved_line:
+			invoke_line = (v16_moved_line['move'] + v16_moved_line['replaced_line'])
+	new_content += ('    #Instrumentation by GeniusPudding\n')	
+	# new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
+	# new_content += (f'    move-result-object {tmp_register}\n\n')	
+	# new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+	new_content += (f'    const-string {tmp_register}, \"{invoke_sign}\"\n\n')
+	new_content += (f'    sput-object {tmp_register}, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
+	new_content += (f'    invoke-static {{}}, {class_name}->targetcallLog()V\n\n')	
+	#new_content += (f'    invoke-static {{}}, {class_name}->targetmethodStartLog()V\n\n')
+	new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
+	new_content += invoke_line
+	if moveresults_line: new_content += (moveresults_line+'\n')	
+	#if v16_moved_line:	new_content += v16_moved_line['moveback']
+	new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
+	#new_content += (f'    invoke-static {{}}, {class_name}->targetmethodEndLog()V\n\n')
 
-		new_content += ('    #Instrumentation by GeniusPudding\n')
-		new_content += (f'    const-string {tmp_register}, \"{rand_method_id}->{target_rand_method_id}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
-		new_content += (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->callLog(Ljava/lang/String;)V\n\n')	
-		new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
-		new_content += (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->targetmethodStartLog(Ljava/lang/String;)V\n\n')	
-		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
-
-		#if not v16_moved_line:#正常情況
-		new_content += (invoke_line+'\n\n') if not v16_moved_line else (v16_moved_line['move'] + v16_moved_line['replaced_line'])
-		if moveresults_line: new_content += (moveresults_line+'\n')
-		#else:#需要搬動v16的 比較麻煩
-			#new_content += (v16_moved_line['move'] + v16_moved_line['replaced_line'])
-			#if moveresults_line: new_content += (moveresults_line+'\n')	
-			#new_content += v16_moved_line['moveback'] 	
-		new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
-		#tmp_register是額外新增的 不會被move result蓋到
-		new_content += (f'    const-string {tmp_register}, \"{invoke_sign} {target_rand_method_id}\"\n\n')
-		new_content += (f'    invoke-static {{{tmp_register}}}, Linjections/InlineLogs;->targetmethodEndLog(Ljava/lang/String;)V\n\n')
-	else:# register_case == 2 (locals >= 16) , tmp is free but > v15
-		#return None
-		no_move = False
-		log_param = None
-		invoke_regs = range_regs if is_range else invoke_line[invoke_line.index('{')+1:invoke_line.index('}')].split(', ')
-		params_list = get_params_list(invoke_line)
-		move_wide = '' # invoke-static 且又需要抓參數但撞到J、D的情況
-
-
-		if 'invoke-static' not in invoke_line: #非靜態函數 所以有p0 = this class
-			log_param =  invoke_regs[0]#這就是p0, object type
-			#print(f'params_list[0]:{params_list[0]}')
-
-		else: #  'invoke-static' 所以看有無參數可用
-			if invoke_regs != ['']:
-				log_param =  invoke_regs[0]
-				#print(f'invoke_line:{invoke_line}\ninvoke_regs:{invoke_regs},params_list:{params_list}')
-				if len(params_list[0]) == 1: #means a basic type, not a class
-					is_object = '' 
-					move_wide = '-wide' if params_list[0] in 'JD' else '' # tmp_register的下一個也留好了
-
-			else: #  'invoke-static' 且沒有參數
-				log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
-
-		new_content += ('    #Instrumentation by GeniusPudding\n')
-		
-		new_content += '' if no_move else (f'    move{is_object}{move_wide}/16 {tmp_register}, {log_param}\n\n')#確認一下是否真的不用move	
-		new_content += (f'    const-string {log_param}, \"{invoke_sign} {rand_method_id}->{target_rand_method_id}\"\n\n')
-		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->callLog(Ljava/lang/String;)V\n\n')	
-		new_content += (f'    const-string {log_param}, \"{invoke_sign} {target_rand_method_id}\"\n\n')#看是否把caller的ID留在這 理論上也不會進去
-		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->targetmethodStartLog(Ljava/lang/String;)V\n\n')
-		new_content += '' if no_move else (f'    move{is_object}{move_wide}/16 {log_param}, {tmp_register}\n\n')#針對是否用到完全沒用過的reg來決定是否搬移暫存資料	
-		new_content += '' if not range_move else move_offset_lines #針對invoke range要搬移暫存器的case
-		new_content += (invoke_line+'\n\n')
-		if moveresults_line:
-			#print('moveresults_line!')
-			new_content += (moveresults_line+'\n')
-			if log_param == moveresults_line.split('\n')[0].split(' ')[-1]:#特殊情況: 如果剛好TME要用的暫存器就是moveresult要蓋掉的
-				is_object = '-object' if 'object' in moveresults_line else ''
-				no_move = False 
-		new_content += '' if not range_move else move_back_offset_lines #針對invoke range要搬移暫存器的case
-		#no_move 只有在'invoke-static' 且沒有參數又沒動過log_param的時候才有可能為真
-		new_content += '' if no_move else (f'    move{is_object}{move_wide}/16 {tmp_register}, {log_param}\n\n')
-		new_content += '' if no_move else (f'    const-string {log_param}, \"{invoke_sign} {rand_method_id}->{target_rand_method_id}\"\n\n')
-		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->targetmethodEndLog(Ljava/lang/String;)V\n\n')
-		new_content += '' if no_move else (f'    move{is_object}{move_wide}/16 {log_param}, {tmp_register}\n\n')	
 	return new_content
 
-def branch_logger(register_case, branch_line, line_index , tmp_register, class_name, current_method_signature, rand_method_id, reg16, reg16_is_object, free_list = None,sixteen_types = None, v16_moved_line = None, is_switch = False, new_version = True):
+
+def branch_logger(register_case, branch_line, line_index , tmp_register, class_name, current_method_signature, rand_method_id, reg16, reg16_is_object, free_list = None,sixteen_types = None, v16_moved_line = None, is_switch = False):
 	#return None
 	new_content = ''
 	branch_tag = branch_line.strip().split(', ')[-1]
 	#class_name = current_method_signature.split('->')[0] #class_name傳入新的dex的class name
 	branch_str = f'line:{str(line_index)}, ' +current_method_signature + '->' + branch_line.strip()#+ ' '+rand_method_id #舊版
-	if new_version:
-		#current_method_signature->branch_ins rand_method_id, rand_branch_id
-		new_content += ('    #Instrumentation by GeniusPudding\n')
-		new_content += (f'    const-string {tmp_register}, \"{branch_str}\"\n\n')		
-		branch = 'branch' if not is_switch else 'switch' 
-		new_content += (f'    sput-object {tmp_register}, {class_name}->{branch}:Ljava/lang/String;\n\n')
-		new_content += (f'    invoke-static {{}}, {class_name}->{branch}Log()V\n\n') 
-		new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line']# + v16_moved_line['moveback']
-		if not is_switch:
-			new_content += (f'    const-string {tmp_register}, \"{branch_tag}\"\n\n')
-			new_content += (f'    sput-object {tmp_register}, {class_name}->branchTag:Ljava/lang/String;\n\n')	
-			new_content += (f'    invoke-static {{}}, {class_name}->branchFalseLog()V\n\n')		
-		return new_content
 
-	# if 'TypeToString(Ljava/lang/Object;Z)Ljava/lang/String;' in current_method_signature:
-	# 	input(f'\nbranch_line:{branch_line},register_case:{register_case}\n,tmp_register:{tmp_register}, reg16:{reg16}, reg16_is_object:{reg16_is_object} \
-	# 	\nfree_list:{free_list}, sixteen_types:{sixteen_types}\n')
-	#print(f'Branch logger: current_method_signature:{current_method_signature},\nbranch_line:{branch_line},reg16:{reg16},tmp_register:{tmp_register}')
-	is_object = '-object'
-	no_move = True
-
-	if register_case != 2:
-		if not reg16_is_object:
-			is_object = ''
-		log_param = tmp_register	
-
-		# 	#TODO: 如果原本分支比較的運算元是J、D怎辦
-	else:# Case 2 , v_last(tmp_register) > v15
-		log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
-
+	#current_method_signature->branch_ins rand_method_id, rand_branch_id
 	new_content += ('    #Instrumentation by GeniusPudding\n')
-	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
-	new_content += (f'    const-string {log_param}, \"{branch_str}\"\n\n')
-	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchLog(Ljava/lang/String;)V\n\n') \
-	if not is_switch else (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->switchLog(Ljava/lang/String;)V\n\n')
-	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')
-	# instrumented_line = branch_line if (register_case != 1 or not reg16 in branch_line) else \
-	# 	f'    move{is_object}/16 {tmp_register}, {reg16}\n\n' + \
-	# 	branch_line.replace(reg16,tmp_register) + \
-	# 	f'\n\n    move{is_object}/16 {reg16}, {tmp_register}\n\n' # case 1 且 reg16有被branch指令使用 
-	# 	#TODO: 如果原本分支比較的運算元是J、D怎辦
-
-	new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line'] #+ v16_moved_line['moveback']  
-	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
-	new_content += (f'    const-string {log_param}, \" {branch_str} {rand_method_id}\"\n\n')
-	new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->branchFalseLog(Ljava/lang/String;)V\n\n') if not is_switch else ''
-	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')
+	new_content += (f'    const-string {tmp_register}, \"{branch_str}\"\n\n')		
+	branch = 'branch' if not is_switch else 'switch' 
+	new_content += (f'    sput-object {tmp_register}, {class_name}->{branch}:Ljava/lang/String;\n\n')
+	new_content += (f'    invoke-static {{}}, {class_name}->{branch}Log()V\n\n') 
+	new_content += (branch_line+'\n\n')	if not v16_moved_line else v16_moved_line['move'] + v16_moved_line['replaced_line']# + v16_moved_line['moveback']
+	if not is_switch:
+		new_content += (f'    const-string {tmp_register}, \"{branch_tag}\"\n\n')
+		new_content += (f'    sput-object {tmp_register}, {class_name}->branchTag:Ljava/lang/String;\n\n')	
+		new_content += (f'    invoke-static {{}}, {class_name}->branchFalseLog()V\n\n')		
 	return new_content
 
+
 def tag_logger(register_case, tmp_register, class_name, current_method_signature, rand_method_id, tag_lines = None,tags = None, free_list = None,sixteen_types = None\
-	,try_catch_map = None, test_pause=False, new_version = True):#randomid 可能是try的也可能是branchTrue的(但不會同時)
+	,try_catch_map = None, test_pause=False):#randomid 可能是try的也可能是branchTrue的(但不會同時)
 	#針對goto,try-catch,cond, 因為沒有要修改指令本身所以很簡單
 	#tags跟tag_lines一一對應，tag_lines用在log裡面的TAG參數，tags用來選擇要inject的log method
 	#tags包含tryStart,tryDone,tryCatch,branchTrue,goto
 	#class_name = current_method_signature.split('->')[0]
-	new_content = ''
-	if new_version:
-		new_content += ('    #Instrumentation by GeniusPudding\n')	
-		for i, line in enumerate(tag_lines):#中間是針對每一個tag下一次const-string跟invoke
-			tag_type = tags[i]
-			if tag_type == 'tryDone':
-				#t = line.strip()
-				# if t not in try_catch_map:#測試用 不應該到這
-				# 	input(f'try_catch_map:{try_catch_map}, line:{line}, current_method_signature:{current_method_signature}')
-				new_content += (f'    const-string {tmp_register}, \"{try_catch_map}\"\n\n')
-				new_content += (f'    sput-object {tmp_register}, {class_name}->tryMap:Ljava/lang/String;\n\n')
-			# tag_str = current_method_signature + '->' + line.strip() + done + ' ' + rand_method_id \
-			# 	if ':cond' not in line and ':goto' not in line else ' '+line.strip()+ ' '+rand_method_id #這邊的設計是為了後面序列比對用的
-			tag_str = line.strip()
-			new_content += (f'    const-string {tmp_register}, \"{tag_str}\"\n\n')
-			new_content += (f'    sput-object {tmp_register}, {class_name}->{tag_type}:Ljava/lang/String;\n\n')	if tag_type != 'branchTrue' \
-				else (f'    sput-object {tmp_register}, {class_name}->branchTag:Ljava/lang/String;\n\n')	
-			new_content += (f'    invoke-static {{}}, {class_name}->{tag_type}Log()V\n\n')
-		return new_content		
-	is_object = '-object'
-	no_move = True
-	log_param = tmp_register
-	if register_case == 2:# Case 2 , v_last(tmp_register) > v15
-		log_param, no_move, is_object = get_free_log_register_and_types(free_list, sixteen_types)
-	# if test_pause:
-	# 	input(f'current_method_signature:{current_method_signature},tag_lines:{tag_lines}\nfree_list:{free_list},sixteen_types:{sixteen_types}\nlog_param:{log_param},no_move:{no_move},is_object:{is_object}')
-	new_content += ('    #Instrumentation by GeniusPudding\n')
-	new_content += '' if no_move else (f'    move{is_object}/16 {tmp_register}, {log_param}\n\n')	
+	new_content = ('    #Instrumentation by GeniusPudding\n')	
 	for i, line in enumerate(tag_lines):#中間是針對每一個tag下一次const-string跟invoke
 		tag_type = tags[i]
-		tag_str = current_method_signature + '->' + line.strip() +' '+rand_method_id if ':cond' not in line else ' '+line.strip()+ ' '+rand_method_id #這邊的設計是為了後面序列比對用的
-		new_content += (f'    const-string {log_param}, \"{tag_str}\"\n\n')
-		new_content += (f'    invoke-static {{{log_param}}}, Linjections/InlineLogs;->{tag_type}Log(Ljava/lang/String;)V\n\n')
-	new_content += '' if no_move else (f'    move{is_object}/16 {log_param}, {tmp_register}\n\n')	
-	return new_content
+		if tag_type == 'tryDone':
+			#t = line.strip()
+			# if t not in try_catch_map:#測試用 不應該到這
+			# 	input(f'try_catch_map:{try_catch_map}, line:{line}, current_method_signature:{current_method_signature}')
+			new_content += (f'    const-string {tmp_register}, \"{try_catch_map}\"\n\n')
+			new_content += (f'    sput-object {tmp_register}, {class_name}->tryMap:Ljava/lang/String;\n\n')
+		# tag_str = current_method_signature + '->' + line.strip() + done + ' ' + rand_method_id \
+		# 	if ':cond' not in line and ':goto' not in line else ' '+line.strip()+ ' '+rand_method_id #這邊的設計是為了後面序列比對用的
+		tag_str = line.strip()
+		new_content += (f'    const-string {tmp_register}, \"{tag_str}\"\n\n')
+		new_content += (f'    sput-object {tmp_register}, {class_name}->{tag_type}:Ljava/lang/String;\n\n')	if tag_type != 'branchTrue' \
+			else (f'    sput-object {tmp_register}, {class_name}->branchTag:Ljava/lang/String;\n\n')	
+		new_content += (f'    invoke-static {{}}, {class_name}->{tag_type}Log()V\n\n')
+	return new_content		
 
 def check_reg_usage(line, free_list, sixteen_types):#計算free_list, sixteen_types的改動
 	operand_regs,result_regs,result_types = get_registers_usage_in_line(line)
@@ -509,40 +321,25 @@ def is_invoke_offcial(invoke_line):#黑名單 但不知道要怎樣才會齊全
 		is_offcial = True
 	return is_offcial
 
-def gen_method_start_log(p_last, rand_method_id, class_name, current_method_signature, no_caller, new_version = True):	
-	if new_version:
-		#class_name = next_dex_class_name(current_method_signature.split('->')[0])
-		new_content = ('    #Instrumentation by GeniusPudding\n')
-		new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
-		new_content += (f'    move-result-object v0\n\n')
-		new_content += (f'    sput-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n') #caller那邊sput caller ID，這邊放calleeID 
-		new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
-		new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
-		new_content += (f'    invoke-static {{}}, {class_name}->callLog()V\n\n')#然後再呼叫call log
-		# new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
-		# new_content += (f'    sput-object v0, {class_name}->methodStart:Ljava/lang/String;\n\n') 
-		#new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
-		#new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
-		#new_content += (f'    invoke-static {{}}, {class_name}->methodStartLog()V\n\n')
-		return new_content
+def gen_method_start_log(p_last, rand_method_id, class_name, current_method_signature, no_caller):	
+	#class_name = next_dex_class_name(current_method_signature.split('->')[0])
 	new_content = ('    #Instrumentation by GeniusPudding\n')
-	if not no_caller:
-		new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
-		new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
-		new_content += (f'    move-object/16 v0, {p_last}\n\n')
-		new_content += (f'    invoke-virtual {{v1, v0}}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-		new_content += (f'    move-result-object v1\n\n')
-		new_content += (f'    const-string v0, \"{rand_method_id}\"\n\n')
-		new_content += (f'    invoke-virtual {{v1, v0}}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-		new_content += (f'    move-result-object v1\n\n')
-		new_content += (f'    invoke-virtual {{v1}}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
-		new_content += (f'    move-result-object v0\n\n')
-		new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->callLog(Ljava/lang/String;)V\n\n')
-	new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
-	new_content += (f'    invoke-static {{v0}}, Linjections/InlineLogs;->methodStartLog(Ljava/lang/String;)V\n\n')
+	new_content += (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
+	new_content += (f'    move-result-object v0\n\n')
+	new_content += (f'    sput-object v0, {class_name}->thismethodID:Ljava/lang/String;\n\n') #caller那邊sput caller ID，這邊放calleeID 
+	new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
+	new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
+	new_content += (f'    invoke-static {{}}, {class_name}->callLog()V\n\n')#然後再呼叫call log
+	# new_content += (f'    const-string v0, \"{current_method_signature} {rand_method_id}\"\n\n')
+	# new_content += (f'    sput-object v0, {class_name}->methodStart:Ljava/lang/String;\n\n') 
+	#new_content += (f'    const-string v0, \"{current_method_signature}\"\n\n')
+	#new_content += (f'    sput-object v0, {class_name}->thismethodSign:Ljava/lang/String;\n\n') 
+	#new_content += (f'    invoke-static {{}}, {class_name}->methodStartLog()V\n\n')
 	return new_content
 
-def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activity, new_version = True):#, target_methods = None): 
+
+def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activity):	
+	# rewrite this function clearly
 	
 	#前面放每個method 都會reset到的屬性
 	in_method_flag = False
@@ -581,7 +378,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 	p_index = 0 #原本的第16號暫存器在p中的index
 	param_reg16 = 'p0' #原本的第16號 有機會因為固定locals+1而超過指令限制 
 	param_reg16_is_object = True#'object' #給case 1 用來判斷如果需要v16時要用哪種move指令
-
+	method_count = 0 #用來識別不同的m-space 以存放對應每個method的靜態變量
 	for i,line in enumerate(smali_lines):
 		v16_moved_line = None#每一行都初始化
 		tmp_line = line
@@ -589,7 +386,7 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 		if line.startswith('.method ') and '<clinit>(' not in line :# and (not target_methods or any([m in line for m in target_methods])): #
 			#filtered out the class constructor methods (<clinit>)
 			#會走到這的應該都不是official_prefix的
-	
+			method_count += 1	
 			if is_main_activity(class_name, main_activity) and 'constructor <init>(' in line:
 				in_main_init = True
 			# 	main_init += line
@@ -867,7 +664,8 @@ def method_logger(smali_lines,smali_base_dir, target_API_graph_all, main_activit
 	#new_content = replace_fields(new_content)
 	log_content = gen_basic_classinfo(new_class_name)
 	log_content += replace_fields()
-	log_content += gen_empty_init()
+	#log_content += gen_empty_init()
+	log_content += ('# direct methods\n')
 	log_content += gen_logs_methoddef(new_class_name)
 
 	return new_content, log_content
@@ -898,7 +696,7 @@ def gen_logs_methoddef(class_name):
 	new_content += gen_methodEndLog(class_name)
 	new_content += gen_targetcallLog(class_name)
 	#new_content += gen_targetmethodStartLog(class_name)
-	new_content += gen_targetmethodEndLog(class_name)
+	#new_content += gen_targetmethodEndLog(class_name)
 	new_content += gen_branchLog(class_name)
 	new_content += gen_branchTrueLog(class_name)
 	new_content += gen_branchFalseLog(class_name)
@@ -975,13 +773,10 @@ def gen_targetcallLog(class_name):
 	new_content += ('    .locals 4\n\n')
 	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
 	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
-	new_content += ('    const-string v0, \"- CALL Relation(target): \"\n\n')
+	new_content += ('    const-string v0, \"- TARGET API CALL: \"\n\n')
 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 	new_content += ('    move-result-object v1\n\n')
 	new_content += (f'    sget-object v3, {class_name}->thismethodSign:Ljava/lang/String;\n\n')
-	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += (f'    sget-object v3, {class_name}->thismethodID:Ljava/lang/String;\n\n')
 	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 	new_content += ('    move-result-object v1\n\n')
 	new_content += ('    const-string v3, "=>"\n\n')
@@ -990,9 +785,12 @@ def gen_targetcallLog(class_name):
 	new_content += (f'    sget-object v3, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
 	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 	new_content += ('    move-result-object v1\n\n')
-	new_content += (f'    sget-object v3, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+	new_content += (f'    sget-object v3, {class_name}->thismethodID:Ljava/lang/String;\n\n')
 	new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
 	new_content += ('    move-result-object v1\n\n')
+	# new_content += (f'    sget-object v3, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+	# new_content += ('    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+	# new_content += ('    move-result-object v1\n\n')
 	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
 	new_content += ('    move-result-object v1\n\n')
 	new_content += ('    const-string v3, "GeniusPudding"\n\n')
@@ -1000,6 +798,7 @@ def gen_targetcallLog(class_name):
 	new_content += ('    return-void\n')
 	new_content += ('.end method\n\n')
 	return new_content
+
 
 def gen_methodStartLog(class_name):
 	new_content = ('.method public static declared-synchronized methodStartLog()V\n')
@@ -1045,49 +844,51 @@ def gen_methodEndLog(class_name):
 	new_content += ('.end method\n\n')
 	return new_content	
 
-def gen_targetmethodStartLog(class_name):
-	new_content = ('.method public static declared-synchronized targetmethodStartLog()V\n')
-	new_content += ('    .locals 2\n\n')
-	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
-	new_content += ('    const-string v0, "- Method START(target): "\n\n')
-	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += (f'    sget-object v0, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
-	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += (f'    sget-object v0, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
-	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += ('    const-string v0, "GeniusPudding"\n\n')
-	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
-	new_content += ('    return-void\n')
-	new_content += ('.end method\n\n')
-	return new_content	
 
-def gen_targetmethodEndLog(class_name):
-	new_content = ('.method public static declared-synchronized targetmethodEndLog()V\n')
-	new_content += ('    .locals 2\n\n')
-	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
-	new_content += ('    const-string v0, "- Method END(target): "\n\n')
-	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += (f'    sget-object v0, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
-	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += (f'    sget-object v0, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
-	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
-	new_content += ('    move-result-object v1\n\n')
-	new_content += ('    const-string v0, "GeniusPudding"\n\n')
-	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
-	new_content += ('    return-void\n')
-	new_content += ('.end method\n\n')
-	return new_content	
+
+# def gen_targetmethodStartLog(class_name):
+# 	new_content = ('.method public static declared-synchronized targetmethodStartLog()V\n')
+# 	new_content += ('    .locals 2\n\n')
+# 	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+# 	new_content += ('    const-string v0, "- Method START(target): "\n\n')
+# 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += (f'    sget-object v0, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
+# 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += (f'    sget-object v0, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+# 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+# 	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+# 	new_content += ('    return-void\n')
+# 	new_content += ('.end method\n\n')
+# 	return new_content	
+
+# def gen_targetmethodEndLog(class_name):
+# 	new_content = ('.method public static declared-synchronized targetmethodEndLog()V\n')
+# 	new_content += ('    .locals 2\n\n')
+# 	new_content += ('    new-instance v1, Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V\n\n')
+# 	new_content += ('    const-string v0, "- Method END(target): "\n\n')
+# 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += (f'    sget-object v0, {class_name}->targetmethodSign:Ljava/lang/String;\n\n')
+# 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += (f'    sget-object v0, {class_name}->targetmethodID:Ljava/lang/String;\n\n')
+# 	new_content += ('    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += ('    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n')
+# 	new_content += ('    move-result-object v1\n\n')
+# 	new_content += ('    const-string v0, "GeniusPudding"\n\n')
+# 	new_content += ('    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n')
+# 	new_content += ('    return-void\n')
+# 	new_content += ('.end method\n\n')
+# 	return new_content	
 
 def gen_branchLog(class_name):
 	new_content = ('.method public static declared-synchronized branchLog()V\n')
@@ -1485,7 +1286,7 @@ def _count_smali_and_walk(w, makedir_path, smali_base_dir, next_smali_dir, total
 	return total_smali_counts, next_smali_dir, next_smali_dir[count_index:]#回傳是第幾個smali dir (用字串存)
 
 		
-def switch_case_logger(register_case, line, tmp_register, free_list, case_index,sixteen_types,rand_method_id, new_version):#TODO 這部分還不知道怎麼做
+def switch_case_logger(register_case, line, tmp_register, free_list, case_index,sixteen_types,rand_method_id):#TODO 這部分還不知道怎麼做
 	new_content = line+'\n'
 	no_move = False
 	is_object = '-object'
