@@ -4,12 +4,12 @@ import json
 import sys 
 
 if __name__ == '__main__':
-    diff_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg0205'
+    diff_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg0410'
     with open('../jsons/TriggerZoo_x86_filename2packagename.json','r') as f:
         f2p = json.load(f)
-    if os.path.exists('EvadingPoints0205.csv'):
-        os.remove('EvadingPoints0205.csv')
-    f = open('EvadingPoints0205.csv', 'w')
+    if os.path.exists('EvadingPoints0410.csv'):
+        os.remove('EvadingPoints0410.csv')
+    f = open('EvadingPoints0410.csv', 'w')
     writer = csv.writer(f)
     writer.writerow(['diff filename','apk name', 'rhsb', 'ehsb','rhdsb', 'ehdsb',  'sign',  'Tr', 'Te'])    
 

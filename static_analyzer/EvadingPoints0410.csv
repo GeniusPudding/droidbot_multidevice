@@ -1,0 +1,6 @@
+diff filename,apk name,rhsb,ehsb,rhdsb,ehdsb,sign,Tr,Te
+0455B2C8FAAC5EDE778C998EDB8E909E3542D8711699C4FCEA473EF327F96DCB,org.project.pycalculator,,,,,La/b/k/r;->c(I)Z : C:cond_1 False,C:cond_0 False,C:cond_0 True
+1645F505C8528E777EE05B8AE687D849E03A1187AB5CA3D49B840B1F5C9B2C9F,mtw.app.vtu,,,,,Lc/c/b/a/b/b/j;->a(I)Z : C:cond_1 False,C:cond_0 False,C:cond_0 True
+9F5FA29E48216F91644C451447BD6BD51ABF0686D1DDC8E0DA3CDE27E79FBE22,com.apinjari.chargerremovalalarm,,,,,La/b/k/r;->c(I)Z : C:cond_1 False,C:cond_0 False,C:cond_0 True
+A6F6CE4450563593EF8DD1F471FD353FF31569AAAEF6280C6BCAAEE5A931F255,com.shyri.whitescreenapp,,,,,La/a/a/C;->c(I)Z : C:cond_1 False,C:cond_0 False,C:cond_0 True
+CD07EA4346A6DCF31B014D32FCFE408A18660E28D28F9A88C18FCED25FFFEB5D,dcunlocker.com.huaweiunlock2,['Landroid/os/Bundle;->getString(Ljava/lang/String;)Ljava/lang/String;'],,,,Ld/a/a/a/a/b/x;->b(Landroid/content/Context;)Z : C:cond_1 False,TS:try_start_1 ,C:cond_1 True

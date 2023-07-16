@@ -89,7 +89,7 @@ def parse_args():
                         help="Run in debug mode (dump debug messages).")
     parser.add_argument("-random", action="store_true", dest="random_input",
                         help="Add randomness to input events.")
-    parser.add_argument("-keep_app", action="store_true", dest="keep_app",
+    parser.add_argument("-keep_app", action="store_true", dest="keep_app", default=False,
                         help="Keep the app on the device after testing.")
     parser.add_argument("-keep_env", action="store_true", dest="keep_env",
                         help="Keep the test environment (eg. minicap and accessibility service) after testing.")
@@ -107,7 +107,7 @@ def parse_args():
                         help="Ignore Ad views by checking resource_id.")
     parser.add_argument("-replay_output", action="store", dest="replay_output",
                         help="The droidbot output directory being replayed.")
-    parser.add_argument("-r", action="store_true", dest="reuse",
+    parser.add_argument("-r", action="store_true", dest="reuse", default= True,
                     help="Reuse the injected apk in dataset.")
     parser.add_argument("-i", action="store_true", dest="inject",
                     help="Inject method logging(hooking) to the apk.")
@@ -264,16 +264,24 @@ def main(testing_apk_path, opts, target_API_graph):
     l = len(all_devices)
     if droidbot: #the third can be used to run other tests
         if l >= 2:
-            try:
-                print('Start generating logs......')
-                #target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs\\Difuzer'
+            # try:
+            print('Start generating logs......')
+            #target_dir = 'C:\\Users\\user\\Desktop\\testing\dataset\\method_seq_logs\\Difuzer'
 
-                p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
-                p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
-                #print(p1,p2)
-                success_logging_file = parser2(p1, p2, target_dir, droidbot.app.package_name + get_log_filecount_index(opts.logdir, droidbot.app.package_name))
+            p1 = os.path.join(opts.output_dir,'logcat_'+ all_devices[0].replace(':','_') + '.txt')
+            p2 = os.path.join(opts.output_dir+'_2','logcat_'+ all_devices[1].replace(':','_') + '.txt')
+            #print(p1,p2)
+            success_logging_file = parser2(p1, p2, target_dir, droidbot.app.package_name + get_log_filecount_index(opts.logdir, droidbot.app.package_name))
+            # except Exception as e:
+            #     print(f'{e} - Can\'t parse the log')
+        
+            # try for uninstall repacked app
+            try:
+                for d in all_devices:
+                    os.system('adb -s '+d+' uninstall '+droidbot.app.package_name)
             except:
-                print('Can\'t parse the log')
+                print('Can\'t uninstall the repacked app')
+
         if l == 1:#用來測試單一裝置重複跑的
             try:
                 print('Start generating logs......')
@@ -330,7 +338,7 @@ if __name__ == "__main__":
         # input(f'logged_apks:{logged_apks}')
         # input(f'none_logged_apks:{none_logged_apks}')
         ran_apks = none_logged_apks + logged_apks 
-
+        ran_apks = logged_apks
         # unlabeled = []
         # with open('Labels.csv', 'r') as f:
         #     reader = csv.reader(f)
@@ -365,8 +373,8 @@ if __name__ == "__main__":
                     print(f'{a} fail_repackage')
 
                 
-            except:
-                print(f'Analyzing {a} failed')
+            except Exception as e:
+                print(f'Analyzing {a} failed, error:{e}')
                 failed_apks['name_list'].append(a)
             t1_stop = process_time() 
             t = t1_stop-t1_start

@@ -94,6 +94,7 @@ def findPackageAndLauncherName(xml_path):
     return  ('','')
 
 if __name__ == "__main__":
-    package_name,activity_name = findPackageAndLauncherName(sys.argv[1])
-    print("package_name:",package_name)
-    print("activity_name:",activity_name)
+    # package_name,activity_name = findPackageAndLauncherName(sys.argv[1])
+    # print("package_name:",package_name)
+    # print("activity_name:",activity_name)
+    patch_log_file(sys.argv[1])

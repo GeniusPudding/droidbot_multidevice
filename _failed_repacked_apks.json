@@ -1,0 +1,37 @@
+{
+  "cc98682b": [],
+  "emulator-5554": [
+    [
+      "repacked_16641D5916324900AAF951233753389A3021175F74B4CD1EE95C2982FCBA8F64.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\nFailure [INSTALL_FAILED_INTERNAL_ERROR: Failed to extract native libraries, res=-110]\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_2DA4F4978C9C01E138DCCB9BD21D191B40F70FF796C1AB56B12A39E01B287434.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\ncmd: Failure calling service package: Broken pipe (32)\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_498D695CC2F6C8365119EAA91DEE38D4399D3B1A50C6D277FE3FE68D3168D4D6.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\nFailure [INSTALL_FAILED_INTERNAL_ERROR: Failed to extract native libraries, res=-110]\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_4BE57F3C3D1414752CFB1B2195491D5B8B904F25A259F94D8F47B8B0022F1363.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\nFailure [INSTALL_FAILED_INTERNAL_ERROR: Failed to extract native libraries, res=-110]\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_69F71FECC07B3CB3F17FD3A6CA4CF5393507538E4D49025E7B1042D8B3B3FC14.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\nFailure [INSTALL_FAILED_VERSION_DOWNGRADE]\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_71A6922D4AF93066C737B78D4F9AE78CCF3D239FAC4615D2F7560D8F05E9AC24.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\ncmd: Can't find service: package\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_78B8C6349113B8A39781A154B70EB797B303A7DE67FCC96ED93A3E0475804429.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\ncmd: Can't find service: package\nPerforming Streamed Install\n"
+    ],
+    [
+      "repacked_DFD02E7121E8F034663EE844DA3222E5573F5434174060D550DC78694A939684.apk",
+      "Install Failed : Serving...\nPerforming Incremental Install\nFailure [INSTALL_FAILED_INTERNAL_ERROR: Failed to extract native libraries, res=-110]\nPerforming Streamed Install\n"
+    ]
+  ]
+}

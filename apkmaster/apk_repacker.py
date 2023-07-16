@@ -8,7 +8,7 @@ import shutil
 randID_re = '\$\([0-9]+\)'
 from androguard.core.bytecodes.apk import APK
 if __name__ != '__main__':
-    from .smali_function_logger import walk_smali_dir #,gen_invoke_set_json  #walk_target_dir,
+    from .smali_function_logger_ver2 import walk_smali_dir #,gen_invoke_set_json  #walk_target_dir,
     from .apk_utils import *
 
 def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, add_dummy_evasion):
@@ -43,7 +43,7 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, ad
         
         smali_base_dir = os.path.join(apktool_dir,subdir)
         #gen_invoke_set_json(smali_base_dir)
-        s = walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph, main_activity)
+        s = walk_smali_dir(smali_base_dir, next_smali_dir, target_API_graph)#, main_activity)
         #print(f's:{s}')
         #walk_target_dir(os.path.join(apktool_dir,subdir), graph)
     patch_log_file(os.path.join(apktool_dir,'smali'))
@@ -63,8 +63,15 @@ def methodlog_instrumentation(target_apk_path, redecompile, target_API_graph, ad
         # r = subprocess.run(['apktool', 'b', apktool_dir], capture_output=True)
         # s = r.stdout.decode("utf-8").strip()
         build_path = os.path.join(apktool_dir,'dist', apkname+'.apk')
+        build_path2 = os.path.join(apktool_dir,'dist', apkname+'_2.apk')
         repacked_path = os.path.join(dirname,'repacked_'+apkname+'.apk')
-        os.system('apksigner sign --ks '+ os.path.join(os.getcwd(), 'apkmaster','res','1.keystore')  + ' --ks-pass pass:s35gj6 --out ' + repacked_path + ' ' + build_path)
+        command = ["zipalign", "-f", "-v", "4", build_path, build_path2]
+        try:
+            subprocess.check_call(command)
+            print(f"Zipalign successful, output saved to {build_path}")
+        except subprocess.CalledProcessError as e:
+            print(f"Zipalign failed with error: {e}")
+        os.system('apksigner sign --ks '+ os.path.join(os.getcwd(), 'apkmaster','res','1.keystore')  + ' --ks-pass pass:s35gj6 --out ' + repacked_path + ' ' + build_path2)
         
         #shutil.copy2(build_path , repacked_path)
 

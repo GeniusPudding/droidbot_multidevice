@@ -23,6 +23,7 @@ def symbolize_logcats(logs):#將PID, TID都用符號代替 來排除跟程式碼
     tid_pool = []    
     for api in logs:
         if ': - ' not in api:
+            # print(f'bad log: {api}')
             continue
         #print(f'api:{api}')
         pid, tid = api.split(' ')[2], api.split(' ')[3]
@@ -42,7 +43,7 @@ def symbolize_logcats(logs):#將PID, TID都用符號代替 來排除跟程式碼
             tid_txt += str(tid_pool.index(tid))
         #print(f'tid_pool:{tid_pool}')
         new_line = api[api.find(': - ')+4:].strip() + ' (' + pid_txt +',' + tid_txt + ')' 
-        #print(f'new_line:{new_line}')
+        # print(f'new_line:{new_line}')
         new_logs.append(new_line)
     return new_logs
 
@@ -83,6 +84,7 @@ def parser(txt1_path, log_path, appname):#for getting method seq from one-device
 
     with open(txt1_path, 'r',encoding='utf-8') as f1:
         tmp_t1 = f1.read().split('\n')
+    print(f'tmp_t1:{tmp_t1}')
 
     t1 = symbolize_logcats(tmp_t1)
     dirname1, basename1 = os.path.split(txt1_path)

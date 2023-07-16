@@ -3,8 +3,8 @@
 import json 
 import os
 import shutil
-diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\TriggerZoo_x86_0205' #test' #TriggerZoo_x86_1205' #TriggerZoo_x86
-output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg0205' #test' #' #dcfg1121
+diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\TriggerZoo_x86_0410' #test' #TriggerZoo_x86_1205' #TriggerZoo_x86
+output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg0410' #test' #' #dcfg1121
 
 
 if __name__ == '__main__':

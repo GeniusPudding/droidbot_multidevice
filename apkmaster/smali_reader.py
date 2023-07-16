@@ -106,6 +106,33 @@ def get_invoke_range_regs(invoke_line, locals_num, register_case):#把range實�
 	# 	input(f'actual_regs:{actual_regs}, offset:{offset},locals_num:{locals_num}')
 	return actual_regs, offset
 
+def get_invoke_range_regs_ver2(invoke_line, locals_num):#把range實際呼叫用的arguments所在的register抓出來 (考慮到已經被插一個locals在末端)
+	#print(f'invoke_line:{invoke_line}')
+	invoke_regs = invoke_line[invoke_line.index('{')+1:invoke_line.index('}')].split(' .. ')
+	actual_regs = []
+	start, end = invoke_regs[0], invoke_regs[1]
+	offset = 0 #如果是v-p這種需要搬動暫存器內容吧 range必須是連號
+	s_i, e_i = int(start[1:]), int(end[1:])	
+
+	if  start[0] == 'p' and  end[0] == 'p':#沒有offset
+		for i in range(s_i,e_i+1):
+			actual_regs.append('p'+str(i)) 
+                  
+	else:
+		if end[0] == 'v' and int(end[1:]) < locals_num: #v form且<locals num
+			for i in range(s_i,e_i+1):
+				actual_regs.append('v'+str(i)) 
+		else:
+			for i in range(s_i, locals_num):
+				actual_regs.append('v'+str(i))			
+			if end[0] == 'p':    
+				for i in range(e_i+1):	
+					actual_regs.append('p'+str(i))
+			else: # (end[0] == 'v' and int(end[1:]) >= locals_num):#剩下兩種都有可能因為加了locals而斷掉range
+				for i in range(locals_num+offset,  e_i+2):	
+					actual_regs.append('v'+str(i))   
+
+	return actual_regs
 
 def get_registers_usage_in_line(dalvik_bytecode_line): 
     #Check for all dalvik instructions in smali representation or androguard representation
@@ -159,7 +186,7 @@ def get_registers_usage_in_line(dalvik_bytecode_line):
         return instruction, reg_list	
 
     instruction,reg_list = parse_smali_tokens(dalvik_bytecode_line)
-	
+    #print(f'reg_list:{reg_list}')
     result_regs = []
     operand_regs = []
     result_types = []
@@ -180,7 +207,6 @@ def get_registers_usage_in_line(dalvik_bytecode_line):
                     else:
                         result_types = ['object']
                     reg_list.remove(reg_list[1])
-                    operand_regs = operand_regs[:-1]
                 if 'wide' in instruction:
                     operand_regs.append(operand_regs[0][0]+str(int(operand_regs[0][1:])+1))	#next order reg	                               
                     
@@ -323,17 +349,23 @@ def is_target_method(method_sign,smali_base_dir,target_API_graph_all):#TODO Trig
 	return boolean
 
 if __name__ == '__main__':
-    line = '    or-int/lit16 v3, v3, 0x80\n'
-    ins = line.strip().split(' ')[0]
-    b = (any([line.startswith(prefix) for prefix in ['    add', '    sub', '    mul', '    div', '    rem', '    and', \
-            '    or', '    xor', '    shl', '    shr', '    ushr']]) and not '2addr' in ins and not 'lit16' in ins)
-    c = any([line.startswith(prefix) \
-        for prefix in ['    return', '    move-result', '    const ', '    const-wide', '    monitor', '    check-', \
-            '    new-instance', '    throw', '    cmp', '    fill-']]) \
-        or any([substr in ins for substr in ['/16', '/from16', 'range', 'switch']])\
-        or (line.startswith('if-') and 'z' in ins)\
-        or (('put' in ins or 'get' in ins) and not ins.startswith('i'))\
-        or (any([line.startswith(prefix) for prefix in ['    add', '    sub', '    mul', '    div', '    rem', '    and', \
-            '    or', '    xor', '    shl', '    shr', '    ushr']]) and not '2addr' in ins and not 'lit16' in ins) 
-    print(b,c)
-    print(is_4bit_instruction(line))
+    print(get_registers_usage_in_line('    add-double p15, p1, p15'))
+    print(get_registers_usage_in_line('    iput-object v2, v13, La/b/e;->b:[Ljava/lang/Object;'))
+    print(get_registers_usage_in_line('    invoke-static/range {v4 .. p1}, Linjections/InlineLogs;->monitorLog2(Ljava/lang/String;Ljava/lang/String;)V'))
+    print(get_invoke_range_regs_ver2('    invoke-static/range {v4 .. p1}, Linjections/InlineLogs;->monitorLog2(Ljava/lang/String;Ljava/lang/String;)V', 10))
+    
+    
+    # line = '    or-int/lit16 v3, v3, 0x80\n'
+    # ins = line.strip().split(' ')[0]
+    # b = (any([line.startswith(prefix) for prefix in ['    add', '    sub', '    mul', '    div', '    rem', '    and', \
+    #         '    or', '    xor', '    shl', '    shr', '    ushr']]) and not '2addr' in ins and not 'lit16' in ins)
+    # c = any([line.startswith(prefix) \
+    #     for prefix in ['    return', '    move-result', '    const ', '    const-wide', '    monitor', '    check-', \
+    #         '    new-instance', '    throw', '    cmp', '    fill-']]) \
+    #     or any([substr in ins for substr in ['/16', '/from16', 'range', 'switch']])\
+    #     or (line.startswith('if-') and 'z' in ins)\
+    #     or (('put' in ins or 'get' in ins) and not ins.startswith('i'))\
+    #     or (any([line.startswith(prefix) for prefix in ['    add', '    sub', '    mul', '    div', '    rem', '    and', \
+    #         '    or', '    xor', '    shl', '    shr', '    ushr']]) and not '2addr' in ins and not 'lit16' in ins) 
+    # print(b,c)
+    # print(is_4bit_instruction(line))

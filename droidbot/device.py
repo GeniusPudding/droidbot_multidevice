@@ -45,6 +45,7 @@ class Device(object):
                 sys.exit(-1)
             device_serial = all_devices[0]
         if "emulator" in device_serial and not is_emulator:
+            is_emulator = True
             self.logger.warning("Seems like you are using an emulator. If so, please add is_emulator option.")
         self.serial = device_serial
         self.is_emulator = is_emulator
@@ -643,7 +644,9 @@ class Device(object):
                 if waiting % 10 == 0:
                     install_p = subprocess.Popen(install_cmd, stdout=subprocess.PIPE)
                 if waiting > 30:
-                    raise Exception('Waiting too long time while installing the app!')
+                    #raise Exception('Waiting too long time while installing the app!')
+                    install_p.terminate()
+                    return
             if not self.connected:
                 install_p.terminate()
                 return
@@ -729,9 +732,12 @@ class Device(object):
         if package_name in self.adb.get_installed_apps():
             uninstall_cmd = ["adb", "-s", self.serial, "uninstall", package_name]
             uninstall_p = subprocess.Popen(uninstall_cmd, stdout=subprocess.PIPE)
+            i = 0
             while package_name in self.adb.get_installed_apps():
                 print("Please wait while uninstalling the app...")
                 time.sleep(3)
+                i += 1
+                if i > 10: break
             uninstall_p.terminate()
 
     def get_app_pid(self, app):
