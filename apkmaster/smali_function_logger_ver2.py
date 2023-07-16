@@ -94,7 +94,7 @@ def gen_method_start_log(current_method_signature, v_last, v_last2):
 	#new_content = ('    #Instrumentation by GeniusPudding\n')
 	new_content = (f'    invoke-static {{}}, Linjections/InlineLogs;->genRandom()Ljava/lang/String;\n\n')
 	new_content += (f'    move-result-object {v_last2}\n\n') #將ID固定存在v_last2, TODO: v256以上的話目前還沒有辦法支援
-	new_content += (f'    const-string {v_last}, \"- Method START: {current_method_signature}, \"\n\n') #將sign固定存在v_last2
+	new_content += (f'    const-string {v_last}, \"- Method START: {current_method_signature} \"\n\n') #將sign固定存在v_last2
 	new_content += (f'    invoke-static/range {{{v_last} .. {v_last2}}}, Linjections/InlineLogs;->monitorLog2(Ljava/lang/String;Ljava/lang/String;)V\n\n')
 	return new_content
 

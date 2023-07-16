@@ -313,32 +313,59 @@ if __name__ == "__main__":
         #For debugging
         ran_apks = []
         logged_apks = []
-        none_logged_apks = []
-        none_repackaged_apks = []
+        # none_logged_apks = []
+        # none_repackaged_apks = []
 
-        log_list = [f[:f.index('(')] for f in os.listdir(target_dir) if '(' in f and os.path.getsize(os.path.join(target_dir,f)) != 0 ]
-        dd = os.listdir(dataset_path)
-        for a in dd:
-            if a[-4:] != '.apk' or 'repacked_' in a :
-                continue
-            r = subprocess.run(['packagename.bat',os.path.join(dataset_path,a)], capture_output=True)   
-            packagename = r.stdout.decode("utf-8").strip()
-            #input(f'packagename:{packagename}')
-            if 'repacked_' + a not in dd:
-                none_repackaged_apks.append(a)
-            if packagename in log_list:
-                logged_apks.append(a)
-            else:
-                none_logged_apks.append(a)
-        random.shuffle(logged_apks)
-        random.shuffle(none_logged_apks)
+        # log_list = [f[:f.index('(')] for f in os.listdir(target_dir) if '(' in f and os.path.getsize(os.path.join(target_dir,f)) != 0 ]
+        # dd = os.listdir(dataset_path)
+        # for a in dd:
+        #     if a[-4:] != '.apk' or 'repacked_' in a :
+        #         continue
+        #     r = subprocess.run(['packagename.bat',os.path.join(dataset_path,a)], capture_output=True)   
+        #     packagename = r.stdout.decode("utf-8").strip()
+        #     #input(f'packagename:{packagename}')
+        #     if 'repacked_' + a not in dd:
+        #         none_repackaged_apks.append(a)
+        #     if packagename in log_list:
+        #         logged_apks.append(a)
+        #     else:
+        #         none_logged_apks.append(a)
+        # random.shuffle(logged_apks)
+        # random.shuffle(none_logged_apks)
 
 
-        input(f'logged_apks:{logged_apks},len:{len(logged_apks)}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}\nnone_repackaged_apks:{none_repackaged_apks},len:{len(none_repackaged_apks)}')
-        # input(f'logged_apks:{logged_apks}')
-        # input(f'none_logged_apks:{none_logged_apks}')
-        ran_apks = none_logged_apks + logged_apks 
-        ran_apks = logged_apks
+        # # input(f'logged_apks:{logged_apks},len:{len(logged_apks)}\nnone_logged_apks:{none_logged_apks},len:{len(none_logged_apks)}\nnone_repackaged_apks:{none_repackaged_apks},len:{len(none_repackaged_apks)}')
+
+        # # input(f'logged_apks:{logged_apks}')
+        # # input(f'none_logged_apks:{none_logged_apks}')
+        # ran_apks = none_logged_apks + logged_apks 
+        # ran_apks = logged_apks
+        ran_apks = ['4C2AFD319BD46B634B8E42CD4EAF6D0CFC24EAEA53A23B2CF220D58ECE6DFD16.apk',
+'0455B2C8FAAC5EDE778C998EDB8E909E3542D8711699C4FCEA473EF327F96DCB.apk',
+'6883284BDEEB541FE035C78F8973A04CCB49F4410220A5840AF77ECE37D0D010.apk',
+'002C7672692000C30B38489402135948EA3D9DED79EF36339E756ACDA8B02BCA.apk',
+'EDCE7D31FD27A42807FB074DAA7B9BB501160EDA03E19C8677325B7CDF9C5C38.apk',
+'1E7BFC3E878D48531B8A5F82C80958BF81945EDB8CCCDC5BFBB40E63E18FD101.apk',
+'65B2B31D807EA12063A5167D14A53855F45D7B876C2F8755226D9F19E0A1A0FB.apk',
+'697A473859BA3C99A3F8C581285FB06C3FC828932A35832CB1FF48FFC2F2B2AA.apk',
+'527E6910F041A5FE6820E54B6597403CBC5907B4169373801D54CA4453920FC9.apk',
+'ABE1F27D283211281D04FE081BB0AB0ECA04775C0EBD361F2614788AC484B4F1.apk',
+'9036CE3B42D17CB3B4F1267FBD138273C2E81E9CBB4CA6838B7848F3C1CC6824.apk',
+'234F17850AFDFE3BF57CB44EF950346CEEAEB83B824FD7CD82AF4BCA80E6591C.apk',
+'2D6947F82FCD7B92F4F5D92E6E6C408008C5FF033FB7AD6F3544F03F8220278B.apk',
+'8FDC1E37CCE6DAF60C718B86B3069E66FD38DD227681EDF1B75663D79D3667E3.apk',
+'A5F6214933CF6DF4416BB119CB9964FD259C1F38CF59F4CE23676F913DA74041.apk',
+'F9271DB76D4A7A21F6B132F96E6D45E12D04320888C24A73903A923817179789.apk',
+'E62AF57254652769EC0BA9DE6F898E4010FC9A7D79D637B164E6C3625931B3AF.apk',
+'E18DF861CED0313A41E6D660E7C5436C5A0A045E4CF5B09E7AAB09AF4209F932.apk',
+'33AB319CEDFEA22B4965012B47475FBB2CB3214BCA9B8F001034BC17A17CB136.apk',
+'B7B657F36AFAB21C269E3D5433DA40E93B20E4DE209A0FC2664CA1D9C09F8AEB.apk',
+'2549073DC87967B9BF657F4BFBD8B556314D8CAA72A412C1A47D04058314DEC3.apk',
+'5DBF74D41A9FD2E31ADD62D06A3DAF80204171B1F269FF7B646C52BC6B3E7DB6.apk',
+'FF44DD4215E324FFF9E1C7B9ECE79572A73F210D66077C39B6FBF88DE2271C5C.apk',
+'F0AB4C62314F20C0FF896A0AEB1179BF7E6E092641F00F86423FDE7032DD2507.apk']
+
+
         # unlabeled = []
         # with open('Labels.csv', 'r') as f:
         #     reader = csv.reader(f)

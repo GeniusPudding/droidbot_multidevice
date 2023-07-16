@@ -21,19 +21,13 @@ get_MethodAnalysis_signature = lambda MethodAnalysis_object: MethodAnalysis_obje
 get_basicblock_signature = lambda BasicBlock_object: BasicBlock_object.name.decode().split('@')[1]# + '-' + get_EncodedMethod_signature(BasicBlock_object.method).replace('/','.')
 
 #取每一種log的sign用來比對, 主要是把後面的random ID濾掉
-get_tag_sign = lambda line: line.split('$(')[0].split(' :')[1] 
-startmethodsign_from_log = lambda line: 'MS:'+line[line.index('Method START')+14: line.index(' $(')]
-endmethodsign_from_log = lambda line: 'ME:'+line[line.index('Method END')+12: line.index(' $(')]
-branchmethodsign_from_log = lambda line: ('BS:'+line[line.index('Branch')+16: line.find('->', 2)]) \
-    if line.startswith('Branch(Switch): ') else ('B:'+get_tag_sign(line) + line[line.index('Branch')+8: line.index('->if')])
-calleesign_from_log = lambda line: line.split('=>')[1].split('(')[0]
-casesign_from_log = lambda line: 'C:'+get_tag_sign(line) + line[5:line.index(':')]
-gotosign_from_log = lambda line: ('GT:'+get_tag_sign(line)) if line.startswith('Goto Tag') else ('G:'+line[6:].split(' $(')[0].replace(' :', ' '))
-trysign_from_log = lambda line: ('TD:'+line.split(') :')[1].split(' $(')[0].replace(':', '')) if line.startswith('Try Done') else (('TS:' if line.startswith('Try Start') else 'TC:')+ get_tag_sign(line))
+startmethodsign_from_log = lambda line: 'MS: ' + line.split(' ')[2].strip(',')
+endmethodsign_from_log = lambda line: 'ME: ' + line.split(' ')[2].strip(',')
+branchmethodsign_from_log = lambda line: ('B: ' + line.split(' ')[1].replace(':','') + line[line.index('->if')+2: line.index(' $(')])
 
 dataset_name = 'TriggerZoo_x86' #'test'#  
 log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\'+dataset_name +'_0608' #log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\\method_seq_logs\\RealJ6+_AS30\\TriggerZoo_antiemulator_testsimpleevasion'
-log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\method_seq_logs\\RealJ6+_AS30\\new_version' 
+# log_path = 'C:\\Users\\user\\Desktop\\testing\\dataset\\method_seq_logs\\RealJ6+_AS30\\new_version' 
 apk_dir = 'C:\\Users\\user\\Desktop\\'+dataset_name #'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\10av_virus' #apk_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\runnable_on_android6\\TriggerZoo_antiemulator'
 diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\'+dataset_name +'_0608' #diff_dir = 'C:\\Users\\user\\Desktop\\testing\\dataset\\diff\\diff_all_ver3'
 output_dir = 'C:\\Users\\user\\Desktop\\droidbot_multidevice\\evading_points\\dcfg0608'
@@ -45,39 +39,14 @@ get_method_id = lambda line: line[line.index('$('): line.index(') (')+1]
 def split_by_method(lines):
     method_lines = {}
     for line in lines:
-        method_id = get_method_id(line)  # 假設你有一個函數可以從日誌行中獲取方法ID
+        method_id = get_method_id(line)  # 從日誌行中獲取方法ID
         if method_id not in method_lines:
             method_lines[method_id] = []
         method_lines[method_id].append(line)
     return method_lines
 
-def verify_split_result(method_lines):
-    # 例如第一項一定是Method START開頭，Branch後面一定是Case,Method END如果存在一定是最後一項，Goto:後面一定是Goto Tag，Try Done:一定會跟相同標籤的Try Start:成對出現
-    try:
-        for key, lines in method_lines.items():
-
-            for l in lines:
-                print(l)
-            input('check\n')
-            assert lines[0].startswith('Method START'), 'Method START not in first line'
-
-            for i in range(len(lines)):
-                if lines[i].startswith('Branch:'):
-                    assert lines[i+1].startswith('Case '), 'Case not in next line of Branch'
-                elif lines[i].startswith('Method END:'):
-                    assert i == len(lines)-1, 'Method END not in last line'
-
-                
-    except AssertionError as e:
-        print(e)
-        return key
-
-
-    print('Split result verified')
-    return None
-
-def gen_new_basicblock(cur_basicblock, line, cur_cfg ,log_parser, device, block_id):
-    next_sign = log_parser(line)
+def gen_new_basicblock(cur_basicblock, line, cur_cfg , device, block_id):
+    next_sign = line.split(' ')[1]
     if next_sign not in cur_cfg:
         cur_cfg[next_sign] = {'id': block_id, 'sign':next_sign, 'real_count':0, 'emu_count':0, 'child_counts_real': {}, 'child_counts_emu': {}}  # Add 'child_counts_{device}' dict for both devices
     next_block = cur_cfg[next_sign]
@@ -131,29 +100,9 @@ def analysis_seqs(method_lines, apk_dcg, device):
             elif line.startswith('Branch'):    
                 cur_basicblock['has_branch'] = branchmethodsign_from_log(line)
             elif line.startswith('TAG:'):    
-                cur_basicblock = gen_new_basicblock(cur_basicblock, line, cur_cfg, trysign_from_log, device, block_id)
+                cur_basicblock = gen_new_basicblock(cur_basicblock, line, cur_cfg, device, block_id)
                 cur_basicblock[device+'_count'] += 1  # increment count when the block is executed
                 block_id += 1
-            # elif line.startswith('Case'): 
-            #     cur_basicblock = gen_new_basicblock(cur_basicblock, line, cur_cfg, casesign_from_log, device, block_id)
-            #     cur_basicblock[device+'_count'] += 1  # increment count when the block is executed
-            #     block_id += 1
-            # elif line.startswith('Try Start'): 
-            #     cur_basicblock = gen_new_basicblock(cur_basicblock, line, cur_cfg, trysign_from_log, device, block_id)
-            #     cur_basicblock[device+'_count'] += 1  # increment count when the block is executed
-            #     block_id += 1
-            # elif line.startswith('Try Catch'): 
-            #     cur_basicblock = gen_new_basicblock(cur_basicblock, line, cur_cfg, trysign_from_log, device, block_id)
-            #     cur_basicblock[device+'_count'] += 1  # increment count when the block is executed
-            #     block_id += 1
-            # elif line.startswith('Try Done'): 
-            #     cur_basicblock['has_trydone'] = trysign_from_log(line)
-            # elif line.startswith('Goto Tag'): 
-            #     cur_basicblock = gen_new_basicblock(cur_basicblock, line, cur_cfg, gotosign_from_log, device, block_id)
-            #     cur_basicblock[device+'_count'] += 1  # increment count when the block is executed
-            #     block_id += 1
-            # elif line.startswith('Goto:'):           
-            #     cur_basicblock['has_goto'] = gotosign_from_log(line)
 
 def log_analysis(log_name):
     for name in os.listdir(log_path):
